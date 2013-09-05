@@ -1,0 +1,38 @@
+<{$bootstrap}>
+<{$jquery}>
+<div class="row-fluid">
+  <div class="span12">
+    <{$toolbar}>
+  </div>
+</div>
+<link href="<{$xoops_url}>/modules/tad_form/class/ScrollTable/superTables.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<{$xoops_url}>/modules/tad_form/class/ScrollTable/superTables.js"></script>
+<script type="text/javascript" src="<{$xoops_url}>/modules/tad_form/class/ScrollTable/jquery.superTable.js"></script>
+
+
+<h1><{$form_title}></h1>
+
+<script>
+$(document).ready(function(){
+    $("#GridView1").toSuperTable({ width:"98%" , height: "350px", fixedCols: 1 });
+});
+
+</script>
+
+<table class="table table-striped " id="GridView1">
+  <tr><th <{$thSty}>><{$smarty.const._MD_TADFORM_COL_WHO}></th>
+  <{foreach item=tt from=$all_title}>
+    <th <{$thSty}>><{$tt.title}></th>
+  <{/foreach}>
+  <th <{$thSty}>><{$smarty.const._MD_TADFORM_FILL_TIME}></th><{$funct_title}></tr>
+  <{foreach item=col from=$result_col}>
+  <tr><td><a href="<{$col.url}>"><{$col.man_name}></a></td>
+    <{foreach item=ans from=$col.ans}>
+    <td><{$ans.val}></td>
+    <{/foreach}>
+    <td><{$col.fill_time}></td>
+    <td><{$col.other_fun}></td>
+  </tr>
+  <{/foreach}>
+</table>
+

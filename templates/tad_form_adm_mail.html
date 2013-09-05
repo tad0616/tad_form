@@ -1,0 +1,52 @@
+<link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadtools/bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadtools/bootstrap/css/bootstrap-responsive.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadtools/css/xoops_adm.css" />
+
+<{if $op=="send"}>
+  
+  <{assign var="i" value=0}>
+  <{foreach item=data from=$main}>
+    <{if !$i}><div class="row-fluid"><{/if}>
+      <div class="hero-unit span5">
+        <span class="label label-info">To: <{$data.mail}></span>
+        <span class="label label-success"><{$data.title}></span>
+        <div><{$data.content}></div>
+      </div>
+  <{assign var="i" value=$i+1}>
+  <{if $i == 2}></div><{assign var="i" value=0}><{/if}>
+  <{/foreach}>
+  
+<div class="clearfix"></div>
+      
+<{else}>
+  <form action="mail.php" method="post" id="myForm">
+    <div class="controls">
+      <input type="text" name="title" class="span11" value="<{$title}>" placeholder="<{$smarty.const._MA_TADFORM_MAIL_TITLE}>">
+    </div>
+
+
+    <div class="controls controls-row">
+      <div class="span9"><{$editor}></div>
+      <div class="span2"><span class="label label-important"><{$smarty.const._MA_TADFORM_SEND_TAG}></span><{$tag}></div>
+    </div>
+
+    <div class="controls">
+
+      <label class="checkbox inline">
+      <input type="checkbox" name="test" id="test" value="1" class="warning"><{$smarty.const._MA_TADFORM_MAIL_TEST}>
+      </label>
+    	<{foreach item=data from=$data}>
+        <label class="checkbox inline">
+        <input name="email[<{$data.man_name}>]" type="checkbox" value="<{$data.email}>" checked><{$data.man_name}>
+        </label>
+      <{/foreach}>
+    </div>
+
+    <div class="controls">
+      <input type="hidden" name="op" value="send">
+      <input type="hidden" name="ofsn" value="<{$ofsn}>">
+    	<input type="submit" value="<{$smarty.const._MA_TADFORM_SEND}>">
+    </div>
+
+  </form>
+<{/if}>
