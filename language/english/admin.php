@@ -76,10 +76,7 @@ define("_MA_TADFORM_KIND2","Quiz");
 define("_MA_TADFORM_KIND1_TH","Done?");
 define("_MA_TADFORM_KIND1_OK","Recruited");
 define("_MA_TADFORM_UPDATE_RESULT","Save");
-define("_MA_TREETABLE_MOVE_PIC","Drag to the destination category.");
-define("_MA_TREETABLE_SORT_PIC","Drag up or down to set the sort of categories");
-define("_MA_TREETABLE_MOVE_ERROR1","Move fail! Source and destination category can not be the same.");
-define("_MA_TREETABLE_MOVE_ERROR2","Move fail! Destination category can not be under the source category.");
+
 define("_MA_TADFORM_USE_CAPTCHA","Use CAPTCHA?");
 define("_MA_TADFORM_SHOW_RESULT","To display the results?");
 define("_MA_TADFORM_NOT_SHOW","Not published the results of this questionnaire.");
