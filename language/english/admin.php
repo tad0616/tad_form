@@ -37,7 +37,8 @@ define("_MA_TADFORM_COL_RADIO","Mulitiple choice");
 define("_MA_TADFORM_COL_CHECKBOX","Multiple choices");
 define("_MA_TADFORM_COL_SELECT","Select Menu");
 define("_MA_TADFORM_COL_TEXTAREA","Text area");
-define("_MA_TADFORM_COL_FCK","FCK Editor");
+define("_MA_TADFORM_COL_DATE","Date");
+define("_MA_TADFORM_COL_DATETIME","DateTime");
 define("_MA_TADFORM_COL_SHOW","Note Only");
 define("_MA_TADFORM_COL_SHOW_NOTE","Using the \"Note Only\", to fill note in the \"Description\"");
 

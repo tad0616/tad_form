@@ -1,10 +1,4 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 tad 製作
-// 製作日期：2008-06-25
-// $Id: function.php,v 1.1 2008/05/14 01:22:08 tad Exp $
-// ------------------------------------------------------------------------- //
-
 $modversion = array();
 
 //---模組基本資訊---//
@@ -20,10 +14,10 @@ $modversion['image'] = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname'] = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date'] = '2013/10/28';
+$modversion['release_date'] = '2013/11/13';
 $modversion['module_website_url'] = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
-$modversion['module_status'] = 'RC3';
+$modversion['module_status'] = 'release';
 $modversion['author_website_url'] = 'http://tad0616.net/';
 $modversion['author_website_name'] = _MI_TAD_WEB;
 $modversion['min_php']=5.2;

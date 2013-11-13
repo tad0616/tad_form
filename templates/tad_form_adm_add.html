@@ -5,85 +5,124 @@
 <{if $op=="edit_opt"}>
 
   <form action="add.php" method="post" id="myForm" enctype="multipart/form-data">
-    <div class="controls controls-row">
-      <div class="span2"><{$smarty.const._MA_TADFORM_COL_TITLE}><{$sort}></div>
-      <input type="text" name="title" value="<{$title}>" class="span8">
+
+    <div class="row-fluid">
+      <label class="span2">
+        <{$smarty.const._MA_TADFORM_COL_TITLE}><{$sort}>
+      </label>
+      <div class="span10">
+        <input type="text" name="title" value="<{$title}>" class="span12">
+      </div>
     </div>
 
-    <div class="controls controls-row">
-      <div class="span2"><{$smarty.const._MA_TADFORM_COL_DESCRIPT}></div>
-      <textarea name="descript" class="span8" rows=4><{$descript}></textarea>
+    <div class="row-fluid">
+      <label class="span2">
+        <{$smarty.const._MA_TADFORM_COL_DESCRIPT}>
+      </label>
+      <div class="span10">
+      <textarea name="descript" class="span12" rows=4><{$descript}></textarea>
+      </div>
     </div>
 
-    <div class="controls controls-row">
-      <div class="span2"><{$smarty.const._MA_TADFORM_COL_KIND}></div>
-      <select name="kind" size=1 class="span3">
-    		<option value="text" <{$kind_text}>><{$smarty.const._MA_TADFORM_COL_TEXT}></option>
-    		<option value="radio" <{$kind_radio}>><{$smarty.const._MA_TADFORM_COL_RADIO}></option>
-    		<option value="checkbox" <{$kind_checkbox}>><{$smarty.const._MA_TADFORM_COL_CHECKBOX}></option>
-    		<option value="select" <{$kind_select}>><{$smarty.const._MA_TADFORM_COL_SELECT}></option>
-    		<option value="textarea" <{$kind_textarea}>><{$smarty.const._MA_TADFORM_COL_TEXTAREA}></option>
-    		<!--option value="fck" <{$kind_fck}>><{$smarty.const._MA_TADFORM_COL_FCK}></option-->
-    		<option value="show" <{$kind_show}>><{$smarty.const._MA_TADFORM_COL_SHOW}></option>
-    	</select>
-      <div class="span2"><{$smarty.const._MA_TADFORM_COL_VAL}></div>
-      <input type="text" name="val" value="<{$val}>" class="span3">
-    </div>
+    <div class="row-fluid">
+
+      <label class="span2">
+        <{$smarty.const._MA_TADFORM_COL_KIND}>
+      </label>
+
+      <div class="span2">
+        <select name="kind" size=1 class="span12">
+          <option value="text" <{if $kind=="text"}>selected<{/if}>><{$smarty.const._MA_TADFORM_COL_TEXT}></option>
+          <option value="radio" <{if $kind=="radio"}>selected<{/if}>><{$smarty.const._MA_TADFORM_COL_RADIO}></option>
+          <option value="checkbox" <{if $kind=="checkbox"}>selected<{/if}>><{$smarty.const._MA_TADFORM_COL_CHECKBOX}></option>
+          <option value="select" <{if $kind=="select"}>selected<{/if}>><{$smarty.const._MA_TADFORM_COL_SELECT}></option>
+          <option value="textarea" <{if $kind=="textarea"}>selected<{/if}>><{$smarty.const._MA_TADFORM_COL_TEXTAREA}></option>
+          <option value="date" <{if $kind=="date"}>selected<{/if}>><{$smarty.const._MA_TADFORM_COL_DATE}></option>
+          <option value="datetime" <{if $kind=="datetime"}>selected<{/if}>><{$smarty.const._MA_TADFORM_COL_DATETIME}></option>
+          <option value="show" <{if $kind=="show"}>selected<{/if}>><{$smarty.const._MA_TADFORM_COL_SHOW}></option>
+        </select>
+      </div>
 
 
-    <div class="controls controls-row">
-      <div class="span2"><{$smarty.const._MA_TADFORM_COL_SIZE}></div>
-      <input type="text" name="size" value="<{$size}>" class="span3" placeholder="<{$smarty.const._MA_TADFORM_COL_NOTE}>">
-      <div class="span2"><{$smarty.const._MA_TADFORM_COL_CHK}></div>
-      <div class="span3">
-        <label class="radio inline">
-          <input type="radio" name="chk" id="chk1" value="1" <{$chk1}>><{$smarty.const._YES}>
-        </label>
-        <label class="radio inline">
-          <input type="radio" name="chk" id="chk0" value="0" <{$chk0}>><{$smarty.const._NO}>
-        </label>
+      <label class="span2">
+        <{$smarty.const._MA_TADFORM_COL_SIZE}>
+      </label>
+      <div class="span6">
+        <input type="text" name="size" value="<{$size}>" class="span12" placeholder="<{$smarty.const._MA_TADFORM_COL_NOTE}>">
       </div>
     </div>
 
 
-    <div class="controls controls-row">
-      <div class="span2"><{$smarty.const._MA_TADFORM_COL_FUNC}></div>
-      <select name="func" size=1 class="span3">
-    		<option value="" <{$func_none}>><{$smarty.const._MA_TADFORM_COL_NO_FUN}></option>
-    		<option value="sum" <{$func_sum}>><{$smarty.const._MA_TADFORM_COL_SUM}></option>
-    		<option value="avg" <{$func_avg}>><{$smarty.const._MA_TADFORM_COL_AVG}></option>
-    		<option value="count" <{$func_count}>><{$smarty.const._MA_TADFORM_COL_COUNT}></option>
-    	</select>
+    <div class="row-fluid">
 
-      <div class="span2"><{$smarty.const._MA_TADFORM_COL_PUBLIC}></div>
-      <div class="span3">
+      <label class="span2">
+        <{$smarty.const._MA_TADFORM_COL_PUBLIC}>
+      </label>
+
+      <div class="span2">
         <label class="radio inline">
-          <input type="radio" name="public" id="public1" value="1" <{$public1}>><{$smarty.const._YES}>
+          <input type="radio" name="public" id="public1" value="1" <{if $public=="1"}>checked<{/if}>><{$smarty.const._YES}>
         </label>
         <label class="radio inline">
-          <input type="radio" name="public" id="public0" value="0" <{$public0}>><{$smarty.const._NO}>
+          <input type="radio" name="public" id="public0" value="0" <{if $public!="1"}>checked<{/if}>><{$smarty.const._NO}>
         </label>
         <input type="hidden" name="sort" value="<{$sort}>">
       </div>
+
+
+
+      <label class="span1">
+        <{$smarty.const._MA_TADFORM_COL_CHK}>
+      </label>
+      <div class="span2">
+        <label class="radio inline">
+          <input type="radio" name="chk" id="chk1" value="1" <{if $chk=="1"}>checked<{/if}>><{$smarty.const._YES}>
+        </label>
+        <label class="radio inline">
+          <input type="radio" name="chk" id="chk0" value="0"  <{if $chk!="1"}>checked<{/if}>><{$smarty.const._NO}>
+        </label>
+      </div>
+
+      <label class="span1">
+        <{$smarty.const._MA_TADFORM_COL_FUNC}>
+      </label>
+
+      <div class="span1">
+        <select name="func" size=1 class="span12">
+          <option value="" <{if $func==""}>selected<{/if}>><{$smarty.const._MA_TADFORM_COL_NO_FUN}></option>
+          <option value="sum" <{if $func=="sum"}>selected<{/if}>><{$smarty.const._MA_TADFORM_COL_SUM}></option>
+          <option value="avg" <{if $func=="avg"}>selected<{/if}>><{$smarty.const._MA_TADFORM_COL_AVG}></option>
+          <option value="count" <{if $func=="count"}>selected<{/if}>><{$smarty.const._MA_TADFORM_COL_COUNT}></option>
+        </select>
+      </div>
+
+      <label class="span1">
+        <{$smarty.const._MA_TADFORM_COL_VAL}>
+      </label>
+
+      <div class="span2">
+        <input type="text" name="val" value="<{$val}>" class="span12">
+      </div>
+
     </div>
 
-    <div class="controls controls-row">
+    <div class="row-fluid">
       <div class="span12 text-center">
-        <input type="hidden" name="op" value="<{$next_op}>">
         <{$end_txt}>
 
-      	<input type="hidden" name="csn" value="<{$csn}>">
-      	<input type="hidden" name="ofsn" value="<{$ofsn}>">
-        <input type="submit" value="<{$smarty.const._TAD_SAVE}>">
+        <input type="hidden" name="op" value="<{$next_op}>">
+        <input type="hidden" name="csn" value="<{$csn}>">
+        <input type="hidden" name="ofsn" value="<{$ofsn}>">
+        <button type="submit" class="btn btn-primary"><{$smarty.const._TAD_SAVE}></button>
       </div>
     </div>
-  
+
   </form>
 <{elseif $op=="edit_all_opt"}>
 
   <{$jquery}>
-	<script>
-	$().ready(function(){
+  <script>
+  $().ready(function(){
       $("#sort").sortable({ opacity: 0.6, cursor: "move", update: function() {
           var order = $(this).sortable("serialize");
           $.post("save_sort.php", order, function(theResponse){
@@ -93,41 +132,41 @@
       });
 
   });
-	function delete_tad_col_func(csn){
-		var sure = window.confirm("<{$smarty.const._TAD_DEL_CONFIRM}>");
-		if (!sure)	return;
-		location.href="add.php?op=delete_tad_form_col&ofsn=<{$ofsn}>&csn=" + csn;
-	}
-	</script>
+  function delete_tad_col_func(csn){
+    var sure = window.confirm("<{$smarty.const._TAD_DEL_CONFIRM}>");
+    if (!sure)  return;
+    location.href="add.php?op=delete_tad_form_col&ofsn=<{$ofsn}>&csn=" + csn;
+  }
+  </script>
   <div id="save_msg"></div>
-	<table class="table table-striped">
-  	<tr>
-  	<th><{$smarty.const._MA_TADFORM_COL_SORT}></th>
-  	<th><{$smarty.const._MA_TADFORM_COL_TITLE}> (<{$smarty.const._MA_TADFORM_COL_DESCRIPT}>)</th>
-  	<th><{$smarty.const._MA_TADFORM_COL_KIND}></th>
-  	<th><{$smarty.const._MA_TADFORM_COL_SIZE}></th>
-  	<th><{$smarty.const._MA_TADFORM_COL_VAL}></th>
-  	<th><{$smarty.const._MA_TADFORM_COL_CHK}></th>
-  	<th><{$smarty.const._MA_TADFORM_COL_FUNC}></th>
-  	<th><{$smarty.const._MA_TADFORM_COL_PUBLIC}></th>
-  	<th><{$smarty.const._TAD_FUNCTION}></th>
-  	</tr>
+  <table class="table table-striped">
+    <tr>
+    <th><{$smarty.const._MA_TADFORM_COL_SORT}></th>
+    <th><{$smarty.const._MA_TADFORM_COL_TITLE}> (<{$smarty.const._MA_TADFORM_COL_DESCRIPT}>)</th>
+    <th><{$smarty.const._MA_TADFORM_COL_KIND}></th>
+    <th><{$smarty.const._MA_TADFORM_COL_SIZE}></th>
+    <th><{$smarty.const._MA_TADFORM_COL_VAL}></th>
+    <th><{$smarty.const._MA_TADFORM_COL_CHK}></th>
+    <th><{$smarty.const._MA_TADFORM_COL_FUNC}></th>
+    <th><{$smarty.const._MA_TADFORM_COL_PUBLIC}></th>
+    <th><{$smarty.const._TAD_FUNCTION}></th>
+    </tr>
     <tbody id="sort">
     <{foreach item=q from=$question}>
       <tr id="tr_<{$q.csn}>">
-    		<td><{$q.sort}> <img src="<{$xoops_url}>/modules/tadtools/treeTable/images/updown_s.png" style="cursor: s-resize;" alt="<{$smarty.const._MA_TREETABLE_SORT_PIC}>" title="<{$smarty.const._MA_TREETABLE_SORT_PIC}>"></td>
-    		<td><span class="question"><b><{$q.title}></b></span><br><span class="note"><{$q.descript}></span></td>
-    		<td><{$q.col_type}></td>
-    		<td><{$q.size}></td>
-    		<td><{$q.val}></td>
-    		<td><{$q.chk}></td>
-    		<td><{$q.func}></td>
-    		<td><{$q.public}></td>
-    		<td>
-      		<a href="javascript:delete_tad_col_func(<{$q.csn}>);" class="btn btn-mini btn-danger"><{$smarty.const._TAD_DEL}></a>
+        <td><{$q.sort}> <img src="<{$xoops_url}>/modules/tadtools/treeTable/images/updown_s.png" style="cursor: s-resize;" alt="<{$smarty.const._MA_TREETABLE_SORT_PIC}>" title="<{$smarty.const._MA_TREETABLE_SORT_PIC}>"></td>
+        <td><span class="question"><b><{$q.title}></b></span><br><span class="note"><{$q.descript}></span></td>
+        <td><{$q.col_type}></td>
+        <td><{$q.size}></td>
+        <td><{$q.val}></td>
+        <td><{$q.chk}></td>
+        <td><{$q.func}></td>
+        <td><{$q.public}></td>
+        <td>
+          <a href="javascript:delete_tad_col_func(<{$q.csn}>);" class="btn btn-mini btn-danger"><{$smarty.const._TAD_DEL}></a>
           <a href="add.php?op=edit_opt&ofsn=<{$ofsn}>&csn=<{$q.csn}>&mode=modify" class="btn btn-mini btn-warning"><{$smarty.const._TAD_EDIT}></a>
-    		</td>
-    	</tr>
+        </td>
+      </tr>
     <{/foreach}>
   </tbody>
   </table>
@@ -142,35 +181,56 @@
   <{$formValidator_code}>
   <script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/My97DatePicker/WdatePicker.js"></script>
   <form action="add.php" method="post" id="myForm" enctype="multipart/form-data">
+
   <div class="row-fluid">
     <div class="span6">
-      <div class="controls controls-row">
-        <div class="span2"><{$smarty.const._MA_TADFORM_TITLE}></div>
-        <input type="text" name="title" id="title" value="<{$title}>" class="validate[required] span8" >
+      <div class="row-fluid">
+        <label class="span2">
+          <{$smarty.const._MA_TADFORM_TITLE}>
+        </label>
+        <div class="span10">
+          <input type="text" name="title" id="title" value="<{$title}>" class="validate[required] span12" >
+        </div>
       </div>
 
-      <div class="controls controls-row">
-        <div class="span2" class="span4"><{$smarty.const._MA_TADFORM_ADM_EMAIL}></div>
-        <input type="text" name="adm_email" id="adm_email" value="<{$adm_email}>" class="validate[required] span8" >
+      <div class="row-fluid">
+        <label class="span2">
+          <{$smarty.const._MA_TADFORM_ADM_EMAIL}>
+        </label>
+        <div class="span10">
+          <input type="text" name="adm_email" id="adm_email" value="<{$adm_email}>" class="validate[required] span12" >
+        </div>
       </div>
 
 
-      <div class="controls controls-row">
-        <div class="span2"><{$smarty.const._MA_TADFORM_START_DATE}></div>
-        <input type="text" name="start_date" id="start_date" class="span3" value="<{$start_date}>" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:00'})">
-
-        <div class="span2"><{$smarty.const._MA_TADFORM_END_DATE}></div>
-        <input type="text" name="end_date" id="end_date" class="span3" value="<{$end_date}>" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:00'})">
+      <div class="row-fluid">
+        <label class="span2">
+          <{$smarty.const._MA_TADFORM_START_DATE}>
+        </label>
+        <div class="span10">
+          <input type="text" name="start_date" id="start_date" class="span12" value="<{$start_date}>" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})">
+        </div>
       </div>
 
+
+      <div class="row-fluid">
+        <label class="span2">
+          <{$smarty.const._MA_TADFORM_END_DATE}>
+        </label>
+        <div class="span10">
+          <input type="text" name="end_date" id="end_date" class="span12" value="<{$end_date}>" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})">
+        </div>
+      </div>
 
     </div>
 
     <div class="span6">
 
-      <div class="controls controls-row">
-        <div class="span3">
-          <div><{$smarty.const._MA_TADFORM_USE_CAPTCHA}></div>
+      <div class="row-fluid">
+        <div class="span4">
+          <label>
+            <{$smarty.const._MA_TADFORM_USE_CAPTCHA}>
+          </label>
           <label class="radio inline">
             <input type="radio" name="captcha" id="captcha_1" value="1" <{$captcha1}>><{$smarty.const._YES}>
           </label>
@@ -178,8 +238,11 @@
             <input type="radio" name="captcha" id="captcha_0" value="0" <{$captcha0}>><{$smarty.const._NO}>
           </label>
         </div>
-        <div class="span3">
-          <div><{$smarty.const._MA_TADFORM_MULTI_SIGN}></div>
+
+        <div class="span4">
+          <label>
+            <{$smarty.const._MA_TADFORM_MULTI_SIGN}>
+          </label>
           <label class="radio inline">
             <input type="radio" name="multi_sign" id="multi_sign_1" value="1" <{$multi_sign1}>><{$smarty.const._YES}>
           </label>
@@ -187,8 +250,11 @@
             <input type="radio" name="multi_sign" id="multi_sign_0" value="0" <{$multi_sign0}>><{$smarty.const._NO}>
           </label>
         </div>
-        <div class="span3">
-          <div><{$smarty.const._MA_TADFORM_SHOW_RESULT}></div>
+
+        <div class="span4">
+          <label>
+            <{$smarty.const._MA_TADFORM_SHOW_RESULT}>
+          </label>
           <label class="radio inline">
             <input type="radio" name="show_result" id="show_result_1" value="1" <{$show_result1}>><{$smarty.const._YES}>
           </label>
@@ -198,36 +264,45 @@
         </div>
       </div>
 
-      <div class="controls controls-row">
-        <div class="span3"><label><{$smarty.const._MA_TADFORM_KIND}></label><select name="kind"><{$kind_menu}></select></div>
-        <div class="span3"><label><{$smarty.const._MA_TADFORM_SIGN_GROUP}></label><{$sign_group}></div>
-        <div class="span3"><label><{$smarty.const._MA_TADFORM_VIEW_RESULT_GROUP}></label><{$view_result_group}></div>
-      </div>
+      <hr>
 
+      <div class="row-fluid">
+        <div class="span4">
+          <label><{$smarty.const._MA_TADFORM_KIND}></label>
+          <select name="kind" class="span12"><{$kind_menu}></select>
+        </div>
+        <div class="span4">
+          <label><{$smarty.const._MA_TADFORM_SIGN_GROUP}></label>
+          <{$sign_group}>
+        </div>
+        <div class="span4">
+          <label><{$smarty.const._MA_TADFORM_VIEW_RESULT_GROUP}></label>
+          <{$view_result_group}>
+        </div>
+      </div>
 
     </div>
   </div>
 
 
   <div class="row-fluid">
-    <div class="span12">
-      <div class="controls controls-row">
-        <div class="span1"><{$smarty.const._MA_TADFORM_CONTENT}></div>
-        <div class="span10"><{$editor}></div>
-      </div>
+    <label class="span1">
+      <{$smarty.const._MA_TADFORM_CONTENT}>
+    </label>
+    <div class="span11">
+      <{$editor}>
     </div>
+  </div>
 
-    <div class="span12">
-      <div class="controls controls-row">
-        <div class="span12 text-center">
-          <input type="hidden" name="enable" value="<{$enable}>">
-          <input type="hidden" name="ofsn" value="<{$ofsn}>">
-          <input type="hidden" name="op" value="<{$op}>">
 
-          <{$next}>
-          <input type="submit" value="<{$smarty.const._TAD_SAVE}>" class="btn">
-        </div>
-      </div>
+  <div class="row-fluid">
+    <div class="span12 text-center">
+      <input type="hidden" name="enable" value="<{$enable}>">
+      <input type="hidden" name="ofsn" value="<{$ofsn}>">
+      <input type="hidden" name="op" value="<{$op}>">
+
+      <{$next}>
+      <button type="submit" class="btn btn-primary"><{$smarty.const._TAD_SAVE}></button>
     </div>
   </div>
 
