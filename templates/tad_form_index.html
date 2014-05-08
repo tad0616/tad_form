@@ -89,7 +89,9 @@
   <{/foreach}>
 	</table>
   <div class="text-center">
-  <{if $show_report}><a href="report.php?ofsn=<{$ofsn}>" class="btn btn-info"><{$smarty.const._MD_TADFORM_VIEW_FORM}></a><{/if}>
+  <{if $show_report}>
+    <a href="report.php?ofsn=<{$ofsn}>" class="btn btn-info"><{$smarty.const._MD_TADFORM_VIEW_FORM}></a>
+  <{/if}>
   <a href="index.php?op=sign&ofsn=<{$ofsn}>" class="btn btn-success"><{$smarty.const._MD_TADFORM_BACK_TO_FORM}></a>
   </div>
 <{else}>
@@ -100,8 +102,15 @@
       <h3><{$form.title}></h3>
 
       <{$form.content}>
+
       <div class="text-center">
-    		<a href="index.php?op=sign&ofsn=<{$form.ofsn}>" class="btn btn-large btn-block btn-primary"><{$form.button}></a>
+
+    		<a href="index.php?op=sign&ofsn=<{$form.ofsn}>" class="btn btn-large btn-block <{if $form.sign_ok}>btn-primary<{else}>disabled<{/if}>"><{$form.button}></a>
+
+        <{if $form.view_ok}>
+          <a href="report.php?ofsn=<{$form.ofsn}>" class="btn btn-info btn-large btn-block"><{$smarty.const._MD_TADFORM_VIEW_FORM}></a>
+        <{/if}>
+
       </div>
   	</div>
   <{/foreach}>

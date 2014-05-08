@@ -1,10 +1,4 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 tad 製作
-// 製作日期：2008-06-25
-// $Id: function.php,v 1.1 2008/05/14 01:22:08 tad Exp $
-// ------------------------------------------------------------------------- //
-
 /*-----------引入檔案區--------------*/
 include "header.php";
 $xoopsOption['template_main'] = "tad_form_index.html";
@@ -14,9 +8,13 @@ include XOOPS_ROOT_PATH."/header.php";
 
 //列出所有tad_form_main資料
 function list_tad_form_main(){
-  global $xoopsDB,$xoopsTpl,$interface_menu;
+  global $xoopsDB,$xoopsTpl,$xoopsUser,$xoopsModule;
   $today=date("Y-m-d H:i:s" , xoops_getUserTimestamp(time()));
-
+  if ($xoopsUser) {
+    $User_Groups=$xoopsUser->getGroups();
+  }else{
+    $User_Groups=array(3);
+  }
   $sql = "select * from ".$xoopsDB->prefix("tad_form_main")." where enable='1' and start_date < '{$today}'  and end_date > '{$today}'";
   $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
   $i=0;
@@ -35,6 +33,30 @@ function list_tad_form_main(){
 
     $multi_sign_pic=($multi_sign=='1')?"<img src='images/report_check.png' align='absmiddle' hspace=6 alt='"._MD_TADFORM_MULTI_SIGN."' title='"._MD_TADFORM_MULTI_SIGN."'><span class='label label-success'>"._MD_TADFORM_MULTI_SIGN."</span> ":"";
 
+    $sign_group_arr=(empty($sign_group))?"":explode(",",$sign_group);
+    $sign_ok=false;
+    if(!empty($sign_group_arr)){
+      foreach($sign_group_arr as $group){
+        if(in_array($group,$User_Groups)){
+          $sign_ok=true;
+          break;
+        }
+      }
+    }
+    $view_result_group_arr=(empty($view_result_group))?"":explode(",",$view_result_group);
+    $view_ok=false;
+    if(!empty($view_result_group_arr)){
+      foreach($view_result_group_arr as $group){
+        if(in_array($group,$User_Groups)){
+          $view_ok=true;
+          break;
+        }
+      }
+    }
+
+
+    $all[$i]['sign_ok']=$sign_ok;
+    $all[$i]['view_ok']=$view_ok;
     $all[$i]['ofsn']=$ofsn;
     $all[$i]['title']=$title;
     $all[$i]['counter']=$counter;
@@ -406,7 +428,7 @@ function col_form($csn="",$kind="",$size="",$default_val="",$db_ans=array(),$chk
     $default_val=(empty($db_ans))?$default_val:$db_ans;
     $span=empty($size)?6:round($size/10,0);
     $chktxt=($chk)?"class='span{$span} validate[required]'":"class='span{$span}'";
-    $main="<input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}' $chktxt onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd H:i' , startDate:'%y-%M-%d %H:%m}'})\">
+    $main="<input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}' $chktxt onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm' , startDate:'%y-%M-%d %H:%m}'})\">
     <input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
     break;
 

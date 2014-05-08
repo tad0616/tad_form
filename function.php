@@ -34,15 +34,18 @@ function can_view_report($ofsn=""){
   global $xoopsUser,$isAdmin;
   if($xoopsUser){
     if($isAdmin)return true;
-    $form=get_tad_form_main($ofsn);
-    if($form['show_result']!='1')return false;
-    $view_result_array=explode(',',$form['view_result_group']);
     $User_Groups=$xoopsUser->getGroups();
-    if(!empty($view_result_array)){
-      foreach($view_result_array as $group){
-        if(in_array($group,$User_Groups)){
-          return true;
-        }
+  }else{
+    $User_Groups=array(3);
+  }
+
+  $form=get_tad_form_main($ofsn);
+  if($form['show_result']!='1')return false;
+  $view_result_array=explode(',',$form['view_result_group']);
+  if(!empty($view_result_array)){
+    foreach($view_result_array as $group){
+      if(in_array($group,$User_Groups)){
+        return true;
       }
     }
   }
