@@ -4,7 +4,7 @@ CREATE TABLE `tad_form_main` (
   `start_date` datetime default NULL,
   `end_date` datetime default NULL,
   `content` text,
-  `uid` smallint(5) unsigned NOT NULL default '0',
+  `uid` mediumint(8) unsigned NOT NULL default '0',
   `post_date` datetime default NULL,
   `enable` enum('1','0') NOT NULL default '1',
   `sign_group` varchar(255) NOT NULL default '',
@@ -36,7 +36,7 @@ CREATE TABLE `tad_form_col` (
 CREATE TABLE `tad_form_fill` (
   `ssn` int(10) unsigned NOT NULL auto_increment,
   `ofsn` smallint(5) unsigned NOT NULL default '0',
-  `uid` smallint(5) unsigned NOT NULL default '0',
+  `uid` mediumint(8) unsigned NOT NULL default '0',
   `man_name` varchar(20) NOT NULL default '',
   `email` varchar(50) NOT NULL default '',
   `fill_time` datetime NOT NULL default '0000-00-00 00:00:00',
