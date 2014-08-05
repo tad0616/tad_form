@@ -3,7 +3,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADFORM_NAME;
-$modversion['version'] = 3.1;
+$modversion['version'] = 3.2;
 $modversion['description'] = _MI_TADFORM_DESC;
 $modversion['author'] = _MI_TADFORM_AUTHOR;
 $modversion['credits'] = _MI_TADFORM_CREDITS;
@@ -14,7 +14,7 @@ $modversion['image'] = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname'] = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date'] = '2014/06/10';
+$modversion['release_date'] = '2014/07/18';
 $modversion['module_website_url'] = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status'] = 'release';
@@ -93,4 +93,13 @@ $modversion['blocks'][2]['show_func'] = "tad_one_form";
 $modversion['blocks'][2]['template'] = "tad_one_form.html";
 $modversion['blocks'][2]['edit_func'] = "tad_one_form_edit";
 $modversion['blocks'][2]['options'] = "";
+
+
+//---偏好設定---//
+$modversion['config'][0]['name']  = 'show_amount';
+$modversion['config'][0]['title'] = '_MI_TADFORM_SHOW_AMOUNT';
+$modversion['config'][0]['description'] = '_MI_TADFORM_SHOW_AMOUNT_DESC';
+$modversion['config'][0]['formtype']  = 'yesno';
+$modversion['config'][0]['valuetype'] = 'int';
+$modversion['config'][0]['default'] = 1;
 ?>

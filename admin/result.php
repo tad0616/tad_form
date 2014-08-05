@@ -62,13 +62,13 @@ function view_result($ofsn="",$isAdmin=false,$view_ssn=''){
 	$xoopsTpl->assign('funct_title',$funct_title);
 	$xoopsTpl->assign('thSty',$thSty);
 
-  $sql = "select ssn,uid,man_name,email,fill_time,result_col from ".$xoopsDB->prefix("tad_form_fill")." where ofsn='{$ofsn}' order by fill_time desc";
+  $sql = "select ssn,uid,man_name,email,fill_time,code,result_col from ".$xoopsDB->prefix("tad_form_fill")." where ofsn='{$ofsn}' order by fill_time desc";
 
 	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
 	$i=0;
 	$col_v=$col="";
-  while(list($ssn,$uid,$man_name,$email,$fill_time,$result_col)=$xoopsDB->fetchRow($result)){
-    $url="{$_SERVER['PHP_SELF']}?op=view&ssn=$ssn&ofsn=$ofsn";
+  while(list($ssn,$uid,$man_name,$email,$fill_time,$code,$result_col)=$xoopsDB->fetchRow($result)){
+    $url="{$_SERVER['PHP_SELF']}?op=view&code=$code";
    	$all_result_col[$i]['url']=$myts->htmlSpecialChars($url);
    	$all_result_col[$i]['man_name']=$myts->htmlSpecialChars($man_name);
 
@@ -83,7 +83,7 @@ function view_result($ofsn="",$isAdmin=false,$view_ssn=''){
 
     $n=0;
     foreach($csn_arr as $csn){
-   
+
 		  if($kk[$csn]=='textarea'){
       	$csn_val=nl2br($col_v[$csn]);
 			}elseif($kk[$csn]=='checkbox'){
@@ -148,10 +148,7 @@ function view_result($ofsn="",$isAdmin=false,$view_ssn=''){
 	$allval="";
 	foreach($ff as $csn=>$func){
 	  if(empty($func))continue;
-	  //$analysis.="<tr><td>{$tt[$csn]}</td>";
-    
-//echo "<p>{$tt[$csn]}-{$col[$csn]['sum']}-[".implode(',',$col[$csn]['count'])."]</p>";
-    
+
 		$analysis[$i]['title']=$tt[$csn];
     $allval="";
 	  if($func=='sum'){
@@ -181,7 +178,10 @@ function view_result($ofsn="",$isAdmin=false,$view_ssn=''){
 	$xoopsTpl->assign('view_ssn',$view_ssn);
 
 	if($view_ssn){
-    view($ofsn,$view_ssn);
+    $sql = "select code from ".$xoopsDB->prefix("tad_form_fill")." where ofsn='{$ofsn}' and ssn='{$view_ssn}'";
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
+    list($code)=$xoopsDB->fetchRow($result);
+    view($code);
   }
 }
 
@@ -205,16 +205,14 @@ $ssn=(empty($_REQUEST['ssn']))?"":intval($_REQUEST['ssn']);
 
 switch($op){
 
-
 	//更新結果
 	case "update_result";
 	update_result($_POST['ssn'],$_POST['result_col']);
 	header("location: {$_SERVER['PHP_SELF']}?ofsn={$ofsn}");
 	break;
-	
+
 	case "view":
 	view_result($ofsn,true,$ssn);
-	
 	break;
 
 
@@ -223,8 +221,8 @@ switch($op){
 	delete_tad_form_ans($ssn);
 	header("location: {$_SERVER['PHP_SELF']}?ofsn={$ofsn}");
 	break;
-	
-	
+
+
 	//預設動作
 	default:
 	view_result($ofsn,true);

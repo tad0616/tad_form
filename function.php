@@ -98,8 +98,15 @@ function get_history($ofsn="",$uid=""){
 
 
 //觀看填報結果
-function view($ofsn="",$ssn="",$mode=""){
-  global $xoopsDB,$xoopsUser,$xoopsTpl;
+function view($code="",$mode=""){
+  global $xoopsDB,$xoopsUser,$xoopsTpl,$isAdmin;
+
+  $myts =& MyTextSanitizer::getInstance();
+
+  $sql = "select ofsn,ssn,uid,man_name,email,fill_time from ".$xoopsDB->prefix("tad_form_fill")." where code='{$code}'";
+  $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
+  list($ofsn,$ssn,$uid,$man_name,$email,$fill_time)=$xoopsDB->fetchRow($result);
+  if(empty($ssn))return;
 
   $form=get_tad_form_main($ofsn);
 
@@ -107,11 +114,6 @@ function view($ofsn="",$ssn="",$mode=""){
   $td_set=($mode=="mail")?"bgcolor=#F0F0F0":"";
   $content=($mode=="mail")?"":"<tr><td class='note' colspan=2>{$form['content']}</td></tr>";
 
-  $myts =& MyTextSanitizer::getInstance();
-
-  $sql = "select ofsn,uid,man_name,email,fill_time from ".$xoopsDB->prefix("tad_form_fill")." where ssn='{$ssn}'";
-  $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-  list($ofsn,$uid,$man_name,$email,$fill_time)=$xoopsDB->fetchRow($result);
 
   $sql = "select b.csn,b.val,a.title from ".$xoopsDB->prefix("tad_form_col")." as a left join ".$xoopsDB->prefix("tad_form_value")." as b on a.csn=b.csn where b.ssn='{$ssn}' order by a.sort";
 
@@ -119,25 +121,51 @@ function view($ofsn="",$ssn="",$mode=""){
   $i=1;
   while(list($csn,$val,$title)=$xoopsDB->fetchRow($result)){
 
-    $all[$i]['td_set']=$td_set;
-    $all[$i]['i']=$i;
-    $all[$i]['title']=$myts->htmlSpecialChars($title);
-    $all[$i]['val']=$myts->htmlSpecialChars($val);
+    if($mode=="mail"){
+      $all.="
+      <tr>
+        <td {$td_set}>{$i}. <b>{$title}</b></td>
+        <td>{$val}</td>
+      </tr>";
+    }else{
+      $all[$i]['td_set']=$td_set;
+      $all[$i]['i']=$i;
+      $all[$i]['title']=$myts->htmlSpecialChars($title);
+      $all[$i]['val']=$myts->htmlSpecialChars($val);
+
+    }
     $i++;
   }
 
+  if($mode=="mail"){
+    $main="
+    <table {$tbl_set}>
+    {$content}
+    {$all}
+    </table>
+    <div class=\"text-center\">
+    ";
 
-  $xoopsTpl->assign('op', 'view');
-  $xoopsTpl->assign('form_title',$form['title']);
-  $xoopsTpl->assign('tbl_set', $tbl_set);
-  $xoopsTpl->assign('content', $content);
-  $xoopsTpl->assign('all', $all);
-  $xoopsTpl->assign('man_name', $myts->htmlSpecialChars($man_name));
-  $xoopsTpl->assign('fill_time', $fill_time);
-  $xoopsTpl->assign('email', $myts->htmlSpecialChars($email));
-  $xoopsTpl->assign('ofsn', $ofsn);
-  $xoopsTpl->assign('ssn', $ssn);
-  $xoopsTpl->assign('show_report', can_view_report($ofsn));
+    if($show_report){
+      $main.="<a href=\"".XOOPS_URL."/modules/tad_form/report.php?ofsn={$ofsn}\" class=\"btn btn-info\">"._MD_TADFORM_VIEW_FORM."</a>";
+    }
+    $main.="<a href=\"".XOOPS_URL."/modules/tad_form/index.php?op=sign&ofsn={$ofsn}\" class=\"btn btn-success\">"._MD_TADFORM_BACK_TO_FORM."</a>
+    </div>";
+
+    return $main;
+  }else{
+    $xoopsTpl->assign('op', 'view');
+    $xoopsTpl->assign('form_title',$form['title']);
+    $xoopsTpl->assign('tbl_set', $tbl_set);
+    $xoopsTpl->assign('content', $content);
+    $xoopsTpl->assign('all', $all);
+    $xoopsTpl->assign('man_name', $myts->htmlSpecialChars($man_name));
+    $xoopsTpl->assign('fill_time', $fill_time);
+    $xoopsTpl->assign('email', $myts->htmlSpecialChars($email));
+    $xoopsTpl->assign('ofsn', $ofsn);
+    $xoopsTpl->assign('ssn', $ssn);
+    $xoopsTpl->assign('show_report', can_view_report($ofsn));
+  }
 }
 
 

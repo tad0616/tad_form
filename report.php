@@ -55,17 +55,17 @@ function view_user_result($ofsn){
 	$xoopsTpl->assign('funct_title',$funct_title);
 	$xoopsTpl->assign('thSty',$thSty);
 
-  $sql = "select ssn,uid,man_name,email,fill_time,result_col from ".$xoopsDB->prefix("tad_form_fill")." where ofsn='{$ofsn}' order by fill_time desc";
+  $sql = "select ssn,uid,man_name,email,fill_time,code,result_col from ".$xoopsDB->prefix("tad_form_fill")." where ofsn='{$ofsn}' order by fill_time desc";
 
 	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
 	$i=0;
 	$all_result_col="";
-  while(list($ssn,$uid,$man_name,$email,$fill_time,$result_col)=$xoopsDB->fetchRow($result)){
+  while(list($ssn,$uid,$man_name,$email,$fill_time,$code,$result_col)=$xoopsDB->fetchRow($result)){
     $fill_time=date("Y-m-d H:i:s",xoops_getUserTimestamp(strtotime($fill_time)));
 		$email_data=explode("@",$email);
 
     //$url=!empty($uid)?"".XOOPS_URL."/userinfo.php?uid=$uid":"#";
-    $url=($isAdmin)?"{$_SERVER['PHP_SELF']}?op=view&ssn=$ssn&ofsn=$ofsn":"#";
+    $url=($isAdmin)?"{$_SERVER['PHP_SELF']}?op=view&code=$code":"#";
    	//$main.="<tr><td><a href='$url'>$man_name</a></td>";
    	$all_result_col[$i]['url']=$myts->htmlSpecialChars($url);
    	$all_result_col[$i]['man_name']=($isAdmin)?$myts->htmlSpecialChars($man_name):$email_data[0];

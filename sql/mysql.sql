@@ -41,6 +41,7 @@ CREATE TABLE `tad_form_fill` (
   `email` varchar(50) NOT NULL default '',
   `fill_time` datetime NOT NULL default '0000-00-00 00:00:00',
   `result_col` varchar(255) NOT NULL default '',
+  `code` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`ssn`)
 ) ENGINE=MyISAM;
 

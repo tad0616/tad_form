@@ -67,7 +67,7 @@ function list_tad_form_main(){
     $all[$i]['post_date']=$post_date;
     $all[$i]['enable']=$enable;
     $all[$i]['multi_sign']=$multi_sign_pic;
-    $all[$i]['button']=sprintf(_MD_TADFORM_SIGN_NOW,$title,$counter);
+    $all[$i]['button']=$xoopsModuleConfig['show_amount']?_MD_TADFORM_SIGNNOW:sprintf(_MD_TADFORM_SIGN_NOW,$title,$counter);
     $all[$i]['date']=sprintf(_MD_TADFORM_SIGN_DATE,$start_date,$end_date);
     $i++;
   }
@@ -347,7 +347,16 @@ function save_val($ofsn='',$ans=array()){
     $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, $sql);
   }
 
-  return $ssn;
+  //產生code
+  $sql="update ".$xoopsDB->prefix("tad_form_fill")." set `code`=md5(CONCAT(`ofsn`,`uid`, `man_name`, `email`, `fill_time`)) where ssn='{$ssn}'";
+  $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
+
+
+  $sql = "select code from ".$xoopsDB->prefix("tad_form_fill")." where ssn='{$ssn}'";
+  $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
+  list($code)=$xoopsDB->fetchRow($result);
+
+  return $code;
 }
 
 
@@ -452,20 +461,23 @@ function replace_tad_form_fill(){
 }
 
 //立即寄出
-function send_now($ssn=""){
+function send_now($code=""){
   global $xoopsConfig,$xoopsDB;
+
+
   $xoopsMailer =& getMailer();
   $xoopsMailer->multimailer->ContentType="text/html";
 
-  $sql = "select a.`ofsn`,a.`man_name`,a.`email`, a.`fill_time`,b.`title`,b.`adm_email`  from ".$xoopsDB->prefix("tad_form_fill")." as a left join ".$xoopsDB->prefix("tad_form_main")." as b on a.ofsn=b.ofsn where a.ssn='$ssn'";
+  $sql = "select a.`ofsn`,a.`man_name`,a.`email`, a.`fill_time`,a.`code`,b.`title`,b.`adm_email`  from ".$xoopsDB->prefix("tad_form_fill")." as a left join ".$xoopsDB->prefix("tad_form_main")." as b on a.ofsn=b.ofsn where a.code='$code'";
   $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-  list($ofsn,$man_name,$email,$fill_time,$title,$adm_email)=$xoopsDB->fetchRow($result);
+  list($ofsn,$man_name,$email,$fill_time,$code,$title,$adm_email)=$xoopsDB->fetchRow($result);
 
   $xoopsMailer->addHeaders("MIME-Version: 1.0");
 
-  $all=view($ofsn,$ssn,"mail");
+  $all=view($code,"mail");
+
   $fill_time=date("Y-m-d H:i:s",xoops_getUserTimestamp(strtotime($fill_time)));
-  $content= sprintf(_MD_TADFORM_MAIL_CONTENT , $man_name , $fill_time , $title , $all , XOOPS_URL."/modules/tad_form/admin/result.php?ofsn={$ofsn}");
+  $content= sprintf(_MD_TADFORM_MAIL_CONTENT , $man_name , $fill_time , $title , $all , XOOPS_URL."/modules/tad_form/view.php?code={$code}");
 
   if(!empty($email)){
    $xoopsMailer->sendMail($email, sprintf(_MD_TADFORM_MAIL_TITLE,$title,$man_name,$fill_time), $content,$headers);
@@ -487,6 +499,7 @@ $op=(empty($_REQUEST['op']))?"":$_REQUEST['op'];
 $ofsn=(empty($_REQUEST['ofsn']))?"":intval($_REQUEST['ofsn']);
 $ssn=(empty($_REQUEST['ssn']))?"":intval($_REQUEST['ssn']);
 $ans=(empty($_REQUEST['ans']))?"":$_REQUEST['ans'];
+$code=(empty($_REQUEST['code']))?"":$_REQUEST['code'];
 
 
 $xoopsTpl->assign( "toolbar" , toolbar_bootstrap($interface_menu)) ;
@@ -503,13 +516,13 @@ switch($op){
   break;
 
   case "save_val":
-  $ssn=save_val($ofsn,$ans);
-  send_now($ssn);
-  redirect_header("index.php?op=view&ofsn={$ofsn}&ssn=$ssn",3, _MD_TADFORM_SAVE_OK);
+  $code=save_val($ofsn,$ans);
+  send_now($code);
+  redirect_header("index.php?op=view&code={$code}",3, _MD_TADFORM_SAVE_OK);
   break;
 
   case "view":
-  view($ofsn,$ssn);
+  view($code);
   break;
 
   default:
