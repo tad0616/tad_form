@@ -11,8 +11,8 @@ function tad_form($options){
 
 	$today=date("Y-m-d H:i:s" , xoops_getUserTimestamp(time()));
 
-	$sql = "select * from ".$xoopsDB->prefix("tad_form_main")." where enable='1' and start_date < '{$today}' and end_date > '{$today}' limit 0,{$options[1]}";
-	$result = $xoopsDB->query($sql);
+	$sql = "select * from ".$xoopsDB->prefix("tad_form_main")." where enable='1' and start_date < '{$today}' and end_date > '{$today}'";
+	$result = $xoopsDB->query($sql) or die($sql);
   $i=0;
   $block="";
 	while(list($ofsn,$title,$start_date,$end_date,$content,$uid,$post_date,$enable)=$xoopsDB->fetchRow($result)){

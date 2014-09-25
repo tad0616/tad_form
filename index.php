@@ -322,8 +322,9 @@ function save_val($ofsn='',$ans=array()){
 
   $now=date("Y-m-d H:i:s" , xoops_getUserTimestamp(time()));
 
+  $_POST['ssn']=intval($_POST['ssn']);
   //先存基本資料
-  $sql = "replace into ".$xoopsDB->prefix("tad_form_fill")." (`ssn`,`ofsn`,`uid`,`man_name`,`email`,`fill_time`) values('{$_POST['ssn']}','{$_POST['ofsn']}','{$uid}','{$_POST['man_name']}','{$_POST['email']}', '{$now}')";
+  $sql = "replace into ".$xoopsDB->prefix("tad_form_fill")." (`ssn`,`ofsn`,`uid`,`man_name`,`email`,`fill_time`,`result_col`,`code`) values('{$_POST['ssn']}','{$_POST['ofsn']}','{$uid}','{$_POST['man_name']}','{$_POST['email']}', '{$now}','','')";
   $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
   $ssn=$xoopsDB->getInsertId();
 
@@ -335,6 +336,7 @@ function save_val($ofsn='',$ans=array()){
   foreach($ans as $csn => $val){
     $value=(is_array($val))?implode(";",$val):$val;
     $value=$myts->addSlashes($value);
+    $ssn=intval($ssn);
     $sql = "replace into ".$xoopsDB->prefix("tad_form_value")." (`ssn`,`csn`,`val`) values('{$ssn}','{$csn}','{$value}')";
     $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
     unset($need_csn_arr[$csn]);
@@ -343,6 +345,7 @@ function save_val($ofsn='',$ans=array()){
 
   //把一些沒填的欄位也補上空值
   foreach($need_csn_arr as $csn){
+    $ssn=intval($ssn);
     $sql = "replace into ".$xoopsDB->prefix("tad_form_value")." (`ssn`,`csn`,`val`) values('{$ssn}','{$csn}','')";
     $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, $sql);
   }
@@ -352,7 +355,7 @@ function save_val($ofsn='',$ans=array()){
   $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
 
 
-  $sql = "select code from ".$xoopsDB->prefix("tad_form_fill")." where ssn='{$ssn}'";
+  $sql = "select `code` from ".$xoopsDB->prefix("tad_form_fill")." where ssn='{$ssn}'";
   $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
   list($code)=$xoopsDB->fetchRow($result);
 
@@ -453,7 +456,7 @@ function col_form($csn="",$kind="",$size="",$default_val="",$db_ans=array(),$chk
 //取代/新增tad_form_fill現有資料
 function replace_tad_form_fill(){
   global $xoopsDB;
-  $sql = "replace into ".$xoopsDB->prefix("tad_form_fill")." (`ofsn`,`uid`,`man_name`,`email`,`fill_time`) values('{$_POST['ofsn']}','{$_POST['uid']}','{$_POST['man_name']}','{$_POST['email']}','{$_POST['fill_time']}')";
+  $sql = "replace into ".$xoopsDB->prefix("tad_form_fill")." (`ofsn`,`uid`,`man_name`,`email`,`fill_time` , `result_col` , `code`) values('{$_POST['ofsn']}','{$_POST['uid']}','{$_POST['man_name']}','{$_POST['email']}','{$_POST['fill_time']}' , '' , '')";
   $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
   //取得最後新增資料的流水編號
   $ofsnuid=$xoopsDB->getInsertId();

@@ -112,6 +112,8 @@ function insert_tad_form_main(){
   $view_result_group=(in_array("",$_POST['view_result_group']))?"":implode(",",$_POST['view_result_group']);
   $now=date("Y-m-d H:i:s" , xoops_getUserTimestamp(time()));
 
+  $_POST['enable']=empty($_POST['enable'])?0:1;
+
   $sql = "insert into ".$xoopsDB->prefix("tad_form_main")." (`title`,`start_date`,`end_date`,`content`,`uid`,`post_date`,`enable`,`sign_group`,`kind`,`adm_email`,`captcha`,`show_result`,`view_result_group`,`multi_sign`) values('{$_POST['title']}','{$_POST['start_date']}','{$_POST['end_date']}','{$_POST['content']}','{$uid}', '{$now}' , '{$_POST['enable']}','{$sign_group}','{$_POST['kind']}','{$_POST['adm_email']}','{$_POST['captcha']}','{$_POST['show_result']}','{$view_result_group}','{$_POST['multi_sign']}')";
   $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
   //取得最後新增資料的流水編號
@@ -125,6 +127,8 @@ function update_tad_form_main($ofsn=""){
   $sign_group=(in_array("",$_POST['sign_group']))?"":implode(",",$_POST['sign_group']);
   $view_result_group=(in_array("",$_POST['view_result_group']))?"":implode(",",$_POST['view_result_group']);
   $now=date("Y-m-d H:i:s" , xoops_getUserTimestamp(time()));
+
+  $_POST['enable']=empty($_POST['enable'])?0:1;
   $sql = "update ".$xoopsDB->prefix("tad_form_main")." set  `title` = '{$_POST['title']}', `start_date` = '{$_POST['start_date']}', `end_date` = '{$_POST['end_date']}', `content` = '{$_POST['content']}', `post_date` = '{$now}', `enable` = '{$_POST['enable']}', `sign_group` = '{$sign_group}', `kind` = '{$_POST['kind']}',`adm_email` = '{$_POST['adm_email']}',`show_result` = '{$_POST['show_result']}',`captcha` = '{$_POST['captcha']}',`view_result_group` = '{$view_result_group}',`multi_sign` = '{$_POST['multi_sign']}' where ofsn='$ofsn'";
   $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
   return $ofsn;
