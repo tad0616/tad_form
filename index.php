@@ -305,7 +305,7 @@ function save_val($ofsn='',$ans=array()){
   if($xoopsUser){
     $uid=$xoopsUser->getVar('uid');
   }else{
-    $uid="";
+    $uid="0";
   }
   $myts =& MyTextSanitizer::getInstance();
   $form=get_tad_form_main($ofsn);
