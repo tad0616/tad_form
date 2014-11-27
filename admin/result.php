@@ -157,9 +157,11 @@ function view_result($ofsn="",$isAdmin=false,$view_ssn=''){
 		}elseif($func=='count'){
   		$analysis[$i]['func']=_MA_TADFORM_COL_COUNT;
   		$val="";
-		  foreach($col[$csn]['count'] as $val=>$count){
-				$allval.="$val : $count<br>";
-			}
+      if(isset($col[$csn]['count']) and is_array($col[$csn]['count'])){
+  		  foreach($col[$csn]['count'] as $val=>$count){
+  				$allval.="$val : $count<br>";
+  			}
+      }
   		$analysis[$i]['val']=$allval;
 		}elseif($func=='avg'){
 		  $avg=round($col[$csn]['sum']/$col[$csn]['count'],2);
