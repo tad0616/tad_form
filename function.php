@@ -104,6 +104,7 @@ function view($code="",$mode=""){
   $myts =& MyTextSanitizer::getInstance();
 
   $sql = "select ofsn,ssn,uid,man_name,email,fill_time from ".$xoopsDB->prefix("tad_form_fill")." where code='{$code}'";
+
   $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
   list($ofsn,$ssn,$uid,$man_name,$email,$fill_time)=$xoopsDB->fetchRow($result);
   if(empty($ssn))return;

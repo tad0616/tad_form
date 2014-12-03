@@ -2,8 +2,7 @@
 /*-----------引入檔案區--------------*/
 include "header.php";
 $xoopsOption['template_main'] = "tad_form_index.html";
-
-include XOOPS_ROOT_PATH."/header.php";
+include_once XOOPS_ROOT_PATH."/header.php";
 /*-----------function區--------------*/
 
 //列出所有tad_form_main資料
@@ -481,16 +480,25 @@ function send_now($code=""){
 
   $fill_time=date("Y-m-d H:i:s",xoops_getUserTimestamp(strtotime($fill_time)));
   $content= sprintf(_MD_TADFORM_MAIL_CONTENT , $man_name , $fill_time , $title , $all , XOOPS_URL."/modules/tad_form/view.php?code={$code}");
+  $subject=sprintf(_MD_TADFORM_MAIL_TITLE,$title,$man_name,$fill_time);
+
+  $sCharset = 'UTF-8';
+  $sHeaders = "MIME-Version: 1.0\r\n" .
+              "Content-type: text/html; charset=$sCharset\r\n";
 
   if(!empty($email)){
-   $xoopsMailer->sendMail($email, sprintf(_MD_TADFORM_MAIL_TITLE,$title,$man_name,$fill_time), $content,$headers);
+    if(!$xoopsMailer->sendMail($email, $subject, $content,$headers)){
+      mail($email, $subject, $content, $sHeaders);
+    }
   }
 
   $email_arr=explode(";",$adm_email);
   foreach($email_arr as $email){
     //$email=trim($email);
     if(!empty($email)){
-     $xoopsMailer->sendMail($email, sprintf(_MD_TADFORM_MAIL_TITLE,$title,$man_name,$fill_time), $content,$headers);
+      if(!$xoopsMailer->sendMail($email, $subject, $content,$headers)){
+        mail($email, $subject, $content, $sHeaders);
+      }
     }
   }
 
@@ -502,7 +510,7 @@ $op=(empty($_REQUEST['op']))?"":$_REQUEST['op'];
 $ofsn=(empty($_REQUEST['ofsn']))?"":intval($_REQUEST['ofsn']);
 $ssn=(empty($_REQUEST['ssn']))?"":intval($_REQUEST['ssn']);
 $ans=(empty($_REQUEST['ans']))?"":$_REQUEST['ans'];
-$code=(empty($_REQUEST['code']))?"":$_REQUEST['code'];
+$code=(empty($_REQUEST['vcode']))?"":$_REQUEST['vcode'];
 
 
 $xoopsTpl->assign( "toolbar" , toolbar_bootstrap($interface_menu)) ;
@@ -521,7 +529,7 @@ switch($op){
   case "save_val":
   $code=save_val($ofsn,$ans);
   send_now($code);
-  redirect_header("index.php?op=view&code={$code}",3, _MD_TADFORM_SAVE_OK);
+  redirect_header("index.php?op=view&vcode={$code}",3, _MD_TADFORM_SAVE_OK);
   break;
 
   case "view":
