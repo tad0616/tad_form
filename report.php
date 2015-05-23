@@ -1,10 +1,4 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 tad 製作
-// 製作日期：2008-06-25
-// $Id: result.php,v 1.1 2008/05/14 01:22:08 tad Exp $
-// ------------------------------------------------------------------------- //
-
 /*-----------引入檔案區--------------*/
 include "header.php";
 $xoopsOption['template_main'] = "tad_form_report.html";
@@ -16,10 +10,10 @@ function view_user_result($ofsn){
 	global $xoopsDB,$xoopsUser,$xoopsTpl,$interface_menu,$isAdmin;
 
 	$form=get_tad_form_main($ofsn);
-  
+
   if($form['show_result']!='1')redirect_header("index.php",3, _MD_TADFORM_HIDE_RESULT);
-  
-  
+
+
 	$myts =& MyTextSanitizer::getInstance();
 
   $thSty="style='width:135px;'";
@@ -61,20 +55,21 @@ function view_user_result($ofsn){
 	$xoopsTpl->assign('funct_title',$funct_title);
 	$xoopsTpl->assign('thSty',$thSty);
 
-  $sql = "select ssn,uid,man_name,email,fill_time,result_col from ".$xoopsDB->prefix("tad_form_fill")." where ofsn='{$ofsn}' order by fill_time desc";
+  $sql = "select ssn,uid,man_name,email,fill_time,code,result_col from ".$xoopsDB->prefix("tad_form_fill")." where ofsn='{$ofsn}' order by fill_time desc";
 
 	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
 	$i=0;
 	$all_result_col="";
-  while(list($ssn,$uid,$man_name,$email,$fill_time,$result_col)=$xoopsDB->fetchRow($result)){
+  while(list($ssn,$uid,$man_name,$email,$fill_time,$code,$result_col)=$xoopsDB->fetchRow($result)){
     $fill_time=date("Y-m-d H:i:s",xoops_getUserTimestamp(strtotime($fill_time)));
 		$email_data=explode("@",$email);
-			
+
     //$url=!empty($uid)?"".XOOPS_URL."/userinfo.php?uid=$uid":"#";
-    $url=($isAdmin)?"{$_SERVER['PHP_SELF']}?op=view&ssn=$ssn&ofsn=$ofsn":"#";
+    $url=($isAdmin)?"{$_SERVER['PHP_SELF']}?op=view&code=$code":"#";
    	//$main.="<tr><td><a href='$url'>$man_name</a></td>";
    	$all_result_col[$i]['url']=$myts->htmlSpecialChars($url);
-   	$all_result_col[$i]['man_name']=($isAdmin)?$myts->htmlSpecialChars($man_name):"{$email_data[0]}@{$fill_time}";
+   	$all_result_col[$i]['man_name']=($isAdmin)?$myts->htmlSpecialChars($man_name):$email_data[0];
+    $all_result_col[$i]['fill_time']=$fill_time;
 
 		$sql2 = "select csn,val from ".$xoopsDB->prefix("tad_form_value")."  where ssn='{$ssn}'";
 

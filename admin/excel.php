@@ -13,8 +13,8 @@ $form_title=str_replace("[","",$form_main['title']);
 $form_title=str_replace("]","",$form_title);
 $form_title=str_replace(" ","_",$form_title);
 $ff=sprintf(_MA_TADFORM_EXCEL_TITLE,$form_title).".xls";
-$dl_name=(_CHARSET=='UTF-8')?$ff:iconv("Big5","UTF-8",$ff);
-$dl_name=(eregi("MSIE",$_SERVER["HTTP_USER_AGENT"]))?urlencode($dl_name):$dl_name;
+$dl_name=(_CHARSET=='UTF-8')?iconv("UTF-8","Big5",$ff):$ff;
+$dl_name=(strpos("MSIE",$_SERVER["HTTP_USER_AGENT"])!==false)?urlencode($dl_name):$dl_name;
 
 $objPHPExcel->setActiveSheetIndex(0);  //設定預設顯示的工作表
 $objActSheet = $objPHPExcel->getActiveSheet(); //指定預設工作表為 $objActSheet
@@ -52,7 +52,7 @@ while(list($ssn,$uid,$man_name,$email,$fill_time)=$xoopsDB->fetchRow($result)){
 
   $m=2;
 	while(list($csn,$val)=$xoopsDB->fetchRow($result2)){
-   
+
 	  if($kk[$csn]=='fck'){
       $val=strip_tags($val);
 		}

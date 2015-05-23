@@ -1,7 +1,7 @@
 <?php
 function xoops_module_update_tad_form(&$module, $old_version) {
     GLOBAL $xoopsDB;
-    
+
 		if(!chk_chk1()) go_update1();
 		if(!chk_chk2()) go_update2();
 		if(!chk_chk3()) go_update3();
@@ -10,6 +10,8 @@ function xoops_module_update_tad_form(&$module, $old_version) {
 		if(!chk_chk6()) go_update6();
 		if(!chk_chk7()) go_update7();
 		if(!chk_chk8()) go_update8();
+    if(chk_uid()) go_update_uid();
+    if(!chk_chk9()) go_update9();
 
 		$old_fckeditor=XOOPS_ROOT_PATH."/modules/tad_form/fckeditor";
 		if(is_dir($old_fckeditor)){
@@ -152,6 +154,49 @@ function go_update8(){
 	$xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
 	return true;
 }
+
+//修正uid欄位
+function chk_uid(){
+  global $xoopsDB;
+  $sql="SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
+  WHERE table_name = '".$xoopsDB->prefix("tad_form_main")."' AND COLUMN_NAME = 'uid'";
+  $result=$xoopsDB->query($sql);
+  list($type)=$xoopsDB->fetchRow($result);
+  if($type=='smallint')return true;
+  return false;
+}
+
+//執行更新
+function go_update_uid(){
+  global $xoopsDB;
+  $sql="ALTER TABLE `".$xoopsDB->prefix("tad_form_main")."` CHANGE `uid` `uid` mediumint(8) unsigned NOT NULL default 0";
+  $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
+  $sql="ALTER TABLE `".$xoopsDB->prefix("tad_form_fill")."` CHANGE `uid` `uid` mediumint(8) unsigned NOT NULL default 0";
+  $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
+  return true;
+}
+
+function chk_chk9(){
+  global $xoopsDB;
+  $sql="select count(`code`) from ".$xoopsDB->prefix("tad_form_fill");
+  $result=$xoopsDB->query($sql);
+  if(empty($result)) return false;
+  return true;
+}
+
+
+function go_update9(){
+  global $xoopsDB;
+  $sql="ALTER TABLE ".$xoopsDB->prefix("tad_form_fill")." ADD `code` varchar(255) NOT NULL";
+  $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
+
+  $sql="update ".$xoopsDB->prefix("tad_form_fill")." set code=md5(CONCAT(`ofsn`,`uid`, `man_name`, `email`, `fill_time`)) ";
+  $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
+
+
+  return true;
+}
+
 
 
 //建立目錄

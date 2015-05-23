@@ -38,7 +38,12 @@ define("_MA_TADFORM_COL_RADIO","圓形單選鈕");
 define("_MA_TADFORM_COL_CHECKBOX","方形複選鈕");
 define("_MA_TADFORM_COL_SELECT","下拉選單");
 define("_MA_TADFORM_COL_TEXTAREA","大量文字框");
+<<<<<<< HEAD
 define("_MA_TADFORM_COL_FCK","所見即所得文字框");
+=======
+define("_MA_TADFORM_COL_DATE","日期輸入框");
+define("_MA_TADFORM_COL_DATETIME","日期＋時間輸入框");
+>>>>>>> 8b3666e5245b225c2d9e14767aff3c9dd8725ef8
 define("_MA_TADFORM_COL_SHOW","僅顯示純文字");
 define("_MA_TADFORM_COL_SHOW_NOTE","選用「僅顯示純文字」時，請將欲顯示文字填寫在「問題描述」即可。");
 
