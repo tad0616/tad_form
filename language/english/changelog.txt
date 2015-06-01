@@ -1,78 +1,78 @@
-Tad Form 3.2 正式版修正項目（2014-09-25 釋出）
+Tad Form 3.2 official version of the amended project (2014-09-25 release)
 ================================================
- 1.修正填報資料透過部份手法可能會被檢視到的bug，增加安全性！
- 2.修正程式使之符合無障礙網頁規範
- 3.修正程式使之在MySQL嚴格模式下可以使用
+ 1. Fixed part of the way through the information furnished may be to examine the bug, added security!
+ 2. Fix the program to conform to WCAG
+ 3. Fixed the program so that it can be used in MySQL strict mode
 
 
-Tad Form 3.1 正式版修正項目（2014-06-10 釋出）
+Tad Form 3.1 official version of the amended project (2014-06-10 release)
 ================================================
- 1.修正訪客無法觀看填報表結果
- 2.修正模組首頁，若無填報權限將無法點擊填報按鈕
- 3.將觀看結果按鈕移至模組首頁
- 4.萬用表單的日期時間欄位值裁切不正確的問題
- 5.解決在windows主機下，Excel檔下載檔名不正確的問題
+ 1. The amendment to Guest furnished table results
+ 2. Fixed module Home, without completing the privilege can not be clicked furnished button
+ 3. Watch the results button to move modules Home
+ Datetime field values ​​4. multimeter single crop is not the right questions
+ 5. addressed in windows host, Excel file to download the file name is not the right questions
 
 
-Tad Form 3.0 正式版修正項目（2013-11-13 釋出）
+Tad Form 3.0 official version amended project (2013-11-13 release)
 ================================================
- 1.訪客無法填寫
- 2.填報截止日期有問題
- 3.複製表單的時候題目是否顯示沒有複製到（還有表單多出來的欄位也是）
- 4.新增日期欄位
- 5.更新驗證機制
+ 1. Visitors can not be filled
+ 2. The reporting deadline in question
+ 3. Copy the form is displayed when the subject is not copied to (and form more out of the field as well)
+ 4. New date field
+ 5. Update verification mechanism
 
 
-Tad Form 3.0 RC3 版修正項目（2013-10-28 釋出）
+Tad Form version 3.0 RC3 amend item (2013-10-28 release)
 ================================================
- 1.最新表單區塊沒出現
- 2.過濾使用者填寫的資料，避免隱碼攻擊
- 3.複選框若是都沒填，則上次填寫的資料不會被清空。
- 4.觀看結果的時候，版面會位移。
- 5.修正萬用表單不管填報是否停止或者有無秀出結果，一律都會秀出結果的bug
+ 1. The latest form of no-show block
+ 2. Filter user fill in the information, to avoid the hidden code attacks
+ 3. If no check box is filled, the last fill in the information will not be emptied.
+ 4. When viewing the results, the layout will be displaced.
+ 5. fixed regardless of completing the single multimeter whether to stop or whether the show off the results, all results will be showed off bug
 
 
-Tad Form 3.0 RC2 版修正項目（2013-07-30 釋出）
+Tad Form Version 3.0 RC2 amend item (2013-07-30 release)
 ================================================
- 1.修正後台統計分析不正確的 bug
- 2.修正無法刪除使用者填寫資料的 bug
+ 1. Fixed an incorrect statistical analysis background bug
+ 2. Fixed can not delete the user fill in the information of bug
 
 
-Tad Form 3.0 RC1 版修正項目（2013-06-21釋出）
+Tad Form Version 3.0 RC1 amend item (2013-06-21 release)
 ================================================
- 1.將模組改為 XOOPS 2.5格式
- 2.套入 bootstrap
- 3.Excel輸出改為真實Excel檔
- 4.可自行決定填報是否可重複填寫（會員）
- 5.可自行決定是否在前台輸出結果（並可選擇只有哪些欄位要顯示）
- 6.修正一堆bug並精簡程式碼
+ 1. The module instead XOOPS 2.5 format
+ 2. sets the bootstrap
+ 3.Excel output instead real Excel file
+ 4. can decide whether to fill reusable fill (Member)
+ 5. You can decide whether the output at the front desk (and choose which fields to display only)
+ 6. Fixed a bunch of bug and streamline code
 
 
-Tad Form 2.0 RC1 版修正項目（2011-11-30釋出）
+Tad Form 2.0 RC1 version amended project (2011-11-30 release)
 ================================================
- 1.修正區塊中的過期活動不會自動消失的問題。
- 2.加入各種表單報名表應用。
- 3.修正XOOPS 2.0.x 版區塊語系不正常的問題。
- 4.修正表單頁面，「編輯」欄位連結不正長的問題。
- 5.修正版本編號問題。
- 6.加入調查結果匯出成試算表檔案功能。
- 7.加入批次調整題目排序功能。
- 8.調整整體輸入版面
- 9.變更欄位驗證機制
-10.移除「FCK編輯器」欄位類型，加入「僅顯示純文字」欄位類型
-11.每個表單可以設定管理表單的Email。
-12.加入通知信測試功能（僅顯示不寄發）
-13.寄通知信給填報人及管理員
-14.加入填報驗證避免大量垃圾填報
-15.加入在前台顯示結果功能
-16.加入純文字欄位
-17.問卷管理Email可改用自定的Email
+ 1. Fixed block expires activities do not automatically go away.
+ 2. Add the various forms application form application.
+ 3. Fix XOOPS 2.0.x version block language is not working properly.
+ 4. fixed form page, the "Edit" link is not correct field length issue.
+ 5. The amended version numbers problem.
+ 6. Add the survey results into a spreadsheet file export capabilities.
+ 7. Add the batch adjustment subject sorting.
+ 8. Adjust the overall input forum
+ 9. Change field verification mechanism
+10. Remove "FCK Editor" field types, add a "display only text" field type
+11. Each form can be set to manage the form of Email.
+12. Join a notification letter test function (only not sent)
+13. Send a notification letter to the informant and administrators
+14. Join furnished verify avoid a lot of garbage to fill
+15. The added result will be displayed in the foreground
+16. The added text field
+17. The questionnaire Management Email Email can switch from a given
 
 
 
-Tad Form 1.1 修正項目（2008-07-01 釋出）
+Tad Form 1.1 Correction Program (2008-07-01 release)
 ================================================
- 1.修正所見即所得編輯器路徑不正常問題。
- 2.修正XOOPS 2.0 空白頁面問題
- 3.加入已填寫人數之資訊
- 4.加入填寫完，會寄發通知信給管理員之功能。
+ 1. Fixed WYSIWYG editor path is not normal problems.
+ 2. Fixed blank page issue XOOPS 2.0
+ 3. Add the number of information already filled
+ 4. Add filled out, it will send a notification letter to the administrator of the function.
