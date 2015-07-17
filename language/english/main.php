@@ -1,10 +1,4 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 tad 製作
-// 製作日期：2008-06-25
-// $Id: function.php,v 1.1 2008/05/14 01:22:08 tad Exp $
-// ------------------------------------------------------------------------- //
-
 define('_JS_EMAIL_CHK', "Please check the E-mail address you offered again!");
 define('_JS_SIGN_CHK', "\"%s\" is required!");
 define('_JS_CHK_TOO_SHORT', "Length of \"%s\" must be more than %s, please reset \"%s\"! Thank you!");

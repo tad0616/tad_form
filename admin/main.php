@@ -1,192 +1,191 @@
 <?php
-/*-----------¤Þ¤JÀÉ®×°Ï--------------*/
+/*-----------å¼•å…¥æª”æ¡ˆå€--------------*/
 $xoopsOption['template_main'] = "tad_form_adm_main.html";
 include_once "header.php";
 include_once "../function.php";
 
-/*-----------function°Ï--------------*/
-//¦C¥X©Ò¦³tad_form_main¸ê®Æ
-function list_tad_form_main(){
-  global $xoopsDB,$xoopsTpl;
+/*-----------functionå€--------------*/
+//åˆ—å‡ºæ‰€æœ‰tad_form_mainè³‡æ–™
+function list_tad_form_main()
+{
+    global $xoopsDB, $xoopsTpl;
 
-  $sql = "select * from ".$xoopsDB->prefix("tad_form_main")." order by post_date desc";
+    $sql = "select * from " . $xoopsDB->prefix("tad_form_main") . " order by post_date desc";
 
-  //getPageBar($­ìsql»yªk, ¨C­¶Åã¥Ü´Xµ§¸ê®Æ, ³Ì¦hÅã¥Ü´X­Ó­¶¼Æ¿ï¶µ);
-  $PageBar=getPageBar($sql,20,10);
-  $bar=$PageBar['bar'];
-  $sql=$PageBar['sql'];
+    //getPageBar($åŽŸsqlèªžæ³•, æ¯é é¡¯ç¤ºå¹¾ç­†è³‡æ–™, æœ€å¤šé¡¯ç¤ºå¹¾å€‹é æ•¸é¸é …);
+    $PageBar = getPageBar($sql, 20, 10);
+    $bar     = $PageBar['bar'];
+    $sql     = $PageBar['sql'];
 
-  $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
 
-  $sign_mems=get_form_count();
-  $cols_num=get_form_col_count();
-  $i=0;
-  $form="";
-  while($all=$xoopsDB->fetchArray($result)){
-    foreach($all as $k=>$v){
-      $$k=$v;
+    $sign_mems = get_form_count();
+    $cols_num  = get_form_col_count();
+    $i         = 0;
+    $form      = "";
+    while ($all = $xoopsDB->fetchArray($result)) {
+        foreach ($all as $k => $v) {
+            $$k = $v;
+        }
+
+        $pic             = ($enable == '1') ? "001_06.gif" : "001_05.gif";
+        $enable_tool     = ($enable == '1') ? "<a href='main.php?op=set_form_status&ofsn=$ofsn&enable=0'><img src='../images/$pic' align='absmiddle' hspace=6 alt='" . _MA_TADFORM_COL_ENABLE . "' title='" . _MA_TADFORM_COL_ENABLE . "'></a>" : "<a href='main.php?op=set_form_status&ofsn=$ofsn&enable=1'><img src='../images/$pic' align='absmiddle' hspace=6 alt='" . _MA_TADFORM_COL_ACTIVE . "' title='" . _MA_TADFORM_COL_ACTIVE . "'></a>";
+        $multi_sign_pic  = ($multi_sign == '1') ? "<img src='../images/report_check.png' align='absmiddle' hspace=6 alt='" . _MA_TADFORM_MULTI_SIGN . "' title='" . _MA_TADFORM_MULTI_SIGN . "'>" : "";
+        $show_result_pic = ($show_result == '1') ? "<img src='../images/report.png' align='absmiddle' hspace=6 alt='" . _MA_TADFORM_SHOW_RESULT . "' title='" . _MA_TADFORM_SHOW_RESULT . "'>" : "";
+
+        $start_date = date("Y-m-d", xoops_getUserTimestamp(strtotime($start_date)));
+        $end_date   = date("Y-m-d", xoops_getUserTimestamp(strtotime($end_date)));
+
+        $start_date = substr($start_date, 0, 10);
+        $end_date   = substr($end_date, 0, 10);
+
+        $counter = (empty($sign_mems[$ofsn])) ? "0" : $sign_mems[$ofsn];
+
+        $form[$i]['ofsn']            = $ofsn;
+        $form[$i]['enable_tool']     = $enable_tool;
+        $form[$i]['title']           = $title;
+        $form[$i]['counter']         = sprintf(_MA_TADFORM_SIGN_MEMS, $counter);
+        $form[$i]['start_date']      = $start_date;
+        $form[$i]['end_date']        = $end_date;
+        $form[$i]['cols_num']        = $cols_num[$ofsn];
+        $form[$i]['multi_sign_pic']  = $multi_sign_pic;
+        $form[$i]['show_result_pic'] = $show_result_pic;
+        $i++;
+    }
+    if (empty($form)) {
+        header('location:add.php');
     }
 
-    $pic=($enable=='1')?"001_06.gif":"001_05.gif";
-    $enable_tool=($enable=='1')?"<a href='main.php?op=set_form_status&ofsn=$ofsn&enable=0'><img src='../images/$pic' align='absmiddle' hspace=6 alt='"._MA_TADFORM_COL_ENABLE."' title='"._MA_TADFORM_COL_ENABLE."'></a>":"<a href='main.php?op=set_form_status&ofsn=$ofsn&enable=1'><img src='../images/$pic' align='absmiddle' hspace=6 alt='"._MA_TADFORM_COL_ACTIVE."' title='"._MA_TADFORM_COL_ACTIVE."'></a>";
-    $multi_sign_pic=($multi_sign=='1')?"<img src='../images/report_check.png' align='absmiddle' hspace=6 alt='"._MA_TADFORM_MULTI_SIGN."' title='"._MA_TADFORM_MULTI_SIGN."'>":"";
-    $show_result_pic=($show_result=='1')?"<img src='../images/report.png' align='absmiddle' hspace=6 alt='"._MA_TADFORM_SHOW_RESULT."' title='"._MA_TADFORM_SHOW_RESULT."'>":"";
-
-    $start_date=date("Y-m-d",xoops_getUserTimestamp(strtotime($start_date)));
-    $end_date=date("Y-m-d",xoops_getUserTimestamp(strtotime($end_date)));
-
-    $start_date=substr($start_date,0,10);
-    $end_date=substr($end_date,0,10);
-
-    $counter=(empty($sign_mems[$ofsn]))?"0":$sign_mems[$ofsn];
-
-
-    $form[$i]['ofsn']=$ofsn;
-    $form[$i]['enable_tool']=$enable_tool;
-    $form[$i]['title']=$title;
-    $form[$i]['counter']=sprintf(_MA_TADFORM_SIGN_MEMS,$counter);
-    $form[$i]['start_date']=$start_date;
-    $form[$i]['end_date']=$end_date;
-    $form[$i]['cols_num']=$cols_num[$ofsn];
-    $form[$i]['multi_sign_pic']=$multi_sign_pic;
-    $form[$i]['show_result_pic']=$show_result_pic;
-    $i++;
-  }
-  if(empty($form))header('location:add.php');
-
-  $xoopsTpl->assign( "form" , $form);
-  $xoopsTpl->assign( "bar" , $bar);
+    $xoopsTpl->assign("form", $form);
+    $xoopsTpl->assign("bar", $bar);
 }
 
-
-//ÀË¬d¶ñ³ø¤H¼Æ
-function get_form_count(){
-  global $xoopsDB;
-  $sql = "select ofsn,count(*) from ".$xoopsDB->prefix("tad_form_fill")." group by ofsn";
-  $result=$xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-  $counter="";
-  while(list($ofsn,$count)=$xoopsDB->fetchRow($result)){
-    $counter[$ofsn]=$count;
-  }
-  return $counter;
+//æª¢æŸ¥å¡«å ±äººæ•¸
+function get_form_count()
+{
+    global $xoopsDB;
+    $sql     = "select ofsn,count(*) from " . $xoopsDB->prefix("tad_form_fill") . " group by ofsn";
+    $result  = $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $counter = "";
+    while (list($ofsn, $count) = $xoopsDB->fetchRow($result)) {
+        $counter[$ofsn] = $count;
+    }
+    return $counter;
 }
 
-
-
-//ÀË¬d¶ñ³øÃD¼Æ
-function get_form_col_count(){
-  global $xoopsDB;
-  $sql = "select ofsn,count(*) from ".$xoopsDB->prefix("tad_form_col")." group by ofsn";
-  $result=$xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-  $counter="";
-  while(list($ofsn,$count)=$xoopsDB->fetchRow($result)){
-    $counter[$ofsn]=$count;
-  }
-  return $counter;
+//æª¢æŸ¥å¡«å ±é¡Œæ•¸
+function get_form_col_count()
+{
+    global $xoopsDB;
+    $sql     = "select ofsn,count(*) from " . $xoopsDB->prefix("tad_form_col") . " group by ofsn";
+    $result  = $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $counter = "";
+    while (list($ofsn, $count) = $xoopsDB->fetchRow($result)) {
+        $counter[$ofsn] = $count;
+    }
+    return $counter;
 }
 
-//§R°£tad_form_main¬Yµ§¸ê®Æ¸ê®Æ
-function delete_tad_form_main($ofsn=""){
-  global $xoopsDB;
-  //¥ý§ä¥X¦³­þ¨Ç¤H¶ñ¤F
-  $sql = "select ssn from ".$xoopsDB->prefix("tad_form_fill")." where ofsn='$ofsn'";
-  $result=$xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-  while(list($ssn)=$xoopsDB->fetchRow($result)){
+//åˆªé™¤tad_form_mainæŸç­†è³‡æ–™è³‡æ–™
+function delete_tad_form_main($ofsn = "")
+{
+    global $xoopsDB;
+    //å…ˆæ‰¾å‡ºæœ‰å“ªäº›äººå¡«äº†
+    $sql    = "select ssn from " . $xoopsDB->prefix("tad_form_fill") . " where ofsn='$ofsn'";
+    $result = $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    while (list($ssn) = $xoopsDB->fetchRow($result)) {
 
-    //§R¤F¶ñ³ø¤º®e
-    $sql = "delete from ".$xoopsDB->prefix("tad_form_value")." where ssn='$ssn'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
+        //åˆªäº†å¡«å ±å…§å®¹
+        $sql = "delete from " . $xoopsDB->prefix("tad_form_value") . " where ssn='$ssn'";
+        $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
 
-    //§R¤F¶ñ¼g¤H¸ê®Æ
-    $sql = "delete from ".$xoopsDB->prefix("tad_form_fill")." where ssn='$ssn'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-  }
+        //åˆªäº†å¡«å¯«äººè³‡æ–™
+        $sql = "delete from " . $xoopsDB->prefix("tad_form_fill") . " where ssn='$ssn'";
+        $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    }
 
-  //§R±¼Äæ¦ì
-  $sql = "delete from ".$xoopsDB->prefix("tad_form_col")." where ofsn='$ofsn'";
-  $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
+    //åˆªæŽ‰æ¬„ä½
+    $sql = "delete from " . $xoopsDB->prefix("tad_form_col") . " where ofsn='$ofsn'";
+    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
 
-  //³Ì«á§R±¼°Ý¨÷
-  $sql = "delete from ".$xoopsDB->prefix("tad_form_main")." where ofsn='$ofsn'";
-  $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
+    //æœ€å¾ŒåˆªæŽ‰å•å·
+    $sql = "delete from " . $xoopsDB->prefix("tad_form_main") . " where ofsn='$ofsn'";
+    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
 }
 
+//è¤‡è£½å•å·
+function copy_form($ofsn = "")
+{
+    global $xoopsDB;
 
+    //è®€å‡ºåŽŸæœ‰è³‡æ–™
+    $sql                                                                                                                                                               = "select `title`, `start_date`, `end_date`, `content`, `uid`, `post_date`, `enable`, `sign_group`, `kind`, `adm_email`, `captcha`, `show_result`, `view_result_group`, `multi_sign` from " . $xoopsDB->prefix("tad_form_main") . " where ofsn='$ofsn'";
+    $result                                                                                                                                                            = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    list($title, $start_date, $end_date, $content, $uid, $post_date, $enable, $sign_group, $kind, $adm_email, $captcha, $show_result, $view_result_group, $multi_sign) = $xoopsDB->fetchRow($result);
 
-//½Æ»s°Ý¨÷
-function copy_form($ofsn=""){
-  global $xoopsDB;
+    $now = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
 
-  //Åª¥X­ì¦³¸ê®Æ
-  $sql = "select `title`, `start_date`, `end_date`, `content`, `uid`, `post_date`, `enable`, `sign_group`, `kind`, `adm_email`, `captcha`, `show_result`, `view_result_group`, `multi_sign` from ".$xoopsDB->prefix("tad_form_main")." where ofsn='$ofsn'";
-  $result=$xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-  list($title,$start_date,$end_date,$content,$uid,$post_date,$enable,$sign_group, $kind, $adm_email, $captcha, $show_result, $view_result_group, $multi_sign)=$xoopsDB->fetchRow($result);
+    //å¯«å…¥æ–°å•å·
+    $sql = "insert into " . $xoopsDB->prefix("tad_form_main") . " (`title`,`start_date`,`end_date`,`content`,`uid`,`post_date`,`enable`,`sign_group`, `kind`, `adm_email`, `captcha`, `show_result`, `view_result_group`, `multi_sign`) values('copy_{$title}','{$start_date}','{$end_date}','{$content}','{$uid}','{$now}','0','{$sign_group}','{$kind}','{$adm_email}','{$captcha}','{$show_result}','{$view_result_group}','{$multi_sign}')";
+    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
 
-  $now=date("Y-m-d H:i:s" , xoops_getUserTimestamp(time()));
+    //å–å¾—æœ€å¾Œæ–°å¢žè³‡æ–™çš„æµæ°´ç·¨è™Ÿ
+    $new_ofsn = $xoopsDB->getInsertId();
 
-  //¼g¤J·s°Ý¨÷
-    $sql = "insert into ".$xoopsDB->prefix("tad_form_main")." (`title`,`start_date`,`end_date`,`content`,`uid`,`post_date`,`enable`,`sign_group`, `kind`, `adm_email`, `captcha`, `show_result`, `view_result_group`, `multi_sign`) values('copy_{$title}','{$start_date}','{$end_date}','{$content}','{$uid}','{$now}','0','{$sign_group}','{$kind}','{$adm_email}','{$captcha}','{$show_result}','{$view_result_group}','{$multi_sign}')";
-  $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-
-  //¨ú±o³Ì«á·s¼W¸ê®Æªº¬y¤ô½s¸¹
-  $new_ofsn=$xoopsDB->getInsertId();
-
-  //Åª¥X¿ï¶µ
-  $sql = "select `title`, `descript`, `kind`, `size`, `val`, `chk`, `func`, `sort` ,`public` from ".$xoopsDB->prefix("tad_form_col")." where ofsn='$ofsn'";
-  $result=$xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-  while(list($title,$descript,$kind,$size,$val,$chk,$func,$sort,$public)=$xoopsDB->fetchRow($result)){
-    //¼g¤J¿ï¶µ
-    $sql = "insert into ".$xoopsDB->prefix("tad_form_col")." (`ofsn`,`title`,`descript`,`kind`,`size`,`val`,`chk`,`func`,`sort`,`public`) values('{$new_ofsn}','{$title}','{$descript}','{$kind}','{$size}','{$val}','{$chk}','{$func}','{$sort}','{$public}')";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-  }
+    //è®€å‡ºé¸é …
+    $sql    = "select `title`, `descript`, `kind`, `size`, `val`, `chk`, `func`, `sort` ,`public` from " . $xoopsDB->prefix("tad_form_col") . " where ofsn='$ofsn'";
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    while (list($title, $descript, $kind, $size, $val, $chk, $func, $sort, $public) = $xoopsDB->fetchRow($result)) {
+        //å¯«å…¥é¸é …
+        $sql = "insert into " . $xoopsDB->prefix("tad_form_col") . " (`ofsn`,`title`,`descript`,`kind`,`size`,`val`,`chk`,`func`,`sort`,`public`) values('{$new_ofsn}','{$title}','{$descript}','{$kind}','{$size}','{$val}','{$chk}','{$func}','{$sort}','{$public}')";
+        $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    }
 }
 
+/*-----------åŸ·è¡Œå‹•ä½œåˆ¤æ–·å€----------*/
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$op   = system_CleanVars($_REQUEST, 'op', '', 'string');
+$ofsn = system_CleanVars($_REQUEST, 'ofsn', 0, 'int');
 
+switch ($op) {
 
-/*-----------°õ¦æ°Ê§@§PÂ_°Ï----------*/
-$op = (!isset($_REQUEST['op']))? "":$_REQUEST['op'];
-$ofsn = (!isset($_REQUEST['ofsn']))? "":intval($_REQUEST['ofsn']);
+    case "excel":
+        download_excel($ofsn);
+        exit;
+        break;
 
-switch($op){
+    //è¼¸å…¥è¡¨æ ¼
+    case "tad_form_main_form";
+        tad_form_main_form($ofsn);
+        break;
 
-  case "excel":
-  download_excel($ofsn);
-  exit;
-  break;
+    //åˆªé™¤è³‡æ–™
+    case "delete_tad_form_main";
+        delete_tad_form_main($ofsn);
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+        break;
 
+    //è®Šæ›´ç‹€æ…‹è³‡æ–™
+    case "set_form_status";
+        set_form_status($ofsn, $_GET['enable']);
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+        break;
 
-  //¿é¤Jªí®æ
-  case "tad_form_main_form";
-  $main=tad_form_main_form($ofsn);
-  break;
+    //è¤‡è£½å•å·
+    case "copy";
+        copy_form($ofsn);
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+        break;
 
-  //§R°£¸ê®Æ
-  case "delete_tad_form_main";
-  delete_tad_form_main($ofsn);
-  header("location: {$_SERVER['PHP_SELF']}");
-  break;
-
-  //ÅÜ§óª¬ºA¸ê®Æ
-  case "set_form_status";
-  set_form_status($ofsn,$_GET['enable']);
-  header("location: {$_SERVER['PHP_SELF']}");
-  break;
-
-
-  //½Æ»s°Ý¨÷
-  case "copy";
-  copy_form($ofsn);
-  header("location: {$_SERVER['PHP_SELF']}");
-  break;
-
-
-  //¹w³]°Ê§@
-  default:
-  list_tad_form_main();
-  break;
+    //é è¨­å‹•ä½œ
+    default:
+        list_tad_form_main();
+        break;
 
 }
 
-/*-----------¨q¥Xµ²ªG°Ï--------------*/
+/*-----------ç§€å‡ºçµæžœå€--------------*/
 include_once 'footer.php';
-?>

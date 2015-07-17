@@ -1,3 +1,12 @@
+Tad Form 3.3 official version of the amended project (2015-07-13 release)
+================================================
+1. Amend the program so that in the MySQL strict mode visitor can fill in the information
+2. Fixed part furnished when it is not someone to fill in, watch the results appear blank scenario.
+3. Fixed part of the case the results can not be exported Excel reporting
+4. Fixed visitors fill out, blank screen scenario.
+5. Add BootStrap3 support
+6. Fixed code to comply with norms PSR2
+
 Tad Form 3.2 official version of the amended project (2014-09-25 release)
 ================================================
  1. Fixed part of the way through the information furnished may be to examine the bug, added security!
