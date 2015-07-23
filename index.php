@@ -303,6 +303,7 @@ function save_val($ofsn = '', $ans = array())
     } else {
         $uid = "0";
     }
+
     $myts = &MyTextSanitizer::getInstance();
     $form = get_tad_form_main($ofsn);
 
@@ -321,7 +322,7 @@ function save_val($ofsn = '', $ans = array())
     $_POST['ssn'] = intval($_POST['ssn']);
     //先存基本資料
     $sql = "replace into " . $xoopsDB->prefix("tad_form_fill") . " (`ssn`,`ofsn`,`uid`,`man_name`,`email`,`fill_time`,`result_col`,`code`) values('{$_POST['ssn']}','{$_POST['ofsn']}','{$uid}','{$_POST['man_name']}','{$_POST['email']}', '{$now}','','')";
-    $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
     $ssn = $xoopsDB->getInsertId();
 
     $need_csn_arr = $_POST['need_csn'];
@@ -332,7 +333,8 @@ function save_val($ofsn = '', $ans = array())
         $value = $myts->addSlashes($value);
         $ssn   = intval($ssn);
         $sql   = "replace into " . $xoopsDB->prefix("tad_form_value") . " (`ssn`,`csn`,`val`) values('{$ssn}','{$csn}','{$value}')";
-        $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+        $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+
         unset($need_csn_arr[$csn]);
     }
 
@@ -378,9 +380,9 @@ function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans 
                 $checked = ($default_val == $val) ? "checked='checked'" : "";
                 $chktxt  = ($chk) ? "class='validate[required] radio'" : "";
                 $main .= "
-                  <label class='radio{$inline}'>
-                    <input type='radio' name='ans[$csn]' value='{$val}' $checked $chktxt>{$val}
-                  </label>";
+								                  <label class='radio{$inline}'>
+								                    <input type='radio' name='ans[$csn]' value='{$val}' $checked $chktxt>{$val}
+								                  </label>";
                 $i++;
             }
             break;
@@ -396,9 +398,9 @@ function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans 
                 $checked = (in_array($val, $db)) ? "checked='checked'" : "";
                 $chktxt  = ($chk) ? "class='validate[required] checkbox'" : "";
                 $main .= "
-                  <label class='checkbox{$inline}'>
-                    <input type='checkbox' name='ans[$csn][]' value='{$val}' $checked $chktxt>{$val}
-                  </label>";
+								                  <label class='checkbox{$inline}'>
+								                    <input type='checkbox' name='ans[$csn][]' value='{$val}' $checked $chktxt>{$val}
+								                  </label>";
                 $i++;
             }
             break;
@@ -430,7 +432,7 @@ function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans 
             $span        = empty($size) ? 6 : round($size / 10, 0);
             $chktxt      = ($chk) ? "validate[required]" : "";
             $main        = "<div class='{$span_col}{$span}'><input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}' class='{$form_control} {$chktxt}' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd' , startDate:'%y-%M-%d}'})\"></div>
-                <input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
+								                <input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
             break;
 
         case "datetime":
@@ -438,7 +440,7 @@ function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans 
             $span        = empty($size) ? 6 : round($size / 10, 0);
             $chktxt      = ($chk) ? "validate[required]" : "";
             $main        = "<div class='{$span_col}{$span}'><input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}'  class='{$form_control} {$chktxt}' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm' , startDate:'%y-%M-%d %H:%m}'})\"></div>
-                <input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
+								                <input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
             break;
 
         case "show":
@@ -506,8 +508,8 @@ include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op   = system_CleanVars($_REQUEST, 'op', '', 'string');
 $ofsn = system_CleanVars($_REQUEST, 'ofsn', 0, 'int');
 $ssn  = system_CleanVars($_REQUEST, 'ssn', 0, 'int');
-$ans  = system_CleanVars($_REQUEST, 'ans', '', 'string');
-$code = system_CleanVars($_REQUEST, 'code', '', 'string');
+$ans  = system_CleanVars($_REQUEST, 'ans', '', 'array');
+$code = system_CleanVars($_REQUEST, 'vcode', '', 'string');
 
 $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign("bootstrap", get_bootstrap());

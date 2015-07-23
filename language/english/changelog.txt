@@ -1,3 +1,9 @@
+Tad Form 3.3.1  official version of the amended project (2015-07-23 release)
+================================================
+1. Fixed the bug that data can't be saved.
+2. Fixed the bug that result can't display after fill
+
+
 Tad Form 3.3 official version of the amended project (2015-07-13 release)
 ================================================
 1. Amend the program so that in the MySQL strict mode visitor can fill in the information
