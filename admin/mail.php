@@ -24,13 +24,13 @@ function mail_form_main($ofsn = "")
     }
 
     if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/fck.php")) {
-        redirect_header("index.php", 3, _MA_NEED_TADTOOLS);
+        redirect_header("index.php", 3, _MD_NEED_TADTOOLS);
     }
-    include_once XOOPS_ROOT_PATH . "/modules/tadtools/fck.php";
-    $fck = new FCKEditor264("tad_form", "content", $content);
-    $fck->setWidth(590);
-    $fck->setHeight(250);
-    $editor = $fck->render();
+
+    include_once XOOPS_ROOT_PATH . "/modules/tadtools/ck.php";
+    $ck = new CKEditor("tad_form", "content", $content);
+    $ck->setHeight(400);
+    $editor = $ck->render();
 
     $sql    = "select man_name,email from " . $xoopsDB->prefix("tad_form_fill") . " where ofsn='{$ofsn}'";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());

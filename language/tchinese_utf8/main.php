@@ -1,5 +1,5 @@
 <?php
-define('_TAD_NEED_TADTOOLS', ' 需要 modules/tadtools，可至<a href="http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50" target="_blank">Tad教材網</a>下載。');
+define('_TAD_NEED_TADTOOLS', ' 需要 modules/tadtools，可至<a href="http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1" target="_blank">XOOPS輕鬆架</a>下載。');
 
 define('_JS_EMAIL_CHK', 'Email不正確，請重新填寫');
 define('_JS_SIGN_CHK', '請完整填寫『%s』欄位，謝謝！');

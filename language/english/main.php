@@ -4,7 +4,7 @@ define('_JS_SIGN_CHK', "\"%s\" is required!");
 define('_JS_CHK_TOO_SHORT', "Length of \"%s\" must be more than %s, please reset \"%s\"! Thank you!");
 define('_JS_CHK_NOT_EQUAL', "Length of \"%s\" must be %s, please reset \"%s\"! Thank you!");
 define('_JS_CHK_TOO_LONG', "Length of \"%s\" must be less than %s, please reset \"%s\"! Thank you!");
-define('_TAD_NEED_TADTOOLS', "This module needs TadTools module. You can download TadTools from <a href='http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50' target='_blank'>Tad's web</a>.");
+define('_TAD_NEED_TADTOOLS', 'This module needs TadTools module. You can download TadTools from <a href="http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1" target="_blank">XOOPS EasyGO</a>.');
 
 define('_MD_TADFORM_SUBMIT_FORM', 'Submit');
 define('_MD_TADFORM_TITLE', 'Subject');
