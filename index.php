@@ -16,7 +16,7 @@ function list_tad_form_main()
         $User_Groups = array(3);
     }
     $sql    = "select * from " . $xoopsDB->prefix("tad_form_main") . " where enable='1' and start_date < '{$today}'  and end_date > '{$today}'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $i      = 0;
     $all    = "";
     while ($data = $xoopsDB->fetchArray($result)) {
@@ -173,7 +173,7 @@ function sign_form($ofsn = "", $ssn = "")
     if ($form['kind'] == "application") {
         $man_name_list = "<table><caption>" . _MD_TADFORM_OK_LIST . "</caption>";
         $sql           = "select email,fill_time from " . $xoopsDB->prefix("tad_form_fill") . " where ofsn='{$ofsn}' and result_col='1'";
-        $result        = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+        $result        = $xoopsDB->query($sql) or web_error($sql);
         $n             = $i             = 3;
         while (list($email, $fill_time) = $xoopsDB->fetchRow($result)) {
             $fill_time  = date("Y-m-d H:i:s", xoops_getUserTimestamp(strtotime($fill_time)));
@@ -197,7 +197,7 @@ function sign_form($ofsn = "", $ssn = "")
 
     $sql = "select * from " . $xoopsDB->prefix("tad_form_col") . " where ofsn='{$ofsn}' order by sort";
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $i      = 1;
     while ($data = $xoopsDB->fetchArray($result)) {
         foreach ($data as $k => $v) {
@@ -304,7 +304,7 @@ function save_val($ofsn = '', $ans = array())
         $uid = "0";
     }
 
-    $myts = &MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
     $form = get_tad_form_main($ofsn);
 
     if ($form['captcha'] == '1') {
@@ -322,7 +322,7 @@ function save_val($ofsn = '', $ans = array())
     $_POST['ssn'] = intval($_POST['ssn']);
     //先存基本資料
     $sql = "replace into " . $xoopsDB->prefix("tad_form_fill") . " (`ssn`,`ofsn`,`uid`,`man_name`,`email`,`fill_time`,`result_col`,`code`) values('{$_POST['ssn']}','{$_POST['ofsn']}','{$uid}','{$_POST['man_name']}','{$_POST['email']}', '{$now}','','')";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
     $ssn = $xoopsDB->getInsertId();
 
     $need_csn_arr = $_POST['need_csn'];
@@ -333,7 +333,7 @@ function save_val($ofsn = '', $ans = array())
         $value = $myts->addSlashes($value);
         $ssn   = intval($ssn);
         $sql   = "replace into " . $xoopsDB->prefix("tad_form_value") . " (`ssn`,`csn`,`val`) values('{$ssn}','{$csn}','{$value}')";
-        $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+        $xoopsDB->queryF($sql) or web_error($sql);
 
         unset($need_csn_arr[$csn]);
     }
@@ -347,10 +347,10 @@ function save_val($ofsn = '', $ans = array())
 
     //產生code
     $sql = "update " . $xoopsDB->prefix("tad_form_fill") . " set `code`=md5(CONCAT(`ofsn`,`uid`, `man_name`, `email`, `fill_time`)) where ssn='{$ssn}'";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
 
     $sql        = "select `code` from " . $xoopsDB->prefix("tad_form_fill") . " where ssn='{$ssn}'";
-    $result     = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result     = $xoopsDB->query($sql) or web_error($sql);
     list($code) = $xoopsDB->fetchRow($result);
 
     return $code;
@@ -359,16 +359,13 @@ function save_val($ofsn = '', $ans = array())
 //製作表單
 function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans = array(), $chk = "")
 {
-    $span_col     = $_SESSION['bootstrap'] == '3' ? 'col-md-' : 'span';
-    $form_control = $_SESSION['bootstrap'] == '3' ? 'form-control' : 'span12';
-    $inline       = $_SESSION['bootstrap'] == '3' ? '-inline' : ' inline';
 
     switch ($kind) {
         case "text":
             $default_val = (empty($db_ans)) ? $default_val : $db_ans;
             $chktxt      = ($chk) ? " validate[required]" : "";
             $span        = empty($size) ? 6 : round($size / 10, 0);
-            $main        = "<div class='{$span_col}{$span}'><input type='text' name='ans[$csn]' id='tf{$csn}' class='{$form_control} {$chktxt}' value='{$default_val}'><input type='hidden' name='need_csn[{$csn}]' value='{$csn}'></div>";
+            $main        = "<div class='col-md-{$span}'><input type='text' name='ans[$csn]' id='tf{$csn}' class='form-control {$chktxt}' value='{$default_val}'><input type='hidden' name='need_csn[{$csn}]' value='{$csn}'></div>";
             break;
 
         case "radio":
@@ -380,7 +377,7 @@ function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans 
                 $checked = ($default_val == $val) ? "checked='checked'" : "";
                 $chktxt  = ($chk) ? "class='validate[required] radio'" : "";
                 $main .= "
-								                  <label class='radio{$inline}'>
+								                  <label class='radio-inline'>
 								                    <input type='radio' name='ans[$csn]' value='{$val}' $checked $chktxt>{$val}
 								                  </label>";
                 $i++;
@@ -398,7 +395,7 @@ function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans 
                 $checked = (in_array($val, $db)) ? "checked='checked'" : "";
                 $chktxt  = ($chk) ? "class='validate[required] checkbox'" : "";
                 $main .= "
-								                  <label class='checkbox{$inline}'>
+								                  <label class='checkbox-inline'>
 								                    <input type='checkbox' name='ans[$csn][]' value='{$val}' $checked $chktxt>{$val}
 								                  </label>";
                 $i++;
@@ -409,7 +406,7 @@ function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans 
             $default_val = (empty($db_ans)) ? $default_val : $db_ans;
             $chktxt      = ($chk) ? "validate[required]" : "";
             $opt         = explode(";", $size);
-            $main        = "<select name='ans[$csn]' id='tf{$csn}' class='{$form_control} {$chktxt}'>";
+            $main        = "<select name='ans[$csn]' id='tf{$csn}' class='form-control {$chktxt}'>";
             foreach ($opt as $val) {
                 $selected = ($default_val == $val) ? "selected" : "";
                 $main .= "<option value='{$val}' $selected>{$val}</option>";
@@ -424,14 +421,14 @@ function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans 
                 $size = 60;
             }
 
-            $main = "<textarea name='ans[$csn]' id='tf{$csn}' class='{$form_control}{$chktxt}' style='height:{$size}px;'>{$default_val}</textarea><input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
+            $main = "<textarea name='ans[$csn]' id='tf{$csn}' class='form-control {$chktxt}' style='height:{$size}px;'>{$default_val}</textarea><input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
             break;
 
         case "date":
             $default_val = (empty($db_ans)) ? $default_val : $db_ans;
             $span        = empty($size) ? 6 : round($size / 10, 0);
             $chktxt      = ($chk) ? "validate[required]" : "";
-            $main        = "<div class='{$span_col}{$span}'><input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}' class='{$form_control} {$chktxt}' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd' , startDate:'%y-%M-%d}'})\"></div>
+            $main        = "<div class='col-md-{$span}'><input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}' class='form-control {$chktxt}' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd' , startDate:'%y-%M-%d}'})\"></div>
 								                <input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
             break;
 
@@ -439,7 +436,7 @@ function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans 
             $default_val = (empty($db_ans)) ? $default_val : $db_ans;
             $span        = empty($size) ? 6 : round($size / 10, 0);
             $chktxt      = ($chk) ? "validate[required]" : "";
-            $main        = "<div class='{$span_col}{$span}'><input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}'  class='{$form_control} {$chktxt}' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm' , startDate:'%y-%M-%d %H:%m}'})\"></div>
+            $main        = "<div class='col-md-{$span}'><input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}'  class='form-control {$chktxt}' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm' , startDate:'%y-%M-%d %H:%m}'})\"></div>
 								                <input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
             break;
 
@@ -455,7 +452,7 @@ function replace_tad_form_fill()
 {
     global $xoopsDB;
     $sql = "replace into " . $xoopsDB->prefix("tad_form_fill") . " (`ofsn`,`uid`,`man_name`,`email`,`fill_time` , `result_col` , `code`) values('{$_POST['ofsn']}','{$_POST['uid']}','{$_POST['man_name']}','{$_POST['email']}','{$_POST['fill_time']}' , '' , '')";
-    $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->query($sql) or web_error($sql);
     //取得最後新增資料的流水編號
     $ofsnuid = $xoopsDB->getInsertId();
     return $ofsnuid;
@@ -470,7 +467,7 @@ function send_now($code = "")
     $xoopsMailer->multimailer->ContentType = "text/html";
 
     $sql                                                                  = "select a.`ofsn`,a.`man_name`,a.`email`, a.`fill_time`,a.`code`,b.`title`,b.`adm_email`  from " . $xoopsDB->prefix("tad_form_fill") . " as a left join " . $xoopsDB->prefix("tad_form_main") . " as b on a.ofsn=b.ofsn where a.code='$code'";
-    $result                                                               = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result                                                               = $xoopsDB->query($sql) or web_error($sql);
     list($ofsn, $man_name, $email, $fill_time, $code, $title, $adm_email) = $xoopsDB->fetchRow($result);
 
     $xoopsMailer->addHeaders("MIME-Version: 1.0");
@@ -478,12 +475,12 @@ function send_now($code = "")
     $all = view($code, "mail");
 
     $fill_time = date("Y-m-d H:i:s", xoops_getUserTimestamp(strtotime($fill_time)));
-    $content   = sprintf(_MD_TADFORM_MAIL_CONTENT, $man_name, $fill_time, $title, $all, XOOPS_URL . "/modules/tad_form/view.php?code={$code}");
+    $content   = sprintf(_MD_TADFORM_MAIL_CONTENT, $man_name, $fill_time, $title, $all, XOOPS_URL . "/modules/tad_form/index.php?op=view&code={$code}");
     $subject   = sprintf(_MD_TADFORM_MAIL_TITLE, $title, $man_name, $fill_time);
 
     $sCharset = 'UTF-8';
     $sHeaders = "MIME-Version: 1.0\r\n" .
-    "Content-type: text/html; charset=$sCharset\r\n";
+        "Content-type: text/html; charset=$sCharset\r\n";
 
     if (!empty($email)) {
         if (!$xoopsMailer->sendMail($email, $subject, $content, $headers)) {

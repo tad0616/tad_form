@@ -107,7 +107,7 @@ function go_update1()
 {
     global $xoopsDB;
     $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_main") . " ADD `kind` varchar(255) NOT NULL";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
     return true;
 }
 
@@ -127,7 +127,7 @@ function go_update2()
 {
     global $xoopsDB;
     $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_fill") . " ADD `result_col` varchar(255) NOT NULL";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
     return true;
 }
 
@@ -147,7 +147,7 @@ function go_update3()
 {
     global $xoopsDB;
     $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_main") . " ADD `adm_email` varchar(255) NOT NULL";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
     return true;
 }
 
@@ -167,7 +167,7 @@ function go_update4()
 {
     global $xoopsDB;
     $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_main") . " ADD `captcha` enum('1','0') NOT NULL default '1'";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
     return true;
 }
 
@@ -187,7 +187,7 @@ function go_update5()
 {
     global $xoopsDB;
     $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_main") . " ADD `show_result` enum('1','0') NOT NULL default '1'";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
     return true;
 }
 
@@ -207,7 +207,7 @@ function go_update6()
 {
     global $xoopsDB;
     $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_main") . " ADD `view_result_group` varchar(255) NOT NULL default ''";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
     return true;
 }
 
@@ -227,7 +227,7 @@ function go_update7()
 {
     global $xoopsDB;
     $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_main") . " ADD `multi_sign` enum('0','1') NOT NULL default '0'";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
     return true;
 }
 
@@ -247,7 +247,7 @@ function go_update8()
 {
     global $xoopsDB;
     $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_col") . " ADD `public`  enum('0','1') NOT NULL default '0'";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
     return true;
 }
 
@@ -271,9 +271,9 @@ function go_update_uid()
 {
     global $xoopsDB;
     $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_form_main") . "` CHANGE `uid` `uid` mediumint(8) unsigned NOT NULL default 0";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
     $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_form_fill") . "` CHANGE `uid` `uid` mediumint(8) unsigned NOT NULL default 0";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
     return true;
 }
 
@@ -293,10 +293,10 @@ function go_update9()
 {
     global $xoopsDB;
     $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_fill") . " ADD `code` varchar(255) NOT NULL";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
 
     $sql = "update " . $xoopsDB->prefix("tad_form_fill") . " set code=md5(CONCAT(`ofsn`,`uid`, `man_name`, `email`, `fill_time`)) ";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
 
     return true;
 }

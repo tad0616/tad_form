@@ -1,10 +1,22 @@
-Tad Form 3.3.1  official version of the amended project (2015-07-23 release)
+Tad Form 3.4.1 (2016-05-26 release)
+================================================
+1.Remove BootStrap2 code
+
+
+Tad Form 3.4 (2016-05-22 release)
+================================================
+ 1.Fixed the problem with editor can't worked in admin interface
+ 2.Support PHP7
+ 3.Remove BootStrap2
+
+
+Tad Form 3.3.1  (2015-07-23 release)
 ================================================
 1. Fixed the bug that data can't be saved.
 2. Fixed the bug that result can't display after fill
 
 
-Tad Form 3.3 official version of the amended project (2015-07-13 release)
+Tad Form 3.3 (2015-07-13 release)
 ================================================
 1. Amend the program so that in the MySQL strict mode visitor can fill in the information
 2. Fixed part furnished when it is not someone to fill in, watch the results appear blank scenario.
@@ -13,14 +25,14 @@ Tad Form 3.3 official version of the amended project (2015-07-13 release)
 5. Add BootStrap3 support
 6. Fixed code to comply with norms PSR2
 
-Tad Form 3.2 official version of the amended project (2014-09-25 release)
+Tad Form 3.2 (2014-09-25 release)
 ================================================
  1. Fixed part of the way through the information furnished may be to examine the bug, added security!
  2. Fix the program to conform to WCAG
  3. Fixed the program so that it can be used in MySQL strict mode
 
 
-Tad Form 3.1 official version of the amended project (2014-06-10 release)
+Tad Form 3.1 (2014-06-10 release)
 ================================================
  1. The amendment to Guest furnished table results
  2. Fixed module Home, without completing the privilege can not be clicked furnished button
@@ -29,7 +41,7 @@ Tad Form 3.1 official version of the amended project (2014-06-10 release)
  5. addressed in windows host, Excel file to download the file name is not the right questions
 
 
-Tad Form 3.0 official version amended project (2013-11-13 release)
+Tad Form 3.0 (2013-11-13 release)
 ================================================
  1. Visitors can not be filled
  2. The reporting deadline in question
@@ -38,7 +50,7 @@ Tad Form 3.0 official version amended project (2013-11-13 release)
  5. Update verification mechanism
 
 
-Tad Form version 3.0 RC3 amend item (2013-10-28 release)
+Tad Form version 3.0 RC3 (2013-10-28 release)
 ================================================
  1. The latest form of no-show block
  2. Filter user fill in the information, to avoid the hidden code attacks
@@ -47,13 +59,13 @@ Tad Form version 3.0 RC3 amend item (2013-10-28 release)
  5. fixed regardless of completing the single multimeter whether to stop or whether the show off the results, all results will be showed off bug
 
 
-Tad Form Version 3.0 RC2 amend item (2013-07-30 release)
+Tad Form Version 3.0 RC2 (2013-07-30 release)
 ================================================
  1. Fixed an incorrect statistical analysis background bug
  2. Fixed can not delete the user fill in the information of bug
 
 
-Tad Form Version 3.0 RC1 amend item (2013-06-21 release)
+Tad Form Version 3.0 RC1 (2013-06-21 release)
 ================================================
  1. The module instead XOOPS 2.5 format
  2. sets the bootstrap
@@ -63,7 +75,7 @@ Tad Form Version 3.0 RC1 amend item (2013-06-21 release)
  6. Fixed a bunch of bug and streamline code
 
 
-Tad Form 2.0 RC1 version amended project (2011-11-30 release)
+Tad Form 2.0 RC1 (2011-11-30 release)
 ================================================
  1. Fixed block expires activities do not automatically go away.
  2. Add the various forms application form application.
@@ -85,7 +97,7 @@ Tad Form 2.0 RC1 version amended project (2011-11-30 release)
 
 
 
-Tad Form 1.1 Correction Program (2008-07-01 release)
+Tad Form 1.1 (2008-07-01 release)
 ================================================
  1. Fixed WYSIWYG editor path is not normal problems.
  2. Fixed blank page issue XOOPS 2.0

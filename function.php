@@ -2,7 +2,7 @@
 
 //引入TadTools的函式庫
 if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php")) {
-    redirect_header("http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50", 3, _TAD_NEED_TADTOOLS);
+    redirect_header("http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1", 3, _TAD_NEED_TADTOOLS);
 }
 include_once XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php";
 
@@ -13,14 +13,14 @@ function get_somebody_ans($ofsn = "", $uid = "", $ssn = "")
     if (empty($uid)) {
         return false;
     }
-    $myts = &MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
 
     if ($ssn) {
         $sql = "select b.ssn,b.csn,b.val from " . $xoopsDB->prefix("tad_form_fill") . " as a left join  " . $xoopsDB->prefix("tad_form_value") . " as b on a.ssn=b.ssn where a.ssn='$ssn' and a.uid='$uid'";
     } else {
         $sql = "select b.ssn,b.csn,b.val from " . $xoopsDB->prefix("tad_form_fill") . " as a left join  " . $xoopsDB->prefix("tad_form_value") . " as b on a.ssn=b.ssn where a.ofsn='$ofsn' and a.uid='$uid'";
     }
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $ans    = "";
     while (list($ssn, $csn, $val) = $xoopsDB->fetchRow($result)) {
         $ans[$csn]  = $myts->htmlSpecialChars($val);
@@ -76,7 +76,7 @@ function is_mine($ssn = "")
         $now_uid = $xoopsUser->uid();
 
         $sql       = "select uid from " . $xoopsDB->prefix("tad_form_fill") . " where ssn='$ssn'";
-        $result    = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+        $result    = $xoopsDB->query($sql) or web_error($sql);
         list($uid) = $xoopsDB->fetchRow($result);
         if ($now_uid == $uid) {
             return true;
@@ -95,7 +95,7 @@ function get_history($ofsn = "", $uid = "")
     }
 
     $sql    = "select * from " . $xoopsDB->prefix("tad_form_fill") . " where ofsn='$ofsn' and uid='$uid'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     //`ssn`, `ofsn`, `uid`, `man_name`, `email`, `fill_time`, `result_col`
     $i = 0;
     while ($all = $xoopsDB->fetchArray($result)) {
@@ -112,11 +112,11 @@ function view($code = "", $mode = "")
 {
     global $xoopsDB, $xoopsUser, $xoopsTpl, $isAdmin;
 
-    $myts = &MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
 
     $sql = "select ofsn,ssn,uid,man_name,email,fill_time from " . $xoopsDB->prefix("tad_form_fill") . " where code='{$code}'";
 
-    $result                                                = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result                                                = $xoopsDB->query($sql) or web_error($sql);
     list($ofsn, $ssn, $uid, $man_name, $email, $fill_time) = $xoopsDB->fetchRow($result);
     if (empty($ssn)) {
         return;
@@ -130,7 +130,7 @@ function view($code = "", $mode = "")
 
     $sql = "select b.csn,b.val,a.title from " . $xoopsDB->prefix("tad_form_col") . " as a left join " . $xoopsDB->prefix("tad_form_value") . " as b on a.csn=b.csn where b.ssn='{$ssn}' order by a.sort";
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $i      = 1;
     while (list($csn, $val, $title) = $xoopsDB->fetchRow($result)) {
 
@@ -188,10 +188,10 @@ function delete_tad_form_ans($ssn = "")
 
     if (is_mine($ssn)) {
         $sql = "delete from " . $xoopsDB->prefix("tad_form_fill") . " where ssn='$ssn'";
-        $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+        $xoopsDB->queryF($sql) or web_error($sql);
 //die($sql);
         $sql = "delete from " . $xoopsDB->prefix("tad_form_value") . " where ssn='$ssn'";
-        $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+        $xoopsDB->queryF($sql) or web_error($sql);
     }
 }
 
@@ -205,12 +205,12 @@ function get_tad_form_main($ofsn = "", $ssn = "")
 
     if ($ssn) {
         $sql        = "select ofsn from " . $xoopsDB->prefix("tad_form_fill") . " where ssn='$ssn'";
-        $result     = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+        $result     = $xoopsDB->query($sql) or web_error($sql);
         list($ofsn) = $xoopsDB->fetchRow($result);
 
     }
     $sql    = "select * from " . $xoopsDB->prefix("tad_form_main") . " where ofsn='$ofsn'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $data   = $xoopsDB->fetchArray($result);
     return $data;
 }
@@ -224,7 +224,7 @@ function set_form_status($ofsn = '', $enable = '0')
     }
 
     $sql    = "update " . $xoopsDB->prefix("tad_form_main") . " set enable='{$enable}' where ofsn='$ofsn'";
-    $result = $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->queryF($sql) or web_error($sql);
 }
 
 //檢查Email的JS

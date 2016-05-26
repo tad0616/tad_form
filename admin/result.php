@@ -17,7 +17,7 @@ function view_result($ofsn = "", $isAdmin = false, $view_ssn = '')
             redirect_header("index.php", 3, _MA_TADFORM_NOT_SHOW);
         }
     }
-    $myts  = &MyTextSanitizer::getInstance();
+    $myts  = MyTextSanitizer::getInstance();
     $thSty = "style='width:135px;'";
 
     $jquery_path = get_jquery(); //一般只要此行即可
@@ -26,7 +26,7 @@ function view_result($ofsn = "", $isAdmin = false, $view_ssn = '')
     $xoopsTpl->assign('ofsn', $ofsn);
 
     $sql       = "select csn,title,kind,func from " . $xoopsDB->prefix("tad_form_col") . " where ofsn='{$ofsn}' order by sort";
-    $result    = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result    = $xoopsDB->query($sql) or web_error($sql);
     $all_title = $tt = $tt = $kk = $csn_arr = "";
     $i         = 0;
     while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
@@ -60,7 +60,7 @@ function view_result($ofsn = "", $isAdmin = false, $view_ssn = '')
 
     $sql = "select ssn,uid,man_name,email,fill_time,code,result_col from " . $xoopsDB->prefix("tad_form_fill") . " where ofsn='{$ofsn}' order by fill_time desc";
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $i      = 0;
     $col_v  = $col  = "";
     while (list($ssn, $uid, $man_name, $email, $fill_time, $code, $result_col) = $xoopsDB->fetchRow($result)) {
@@ -70,7 +70,7 @@ function view_result($ofsn = "", $isAdmin = false, $view_ssn = '')
 
         $sql2 = "select csn,val from " . $xoopsDB->prefix("tad_form_value") . "  where ssn='{$ssn}'";
 
-        $result2 = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+        $result2 = $xoopsDB->query($sql2) or web_error($sql2);
 
         while (list($csn, $val) = $xoopsDB->fetchRow($result2)) {
             $col_v[$csn] = $myts->htmlSpecialChars($val);
@@ -173,7 +173,7 @@ function view_result($ofsn = "", $isAdmin = false, $view_ssn = '')
 
     if ($view_ssn) {
         $sql        = "select code from " . $xoopsDB->prefix("tad_form_fill") . " where ofsn='{$ofsn}' and ssn='{$view_ssn}'";
-        $result     = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+        $result     = $xoopsDB->query($sql) or web_error($sql);
         list($code) = $xoopsDB->fetchRow($result);
         view($code);
     }
@@ -185,7 +185,7 @@ function update_result($ssn_arr = array(), $result_col = array())
     global $xoopsDB;
     foreach ($ssn_arr as $ssn) {
         $sql = "update " . $xoopsDB->prefix("tad_form_fill") . " set result_col='{$result_col[$ssn]}'  where ssn='$ssn'";
-        $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+        $xoopsDB->queryF($sql) or web_error($sql);
     }
 }
 

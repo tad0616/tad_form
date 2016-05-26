@@ -25,7 +25,7 @@ $objActSheet->setCellValueByColumnAndRow(0, 1, _MA_TADFORM_COL_WHO);
 $objActSheet->setCellValueByColumnAndRow(1, 1, _MA_TADFORM_SIGN_DATE);
 
 $sql    = "select csn,title,kind,func from " . $xoopsDB->prefix("tad_form_col") . " where ofsn='{$ofsn}' order by sort";
-$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+$result = $xoopsDB->query($sql) or web_error($sql);
 $col    = 2;
 while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
     if ($kind == 'show') {
@@ -39,7 +39,7 @@ while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
 
 $n      = 2;
 $sql    = "select ssn,uid,man_name,email,fill_time from " . $xoopsDB->prefix("tad_form_fill") . " where ofsn='{$ofsn}' order by fill_time desc";
-$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+$result = $xoopsDB->query($sql) or web_error($sql);
 while (list($ssn, $uid, $man_name, $email, $fill_time) = $xoopsDB->fetchRow($result)) {
 
     $fill_time = date("Y-m-d H:i:s", xoops_getUserTimestamp(strtotime($fill_time)));
@@ -47,7 +47,7 @@ while (list($ssn, $uid, $man_name, $email, $fill_time) = $xoopsDB->fetchRow($res
     $objActSheet->setCellValueByColumnAndRow(1, $n, $fill_time);
 
     $sql2    = "select a.csn,a.val from " . $xoopsDB->prefix("tad_form_value") . " as a," . $xoopsDB->prefix("tad_form_col") . " as b where a.csn=b.csn and a.ssn='{$ssn}'  order by b.sort";
-    $result2 = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result2 = $xoopsDB->query($sql2) or web_error($sql2);
 
     $m = 2;
     while (list($csn, $val) = $xoopsDB->fetchRow($result2)) {

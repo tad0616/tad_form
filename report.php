@@ -19,7 +19,7 @@ function view_user_result($ofsn)
         redirect_header("index.php", 3, _MD_TADFORM_HIDE_RESULT);
     }
 
-    $myts = &MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
 
     $thSty = "style='width:135px;'";
 
@@ -28,7 +28,7 @@ function view_user_result($ofsn)
 
     $sql = "select csn,title,kind,func from " . $xoopsDB->prefix("tad_form_col") . " where ofsn='{$ofsn}' and public='1' order by sort";
     //die($sql);
-    $result    = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result    = $xoopsDB->query($sql) or web_error($sql);
     $all_title = "";
     $i         = 0;
     $csn_arr   = $ff   = $tt   = $kk   = array();
@@ -60,7 +60,7 @@ function view_user_result($ofsn)
 
     $sql = "select ssn,uid,man_name,email,fill_time,code,result_col from " . $xoopsDB->prefix("tad_form_fill") . " where ofsn='{$ofsn}' order by fill_time desc";
 
-    $result         = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result         = $xoopsDB->query($sql) or web_error($sql);
     $i              = 0;
     $all_result_col = "";
     while (list($ssn, $uid, $man_name, $email, $fill_time, $code, $result_col) = $xoopsDB->fetchRow($result)) {
@@ -76,7 +76,7 @@ function view_user_result($ofsn)
 
         $sql2 = "select csn,val from " . $xoopsDB->prefix("tad_form_value") . "  where ssn='{$ssn}'";
 
-        $result2 = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+        $result2 = $xoopsDB->query($sql2) or web_error($sql2);
         //$all="";
 
         $col_v = array();

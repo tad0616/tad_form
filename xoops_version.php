@@ -3,7 +3,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADFORM_NAME;
-$modversion['version']     = 3.31;
+$modversion['version']     = 3.41;
 $modversion['description'] = _MI_TADFORM_DESC;
 $modversion['author']      = _MI_TADFORM_AUTHOR;
 $modversion['credits']     = _MI_TADFORM_CREDITS;
@@ -14,7 +14,7 @@ $modversion['image']       = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname']     = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date']        = '2015/07/23';
+$modversion['release_date']        = '2016/05/26';
 $modversion['module_website_url']  = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status']       = 'release';
@@ -56,48 +56,23 @@ $modversion['hasMain'] = 1;
 //---樣板設定---//
 $modversion['templates']                    = array();
 $i                                          = 1;
-$modversion['templates'][$i]['file']        = 'tad_form_index.html';
-$modversion['templates'][$i]['description'] = 'tad_form_index.html';
-
-$i++;
 $modversion['templates'][$i]['file']        = 'tad_form_index_b3.html';
 $modversion['templates'][$i]['description'] = 'tad_form_index_b3.html';
-
-$i++;
-$modversion['templates'][$i]['file']        = 'tad_form_adm_main.html';
-$modversion['templates'][$i]['description'] = 'tad_form_adm_main.html';
-
 $i++;
 $modversion['templates'][$i]['file']        = 'tad_form_adm_main_b3.html';
 $modversion['templates'][$i]['description'] = 'tad_form_adm_main_b3.html';
-
-$i++;
-$modversion['templates'][$i]['file']        = 'tad_form_adm_mail.html';
-$modversion['templates'][$i]['description'] = 'tad_form_adm_mail.html';
 
 $i++;
 $modversion['templates'][$i]['file']        = 'tad_form_adm_mail_b3.html';
 $modversion['templates'][$i]['description'] = 'tad_form_adm_mail_b3.html';
 
 $i++;
-$modversion['templates'][$i]['file']        = 'tad_form_adm_result.html';
-$modversion['templates'][$i]['description'] = 'tad_form_adm_result.html';
-
-$i++;
 $modversion['templates'][$i]['file']        = 'tad_form_adm_result_b3.html';
 $modversion['templates'][$i]['description'] = 'tad_form_adm_result_b3.html';
 
 $i++;
-$modversion['templates'][$i]['file']        = 'tad_form_adm_add.html';
-$modversion['templates'][$i]['description'] = 'tad_form_adm_add.html';
-
-$i++;
 $modversion['templates'][$i]['file']        = 'tad_form_adm_add_b3.html';
 $modversion['templates'][$i]['description'] = 'tad_form_adm_add_b3.html';
-
-$i++;
-$modversion['templates'][$i]['file']        = 'tad_form_report.html';
-$modversion['templates'][$i]['description'] = 'tad_form_report.html';
 
 $i++;
 $modversion['templates'][$i]['file']        = 'tad_form_report_b3.html';
