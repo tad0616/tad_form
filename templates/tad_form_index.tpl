@@ -1,11 +1,11 @@
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-sm-12">
     <{$toolbar}>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-sm-12">
     <{if $op=="sign"}>
 
       <{$jquery}>
@@ -36,19 +36,19 @@
         </p>
 
         <div class="form-group">
-          <label class="col-md-2 control-label">
+          <label class="col-sm-2 control-label">
             <{$smarty.const._MD_TADFORM_MAN_NAME}>
           </label>
-          <div class="col-md-2">
+          <div class="col-sm-2">
             <input type="text" name="man_name" id="tfman_name" class='form-control validate[required]' value="<{$uid_name}>">
           </div>
-          <label class="col-md-2 control-label">
+          <label class="col-sm-2 control-label">
             <{$smarty.const._MD_TADFORM_EMAIL}>
           </label>
-          <div class="col-md-4">
+          <div class="col-sm-4">
             <input type="text" name="email" id="tfemail"  class='form-control validate[required]' value="<{$email}>">
           </div>
-          <div class="col-md-2">
+          <div class="col-sm-2">
             <button type="submit" name="submit" class="btn btn-primary"><{$smarty.const._MD_TADFORM_SUBMIT_FORM}></button>
           </div>
         </div>

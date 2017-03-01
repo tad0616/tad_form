@@ -6,7 +6,7 @@
     <{assign var="i" value=0}>
     <{foreach item=data from=$main}>
       <{if !$i}><div class="row"><{/if}>
-        <div class="jumbotron col-md-5">
+        <div class="jumbotron col-sm-5">
           <span class="label label-info">To: <{$data.mail}></span>
           <span class="label label-success"><{$data.title}></span>
           <div><{$data.content}></div>
@@ -20,23 +20,23 @@
   <{else}>
     <form action="mail.php" method="post" id="myForm" class="form-horizontal" role="form">
       <div class="form-group">
-        <div class="col-md-12">
+        <div class="col-sm-12">
         <input type="text" name="title" class="form-control" value="<{$title}>" placeholder="<{$smarty.const._MA_TADFORM_MAIL_TITLE}>">
         </div>
       </div>
 
       <div class="form-group">
-        <div class="col-md-10">
+        <div class="col-sm-10">
           <{$editor}>
         </div>
-        <div class="col-md-2">
+        <div class="col-sm-2">
          <span class="label label-danger"><{$smarty.const._MA_TADFORM_SEND_TAG}></span>
          <{$tag}>
         </div>
       </div>
 
       <div class="form-group">
-        <div class="col-md-12">
+        <div class="col-sm-12">
           <label class="checkbox-inline">
             <input type="checkbox" name="test" id="test" value="1" class="warning"><{$smarty.const._MA_TADFORM_MAIL_TEST}>
           </label>

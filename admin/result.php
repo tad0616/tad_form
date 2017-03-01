@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = "tad_form_adm_result.html";
+$xoopsOption['template_main'] = "tad_form_adm_result.tpl";
 include_once "header.php";
 include_once "../function.php";
 
