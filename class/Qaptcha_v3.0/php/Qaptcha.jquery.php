@@ -39,7 +39,7 @@ else
       if (is_float($a))
       {
         // Always use "." for floats.
-        return floatval(str_replace(",", ".", strval($a)));
+        return (float)str_replace(",", ".", (string)$a);
       }
 
       if (is_string($a))

@@ -7,7 +7,7 @@ include_once "../function.php";
 include '../../tadtools/PHPExcel.php'; //引入 PHPExcel 物件庫
 $objPHPExcel = new PHPExcel(); //實體化Excel
 
-$ofsn       = isset($_REQUEST['ofsn']) ? intval($_REQUEST['ofsn']) : 0;
+$ofsn       = isset($_REQUEST['ofsn']) ? (int)$_REQUEST['ofsn'] : 0;
 $form_main  = get_tad_form_main($ofsn);
 $form_title = str_replace("[", "", $form_main['title']);
 $form_title = str_replace("]", "", $form_title);
