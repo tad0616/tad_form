@@ -40,13 +40,15 @@
             <{$smarty.const._MD_TADFORM_MAN_NAME}>
           </label>
           <div class="col-sm-2">
-            <input type="text" name="man_name" id="tfman_name" class='form-control validate[required]' value="<{$uid_name}>">
+            <label for='tfman_name' style='display:none;'>tfman_name</label>
+            <input type="text" name="man_name" id="tfman_name" class='form-control validate[required]' <{if $uid_name}>value="<{$uid_name}>"<{/if}>>
           </div>
           <label class="col-sm-2 control-label">
             <{$smarty.const._MD_TADFORM_EMAIL}>
           </label>
           <div class="col-sm-4">
-            <input type="text" name="email" id="tfemail"  class='form-control validate[required]' value="<{$email}>">
+            <label for='tfemail' style='display:none;'>tfemail</label>
+            <input type="text" name="email" id="tfemail"  class='form-control validate[required]' <{if $email}>value="<{$email}>"<{/if}>>
           </div>
           <div class="col-sm-2">
             <button type="submit" name="submit" class="btn btn-primary"><{$smarty.const._MD_TADFORM_SUBMIT_FORM}></button>
