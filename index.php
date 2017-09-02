@@ -365,7 +365,7 @@ function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans 
             $default_val = (empty($db_ans)) ? $default_val : $db_ans;
             $chktxt      = ($chk) ? " validate[required]" : "";
             $span        = empty($size) ? 6 : round($size / 10, 0);
-            $main        = "<div class='col-sm-{$span}'><input type='text' name='ans[$csn]' id='tf{$csn}' class='form-control {$chktxt}' value='{$default_val}'><input type='hidden' name='need_csn[{$csn}]' value='{$csn}'></div>";
+            $main        = "<div class='col-sm-{$span}'><label for='tf{$csn}' style='display:none;'>{$csn}</label><input type='text' name='ans[$csn]' id='tf{$csn}' class='form-control {$chktxt}' value='{$default_val}'><input type='hidden' name='need_csn[{$csn}]' value='{$csn}'></div>";
             break;
 
         case "radio":
@@ -377,9 +377,9 @@ function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans 
                 $checked = ($default_val == $val) ? "checked='checked'" : "";
                 $chktxt  = ($chk) ? "class='validate[required] radio'" : "";
                 $main .= "
-								                  <label class='radio-inline'>
-								                    <input type='radio' name='ans[$csn]' value='{$val}' $checked $chktxt>{$val}
-								                  </label>";
+                  <label class='radio-inline'>
+                    <input type='radio' name='ans[$csn]' value='{$val}' $checked $chktxt>{$val}
+                  </label>";
                 $i++;
             }
             break;
@@ -395,9 +395,9 @@ function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans 
                 $checked = (in_array($val, $db)) ? "checked='checked'" : "";
                 $chktxt  = ($chk) ? "class='validate[required] checkbox'" : "";
                 $main .= "
-								                  <label class='checkbox-inline'>
-								                    <input type='checkbox' name='ans[$csn][]' value='{$val}' $checked $chktxt>{$val}
-								                  </label>";
+                  <label class='checkbox-inline'>
+                    <input type='checkbox' name='ans[$csn][]' value='{$val}' $checked $chktxt>{$val}
+                  </label>";
                 $i++;
             }
             break;
@@ -406,7 +406,7 @@ function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans 
             $default_val = (empty($db_ans)) ? $default_val : $db_ans;
             $chktxt      = ($chk) ? "validate[required]" : "";
             $opt         = explode(";", $size);
-            $main        = "<select name='ans[$csn]' id='tf{$csn}' class='form-control {$chktxt}'>";
+            $main        = "<label for='tf{$csn}' style='display:none;'>{$csn}</label><select name='ans[$csn]' id='tf{$csn}' class='form-control {$chktxt}'>";
             foreach ($opt as $val) {
                 $selected = ($default_val == $val) ? "selected" : "";
                 $main .= "<option value='{$val}' $selected>{$val}</option>";
@@ -421,14 +421,14 @@ function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans 
                 $size = 60;
             }
 
-            $main = "<textarea name='ans[$csn]' id='tf{$csn}' class='form-control {$chktxt}' style='height:{$size}px;'>{$default_val}</textarea><input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
+            $main = "<label for='tf{$csn}' style='display:none;'>{$csn}</label><textarea name='ans[$csn]' id='tf{$csn}' class='form-control {$chktxt}' style='height:{$size}px;'>{$default_val}</textarea><input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
             break;
 
         case "date":
             $default_val = (empty($db_ans)) ? $default_val : $db_ans;
             $span        = empty($size) ? 6 : round($size / 10, 0);
             $chktxt      = ($chk) ? "validate[required]" : "";
-            $main        = "<div class='col-sm-{$span}'><input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}' class='form-control {$chktxt}' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd' , startDate:'%y-%M-%d}'})\"></div>
+            $main        = "<div class='col-sm-{$span}'><label for='tf{$csn}' style='display:none;'>{$csn}</label><input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}' class='form-control {$chktxt}' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd' , startDate:'%y-%M-%d}'})\"></div>
 								                <input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
             break;
 
@@ -436,7 +436,7 @@ function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans 
             $default_val = (empty($db_ans)) ? $default_val : $db_ans;
             $span        = empty($size) ? 6 : round($size / 10, 0);
             $chktxt      = ($chk) ? "validate[required]" : "";
-            $main        = "<div class='col-sm-{$span}'><input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}'  class='form-control {$chktxt}' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm' , startDate:'%y-%M-%d %H:%m}'})\"></div>
+            $main        = "<div class='col-sm-{$span}'><label for='tf{$csn}' style='display:none;'>{$csn}</label><input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}'  class='form-control {$chktxt}' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm' , startDate:'%y-%M-%d %H:%m}'})\"></div>
 								                <input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
             break;
 

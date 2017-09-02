@@ -1,9 +1,9 @@
 <?php
 $modversion = array();
 
-//---模組基本資訊---//
+//---æ¨¡çµåºæ¬è³è¨---//
 $modversion['name']        = _MI_TADFORM_NAME;
-$modversion['version']     = 3.42;
+$modversion['version']     = 3.43;
 $modversion['description'] = _MI_TADFORM_DESC;
 $modversion['author']      = _MI_TADFORM_AUTHOR;
 $modversion['credits']     = _MI_TADFORM_CREDITS;
@@ -13,47 +13,49 @@ $modversion['license_url'] = 'www.gnu.org/licenses/gpl-2.0.html/';
 $modversion['image']       = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname']     = basename(__DIR__);
 
-//---模組狀態資訊---//
-$modversion['release_date']        = '2017-01-08';
+
+//---¼Ò²Õª¬ºA¸ê°T---//
+$modversion['release_date']        = '2017-06-16';
+
 $modversion['module_website_url']  = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status']       = 'release';
 $modversion['author_website_url']  = 'http://tad0616.net/';
 $modversion['author_website_name'] = _MI_TAD_WEB;
-$modversion['min_php']             = 5.3;
+$modversion['min_php']             = 5.4;
 $modversion['min_xoops']           = '2.5';
 
-//---paypal資訊---//
+//---paypalè³è¨---//
 $modversion['paypal']                  = array();
 $modversion['paypal']['business']      = 'tad0616@gmail.com';
 $modversion['paypal']['item_name']     = 'Donation : ' . _MI_TAD_WEB;
 $modversion['paypal']['amount']        = 0;
 $modversion['paypal']['currency_code'] = 'USD';
 
-//---資料表架構---//
+//---è³æè¡¨æ¶æ§---//
 $modversion['sqlfile']['mysql'] = "sql/mysql.sql";
 $modversion['tables'][1]        = "tad_form_col";
 $modversion['tables'][2]        = "tad_form_fill";
 $modversion['tables'][3]        = "tad_form_main";
 $modversion['tables'][4]        = "tad_form_value";
 
-//---啟動後台管理界面選單---//
+//---ååå¾å°ç®¡ççé¢é¸å®---//
 $modversion['system_menu'] = 1;
 
-//---安裝設定---//
+//---å®è£è¨­å®---//
 $modversion['onInstall']   = "include/onInstall.php";
 $modversion['onUpdate']    = "include/onUpdate.php";
 $modversion['onUninstall'] = "include/onUninstall.php";
 
-//---管理介面設定---//
+//---ç®¡çä»é¢è¨­å®---//
 $modversion['hasAdmin']   = 1;
 $modversion['adminindex'] = "admin/index.php";
 $modversion['adminmenu']  = "admin/menu.php";
 
-//---使用者主選單設定---//
+//---ä½¿ç¨èä¸»é¸å®è¨­å®---//
 $modversion['hasMain'] = 1;
 
-//---樣板設定---//
+//---æ¨£æ¿è¨­å®---//
 $modversion['templates']                    = array();
 $i                                          = 1;
 $modversion['templates'][$i]['file']        = 'tad_form_index.tpl';
@@ -78,7 +80,7 @@ $i++;
 $modversion['templates'][$i]['file']        = 'tad_form_report.tpl';
 $modversion['templates'][$i]['description'] = 'tad_form_report.tpl';
 
-//---區塊設定---//
+//---åå¡è¨­å®---//
 $modversion['blocks']                   = array();
 $modversion['blocks'][1]['file']        = "tad_form.php";
 $modversion['blocks'][1]['name']        = _MI_TADFORM_BNAME1;
@@ -94,7 +96,7 @@ $modversion['blocks'][2]['template']    = "tad_one_form.tpl";
 $modversion['blocks'][2]['edit_func']   = "tad_one_form_edit";
 $modversion['blocks'][2]['options']     = "";
 
-//---偏好設定---//
+//---åå¥½è¨­å®---//
 $modversion['config'][0]['name']        = 'show_amount';
 $modversion['config'][0]['title']       = '_MI_TADFORM_SHOW_AMOUNT';
 $modversion['config'][0]['description'] = '_MI_TADFORM_SHOW_AMOUNT_DESC';
