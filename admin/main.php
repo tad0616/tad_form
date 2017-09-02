@@ -10,7 +10,7 @@ function list_tad_form_main()
 {
     global $xoopsDB, $xoopsTpl;
 
-    $sql = "select * from " . $xoopsDB->prefix("tad_form_main") . " order by post_date desc";
+    $sql = "SELECT * FROM " . $xoopsDB->prefix("tad_form_main") . " ORDER BY post_date DESC";
 
     //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
     $PageBar = getPageBar($sql, 20, 10);
@@ -64,7 +64,7 @@ function list_tad_form_main()
 function get_form_count()
 {
     global $xoopsDB;
-    $sql     = "select ofsn,count(*) from " . $xoopsDB->prefix("tad_form_fill") . " group by ofsn";
+    $sql = "SELECT ofsn,count(*) FROM " . $xoopsDB->prefix("tad_form_fill") . " GROUP BY ofsn";
     $result  = $xoopsDB->queryF($sql) or web_error($sql);
     $counter = "";
     while (list($ofsn, $count) = $xoopsDB->fetchRow($result)) {
@@ -77,7 +77,7 @@ function get_form_count()
 function get_form_col_count()
 {
     global $xoopsDB;
-    $sql     = "select ofsn,count(*) from " . $xoopsDB->prefix("tad_form_col") . " group by ofsn";
+    $sql = "SELECT ofsn,count(*) FROM " . $xoopsDB->prefix("tad_form_col") . " GROUP BY ofsn";
     $result  = $xoopsDB->queryF($sql) or web_error($sql);
     $counter = "";
     while (list($ofsn, $count) = $xoopsDB->fetchRow($result)) {
@@ -155,26 +155,26 @@ switch ($op) {
         break;
 
     //輸入表格
-    case "tad_form_main_form";
+    case "tad_form_main_form":
         tad_form_main_form($ofsn);
         break;
 
     //刪除資料
-    case "delete_tad_form_main";
+    case "delete_tad_form_main":
         delete_tad_form_main($ofsn);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
         break;
 
     //變更狀態資料
-    case "set_form_status";
+    case "set_form_status":
         set_form_status($ofsn, $_GET['enable']);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
         break;
 
     //複製問卷
-    case "copy";
+    case "copy":
         copy_form($ofsn);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;

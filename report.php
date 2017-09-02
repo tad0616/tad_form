@@ -3,7 +3,7 @@
 include "header.php";
 $xoopsOption['template_main'] = "tad_form_report.tpl";
 include_once XOOPS_ROOT_PATH . "/header.php";
-if (!can_view_report(intval($_REQUEST['ofsn']))) {
+if (!can_view_report((int)$_REQUEST['ofsn'])) {
     redirect_header("index.php", 3, _MD_TADFORM_ONLY_MEM);
 }
 

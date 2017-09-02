@@ -90,7 +90,7 @@ function view_result($ofsn = "", $isAdmin = false, $view_ssn = '')
             $n++;
 
             if ($ff[$csn] == 'sum') {
-                $col[$csn]['sum'] += intval($col_v[$csn]);
+                $col[$csn]['sum'] += (int)$col_v[$csn];
             } elseif ($ff[$csn] == 'count') {
                 $val_arr = explode(";", $col_v[$csn]);
                 foreach ($val_arr as $v) {

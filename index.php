@@ -319,7 +319,7 @@ function save_val($ofsn = '', $ans = array())
 
     $now = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
 
-    $_POST['ssn'] = intval($_POST['ssn']);
+    $_POST['ssn'] = (int)$_POST['ssn'];
     //先存基本資料
     $sql = "replace into " . $xoopsDB->prefix("tad_form_fill") . " (`ssn`,`ofsn`,`uid`,`man_name`,`email`,`fill_time`,`result_col`,`code`) values('{$_POST['ssn']}','{$_POST['ofsn']}','{$uid}','{$_POST['man_name']}','{$_POST['email']}', '{$now}','','')";
     $xoopsDB->queryF($sql) or web_error($sql);
@@ -331,7 +331,7 @@ function save_val($ofsn = '', $ans = array())
     foreach ($ans as $csn => $val) {
         $value = (is_array($val)) ? implode(";", $val) : $val;
         $value = $myts->addSlashes($value);
-        $ssn   = intval($ssn);
+        $ssn   = (int)$ssn;
         $sql   = "replace into " . $xoopsDB->prefix("tad_form_value") . " (`ssn`,`csn`,`val`) values('{$ssn}','{$csn}','{$value}')";
         $xoopsDB->queryF($sql) or web_error($sql);
 
@@ -340,7 +340,7 @@ function save_val($ofsn = '', $ans = array())
 
     //把一些沒填的欄位也補上空值
     foreach ($need_csn_arr as $csn) {
-        $ssn = intval($ssn);
+        $ssn = (int)$ssn;
         $sql = "replace into " . $xoopsDB->prefix("tad_form_value") . " (`ssn`,`csn`,`val`) values('{$ssn}','{$csn}','')";
         $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $sql);
     }
