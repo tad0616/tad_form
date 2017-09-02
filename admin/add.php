@@ -312,14 +312,14 @@ $mode = system_CleanVars($_REQUEST, 'mode', '', 'string');
 switch ($op) {
 
     //更新欄位是否公開
-    case "change_public";
+    case "change_public":
         change_public($csn, $_GET['public']);
         header("location: {$_SERVER['PHP_SELF']}?op=edit_all_opt&ofsn=$ofsn");
         exit;
         break;
 
     //更新欄位是否檢查
-    case "change_chk";
+    case "change_chk":
         change_chk($csn, $_GET['chk']);
         header("location: {$_SERVER['PHP_SELF']}?op=edit_all_opt&ofsn=$ofsn");
         exit;
@@ -333,7 +333,7 @@ switch ($op) {
         break;
 
     //更新資料
-    case "update_tad_form_main";
+    case "update_tad_form_main":
         $ofsn = update_tad_form_main($ofsn);
         if ($_POST['edit_option'] == '1') {
             header("location: {$_SERVER['PHP_SELF']}?op=edit_opt&ofsn=$ofsn");
@@ -345,24 +345,24 @@ switch ($op) {
         break;
 
     //輸入表格
-    case "edit_opt";
+    case "edit_opt":
         tad_form_col_form($ofsn, $csn, $mode);
         break;
 
     //刪除欄位
-    case "delete_tad_form_col";
+    case "delete_tad_form_col":
         delete_tad_form_col($csn);
         header("location: {$_SERVER['PHP_SELF']}?op=edit_all_opt&ofsn={$ofsn}");
         exit;
         break;
 
     //編輯所有題目
-    case "edit_all_opt";
+    case "edit_all_opt":
         edit_all_opt($ofsn);
         break;
 
     //更新資料
-    case "update_tad_form_col";
+    case "update_tad_form_col":
         update_tad_form_col($csn);
         if ($_POST['end'] == '1') {
             header("location: main.php");
