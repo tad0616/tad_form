@@ -1,3 +1,10 @@
+Tad Form 3.4.4 (released on 2018-05-21)
+================================================
+1. Support PHP 7.2
+2. Support database strict mode
+3. Remove the tchinese Big5 language
+
+
 Tad Form 3.4.3 (2017-06-16 released)
 ================================================
 1.Completion of accessibility 2.0 A level detection

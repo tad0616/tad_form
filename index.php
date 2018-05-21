@@ -18,7 +18,7 @@ function list_tad_form_main()
     $sql    = "select * from " . $xoopsDB->prefix("tad_form_main") . " where enable='1' and start_date < '{$today}'  and end_date > '{$today}'";
     $result = $xoopsDB->query($sql) or web_error($sql);
     $i      = 0;
-    $all    = "";
+    $all    = array();
     while ($data = $xoopsDB->fetchArray($result)) {
         foreach ($data as $k => $v) {
             $$k = $v;
@@ -508,8 +508,6 @@ $ssn  = system_CleanVars($_REQUEST, 'ssn', 0, 'int');
 $ans  = system_CleanVars($_REQUEST, 'ans', '', 'array');
 $code = system_CleanVars($_REQUEST, 'vcode', '', 'string');
 
-$xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
-$xoopsTpl->assign("bootstrap", get_bootstrap());
 
 switch ($op) {
     case "sign":
@@ -520,7 +518,6 @@ switch ($op) {
         delete_tad_form_ans($ssn);
         header("location:index.php?op=sign&ofsn={$ofsn}");
         exit;
-        break;
 
     case "save_val":
         $code = save_val($ofsn, $ans);
@@ -538,4 +535,6 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
+
+$xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
 include_once XOOPS_ROOT_PATH . '/footer.php';
