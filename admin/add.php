@@ -70,13 +70,11 @@ function tad_form_main_form($ofsn = "")
     $xoopsTpl->assign("title", $title);
     $xoopsTpl->assign("sign_group", $sign_group);
     $xoopsTpl->assign("kind_menu", $kind_menu);
-    $xoopsTpl->assign("show_result1", chk($show_result, "1"));
-    $xoopsTpl->assign("show_result0", chk($show_result, "0"));
+    $xoopsTpl->assign("show_result", $show_result);
     $xoopsTpl->assign("start_date", $start_date);
     $xoopsTpl->assign("end_date", $end_date);
     $xoopsTpl->assign("adm_email", $adm_email);
-    $xoopsTpl->assign("captcha1", chk($captcha, "1"));
-    $xoopsTpl->assign("captcha0", chk($captcha, "0"));
+    $xoopsTpl->assign("captcha", $captcha);
     $xoopsTpl->assign("editor", $editor);
     $xoopsTpl->assign("enable", $enable);
     $xoopsTpl->assign("ofsn", $ofsn);
@@ -84,8 +82,6 @@ function tad_form_main_form($ofsn = "")
     $xoopsTpl->assign("next", $next);
     $xoopsTpl->assign("view_result_group", $view_result_group);
     $xoopsTpl->assign("multi_sign", $multi_sign);
-    $xoopsTpl->assign("multi_sign1", chk($multi_sign, "1"));
-    $xoopsTpl->assign("multi_sign0", chk($multi_sign, "0"));
 
 }
 

@@ -202,7 +202,6 @@ switch ($op) {
         update_result($_POST['ssn'], $_POST['result_col']);
         header("location: {$_SERVER['PHP_SELF']}?ofsn={$ofsn}");
         exit;
-        break;
 
     case "view":
         view_result($ofsn, true, $ssn);
@@ -213,7 +212,6 @@ switch ($op) {
         delete_tad_form_ans($ssn);
         header("location: {$_SERVER['PHP_SELF']}?ofsn={$ofsn}");
         exit;
-        break;
 
     //預設動作
     default:
