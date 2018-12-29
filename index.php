@@ -16,7 +16,7 @@ function list_tad_form_main()
         $User_Groups = array(3);
     }
     $sql    = "select * from " . $xoopsDB->prefix("tad_form_main") . " where enable='1' and start_date < '{$today}'  and end_date > '{$today}'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     $i      = 0;
     $all    = array();
     while ($data = $xoopsDB->fetchArray($result)) {
@@ -173,7 +173,7 @@ function sign_form($ofsn = "", $ssn = "")
     if ($form['kind'] == "application") {
         $man_name_list = "<table><caption>" . _MD_TADFORM_OK_LIST . "</caption>";
         $sql           = "select email,fill_time from " . $xoopsDB->prefix("tad_form_fill") . " where ofsn='{$ofsn}' and result_col='1'";
-        $result        = $xoopsDB->query($sql) or web_error($sql);
+        $result        = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
         $n             = $i             = 3;
         while (list($email, $fill_time) = $xoopsDB->fetchRow($result)) {
             $fill_time  = date("Y-m-d H:i:s", xoops_getUserTimestamp(strtotime($fill_time)));
@@ -197,7 +197,7 @@ function sign_form($ofsn = "", $ssn = "")
 
     $sql = "select * from " . $xoopsDB->prefix("tad_form_col") . " where ofsn='{$ofsn}' order by sort";
 
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     $i      = 1;
     while ($data = $xoopsDB->fetchArray($result)) {
         foreach ($data as $k => $v) {
@@ -322,7 +322,7 @@ function save_val($ofsn = '', $ans = array())
     $_POST['ssn'] = (int)$_POST['ssn'];
     //先存基本資料
     $sql = "replace into " . $xoopsDB->prefix("tad_form_fill") . " (`ssn`,`ofsn`,`uid`,`man_name`,`email`,`fill_time`,`result_col`,`code`) values('{$_POST['ssn']}','{$_POST['ofsn']}','{$uid}','{$_POST['man_name']}','{$_POST['email']}', '{$now}','','')";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
     $ssn = $xoopsDB->getInsertId();
 
     $need_csn_arr = $_POST['need_csn'];
@@ -333,7 +333,7 @@ function save_val($ofsn = '', $ans = array())
         $value = $myts->addSlashes($value);
         $ssn   = (int)$ssn;
         $sql   = "replace into " . $xoopsDB->prefix("tad_form_value") . " (`ssn`,`csn`,`val`) values('{$ssn}','{$csn}','{$value}')";
-        $xoopsDB->queryF($sql) or web_error($sql);
+        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
 
         unset($need_csn_arr[$csn]);
     }
@@ -347,10 +347,10 @@ function save_val($ofsn = '', $ans = array())
 
     //產生code
     $sql = "update " . $xoopsDB->prefix("tad_form_fill") . " set `code`=md5(CONCAT(`ofsn`,`uid`, `man_name`, `email`, `fill_time`)) where ssn='{$ssn}'";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
 
     $sql        = "select `code` from " . $xoopsDB->prefix("tad_form_fill") . " where ssn='{$ssn}'";
-    $result     = $xoopsDB->query($sql) or web_error($sql);
+    $result     = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     list($code) = $xoopsDB->fetchRow($result);
 
     return $code;
@@ -452,7 +452,7 @@ function replace_tad_form_fill()
 {
     global $xoopsDB;
     $sql = "replace into " . $xoopsDB->prefix("tad_form_fill") . " (`ofsn`,`uid`,`man_name`,`email`,`fill_time` , `result_col` , `code`) values('{$_POST['ofsn']}','{$_POST['uid']}','{$_POST['man_name']}','{$_POST['email']}','{$_POST['fill_time']}' , '' , '')";
-    $xoopsDB->query($sql) or web_error($sql);
+    $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     //取得最後新增資料的流水編號
     $ofsnuid = $xoopsDB->getInsertId();
     return $ofsnuid;
@@ -467,7 +467,7 @@ function send_now($code = "")
     $xoopsMailer->multimailer->ContentType = "text/html";
 
     $sql                                                                  = "select a.`ofsn`,a.`man_name`,a.`email`, a.`fill_time`,a.`code`,b.`title`,b.`adm_email`  from " . $xoopsDB->prefix("tad_form_fill") . " as a left join " . $xoopsDB->prefix("tad_form_main") . " as b on a.ofsn=b.ofsn where a.code='$code'";
-    $result                                                               = $xoopsDB->query($sql) or web_error($sql);
+    $result                                                               = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     list($ofsn, $man_name, $email, $fill_time, $code, $title, $adm_email) = $xoopsDB->fetchRow($result);
 
     $xoopsMailer->addHeaders("MIME-Version: 1.0");

@@ -17,7 +17,7 @@ function list_tad_form_main()
     $bar     = $PageBar['bar'];
     $sql     = $PageBar['sql'];
 
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
 
     $sign_mems = get_form_count();
     $cols_num  = get_form_col_count();
@@ -65,7 +65,7 @@ function get_form_count()
 {
     global $xoopsDB;
     $sql = "SELECT ofsn,count(*) FROM " . $xoopsDB->prefix("tad_form_fill") . " GROUP BY ofsn";
-    $result  = $xoopsDB->queryF($sql) or web_error($sql);
+    $result  = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
     $counter = array();
     while (list($ofsn, $count) = $xoopsDB->fetchRow($result)) {
         $counter[$ofsn] = $count;
@@ -78,7 +78,7 @@ function get_form_col_count()
 {
     global $xoopsDB;
     $sql = "SELECT ofsn,count(*) FROM " . $xoopsDB->prefix("tad_form_col") . " GROUP BY ofsn";
-    $result  = $xoopsDB->queryF($sql) or web_error($sql);
+    $result  = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
     $counter = array();
     while (list($ofsn, $count) = $xoopsDB->fetchRow($result)) {
         $counter[$ofsn] = $count;
@@ -92,25 +92,25 @@ function delete_tad_form_main($ofsn = "")
     global $xoopsDB;
     //先找出有哪些人填了
     $sql    = "select ssn from " . $xoopsDB->prefix("tad_form_fill") . " where ofsn='$ofsn'";
-    $result = $xoopsDB->queryF($sql) or web_error($sql);
+    $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
     while (list($ssn) = $xoopsDB->fetchRow($result)) {
 
         //刪了填報內容
         $sql = "delete from " . $xoopsDB->prefix("tad_form_value") . " where ssn='$ssn'";
-        $xoopsDB->queryF($sql) or web_error($sql);
+        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
 
         //刪了填寫人資料
         $sql = "delete from " . $xoopsDB->prefix("tad_form_fill") . " where ssn='$ssn'";
-        $xoopsDB->queryF($sql) or web_error($sql);
+        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
     }
 
     //刪掉欄位
     $sql = "delete from " . $xoopsDB->prefix("tad_form_col") . " where ofsn='$ofsn'";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
 
     //最後刪掉問卷
     $sql = "delete from " . $xoopsDB->prefix("tad_form_main") . " where ofsn='$ofsn'";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
 }
 
 //複製問卷
@@ -120,25 +120,25 @@ function copy_form($ofsn = "")
 
     //讀出原有資料
     $sql                                                                                                                                                               = "select `title`, `start_date`, `end_date`, `content`, `uid`, `post_date`, `enable`, `sign_group`, `kind`, `adm_email`, `captcha`, `show_result`, `view_result_group`, `multi_sign` from " . $xoopsDB->prefix("tad_form_main") . " where ofsn='$ofsn'";
-    $result                                                                                                                                                            = $xoopsDB->query($sql) or web_error($sql);
+    $result                                                                                                                                                            = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     list($title, $start_date, $end_date, $content, $uid, $post_date, $enable, $sign_group, $kind, $adm_email, $captcha, $show_result, $view_result_group, $multi_sign) = $xoopsDB->fetchRow($result);
 
     $now = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
 
     //寫入新問卷
     $sql = "insert into " . $xoopsDB->prefix("tad_form_main") . " (`title`,`start_date`,`end_date`,`content`,`uid`,`post_date`,`enable`,`sign_group`, `kind`, `adm_email`, `captcha`, `show_result`, `view_result_group`, `multi_sign`) values('copy_{$title}','{$start_date}','{$end_date}','{$content}','{$uid}','{$now}','0','{$sign_group}','{$kind}','{$adm_email}','{$captcha}','{$show_result}','{$view_result_group}','{$multi_sign}')";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
 
     //取得最後新增資料的流水編號
     $new_ofsn = $xoopsDB->getInsertId();
 
     //讀出選項
     $sql    = "select `title`, `descript`, `kind`, `size`, `val`, `chk`, `func`, `sort` ,`public` from " . $xoopsDB->prefix("tad_form_col") . " where ofsn='$ofsn'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     while (list($title, $descript, $kind, $size, $val, $chk, $func, $sort, $public) = $xoopsDB->fetchRow($result)) {
         //寫入選項
         $sql = "insert into " . $xoopsDB->prefix("tad_form_col") . " (`ofsn`,`title`,`descript`,`kind`,`size`,`val`,`chk`,`func`,`sort`,`public`) values('{$new_ofsn}','{$title}','{$descript}','{$kind}','{$size}','{$val}','{$chk}','{$func}','{$sort}','{$public}')";
-        $xoopsDB->queryF($sql) or web_error($sql);
+        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
     }
 }
 
