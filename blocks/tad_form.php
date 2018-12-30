@@ -2,7 +2,8 @@
 //區塊主函式 (列出目前執行中的線上調查表)
 function tad_form($options)
 {
-    global $xoopsDB;
+    global $xoopsDB, $xoTheme;
+    $xoTheme->addStylesheet('modules/tadtools/css/vertical_menu.css');
 
     $today = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
 
