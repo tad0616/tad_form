@@ -28,7 +28,7 @@ function view_user_result($ofsn)
 
     $sql = "select csn,title,kind,func from " . $xoopsDB->prefix("tad_form_col") . " where ofsn='{$ofsn}' and public='1' order by sort";
     //die($sql);
-    $result    = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
+    $result    = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $all_title = array();
     $i         = 0;
     $csn_arr   = $ff   = $tt   = $kk   = array();
@@ -60,7 +60,7 @@ function view_user_result($ofsn)
 
     $sql = "select ssn,uid,man_name,email,fill_time,code,result_col from " . $xoopsDB->prefix("tad_form_fill") . " where ofsn='{$ofsn}' order by fill_time desc";
 
-    $result         = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
+    $result         = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i              = 0;
     $all_result_col = array();
     while (list($ssn, $uid, $man_name, $email, $fill_time, $code, $result_col) = $xoopsDB->fetchRow($result)) {

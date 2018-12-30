@@ -26,7 +26,7 @@ function view_result($ofsn = "", $isAdmin = false, $view_ssn = '')
     $xoopsTpl->assign('ofsn', $ofsn);
 
     $sql       = "select csn,title,kind,func from " . $xoopsDB->prefix("tad_form_col") . " where ofsn='{$ofsn}' order by sort";
-    $result    = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
+    $result    = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $all_title = $tt = $tt = $kk = $csn_arr = array();
     $i         = 0;
     while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
@@ -60,7 +60,7 @@ function view_result($ofsn = "", $isAdmin = false, $view_ssn = '')
 
     $sql = "select ssn,uid,man_name,email,fill_time,code,result_col from " . $xoopsDB->prefix("tad_form_fill") . " where ofsn='{$ofsn}' order by fill_time desc";
 
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i      = 0;
     $col_v  = $col  = array();
     while (list($ssn, $uid, $man_name, $email, $fill_time, $code, $result_col) = $xoopsDB->fetchRow($result)) {
@@ -173,7 +173,7 @@ function view_result($ofsn = "", $isAdmin = false, $view_ssn = '')
 
     if ($view_ssn) {
         $sql        = "select code from " . $xoopsDB->prefix("tad_form_fill") . " where ofsn='{$ofsn}' and ssn='{$view_ssn}'";
-        $result     = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
+        $result     = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
         list($code) = $xoopsDB->fetchRow($result);
         view($code);
     }
@@ -185,7 +185,7 @@ function update_result($ssn_arr = array(), $result_col = array())
     global $xoopsDB;
     foreach ($ssn_arr as $ssn) {
         $sql = "update " . $xoopsDB->prefix("tad_form_fill") . " set result_col='{$result_col[$ssn]}'  where ssn='$ssn'";
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
+        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     }
 }
 
