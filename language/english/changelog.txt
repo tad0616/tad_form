@@ -1,6 +1,7 @@
 Tad Form 3.4.5 (2019-01-01 released)
 ================================================
 1.Support Bootstrap4
+2.Support PHP 7.3
 
 
 Tad Form 3.4.4 (2018-05-21 released)

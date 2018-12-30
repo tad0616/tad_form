@@ -43,11 +43,25 @@ function tad_one_form_edit($options)
     $sql    = "select * from " . $xoopsDB->prefix("tad_form_main") . " where enable='1' and start_date < '{$today}' and end_date > '{$today}'";
     $result = $xoopsDB->query($sql);
 
-    $form = _MB_TADFORM_ONE_FORM_T1 . "	<select name='options[0]' size=5>";
+    $opt = "";
     while (list($ofsn, $title, $start_date, $end_date, $content, $uid, $post_date, $enable) = $xoopsDB->fetchRow($result)) {
         $selected = ($ofsn == $options[0]) ? "selected" : "";
-        $form .= "<option value='{$ofsn}' $selected>$title</option>\n";
+        $opt .= "<option value='{$ofsn}' $selected>$title</option>\n";
     }
-    $form .= "</select>";
+    $opt .= "";
+
+    $form = "
+    <ol class='my-form'>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADFORM_ONE_FORM_T1 . "</lable>
+            <div class='my-content'>
+                <select name='options[0]' class='my-input' size=5>
+                {$opt}
+                </select>
+            </div>
+        </li>
+    </ol>
+    ";
+
     return $form;
 }
