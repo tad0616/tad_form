@@ -17,7 +17,7 @@ define('_MI_TADFORM_SHOW_AMOUNT', 'Does display the number of people?');
 define('_MI_TADFORM_SHOW_AMOUNT_DESC', 'Does display the number of people?');
 
 define('_MI_TADFORM_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('_MI_TADFORM_HELP_HEADER', __DIR__ . '/help/helpheader.html');
+define('_MI_TADFORM_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_TADFORM_BACK_2_ADMIN', 'Back to Administration of ');
 
 //help

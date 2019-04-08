@@ -17,7 +17,7 @@ define('_MI_TADFORM_SHOW_AMOUNT', '前台是否顯示已有幾人填寫');
 define('_MI_TADFORM_SHOW_AMOUNT_DESC', '前台的填報按鈕上是否顯示已有幾人填寫？');
 
 define('_MI_TADFORM_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('_MI_TADFORM_HELP_HEADER', __DIR__ . '/help/helpheader.html');
+define('_MI_TADFORM_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_TADFORM_BACK_2_ADMIN', '管理');
 
 //help
