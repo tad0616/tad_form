@@ -2,33 +2,33 @@
 <div class="container-fluid">
   <{if $op=="edit_opt"}>
 
-    <form action="add.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
+    <form action="add.php" method="post" id="myForm" enctype="multipart/form-data" role="form">
 
-      <div class="form-group">
-        <label class="col-md-2 control-label">
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label text-sm-right">
           <{$smarty.const._MA_TADFORM_COL_TITLE}><{$sort}>
         </label>
-        <div class="col-md-10">
+        <div class="col-sm-10">
           <input type="text" name="title" id="title" value="<{$title}>" class="form-control">
         </div>
       </div>
 
 
-      <div class="form-group">
-        <label class="col-md-2 control-label">
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label text-sm-right">
           <{$smarty.const._MA_TADFORM_COL_DESCRIPT}>
         </label>
-        <div class="col-md-10">
+        <div class="col-sm-10">
           <textarea name="descript" id="descript" class="form-control" rows=4><{$descript}></textarea>
         </div>
       </div>
 
 
-      <div class="form-group">
-        <label class="col-md-2 control-label">
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label text-sm-right">
           <{$smarty.const._MA_TADFORM_COL_KIND}>
         </label>
-        <div class="col-md-2">
+        <div class="col-sm-2">
           <select name="kind" size=1 class="form-control">
             <option value="text" <{if $kind=="text"}>selected<{/if}>><{$smarty.const._MA_TADFORM_COL_TEXT}></option>
             <option value="radio" <{if $kind=="radio"}>selected<{/if}>><{$smarty.const._MA_TADFORM_COL_RADIO}></option>
@@ -40,44 +40,48 @@
             <option value="show" <{if $kind=="show"}>selected<{/if}>><{$smarty.const._MA_TADFORM_COL_SHOW}></option>
           </select>
         </div>
-        <label class="col-md-2 control-label">
+        <label class="col-sm-2 col-form-label text-sm-right">
           <{$smarty.const._MA_TADFORM_COL_SIZE}>
         </label>
-        <div class="col-md-6">
+        <div class="col-sm-6">
           <input type="text" name="size" id="size" value="<{$size}>" class="form-control" placeholder="<{$smarty.const._MA_TADFORM_COL_NOTE}>">
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="col-md-2 control-label">
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label text-sm-right">
           <{$smarty.const._MA_TADFORM_COL_PUBLIC}>
         </label>
-        <div class="col-md-2">
-          <label class="radio-inline">
-            <input type="radio" name="public" id="public1" value="1" <{if $public=="1"}>checked<{/if}>><{$smarty.const._YES}>
-          </label>
-          <label class="radio-inline">
-            <input type="radio" name="public" id="public0" value="0" <{if $public!="1"}>checked<{/if}>><{$smarty.const._NO}>
-          </label>
+        <div class="col-sm-2">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="public" id="public_1" value="1" <{if $public == "1"}>checked="checked"<{/if}>>
+            <label class="form-check-label" for="public_1"><{$smarty.const._YES}></label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="public" id="public_0" value="0" <{if $public != "1"}>checked="checked"<{/if}>>
+            <label class="form-check-label" for="public_0"><{$smarty.const._NO}></label>
+          </div>
           <input type="hidden" name="sort" value="<{$sort}>">
         </div>
 
-        <label class="col-md-1 control-label">
+        <label class="col-sm-1 col-form-label text-sm-right">
           <{$smarty.const._MA_TADFORM_COL_CHK}>
         </label>
-        <div class="col-md-2">
-          <label class="radio-inline">
-            <input type="radio" name="chk" id="chk1" value="1" <{if $chk=="1"}>checked<{/if}>><{$smarty.const._YES}>
-          </label>
-          <label class="radio-inline">
-            <input type="radio" name="chk" id="chk0" value="0"  <{if $chk!="1"}>checked<{/if}>><{$smarty.const._NO}>
-          </label>
+        <div class="col-sm-2">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="chk" id="chk_1" value="1" <{if $chk == "1"}>checked="checked"<{/if}>>
+            <label class="form-check-label" for="chk_1"><{$smarty.const._YES}></label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="chk" id="chk_0" value="0" <{if $chk != "1"}>checked="checked"<{/if}>>
+            <label class="form-check-label" for="chk_0"><{$smarty.const._NO}></label>
+          </div>
         </div>
 
-        <label class="col-md-1 control-label">
+        <label class="col-sm-1 col-form-label text-sm-right">
           <{$smarty.const._MA_TADFORM_COL_FUNC}>
         </label>
-        <div class="col-md-1">
+        <div class="col-sm-1">
           <select name="func" id="func" size=1 class="form-control">
             <option value="" <{if $func==""}>selected<{/if}>><{$smarty.const._MA_TADFORM_COL_NO_FUN}></option>
             <option value="sum" <{if $func=="sum"}>selected<{/if}>><{$smarty.const._MA_TADFORM_COL_SUM}></option>
@@ -86,10 +90,10 @@
           </select>
         </div>
 
-        <label class="col-md-1 control-label">
+        <label class="col-sm-1 col-form-label text-sm-right">
           <{$smarty.const._MA_TADFORM_COL_VAL}>
         </label>
-        <div class="col-md-2">
+        <div class="col-sm-2">
           <input type="text" name="val" id="val" value="<{$val}>" class="form-control">
         </div>
       </div>
@@ -97,7 +101,7 @@
 
 
       <div class="row">
-        <div class="col-md-12 text-center">
+        <div class="col-sm-12 text-center">
           <{$end_txt}>
 
           <input type="hidden" name="op" value="<{$next_op}>">
@@ -153,8 +157,8 @@
           <td><{$q.func}></td>
           <td><{$q.public}></td>
           <td>
-            <a href="javascript:delete_tad_col_func(<{$q.csn}>);" class="btn btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
-            <a href="add.php?op=edit_opt&ofsn=<{$ofsn}>&csn=<{$q.csn}>&mode=modify" class="btn btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>
+            <a href="javascript:delete_tad_col_func(<{$q.csn}>);" class="btn btn-sm btn-danger"><{$smarty.const._TAD_DEL}></a>
+            <a href="add.php?op=edit_opt&ofsn=<{$ofsn}>&csn=<{$q.csn}>&mode=modify" class="btn btn-sm btn-warning"><{$smarty.const._TAD_EDIT}></a>
           </td>
         </tr>
       <{/foreach}>
@@ -170,104 +174,110 @@
   <{else}>
     <{$formValidator_code}>
     <script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/My97DatePicker/WdatePicker.js"></script>
-    <form action="add.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
+    <form action="add.php" method="post" id="myForm" enctype="multipart/form-data" role="form">
 
 
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-sm-6">
 
-          <div class="form-group">
-            <label class="col-md-2 control-label">
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label text-sm-right">
               <{$smarty.const._MA_TADFORM_TITLE}>
             </label>
-            <div class="col-md-10">
+            <div class="col-sm-10">
               <input type="text" name="title" id="title" value="<{$title}>" class="validate[required] form-control" >
             </div>
           </div>
 
 
-          <div class="form-group">
-            <label class="col-md-2 control-label">
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label text-sm-right">
               <{$smarty.const._MA_TADFORM_ADM_EMAIL}>
             </label>
-            <div class="col-md-10">
+            <div class="col-sm-10">
               <input type="text" name="adm_email" id="adm_email" value="<{$adm_email}>" class="validate[required] form-control" >
             </div>
           </div>
 
 
-          <div class="form-group">
-            <label class="col-md-2 control-label">
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label text-sm-right">
               <{$smarty.const._MA_TADFORM_START_DATE}>
             </label>
-            <div class="col-md-10">
+            <div class="col-sm-10">
               <input type="text" name="start_date" id="start_date" class="form-control" value="<{$start_date}>" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})">
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="col-md-2 control-label">
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label text-sm-right">
               <{$smarty.const._MA_TADFORM_END_DATE}>
             </label>
-            <div class="col-md-10">
+            <div class="col-sm-10">
               <input type="text" name="end_date" id="end_date" class="form-control" value="<{$end_date}>" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})">
             </div>
           </div>
 
         </div>
 
-        <div class="col-md-6">
+        <div class="col-sm-6">
 
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-sm-4">
               <label style="display: block;">
                 <{$smarty.const._MA_TADFORM_USE_CAPTCHA}>
               </label>
-              <label class="radio-inline">
-                <input type="radio" name="captcha" id="captcha_1" value="1" <{$captcha1}>><{$smarty.const._YES}>
-              </label>
-              <label class="radio-inline">
-                <input type="radio" name="captcha" id="captcha_0" value="0" <{$captcha0}>><{$smarty.const._NO}>
-              </label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="captcha" id="captcha_1" value="1" <{if $captcha == "1"}>checked="checked"<{/if}>>
+                <label class="form-check-label" for="captcha_1"><{$smarty.const._YES}></label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="captcha" id="captcha_0" value="0" <{if $captcha != "1"}>checked="checked"<{/if}>>
+                <label class="form-check-label" for="captcha_0"><{$smarty.const._NO}></label>
+              </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-sm-4">
               <label style="display: block;">
                 <{$smarty.const._MA_TADFORM_MULTI_SIGN}>
               </label>
-              <label class="radio-inline">
-                <input type="radio" name="multi_sign" id="multi_sign_1" value="1" <{$multi_sign1}>><{$smarty.const._YES}>
-              </label>
-              <label class="radio-inline">
-                <input type="radio" name="multi_sign" id="multi_sign_0" value="0" <{$multi_sign0}>><{$smarty.const._NO}>
-              </label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="multi_sign" id="multi_sign_1" value="1" <{if $multi_sign == "1"}>checked="checked"<{/if}>>
+                <label class="form-check-label" for="multi_sign_1"><{$smarty.const._YES}></label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="multi_sign" id="multi_sign_0" value="0" <{if $multi_sign != "1"}>checked="checked"<{/if}>>
+                <label class="form-check-label" for="multi_sign_0"><{$smarty.const._NO}></label>
+              </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-sm-4">
               <label style="display: block;">
                 <{$smarty.const._MA_TADFORM_SHOW_RESULT}>
               </label>
-              <label class="radio-inline">
-                <input type="radio" name="show_result" id="show_result_1" value="1" <{$show_result1}>><{$smarty.const._YES}>
-              </label>
-              <label class="radio-inline">
-                <input type="radio" name="show_result" id="show_result_0" value="0" <{$show_result0}>><{$smarty.const._NO}>
-              </label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="show_result" id="show_result_1" value="1" <{if $show_result == "1"}>checked="checked"<{/if}>>
+                <label class="form-check-label" for="show_result_1"><{$smarty.const._YES}></label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="show_result" id="show_result_0" value="0" <{if $show_result != "1"}>checked="checked"<{/if}>>
+                <label class="form-check-label" for="show_result_0"><{$smarty.const._NO}></label>
+              </div>
             </div>
           </div>
 
           <hr>
 
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-sm-4">
               <label><{$smarty.const._MA_TADFORM_KIND}></label>
               <select name="kind" class="form-control"><{$kind_menu}></select>
             </div>
-            <div class="col-md-4">
+            <div class="col-sm-4">
               <label><{$smarty.const._MA_TADFORM_SIGN_GROUP}></label>
               <{$sign_group}>
             </div>
-            <div class="col-md-4">
+            <div class="col-sm-4">
               <label><{$smarty.const._MA_TADFORM_VIEW_RESULT_GROUP}></label>
               <{$view_result_group}>
             </div>
@@ -278,14 +288,14 @@
 
 
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-sm-12">
           <{$editor}>
         </div>
       </div>
 
 
       <div class="row">
-        <div class="col-md-12 text-center">
+        <div class="col-sm-12 text-center">
           <input type="hidden" name="enable" value="<{$enable}>">
           <input type="hidden" name="ofsn" value="<{$ofsn}>">
           <input type="hidden" name="op" value="<{$op}>">

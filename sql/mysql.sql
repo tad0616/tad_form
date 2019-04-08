@@ -15,7 +15,7 @@ CREATE TABLE `tad_form_main` (
   `view_result_group` varchar(255) NOT NULL default '',
   `multi_sign` enum('0','1') NOT NULL default '0',
   PRIMARY KEY  (`ofsn`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `tad_form_col` (
   `csn` mediumint(8) unsigned NOT NULL auto_increment,
@@ -31,7 +31,7 @@ CREATE TABLE `tad_form_col` (
   `public` enum('0','1') NOT NULL default '0',
   PRIMARY KEY  (`csn`),
   KEY `ofsn` (`ofsn`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `tad_form_fill` (
   `ssn` int(10) unsigned NOT NULL auto_increment,
@@ -39,11 +39,11 @@ CREATE TABLE `tad_form_fill` (
   `uid` mediumint(8) unsigned NOT NULL default '0',
   `man_name` varchar(20) NOT NULL default '',
   `email` varchar(50) NOT NULL default '',
-  `fill_time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `fill_time` datetime NOT NULL,
   `result_col` varchar(255) NOT NULL default '',
   `code` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`ssn`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `tad_form_value` (
@@ -51,4 +51,4 @@ CREATE TABLE `tad_form_value` (
   `csn` mediumint(8) unsigned NOT NULL default '0',
   `val` text,
   PRIMARY KEY  (`ssn`,`csn`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

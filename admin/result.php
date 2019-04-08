@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = "tad_form_adm_result.html";
+$xoopsOption['template_main'] = "tad_form_adm_result.tpl";
 include_once "header.php";
 include_once "../function.php";
 
@@ -26,8 +26,8 @@ function view_result($ofsn = "", $isAdmin = false, $view_ssn = '')
     $xoopsTpl->assign('ofsn', $ofsn);
 
     $sql       = "select csn,title,kind,func from " . $xoopsDB->prefix("tad_form_col") . " where ofsn='{$ofsn}' order by sort";
-    $result    = $xoopsDB->query($sql) or web_error($sql);
-    $all_title = $tt = $tt = $kk = $csn_arr = "";
+    $result    = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $all_title = $tt = $tt = $kk = $csn_arr = array();
     $i         = 0;
     while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
         if ($kind == "show") {
@@ -60,9 +60,9 @@ function view_result($ofsn = "", $isAdmin = false, $view_ssn = '')
 
     $sql = "select ssn,uid,man_name,email,fill_time,code,result_col from " . $xoopsDB->prefix("tad_form_fill") . " where ofsn='{$ofsn}' order by fill_time desc";
 
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i      = 0;
-    $col_v  = $col  = "";
+    $col_v  = $col  = array();
     while (list($ssn, $uid, $man_name, $email, $fill_time, $code, $result_col) = $xoopsDB->fetchRow($result)) {
         $url                            = "{$_SERVER['PHP_SELF']}?op=view&code=$code";
         $all_result_col[$i]['url']      = $myts->htmlSpecialChars($url);
@@ -90,7 +90,7 @@ function view_result($ofsn = "", $isAdmin = false, $view_ssn = '')
             $n++;
 
             if ($ff[$csn] == 'sum') {
-                $col[$csn]['sum'] += intval($col_v[$csn]);
+                $col[$csn]['sum'] += (int) $col_v[$csn];
             } elseif ($ff[$csn] == 'count') {
                 $val_arr = explode(";", $col_v[$csn]);
                 foreach ($val_arr as $v) {
@@ -133,7 +133,7 @@ function view_result($ofsn = "", $isAdmin = false, $view_ssn = '')
 	<input type='submit' value='" . _MA_TADFORM_UPDATE_RESULT . "'></p>" : "";
     $xoopsTpl->assign('submit', $submit);
 
-    $analysis = "";
+    $analysis = array();
     $i        = 0;
     $allval   = "";
     foreach ($ff as $csn => $func) {
@@ -173,7 +173,7 @@ function view_result($ofsn = "", $isAdmin = false, $view_ssn = '')
 
     if ($view_ssn) {
         $sql        = "select code from " . $xoopsDB->prefix("tad_form_fill") . " where ofsn='{$ofsn}' and ssn='{$view_ssn}'";
-        $result     = $xoopsDB->query($sql) or web_error($sql);
+        $result     = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
         list($code) = $xoopsDB->fetchRow($result);
         view($code);
     }
@@ -185,7 +185,7 @@ function update_result($ssn_arr = array(), $result_col = array())
     global $xoopsDB;
     foreach ($ssn_arr as $ssn) {
         $sql = "update " . $xoopsDB->prefix("tad_form_fill") . " set result_col='{$result_col[$ssn]}'  where ssn='$ssn'";
-        $xoopsDB->queryF($sql) or web_error($sql);
+        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     }
 }
 
@@ -202,7 +202,6 @@ switch ($op) {
         update_result($_POST['ssn'], $_POST['result_col']);
         header("location: {$_SERVER['PHP_SELF']}?ofsn={$ofsn}");
         exit;
-        break;
 
     case "view":
         view_result($ofsn, true, $ssn);
@@ -213,7 +212,6 @@ switch ($op) {
         delete_tad_form_ans($ssn);
         header("location: {$_SERVER['PHP_SELF']}?ofsn={$ofsn}");
         exit;
-        break;
 
     //預設動作
     default:

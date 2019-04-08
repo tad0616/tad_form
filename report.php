@@ -1,9 +1,9 @@
 <?php
 /*-----------引入檔案區--------------*/
 include "header.php";
-$xoopsOption['template_main'] = set_bootstrap("tad_form_report.html");
+$xoopsOption['template_main'] = "tad_form_report.tpl";
 include_once XOOPS_ROOT_PATH . "/header.php";
-if (!can_view_report(intval($_REQUEST['ofsn']))) {
+if (!can_view_report((int)$_REQUEST['ofsn'])) {
     redirect_header("index.php", 3, _MD_TADFORM_ONLY_MEM);
 }
 
@@ -28,8 +28,8 @@ function view_user_result($ofsn)
 
     $sql = "select csn,title,kind,func from " . $xoopsDB->prefix("tad_form_col") . " where ofsn='{$ofsn}' and public='1' order by sort";
     //die($sql);
-    $result    = $xoopsDB->query($sql) or web_error($sql);
-    $all_title = "";
+    $result    = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $all_title = array();
     $i         = 0;
     $csn_arr   = $ff   = $tt   = $kk   = array();
     while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
@@ -60,9 +60,9 @@ function view_user_result($ofsn)
 
     $sql = "select ssn,uid,man_name,email,fill_time,code,result_col from " . $xoopsDB->prefix("tad_form_fill") . " where ofsn='{$ofsn}' order by fill_time desc";
 
-    $result         = $xoopsDB->query($sql) or web_error($sql);
+    $result         = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i              = 0;
-    $all_result_col = "";
+    $all_result_col = array();
     while (list($ssn, $uid, $man_name, $email, $fill_time, $code, $result_col) = $xoopsDB->fetchRow($result)) {
         $fill_time  = date("Y-m-d H:i:s", xoops_getUserTimestamp(strtotime($fill_time)));
         $email_data = explode("@", $email);

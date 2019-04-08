@@ -7,7 +7,7 @@ include_once "../function.php";
 include '../../tadtools/PHPExcel.php'; //引入 PHPExcel 物件庫
 $objPHPExcel = new PHPExcel(); //實體化Excel
 
-$ofsn       = isset($_REQUEST['ofsn']) ? intval($_REQUEST['ofsn']) : 0;
+$ofsn       = isset($_REQUEST['ofsn']) ? (int)$_REQUEST['ofsn'] : 0;
 $form_main  = get_tad_form_main($ofsn);
 $form_title = str_replace("[", "", $form_main['title']);
 $form_title = str_replace("]", "", $form_title);
@@ -25,7 +25,7 @@ $objActSheet->setCellValueByColumnAndRow(0, 1, _MA_TADFORM_COL_WHO);
 $objActSheet->setCellValueByColumnAndRow(1, 1, _MA_TADFORM_SIGN_DATE);
 
 $sql    = "select csn,title,kind,func from " . $xoopsDB->prefix("tad_form_col") . " where ofsn='{$ofsn}' order by sort";
-$result = $xoopsDB->query($sql) or web_error($sql);
+$result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 $col    = 2;
 while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
     if ($kind == 'show') {
@@ -39,7 +39,7 @@ while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
 
 $n      = 2;
 $sql    = "select ssn,uid,man_name,email,fill_time from " . $xoopsDB->prefix("tad_form_fill") . " where ofsn='{$ofsn}' order by fill_time desc";
-$result = $xoopsDB->query($sql) or web_error($sql);
+$result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 while (list($ssn, $uid, $man_name, $email, $fill_time) = $xoopsDB->fetchRow($result)) {
 
     $fill_time = date("Y-m-d H:i:s", xoops_getUserTimestamp(strtotime($fill_time)));

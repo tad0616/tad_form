@@ -94,7 +94,7 @@ function chk_tad_form_block()
 function chk_chk1()
 {
     global $xoopsDB;
-    $sql    = "select count(`kind`) from " . $xoopsDB->prefix("tad_form_main");
+    $sql    = "SELECT count(`kind`) FROM " . $xoopsDB->prefix("tad_form_main");
     $result = $xoopsDB->query($sql);
     if (empty($result)) {
         return false;
@@ -106,15 +106,15 @@ function chk_chk1()
 function go_update1()
 {
     global $xoopsDB;
-    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_main") . " ADD `kind` varchar(255) NOT NULL";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_main") . " ADD `kind` VARCHAR(255) NOT NULL";
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     return true;
 }
 
 function chk_chk2()
 {
     global $xoopsDB;
-    $sql    = "select count(`result_col`) from " . $xoopsDB->prefix("tad_form_fill");
+    $sql    = "SELECT count(`result_col`) FROM " . $xoopsDB->prefix("tad_form_fill");
     $result = $xoopsDB->query($sql);
     if (empty($result)) {
         return false;
@@ -126,15 +126,15 @@ function chk_chk2()
 function go_update2()
 {
     global $xoopsDB;
-    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_fill") . " ADD `result_col` varchar(255) NOT NULL";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_fill") . " ADD `result_col` VARCHAR(255) NOT NULL";
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     return true;
 }
 
 function chk_chk3()
 {
     global $xoopsDB;
-    $sql    = "select count(`adm_email`) from " . $xoopsDB->prefix("tad_form_main");
+    $sql    = "SELECT count(`adm_email`) FROM " . $xoopsDB->prefix("tad_form_main");
     $result = $xoopsDB->query($sql);
     if (empty($result)) {
         return false;
@@ -146,15 +146,15 @@ function chk_chk3()
 function go_update3()
 {
     global $xoopsDB;
-    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_main") . " ADD `adm_email` varchar(255) NOT NULL";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_main") . " ADD `adm_email` VARCHAR(255) NOT NULL";
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     return true;
 }
 
 function chk_chk4()
 {
     global $xoopsDB;
-    $sql    = "select count(`captcha`) from " . $xoopsDB->prefix("tad_form_main");
+    $sql    = "SELECT count(`captcha`) FROM " . $xoopsDB->prefix("tad_form_main");
     $result = $xoopsDB->query($sql);
     if (empty($result)) {
         return false;
@@ -166,15 +166,15 @@ function chk_chk4()
 function go_update4()
 {
     global $xoopsDB;
-    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_main") . " ADD `captcha` enum('1','0') NOT NULL default '1'";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_main") . " ADD `captcha` ENUM('1','0') NOT NULL DEFAULT '1'";
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     return true;
 }
 
 function chk_chk5()
 {
     global $xoopsDB;
-    $sql    = "select count(`show_result`) from " . $xoopsDB->prefix("tad_form_main");
+    $sql    = "SELECT count(`show_result`) FROM " . $xoopsDB->prefix("tad_form_main");
     $result = $xoopsDB->query($sql);
     if (empty($result)) {
         return false;
@@ -186,15 +186,15 @@ function chk_chk5()
 function go_update5()
 {
     global $xoopsDB;
-    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_main") . " ADD `show_result` enum('1','0') NOT NULL default '1'";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_main") . " ADD `show_result` ENUM('1','0') NOT NULL DEFAULT '1'";
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     return true;
 }
 
 function chk_chk6()
 {
     global $xoopsDB;
-    $sql    = "select count(`view_result_group`) from " . $xoopsDB->prefix("tad_form_main");
+    $sql    = "SELECT count(`view_result_group`) FROM " . $xoopsDB->prefix("tad_form_main");
     $result = $xoopsDB->query($sql);
     if (empty($result)) {
         return false;
@@ -206,15 +206,15 @@ function chk_chk6()
 function go_update6()
 {
     global $xoopsDB;
-    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_main") . " ADD `view_result_group` varchar(255) NOT NULL default ''";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_main") . " ADD `view_result_group` VARCHAR(255) NOT NULL DEFAULT ''";
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     return true;
 }
 
 function chk_chk7()
 {
     global $xoopsDB;
-    $sql    = "select count(`multi_sign`) from " . $xoopsDB->prefix("tad_form_main");
+    $sql    = "SELECT count(`multi_sign`) FROM " . $xoopsDB->prefix("tad_form_main");
     $result = $xoopsDB->query($sql);
     if (empty($result)) {
         return false;
@@ -226,15 +226,15 @@ function chk_chk7()
 function go_update7()
 {
     global $xoopsDB;
-    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_main") . " ADD `multi_sign` enum('0','1') NOT NULL default '0'";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_main") . " ADD `multi_sign` ENUM('0','1') NOT NULL DEFAULT '0'";
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     return true;
 }
 
 function chk_chk8()
 {
     global $xoopsDB;
-    $sql    = "select count(`public`) from " . $xoopsDB->prefix("tad_form_col");
+    $sql    = "SELECT count(`public`) FROM " . $xoopsDB->prefix("tad_form_col");
     $result = $xoopsDB->query($sql);
     if (empty($result)) {
         return false;
@@ -246,8 +246,8 @@ function chk_chk8()
 function go_update8()
 {
     global $xoopsDB;
-    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_col") . " ADD `public`  enum('0','1') NOT NULL default '0'";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_col") . " ADD `public`  ENUM('0','1') NOT NULL DEFAULT '0'";
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     return true;
 }
 
@@ -270,17 +270,17 @@ function chk_uid()
 function go_update_uid()
 {
     global $xoopsDB;
-    $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_form_main") . "` CHANGE `uid` `uid` mediumint(8) unsigned NOT NULL default 0";
-    $xoopsDB->queryF($sql) or web_error($sql);
-    $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_form_fill") . "` CHANGE `uid` `uid` mediumint(8) unsigned NOT NULL default 0";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_form_main") . "` CHANGE `uid` `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0";
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_form_fill") . "` CHANGE `uid` `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0";
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     return true;
 }
 
 function chk_chk9()
 {
     global $xoopsDB;
-    $sql    = "select count(`code`) from " . $xoopsDB->prefix("tad_form_fill");
+    $sql    = "SELECT count(`code`) FROM " . $xoopsDB->prefix("tad_form_fill");
     $result = $xoopsDB->query($sql);
     if (empty($result)) {
         return false;
@@ -292,91 +292,16 @@ function chk_chk9()
 function go_update9()
 {
     global $xoopsDB;
-    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_fill") . " ADD `code` varchar(255) NOT NULL";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_form_fill") . " ADD `code` VARCHAR(255) NOT NULL";
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
     $sql = "update " . $xoopsDB->prefix("tad_form_fill") . " set code=md5(CONCAT(`ofsn`,`uid`, `man_name`, `email`, `fill_time`)) ";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
     return true;
 }
 
-//建立目錄
-function mk_dir($dir = "")
-{
-    //若無目錄名稱秀出警告訊息
-    if (empty($dir)) {
-        return;
-    }
 
-    //若目錄不存在的話建立目錄
-    if (!is_dir($dir)) {
-        umask(000);
-        //若建立失敗秀出警告訊息
-        mkdir($dir, 0777);
-    }
-}
-
-//拷貝目錄
-function full_copy($source = "", $target = "")
-{
-    if (is_dir($source)) {
-        @mkdir($target);
-        $d = dir($source);
-        while (false !== ($entry = $d->read())) {
-            if ($entry == '.' || $entry == '..') {
-                continue;
-            }
-
-            $Entry = $source . '/' . $entry;
-            if (is_dir($Entry)) {
-                full_copy($Entry, $target . '/' . $entry);
-                continue;
-            }
-            copy($Entry, $target . '/' . $entry);
-        }
-        $d->close();
-    } else {
-        copy($source, $target);
-    }
-}
-
-function rename_win($oldfile, $newfile)
-{
-    if (!rename($oldfile, $newfile)) {
-        if (copy($oldfile, $newfile)) {
-            unlink($oldfile);
-            return true;
-        }
-        return false;
-    }
-    return true;
-}
-
-function delete_directory($dirname)
-{
-    if (is_dir($dirname)) {
-        $dir_handle = opendir($dirname);
-    }
-
-    if (!$dir_handle) {
-        return false;
-    }
-
-    while ($file = readdir($dir_handle)) {
-        if ($file != "." && $file != "..") {
-            if (!is_dir($dirname . "/" . $file)) {
-                unlink($dirname . "/" . $file);
-            } else {
-                delete_directory($dirname . '/' . $file);
-            }
-
-        }
-    }
-    closedir($dir_handle);
-    rmdir($dirname);
-    return true;
-}
 
 //做縮圖
 function thumbnail($filename = "", $thumb_name = "", $type = "image/jpeg", $width = "120")
@@ -412,4 +337,90 @@ function thumbnail($filename = "", $thumb_name = "", $type = "image/jpeg", $widt
 
     return;
     exit;
+}
+
+
+
+//建立目錄
+if (!function_exists('mk_dir')) {
+    function mk_dir($dir = "")
+    {
+        //若無目錄名稱秀出警告訊息
+        if (empty($dir)) {
+            return;
+        }
+
+        //若目錄不存在的話建立目錄
+        if (!is_dir($dir)) {
+            umask(000);
+            //若建立失敗秀出警告訊息
+            mkdir($dir, 0777);
+        }
+    }
+}
+
+//拷貝目錄
+if (!function_exists('full_copy')) {
+    function full_copy($source = "", $target = "")
+    {
+        if (is_dir($source)) {
+            @mkdir($target);
+            $d = dir($source);
+            while (false !== ($entry = $d->read())) {
+                if ($entry == '.' || $entry == '..') {
+                    continue;
+                }
+
+                $Entry = $source . '/' . $entry;
+                if (is_dir($Entry)) {
+                    full_copy($Entry, $target . '/' . $entry);
+                    continue;
+                }
+                copy($Entry, $target . '/' . $entry);
+            }
+            $d->close();
+        } else {
+            copy($source, $target);
+        }
+    }
+}
+
+if (!function_exists('rename_win')) {
+    function rename_win($oldfile, $newfile)
+    {
+        if (!rename($oldfile, $newfile)) {
+            if (copy($oldfile, $newfile)) {
+                unlink($oldfile);
+                return true;
+            }
+            return false;
+        }
+        return true;
+    }
+}
+
+if (!function_exists('delete_directory')) {
+    function delete_directory($dirname)
+    {
+        if (is_dir($dirname)) {
+            $dir_handle = opendir($dirname);
+        }
+
+        if (!$dir_handle) {
+            return false;
+        }
+
+        while ($file = readdir($dir_handle)) {
+            if ($file != "." && $file != "..") {
+                if (!is_dir($dirname . "/" . $file)) {
+                    unlink($dirname . "/" . $file);
+                } else {
+                    delete_directory($dirname . '/' . $file);
+                }
+            }
+        }
+        closedir($dir_handle);
+        rmdir($dirname);
+        return true;
+    }
 }

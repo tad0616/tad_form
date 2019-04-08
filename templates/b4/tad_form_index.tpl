@@ -1,11 +1,11 @@
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-sm-12">
     <{$toolbar}>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-sm-12">
     <{if $op=="sign"}>
 
       <{$jquery}>
@@ -21,7 +21,7 @@
       </script>
       <h1><{$form_title}></h1>
 
-      <form action="index.php" method="post" name="myForm" id="myForm" enctype="multipart/form-data" onSubmit="return check_data()" class="form-horizontal" role="form">
+      <form action="index.php" method="post" name="myForm" id="myForm" enctype="multipart/form-data" onSubmit="return check_data()" role="form">
         <table class="table table-striped table-bordered">
         <tr><td><{$form_content}></td></tr>
         <{$apply_ok}>
@@ -35,20 +35,22 @@
           <{$captcha_div}>
         </p>
 
-        <div class="form-group">
-          <label class="col-md-2 control-label">
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label text-sm-right">
             <{$smarty.const._MD_TADFORM_MAN_NAME}>
           </label>
-          <div class="col-md-2">
-            <input type="text" name="man_name" id="tfman_name" class='form-control validate[required]' value="<{$uid_name}>">
+          <div class="col-sm-2">
+            <label for='tfman_name' style='display:none;'>tfman_name</label>
+            <input type="text" name="man_name" id="tfman_name" class='form-control validate[required]' <{if $uid_name}>value="<{$uid_name}>"<{/if}>>
           </div>
-          <label class="col-md-2 control-label">
+          <label class="col-sm-2 col-form-label text-sm-right">
             <{$smarty.const._MD_TADFORM_EMAIL}>
           </label>
-          <div class="col-md-4">
-            <input type="text" name="email" id="tfemail"  class='form-control validate[required]' value="<{$email}>">
+          <div class="col-sm-4">
+            <label for='tfemail' style='display:none;'>tfemail</label>
+            <input type="text" name="email" id="tfemail"  class='form-control validate[required]' <{if $email}>value="<{$email}>"<{/if}>>
           </div>
-          <div class="col-md-2">
+          <div class="col-sm-2">
             <button type="submit" name="submit" class="btn btn-primary"><{$smarty.const._MD_TADFORM_SUBMIT_FORM}></button>
           </div>
         </div>
@@ -65,7 +67,7 @@
           location.href="index.php?op=delete_fill&ofsn=<{$ofsn}>&ssn=" + ssn;
         }
         </script>
-      <div class="well" style="margin-top:30px;">
+      <div class="card card-body bg-light m-1" style="margin-top:30px;">
       <h3><{$smarty.const._MD_TADFORM_HISTORY}></h3>
       <table class="table table-striped">
       <{foreach item=history from=$history}>
@@ -73,8 +75,8 @@
         <td><{$history.fill_time}></td>
         <td><{$history.man_name}></td>
         <td class="text-right">
-        <a href="javascript:delete_fill(<{$history.ssn}>)" class="btn btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
-        <a href="<{$xoops_url}>/modules/tad_form/index.php?op=sign&ssn=<{$history.ssn}>" class="btn btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>
+        <a href="javascript:delete_fill(<{$history.ssn}>)" class="btn btn-sm btn-danger"><{$smarty.const._TAD_DEL}></a>
+        <a href="<{$xoops_url}>/modules/tad_form/index.php?op=sign&ssn=<{$history.ssn}>" class="btn btn-sm btn-warning"><{$smarty.const._TAD_EDIT}></a>
         </td>
       </tr>
       <{/foreach}>
@@ -109,8 +111,8 @@
     <{else}>
 
       <{foreach item=form from=$all}>
-        <div class="well">
-          <div class="pull-right"><{$form.multi_sign}><span class="label label-info"><{$form.date}></span></div>
+        <div class="card card-body bg-light m-1">
+          <div class="pull-right"><{$form.multi_sign}><span class="badge badge-info"><{$form.date}></span></div>
           <h3><{$form.title}></h3>
 
           <{$form.content}>
