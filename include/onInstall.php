@@ -2,16 +2,16 @@
 function xoops_module_install_tad_form(&$module)
 {
 
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_form");
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_form/file");
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_form/image");
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_form/image/.thumbs");
+    tad_form_mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_form");
+    tad_form_mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_form/file");
+    tad_form_mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_form/image");
+    tad_form_mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_form/image/.thumbs");
 
     return true;
 }
 
 //建立目錄
-function mk_dir($dir = "")
+function tad_form_mk_dir($dir = "")
 {
     //若無目錄名稱秀出警告訊息
     if (empty($dir)) {
