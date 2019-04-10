@@ -5,29 +5,7 @@ if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php")) {
     redirect_header("http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1", 3, _TAD_NEED_TADTOOLS);
 }
 include_once XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php";
-
-//取得某人在某問卷的填寫結果
-function get_somebody_ans($ofsn = "", $uid = "", $ssn = "")
-{
-    global $xoopsDB;
-    if (empty($uid)) {
-        return false;
-    }
-    $myts = MyTextSanitizer::getInstance();
-
-    if ($ssn) {
-        $sql = "select b.ssn,b.csn,b.val from " . $xoopsDB->prefix("tad_form_fill") . " as a left join  " . $xoopsDB->prefix("tad_form_value") . " as b on a.ssn=b.ssn where a.ssn='$ssn' and a.uid='$uid'";
-    } else {
-        $sql = "select b.ssn,b.csn,b.val from " . $xoopsDB->prefix("tad_form_fill") . " as a left join  " . $xoopsDB->prefix("tad_form_value") . " as b on a.ssn=b.ssn where a.ofsn='$ofsn' and a.uid='$uid'";
-    }
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    $ans    = array();
-    while (list($ssn, $csn, $val) = $xoopsDB->fetchRow($result)) {
-        $ans[$csn]  = $myts->htmlSpecialChars($val);
-        $ans['ssn'] = $ssn;
-    }
-    return $ans;
-}
+include_once XOOPS_ROOT_PATH . "/modules/tad_form/function_block.php";
 
 //看某人是否可看填報結果
 function can_view_report($ofsn = "")
@@ -160,7 +138,7 @@ function view($code = "", $mode = "")
     ";
 
         if ($show_report) {
-            $main .= "<a href=\"" . XOOPS_URL . "/modules/tad_form/report.php?ofsn={$ofsn}\" class=\"btn btn-info\">" . _MD_TADFORM_VIEW_FORM . "</a>";
+            $main .= "<a href=\"" . XOOPS_URL . "/modules/tad_form/report.php?ofsn={$ofsn}\" class=\"btn btn-info\">" . _TADFORM_VIEW_FORM . "</a>";
         }
         $main .= "<a href=\"" . XOOPS_URL . "/modules/tad_form/index.php?op=sign&ofsn={$ofsn}\" class=\"btn btn-success\">" . _MD_TADFORM_BACK_TO_FORM . "</a>
     </div>";
@@ -195,26 +173,6 @@ function delete_tad_form_ans($ssn = "")
     }
 }
 
-//以流水號取得某筆tad_form_main資料
-function get_tad_form_main($ofsn = "", $ssn = "")
-{
-    global $xoopsDB;
-    if (empty($ofsn) and empty($ssn)) {
-        return;
-    }
-
-    if ($ssn) {
-        $sql        = "select ofsn from " . $xoopsDB->prefix("tad_form_fill") . " where ssn='$ssn'";
-        $result     = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-        list($ofsn) = $xoopsDB->fetchRow($result);
-
-    }
-    $sql    = "select * from " . $xoopsDB->prefix("tad_form_main") . " where ofsn='$ofsn'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    $data   = $xoopsDB->fetchArray($result);
-    return $data;
-}
-
 //變更狀態
 function set_form_status($ofsn = '', $enable = '0')
 {
@@ -225,19 +183,6 @@ function set_form_status($ofsn = '', $enable = '0')
 
     $sql    = "update " . $xoopsDB->prefix("tad_form_main") . " set enable='{$enable}' where ofsn='$ofsn'";
     $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
-}
-
-//檢查Email的JS
-function chk_emeil_js($email_col = "email", $form_name = "myForm")
-{
-    $js = "
-  var regPatten=/^.+@.+\..{2,3}$/;
-  if (document.{$form_name}.elements['{$email_col}'].value.match(regPatten)==null){
-    alert('" . _JS_EMAIL_CHK . "');
-    return false;
-  }
-  ";
-    return $js;
 }
 
 /*

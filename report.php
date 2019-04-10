@@ -3,7 +3,7 @@
 include "header.php";
 $xoopsOption['template_main'] = "tad_form_report.tpl";
 include_once XOOPS_ROOT_PATH . "/header.php";
-if (!can_view_report((int)$_REQUEST['ofsn'])) {
+if (!can_view_report((int) $_REQUEST['ofsn'])) {
     redirect_header("index.php", 3, _MD_TADFORM_ONLY_MEM);
 }
 
@@ -102,7 +102,7 @@ function view_user_result($ofsn)
         //根據不同表單類型，提供不同的功能
         if ($form['kind'] == "application") {
             $result_col_pic = ($result_col == '1') ? "001_06.gif" : "001_05.gif";
-            $other_fun      = "<img src='images/{$result_col_pic}' alt='{$result_col_pic}' title='{$result_col_pic}'>";
+            $other_fun      = "<img src='" . XOOPS_URL . "/modules/tad_form/images/{$result_col_pic}' alt='{$result_col_pic}' title='{$result_col_pic}'>";
         } else {
             $other_fun = "";
         }
