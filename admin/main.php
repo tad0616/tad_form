@@ -22,7 +22,7 @@ function list_tad_form_main()
     $sign_mems = get_form_count();
     $cols_num  = get_form_col_count();
     $i         = 0;
-    $form      = array();
+    $form      = [];
     while ($all = $xoopsDB->fetchArray($result)) {
         foreach ($all as $k => $v) {
             $$k = $v;
@@ -66,7 +66,7 @@ function get_form_count()
     global $xoopsDB;
     $sql = "SELECT ofsn,count(*) FROM " . $xoopsDB->prefix("tad_form_fill") . " GROUP BY ofsn";
     $result  = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
-    $counter = array();
+    $counter = [];
     while (list($ofsn, $count) = $xoopsDB->fetchRow($result)) {
         $counter[$ofsn] = $count;
     }
@@ -79,7 +79,7 @@ function get_form_col_count()
     global $xoopsDB;
     $sql = "SELECT ofsn,count(*) FROM " . $xoopsDB->prefix("tad_form_col") . " GROUP BY ofsn";
     $result  = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
-    $counter = array();
+    $counter = [];
     while (list($ofsn, $count) = $xoopsDB->fetchRow($result)) {
         $counter[$ofsn] = $count;
     }

@@ -14,7 +14,7 @@ function tad_form_main_form($ofsn = "")
     if (!empty($ofsn)) {
         $DBV = get_tad_form_main($ofsn);
     } else {
-        $DBV = array();
+        $DBV = [];
     }
 
     //預設值設定
@@ -27,12 +27,12 @@ function tad_form_main_form($ofsn = "")
     $uid               = (!isset($DBV['uid'])) ? "" : $DBV['uid'];
     $post_date         = (!isset($DBV['post_date'])) ? "" : $DBV['post_date'];
     $enable            = (!isset($DBV['enable'])) ? "" : $DBV['enable'];
-    $sign_group        = (!isset($DBV['sign_group'])) ? array(1, 2) : explode(",", $DBV['sign_group']);
+    $sign_group        = (!isset($DBV['sign_group'])) ? [1, 2] : explode(",", $DBV['sign_group']);
     $kind              = (!isset($DBV['kind'])) ? "" : $DBV['kind'];
     $adm_email         = (empty($DBV['adm_email'])) ? $xoopsUser->email() : $DBV['adm_email'];
     $captcha           = (!isset($DBV['captcha'])) ? "0" : $DBV['captcha'];
     $show_result       = (!isset($DBV['show_result'])) ? "0" : $DBV['show_result'];
-    $view_result_group = (!isset($DBV['view_result_group'])) ? array(1) : explode(",", $DBV['view_result_group']);
+    $view_result_group = (!isset($DBV['view_result_group'])) ? [1] : explode(",", $DBV['view_result_group']);
     $multi_sign        = (!isset($DBV['multi_sign'])) ? "0" : $DBV['multi_sign'];
 
     $SelectGroup_name = new XoopsFormSelectGroup("", "sign_group", true, $sign_group, 5, true);
@@ -142,7 +142,7 @@ function tad_form_col_form($the_ofsn = "", $csn = "", $mode = "")
     if (!empty($csn)) {
         $DBV = get_tad_form_col($csn);
     } else {
-        $DBV = array();
+        $DBV = [];
     }
 
     $form = get_tad_form_main($the_ofsn);

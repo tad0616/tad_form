@@ -27,7 +27,7 @@ function view_result($ofsn = "", $isAdmin = false, $view_ssn = '')
 
     $sql       = "select csn,title,kind,func from " . $xoopsDB->prefix("tad_form_col") . " where ofsn='{$ofsn}' order by sort";
     $result    = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    $all_title = $tt = $tt = $kk = $csn_arr = array();
+    $all_title = $tt = $tt = $kk = $csn_arr = [];
     $i         = 0;
     while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
         if ($kind == "show") {
@@ -62,7 +62,7 @@ function view_result($ofsn = "", $isAdmin = false, $view_ssn = '')
 
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i      = 0;
-    $col_v  = $col  = array();
+    $col_v  = $col  = [];
     while (list($ssn, $uid, $man_name, $email, $fill_time, $code, $result_col) = $xoopsDB->fetchRow($result)) {
         $url                            = "{$_SERVER['PHP_SELF']}?op=view&code=$code";
         $all_result_col[$i]['url']      = $myts->htmlSpecialChars($url);
@@ -133,7 +133,7 @@ function view_result($ofsn = "", $isAdmin = false, $view_ssn = '')
 	<input type='submit' value='" . _MA_TADFORM_UPDATE_RESULT . "'></p>" : "";
     $xoopsTpl->assign('submit', $submit);
 
-    $analysis = array();
+    $analysis = [];
     $i        = 0;
     $allval   = "";
     foreach ($ff as $csn => $func) {
@@ -180,7 +180,7 @@ function view_result($ofsn = "", $isAdmin = false, $view_ssn = '')
 }
 
 //更新結果
-function update_result($ssn_arr = array(), $result_col = array())
+function update_result($ssn_arr = [], $result_col = [])
 {
     global $xoopsDB;
     foreach ($ssn_arr as $ssn) {

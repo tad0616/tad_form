@@ -21,7 +21,7 @@ function get_somebody_ans($ofsn = "", $uid = "", $ssn = "")
         $sql = "select b.ssn,b.csn,b.val from " . $xoopsDB->prefix("tad_form_fill") . " as a left join  " . $xoopsDB->prefix("tad_form_value") . " as b on a.ssn=b.ssn where a.ofsn='$ofsn' and a.uid='$uid'";
     }
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    $ans    = array();
+    $ans    = [];
     while (list($ssn, $csn, $val) = $xoopsDB->fetchRow($result)) {
         $ans[$csn]  = $myts->htmlSpecialChars($val);
         $ans['ssn'] = $ssn;
@@ -40,7 +40,7 @@ function can_view_report($ofsn = "")
 
         $User_Groups = $xoopsUser->getGroups();
     } else {
-        $User_Groups = array(3);
+        $User_Groups = [3];
     }
 
     $form = get_tad_form_main($ofsn);

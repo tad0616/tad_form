@@ -13,12 +13,12 @@ function list_tad_form_main()
     if ($xoopsUser) {
         $User_Groups = $xoopsUser->getGroups();
     } else {
-        $User_Groups = array(3);
+        $User_Groups = [3];
     }
     $sql    = "select * from " . $xoopsDB->prefix("tad_form_main") . " where enable='1' and start_date < '{$today}'  and end_date > '{$today}'";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i      = 0;
-    $all    = array();
+    $all    = [];
     while ($data = $xoopsDB->fetchArray($result)) {
         foreach ($data as $k => $v) {
             $$k = $v;
@@ -128,14 +128,14 @@ function sign_form($ofsn = "", $ssn = "")
         if ($ssn) {
             $db_ans = get_somebody_ans($ofsn, $uid, $ssn);
         } else {
-            $db_ans = ($form['multi_sign'] == '1') ? array() : get_somebody_ans($ofsn, $uid, $ssn);
+            $db_ans = ($form['multi_sign'] == '1') ? [] : get_somebody_ans($ofsn, $uid, $ssn);
         }
         $history = ($form['multi_sign'] == '1') ? get_history($ofsn, $uid) : "";
     } else {
         $uid_name = "";
         $email    = $history    = "";
         $isAdmin  = false;
-        $db_ans   = array();
+        $db_ans   = [];
         if (!empty($sign_group) and !in_array(3, $sign_group)) {
             $xoopsTpl->assign('op', 'error');
             $xoopsTpl->assign('title', $form['title']);
@@ -294,7 +294,7 @@ function sign_form($ofsn = "", $ssn = "")
 }
 
 //儲存問卷
-function save_val($ofsn = '', $ans = array())
+function save_val($ofsn = '', $ans = [])
 {
     global $xoopsDB, $xoopsUser;
 
@@ -357,7 +357,7 @@ function save_val($ofsn = '', $ans = array())
 }
 
 //製作表單
-function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans = array(), $chk = "")
+function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans = [], $chk = "")
 {
 
     switch ($kind) {

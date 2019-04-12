@@ -66,7 +66,7 @@ function send_all($ofsn)
     $i = 0;
     foreach ($_POST['email'] as $man_name => $mail) {
         $content = $_POST['content'];
-        $ans     = array();
+        $ans     = [];
         $sql     = "select a.csn,a.val from " . $xoopsDB->prefix("tad_form_value") . " as a left join " . $xoopsDB->prefix("tad_form_fill") . " as b on a.ssn=b.ssn where b.man_name='$man_name' and b.`ofsn`='{$ofsn}'";
         $result  = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
         while (list($csn, $val) = $xoopsDB->fetchRow($result)) {

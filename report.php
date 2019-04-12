@@ -29,9 +29,9 @@ function view_user_result($ofsn)
     $sql = "select csn,title,kind,func from " . $xoopsDB->prefix("tad_form_col") . " where ofsn='{$ofsn}' and public='1' order by sort";
     //die($sql);
     $result    = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    $all_title = array();
+    $all_title = [];
     $i         = 0;
-    $csn_arr   = $ff   = $tt   = $kk   = array();
+    $csn_arr   = $ff   = $tt   = $kk   = [];
     while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
         if ($kind == "show") {
             continue;
@@ -62,7 +62,7 @@ function view_user_result($ofsn)
 
     $result         = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i              = 0;
-    $all_result_col = array();
+    $all_result_col = [];
     while (list($ssn, $uid, $man_name, $email, $fill_time, $code, $result_col) = $xoopsDB->fetchRow($result)) {
         $fill_time  = date("Y-m-d H:i:s", xoops_getUserTimestamp(strtotime($fill_time)));
         $email_data = explode("@", $email);
@@ -79,7 +79,7 @@ function view_user_result($ofsn)
         $result2 = $xoopsDB->query($sql2) or web_error($sql2);
         //$all="";
 
-        $col_v = array();
+        $col_v = [];
         while (list($csn, $val) = $xoopsDB->fetchRow($result2)) {
             $col_v[$csn] = $myts->htmlSpecialChars($val);
         }

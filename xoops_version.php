@@ -1,5 +1,5 @@
 <?php
-$modversion = array();
+$modversion = [];
 
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADFORM_NAME;
@@ -25,7 +25,7 @@ $modversion['min_php']             = 5.4;
 $modversion['min_xoops']           = '2.5';
 
 //---paypal資訊---//
-$modversion['paypal']                  = array();
+$modversion['paypal']                  = [];
 $modversion['paypal']['business']      = 'tad0616@gmail.com';
 $modversion['paypal']['item_name']     = 'Donation : ' . _MI_TAD_WEB;
 $modversion['paypal']['amount']        = 0;
@@ -55,7 +55,7 @@ $modversion['onUpdate']    = "include/onUpdate.php";
 $modversion['onUninstall'] = "include/onUninstall.php";
 
 //---樣板設定---//
-$modversion['templates']                    = array();
+$modversion['templates']                    = [];
 $i                                          = 1;
 $modversion['templates'][$i]['file']        = 'tad_form_index.tpl';
 $modversion['templates'][$i]['description'] = 'tad_form_index.tpl';
@@ -80,7 +80,7 @@ $modversion['templates'][$i]['file']        = 'tad_form_report.tpl';
 $modversion['templates'][$i]['description'] = 'tad_form_report.tpl';
 
 //---區塊設定---//
-$modversion['blocks']                   = array();
+$modversion['blocks']                   = [];
 $modversion['blocks'][1]['file']        = "tad_form.php";
 $modversion['blocks'][1]['name']        = _MI_TADFORM_BNAME1;
 $modversion['blocks'][1]['description'] = _MI_TADFORM_BDESC1;
