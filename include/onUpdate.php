@@ -46,12 +46,12 @@ function xoops_module_update_tad_form(&$module, $old_version)
         Utility::go_update9();
     }
 
-    $old_fckeditor = XOOPS_ROOT_PATH . "/modules/tad_form/fckeditor";
+    $old_fckeditor = XOOPS_ROOT_PATH . '/modules/tad_form/fckeditor';
     if (is_dir($old_fckeditor)) {
         Utility::delete_directory($old_fckeditor);
     }
 
     Utility::chk_tad_form_block();
+
     return true;
 }
-

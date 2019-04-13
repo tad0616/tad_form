@@ -4,33 +4,33 @@ function tad_one_form($options)
 {
     global $xoopsDB;
 
-    $today = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
+    $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
-    $sql = "select count(*) from " . $xoopsDB->prefix("tad_form_fill") . " where ofsn='{$options[0]}'";
+    $sql = 'select count(*) from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='{$options[0]}'";
     //die($sql);
-    $result        = $xoopsDB->query($sql);
+    $result = $xoopsDB->query($sql);
     list($counter) = $xoopsDB->fetchRow($result);
 
-    $sql    = "select * from " . $xoopsDB->prefix("tad_form_main") . " where ofsn='{$options[0]}'";
+    $sql = 'select * from ' . $xoopsDB->prefix('tad_form_main') . " where ofsn='{$options[0]}'";
     $result = $xoopsDB->query($sql);
 
     list($ofsn, $title, $start_date, $end_date, $content, $uid, $post_date, $enable) = $xoopsDB->fetchRow($result);
 
-    $start_date = date("Y-m-d", xoops_getUserTimestamp(strtotime($start_date)));
-    $end_date   = date("Y-m-d", xoops_getUserTimestamp(strtotime($end_date)));
+    $start_date = date('Y-m-d', xoops_getUserTimestamp(strtotime($start_date)));
+    $end_date = date('Y-m-d', xoops_getUserTimestamp(strtotime($end_date)));
 
-    if (date("Y-m-d", xoops_getUserTimestamp(time())) > $end_date) {
-        return "";
+    if (date('Y-m-d', xoops_getUserTimestamp(time())) > $end_date) {
+        return '';
     }
 
-    $block['ofsn']       = $ofsn;
-    $block['title']      = $title;
+    $block['ofsn'] = $ofsn;
+    $block['title'] = $title;
     $block['start_date'] = $start_date;
-    $block['end_date']   = $end_date;
-    $block['content']    = $content;
-    $block['post_date']  = $post_date;
-    $block['sign_now']   = sprintf(_MB_TADFORM_SIGN_NOW, $title, $counter);
-    $block['date']       = sprintf(_MB_TADFORM_SIGN_DATE, $start_date, $end_date);
+    $block['end_date'] = $end_date;
+    $block['content'] = $content;
+    $block['post_date'] = $post_date;
+    $block['sign_now'] = sprintf(_MB_TADFORM_SIGN_NOW, $title, $counter);
+    $block['date'] = sprintf(_MB_TADFORM_SIGN_DATE, $start_date, $end_date);
 
     return $block;
 }
@@ -39,16 +39,16 @@ function tad_one_form($options)
 function tad_one_form_edit($options)
 {
     global $xoopsDB;
-    $today  = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
-    $sql    = "select * from " . $xoopsDB->prefix("tad_form_main") . " where enable='1' and start_date < '{$today}' and end_date > '{$today}'";
+    $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
+    $sql = 'select * from ' . $xoopsDB->prefix('tad_form_main') . " where enable='1' and start_date < '{$today}' and end_date > '{$today}'";
     $result = $xoopsDB->query($sql);
 
-    $opt = "";
+    $opt = '';
     while (list($ofsn, $title, $start_date, $end_date, $content, $uid, $post_date, $enable) = $xoopsDB->fetchRow($result)) {
-        $selected = ($ofsn == $options[0]) ? "selected" : "";
+        $selected = ($ofsn == $options[0]) ? 'selected' : '';
         $opt .= "<option value='{$ofsn}' $selected>$title</option>\n";
     }
-    $opt .= "";
+    $opt .= '';
 
     $form = "
     <ol class='my-form'>

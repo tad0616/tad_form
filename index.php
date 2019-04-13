@@ -1,109 +1,109 @@
 <?php
 /*-----------引入檔案區--------------*/
-include "header.php";
-$xoopsOption['template_main'] = "tad_form_index.tpl";
-include_once XOOPS_ROOT_PATH . "/header.php";
+include 'header.php';
+$xoopsOption['template_main'] = 'tad_form_index.tpl';
+include_once XOOPS_ROOT_PATH . '/header.php';
 /*-----------function區--------------*/
 
 //列出所有tad_form_main資料
 function list_tad_form_main()
 {
     global $xoopsDB, $xoopsTpl, $xoopsUser, $xoopsModule;
-    $today = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
+    $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
     if ($xoopsUser) {
         $User_Groups = $xoopsUser->getGroups();
     } else {
         $User_Groups = [3];
     }
-    $sql    = "select * from " . $xoopsDB->prefix("tad_form_main") . " where enable='1' and start_date < '{$today}'  and end_date > '{$today}'";
+    $sql = 'select * from ' . $xoopsDB->prefix('tad_form_main') . " where enable='1' and start_date < '{$today}'  and end_date > '{$today}'";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    $i      = 0;
-    $all    = [];
+    $i = 0;
+    $all = [];
     while ($data = $xoopsDB->fetchArray($result)) {
         foreach ($data as $k => $v) {
             $$k = $v;
         }
 
-        $sql2          = "select count(*) from " . $xoopsDB->prefix("tad_form_fill") . " where ofsn='{$ofsn}'";
-        $result2       = $xoopsDB->query($sql2);
+        $sql2 = 'select count(*) from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='{$ofsn}'";
+        $result2 = $xoopsDB->query($sql2);
         list($counter) = $xoopsDB->fetchRow($result2);
 
-        $start_date = date("Y-m-d", xoops_getUserTimestamp(strtotime($start_date)));
-        $end_date   = date("Y-m-d", xoops_getUserTimestamp(strtotime($end_date)));
+        $start_date = date('Y-m-d', xoops_getUserTimestamp(strtotime($start_date)));
+        $end_date = date('Y-m-d', xoops_getUserTimestamp(strtotime($end_date)));
 
-        $multi_sign_pic = ($multi_sign == '1') ? "<img src='images/report_check.png' align='absmiddle' hspace=6 alt='" . _MD_TADFORM_MULTI_SIGN . "' title='" . _MD_TADFORM_MULTI_SIGN . "'><span class='badge badge-success'>" . _MD_TADFORM_MULTI_SIGN . "</span> " : "";
+        $multi_sign_pic = ('1' == $multi_sign) ? "<img src='images/report_check.png' align='absmiddle' hspace=6 alt='" . _MD_TADFORM_MULTI_SIGN . "' title='" . _MD_TADFORM_MULTI_SIGN . "'><span class='badge badge-success'>" . _MD_TADFORM_MULTI_SIGN . '</span> ' : '';
 
-        $sign_group_arr = (empty($sign_group)) ? "" : explode(",", $sign_group);
-        $sign_ok        = false;
+        $sign_group_arr = (empty($sign_group)) ? '' : explode(',', $sign_group);
+        $sign_ok = false;
         if (!empty($sign_group_arr)) {
             foreach ($sign_group_arr as $group) {
-                if (in_array($group, $User_Groups)) {
+                if (in_array($group, $User_Groups, true)) {
                     $sign_ok = true;
                     break;
                 }
             }
         }
-        $view_result_group_arr = (empty($view_result_group)) ? "" : explode(",", $view_result_group);
-        $view_ok               = false;
+        $view_result_group_arr = (empty($view_result_group)) ? '' : explode(',', $view_result_group);
+        $view_ok = false;
         if (!empty($view_result_group_arr)) {
             foreach ($view_result_group_arr as $group) {
-                if (in_array($group, $User_Groups)) {
+                if (in_array($group, $User_Groups, true)) {
                     $view_ok = true;
                     break;
                 }
             }
         }
 
-        $all[$i]['sign_ok']    = $sign_ok;
-        $all[$i]['view_ok']    = $view_ok;
-        $all[$i]['ofsn']       = $ofsn;
-        $all[$i]['title']      = $title;
-        $all[$i]['counter']    = $counter;
+        $all[$i]['sign_ok'] = $sign_ok;
+        $all[$i]['view_ok'] = $view_ok;
+        $all[$i]['ofsn'] = $ofsn;
+        $all[$i]['title'] = $title;
+        $all[$i]['counter'] = $counter;
         $all[$i]['start_date'] = $start_date;
-        $all[$i]['end_date']   = $end_date;
-        $all[$i]['content']    = $content;
-        $all[$i]['uid']        = $uid;
-        $all[$i]['post_date']  = $post_date;
-        $all[$i]['enable']     = $enable;
+        $all[$i]['end_date'] = $end_date;
+        $all[$i]['content'] = $content;
+        $all[$i]['uid'] = $uid;
+        $all[$i]['post_date'] = $post_date;
+        $all[$i]['enable'] = $enable;
         $all[$i]['multi_sign'] = $multi_sign_pic;
-        $all[$i]['button']     = $xoopsModuleConfig['show_amount'] ? _MD_TADFORM_SIGNNOW : sprintf(_MD_TADFORM_SIGN_NOW, $title, $counter);
-        $all[$i]['date']       = sprintf(_MD_TADFORM_SIGN_DATE, $start_date, $end_date);
+        $all[$i]['button'] = $xoopsModuleConfig['show_amount'] ? _MD_TADFORM_SIGNNOW : sprintf(_MD_TADFORM_SIGN_NOW, $title, $counter);
+        $all[$i]['date'] = sprintf(_MD_TADFORM_SIGN_DATE, $start_date, $end_date);
         $i++;
     }
 
     if (empty($all)) {
-        $xoopsTpl->assign('op', "error");
-        $xoopsTpl->assign('title', "");
+        $xoopsTpl->assign('op', 'error');
+        $xoopsTpl->assign('title', '');
         $xoopsTpl->assign('msg', _MD_TADFORM_EMPTY);
     } else {
-        $xoopsTpl->assign("jquery", get_jquery(true));
+        $xoopsTpl->assign('jquery', get_jquery(true));
         $xoopsTpl->assign('all', $all);
     }
 }
 
 //填寫表單
-function sign_form($ofsn = "", $ssn = "")
+function sign_form($ofsn = '', $ssn = '')
 {
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsTpl;
 
-    $today = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
-    $form  = get_tad_form_main($ofsn, $ssn);
-    $ofsn  = $form['ofsn'];
+    $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
+    $form = get_tad_form_main($ofsn, $ssn);
+    $ofsn = $form['ofsn'];
 
-    $sign_group = (empty($form['sign_group'])) ? "" : explode(",", $form['sign_group']);
+    $sign_group = (empty($form['sign_group'])) ? '' : explode(',', $form['sign_group']);
 
     if ($xoopsUser) {
         $module_id = $xoopsModule->getVar('mid');
-        $isAdmin   = $xoopsUser->isAdmin($module_id);
-        $email     = $xoopsUser->getVar('email');
+        $isAdmin = $xoopsUser->isAdmin($module_id);
+        $email = $xoopsUser->getVar('email');
 
         $User_Groups = $xoopsUser->getGroups();
-        $ugroup      = implode(",", $User_Groups);
+        $ugroup = implode(',', $User_Groups);
 
-        if (!empty($sign_group) and !in_array(1, $User_Groups)) {
+        if (!empty($sign_group) and !in_array(1, $User_Groups, true)) {
             $ok = false;
             foreach ($sign_group as $group) {
-                if (in_array($group, $User_Groups)) {
+                if (in_array($group, $User_Groups, true)) {
                     $ok = true;
                 }
             }
@@ -111,11 +111,12 @@ function sign_form($ofsn = "", $ssn = "")
                 $xoopsTpl->assign('op', 'error');
                 $xoopsTpl->assign('title', $form['title']);
                 $xoopsTpl->assign('msg', _MD_TADFORM_ONLY_MEM);
+
                 return;
             }
         }
 
-        $uid      = $xoopsUser->getVar('uid');
+        $uid = $xoopsUser->getVar('uid');
         $uid_name = $xoopsUser->getVar('name');
         if (empty($uid_name)) {
             $uid_name = $xoopsUser->getVar('uname');
@@ -128,91 +129,94 @@ function sign_form($ofsn = "", $ssn = "")
         if ($ssn) {
             $db_ans = get_somebody_ans($ofsn, $uid, $ssn);
         } else {
-            $db_ans = ($form['multi_sign'] == '1') ? [] : get_somebody_ans($ofsn, $uid, $ssn);
+            $db_ans = ('1' == $form['multi_sign']) ? [] : get_somebody_ans($ofsn, $uid, $ssn);
         }
-        $history = ($form['multi_sign'] == '1') ? get_history($ofsn, $uid) : "";
+        $history = ('1' == $form['multi_sign']) ? get_history($ofsn, $uid) : '';
     } else {
-        $uid_name = "";
-        $email    = $history    = "";
-        $isAdmin  = false;
-        $db_ans   = [];
-        if (!empty($sign_group) and !in_array(3, $sign_group)) {
+        $uid_name = '';
+        $email = $history = '';
+        $isAdmin = false;
+        $db_ans = [];
+        if (!empty($sign_group) and !in_array(3, $sign_group, true)) {
             $xoopsTpl->assign('op', 'error');
             $xoopsTpl->assign('title', $form['title']);
             $xoopsTpl->assign('msg', _MD_TADFORM_ONLY_MEM);
+
             return;
         }
     }
 
     if (!$isAdmin) {
-        if ($form['enable'] != '1') {
+        if ('1' != $form['enable']) {
             $xoopsTpl->assign('op', 'error');
             $xoopsTpl->assign('title', $form['title']);
             $xoopsTpl->assign('msg', sprintf(_MD_TADFORM_UNABLE, $form['title']));
+
             return;
         }
 
-        $form['start_date'] = date("Y-m-d H:i", xoops_getUserTimestamp(strtotime($form['start_date'])));
+        $form['start_date'] = date('Y-m-d H:i', xoops_getUserTimestamp(strtotime($form['start_date'])));
         if ($today < $form['start_date']) {
             $xoopsTpl->assign('op', 'error');
             $xoopsTpl->assign('title', $form['title']);
             $xoopsTpl->assign('msg', sprintf(_MD_TADFORM_NOT_START, $form['title'], $form['start_date']));
+
             return;
         }
 
-        $form['end_date'] = date("Y-m-d H:i", xoops_getUserTimestamp(strtotime($form['end_date'])));
+        $form['end_date'] = date('Y-m-d H:i', xoops_getUserTimestamp(strtotime($form['end_date'])));
         if ($today > $form['end_date']) {
             $xoopsTpl->assign('op', 'error');
             $xoopsTpl->assign('title', $form['title']);
             $xoopsTpl->assign('msg', sprintf(_MD_TADFORM_OVERDUE, $form['title'], $form['end_date']));
+
             return;
         }
     }
 
     //若是用來報名的
-    if ($form['kind'] == "application") {
-        $man_name_list = "<table><caption>" . _MD_TADFORM_OK_LIST . "</caption>";
-        $sql           = "select email,fill_time from " . $xoopsDB->prefix("tad_form_fill") . " where ofsn='{$ofsn}' and result_col='1'";
-        $result        = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-        $n             = $i             = 3;
+    if ('application' == $form['kind']) {
+        $man_name_list = '<table><caption>' . _MD_TADFORM_OK_LIST . '</caption>';
+        $sql = 'select email,fill_time from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='{$ofsn}' and result_col='1'";
+        $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+        $n = $i = 3;
         while (list($email, $fill_time) = $xoopsDB->fetchRow($result)) {
-            $fill_time  = date("Y-m-d H:i:s", xoops_getUserTimestamp(strtotime($fill_time)));
-            $email_data = explode("@", $email);
-            $man_name_list .= ($n % $i == 0) ? "<tr>" : "";
+            $fill_time = date('Y-m-d H:i:s', xoops_getUserTimestamp(strtotime($fill_time)));
+            $email_data = explode('@', $email);
+            $man_name_list .= (0 == $n % $i) ? '<tr>' : '';
             $man_name_list .= "<td>{$email_data[0]}@{$fill_time}</td> ";
-            $man_name_list .= ($n % $i == $i - 1) ? "</tr>" : "";
+            $man_name_list .= ($n % $i == $i - 1) ? '</tr>' : '';
             $n++;
         }
-        $man_name_list .= "</table>";
+        $man_name_list .= '</table>';
 
         $apply_ok = "<tr><td>{$man_name_list}</td></tr>";
     } elseif ($form['show_result'] and can_view_report($ofsn)) {
-        $apply_ok = "<tr><td><a href='report.php?ofsn=$ofsn' class='btn btn-info'>" . _MD_TADFORM_VIEW_FORM . "</a></td></tr>";
-
+        $apply_ok = "<tr><td><a href='report.php?ofsn=$ofsn' class='btn btn-info'>" . _MD_TADFORM_VIEW_FORM . '</a></td></tr>';
     } else {
-        $apply_ok = "";
+        $apply_ok = '';
     }
 
-    $main_form = "";
+    $main_form = '';
 
-    $sql = "select * from " . $xoopsDB->prefix("tad_form_col") . " where ofsn='{$ofsn}' order by sort";
+    $sql = 'select * from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn='{$ofsn}' order by sort";
 
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    $i      = 1;
+    $i = 1;
     while ($data = $xoopsDB->fetchArray($result)) {
         foreach ($data as $k => $v) {
             $$k = $v;
         }
 
-        $edit_btn   = ($isAdmin) ? "<a href='admin/add.php?op=edit_opt&ofsn=$ofsn&csn=$csn&mode=update' class='btn btn-mini btn-warning pull-right'>" . _TAD_EDIT . "</a>" : "";
-        $db_ans_csn = isset($db_ans[$csn]) ? $db_ans[$csn] : "";
-        $col_form   = col_form($csn, $kind, $size, $val, $db_ans_csn, $chk);
+        $edit_btn = ($isAdmin) ? "<a href='admin/add.php?op=edit_opt&ofsn=$ofsn&csn=$csn&mode=update' class='btn btn-mini btn-warning pull-right'>" . _TAD_EDIT . '</a>' : '';
+        $db_ans_csn = isset($db_ans[$csn]) ? $db_ans[$csn] : '';
+        $col_form = col_form($csn, $kind, $size, $val, $db_ans_csn, $chk);
 
-        $chk_txt = ($chk == '1') ? "<img src='images/star.png' alt='" . _MD_TADFORM_NEED_SIGN . "' hspace=3 align=absmiddle>" : "";
-        $note    = (empty($descript)) ? "" : "<span class='note'>({$descript})</span>";
-        if ($kind == 'show') {
+        $chk_txt = ('1' == $chk) ? "<img src='images/star.png' alt='" . _MD_TADFORM_NEED_SIGN . "' hspace=3 align=absmiddle>" : '';
+        $note = (empty($descript)) ? '' : "<span class='note'>({$descript})</span>";
+        if ('show' == $kind) {
             $show_title = $descript;
-            $show_col   = "";
+            $show_col = '';
         } else {
             $show_title = "
               <div class='q_col'>
@@ -231,19 +235,18 @@ function sign_form($ofsn = "", $ssn = "")
             $show_col
             ";
 
-        if ($kind != 'show') {
+        if ('show' != $kind) {
             $i++;
         }
-
     }
 
-    $chk_emeil_js = chk_emeil_js("email", "myForm");
+    $chk_emeil_js = chk_emeil_js('email', 'myForm');
 
     $jquery = get_jquery(true);
 
-    $captcha_js  = "";
-    $captcha_div = "";
-    if ($form['captcha'] == '1') {
+    $captcha_js = '';
+    $captcha_div = '';
+    if ('1' == $form['captcha']) {
         $captcha_js = "
         <link rel='stylesheet' type='text/css' href='class/Qaptcha_v3.0/jquery/QapTcha.jquery.css' media='screen' />
         <script type='text/javascript' src='class/Qaptcha_v3.0/jquery/jquery.ui.touch.js'></script>
@@ -256,15 +259,15 @@ function sign_form($ofsn = "", $ssn = "")
         $captcha_div = "<div class='QapTcha'></div>";
     }
 
-    $tool = "";
+    $tool = '';
     if ($isAdmin) {
         $tool = "
         <a href='admin/add.php?op=tad_form_main_form&ofsn={$ofsn}' class='btn btn-warning'>" . sprintf(_MD_TADFORM_EDIT_FORM, $form['title']) . "</a>
         <a href='admin/add.php?op=edit_all_opt&ofsn={$ofsn}' class='btn btn-warning'>" . _MD_TADFORM_EDIT_ALL . "</a>
-        <a href='admin/result.php?ofsn={$ofsn}' class='btn btn-primary'>" . _MD_TADFORM_VIEW_FORM . "</a>";
+        <a href='admin/result.php?ofsn={$ofsn}' class='btn btn-primary'>" . _MD_TADFORM_VIEW_FORM . '</a>';
     }
 
-    $db_ans_ssn = isset($db_ans['ssn']) ? $db_ans['ssn'] : "";
+    $db_ans_ssn = isset($db_ans['ssn']) ? $db_ans['ssn'] : '';
 
     $xoopsTpl->assign('op', 'sign');
     $xoopsTpl->assign('jquery', $jquery);
@@ -284,13 +287,13 @@ function sign_form($ofsn = "", $ssn = "")
     $xoopsTpl->assign('history', $history);
 
     //表單驗證
-    if (!file_exists(TADTOOLS_PATH . "/formValidator.php")) {
-        redirect_header("index.php", 3, _MA_NEED_TADTOOLS);
+    if (!file_exists(TADTOOLS_PATH . '/formValidator.php')) {
+        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
     }
-    include_once TADTOOLS_PATH . "/formValidator.php";
-    $formValidator      = new formValidator("#myForm");
+    include_once TADTOOLS_PATH . '/formValidator.php';
+    $formValidator = new formValidator('#myForm');
     $formValidator_code = $formValidator->render();
-    $xoopsTpl->assign("formValidator_code", $formValidator_code);
+    $xoopsTpl->assign('formValidator_code', $formValidator_code);
 }
 
 //儲存問卷
@@ -301,27 +304,25 @@ function save_val($ofsn = '', $ans = [])
     if ($xoopsUser) {
         $uid = $xoopsUser->getVar('uid');
     } else {
-        $uid = "0";
+        $uid = '0';
     }
 
     $myts = MyTextSanitizer::getInstance();
     $form = get_tad_form_main($ofsn);
 
-    if ($form['captcha'] == '1') {
-
+    if ('1' == $form['captcha']) {
         if (isset($_POST['iQapTcha']) && empty($_POST['iQapTcha']) && isset($_SESSION['iQaptcha']) && $_SESSION['iQaptcha']) {
-
         } else {
             redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADFORM_CAPTCHA_ERROR);
             exit;
         }
     }
 
-    $now = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
+    $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
     $_POST['ssn'] = (int)$_POST['ssn'];
     //先存基本資料
-    $sql = "replace into " . $xoopsDB->prefix("tad_form_fill") . " (`ssn`,`ofsn`,`uid`,`man_name`,`email`,`fill_time`,`result_col`,`code`) values('{$_POST['ssn']}','{$_POST['ofsn']}','{$uid}','{$_POST['man_name']}','{$_POST['email']}', '{$now}','','')";
+    $sql = 'replace into ' . $xoopsDB->prefix('tad_form_fill') . " (`ssn`,`ofsn`,`uid`,`man_name`,`email`,`fill_time`,`result_col`,`code`) values('{$_POST['ssn']}','{$_POST['ofsn']}','{$uid}','{$_POST['man_name']}','{$_POST['email']}', '{$now}','','')";
     $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     $ssn = $xoopsDB->getInsertId();
 
@@ -329,10 +330,10 @@ function save_val($ofsn = '', $ans = [])
 
     //再存填寫資料
     foreach ($ans as $csn => $val) {
-        $value = (is_array($val)) ? implode(";", $val) : $val;
+        $value = (is_array($val)) ? implode(';', $val) : $val;
         $value = $myts->addSlashes($value);
-        $ssn   = (int)$ssn;
-        $sql   = "replace into " . $xoopsDB->prefix("tad_form_value") . " (`ssn`,`csn`,`val`) values('{$ssn}','{$csn}','{$value}')";
+        $ssn = (int)$ssn;
+        $sql = 'replace into ' . $xoopsDB->prefix('tad_form_value') . " (`ssn`,`csn`,`val`) values('{$ssn}','{$csn}','{$value}')";
         $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
         unset($need_csn_arr[$csn]);
@@ -341,41 +342,39 @@ function save_val($ofsn = '', $ans = [])
     //把一些沒填的欄位也補上空值
     foreach ($need_csn_arr as $csn) {
         $ssn = (int)$ssn;
-        $sql = "replace into " . $xoopsDB->prefix("tad_form_value") . " (`ssn`,`csn`,`val`) values('{$ssn}','{$csn}','')";
+        $sql = 'replace into ' . $xoopsDB->prefix('tad_form_value') . " (`ssn`,`csn`,`val`) values('{$ssn}','{$csn}','')";
         $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $sql);
     }
 
     //產生code
-    $sql = "update " . $xoopsDB->prefix("tad_form_fill") . " set `code`=md5(CONCAT(`ofsn`,`uid`, `man_name`, `email`, `fill_time`)) where ssn='{$ssn}'";
+    $sql = 'update ' . $xoopsDB->prefix('tad_form_fill') . " set `code`=md5(CONCAT(`ofsn`,`uid`, `man_name`, `email`, `fill_time`)) where ssn='{$ssn}'";
     $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
-    $sql        = "select `code` from " . $xoopsDB->prefix("tad_form_fill") . " where ssn='{$ssn}'";
-    $result     = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $sql = 'select `code` from ' . $xoopsDB->prefix('tad_form_fill') . " where ssn='{$ssn}'";
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     list($code) = $xoopsDB->fetchRow($result);
 
     return $code;
 }
 
 //製作表單
-function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans = [], $chk = "")
+function col_form($csn = '', $kind = '', $size = '', $default_val = '', $db_ans = [], $chk = '')
 {
-
     switch ($kind) {
-        case "text":
+        case 'text':
             $default_val = (empty($db_ans)) ? $default_val : $db_ans;
-            $chktxt      = ($chk) ? " validate[required]" : "";
-            $span        = empty($size) ? 6 : round($size / 10, 0);
-            $main        = "<div class='col-sm-{$span}'><label for='tf{$csn}' style='display:none;'>{$csn}</label><input type='text' name='ans[$csn]' id='tf{$csn}' class='form-control {$chktxt}' value='{$default_val}'><input type='hidden' name='need_csn[{$csn}]' value='{$csn}'></div>";
+            $chktxt = ($chk) ? ' validate[required]' : '';
+            $span = empty($size) ? 6 : round($size / 10, 0);
+            $main = "<div class='col-sm-{$span}'><label for='tf{$csn}' style='display:none;'>{$csn}</label><input type='text' name='ans[$csn]' id='tf{$csn}' class='form-control {$chktxt}' value='{$default_val}'><input type='hidden' name='need_csn[{$csn}]' value='{$csn}'></div>";
             break;
-
-        case "radio":
+        case 'radio':
             $default_val = (empty($db_ans)) ? $default_val : $db_ans;
-            $opt         = explode(";", $size);
-            $i           = 0;
-            $main        = "<input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
+            $opt = explode(';', $size);
+            $i = 0;
+            $main = "<input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
             foreach ($opt as $val) {
-                $checked = ($default_val == $val) ? "checked='checked'" : "";
-                $chktxt  = ($chk) ? "class='validate[required] radio'" : "";
+                $checked = ($default_val == $val) ? "checked='checked'" : '';
+                $chktxt = ($chk) ? "class='validate[required] radio'" : '';
                 $main .= "
                   <label class='radio-inline'>
                     <input type='radio' name='ans[$csn]' value='{$val}' $checked $chktxt>{$val}
@@ -383,17 +382,16 @@ function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans 
                 $i++;
             }
             break;
-
-        case "checkbox":
+        case 'checkbox':
             $default_val = (empty($db_ans)) ? $default_val : $db_ans;
-            $db          = explode(";", $default_val);
+            $db = explode(';', $default_val);
 
-            $opt  = explode(";", $size);
-            $i    = 0;
+            $opt = explode(';', $size);
+            $i = 0;
             $main = "<input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
             foreach ($opt as $val) {
-                $checked = (in_array($val, $db)) ? "checked='checked'" : "";
-                $chktxt  = ($chk) ? "class='validate[required] checkbox'" : "";
+                $checked = (in_array($val, $db, true)) ? "checked='checked'" : '';
+                $chktxt = ($chk) ? "class='validate[required] checkbox'" : '';
                 $main .= "
                   <label class='checkbox-inline'>
                     <input type='checkbox' name='ans[$csn][]' value='{$val}' $checked $chktxt>{$val}
@@ -401,49 +399,45 @@ function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans 
                 $i++;
             }
             break;
-
-        case "select":
+        case 'select':
             $default_val = (empty($db_ans)) ? $default_val : $db_ans;
-            $chktxt      = ($chk) ? "validate[required]" : "";
-            $opt         = explode(";", $size);
-            $main        = "<label for='tf{$csn}' style='display:none;'>{$csn}</label><select name='ans[$csn]' id='tf{$csn}' class='form-control {$chktxt}'>";
+            $chktxt = ($chk) ? 'validate[required]' : '';
+            $opt = explode(';', $size);
+            $main = "<label for='tf{$csn}' style='display:none;'>{$csn}</label><select name='ans[$csn]' id='tf{$csn}' class='form-control {$chktxt}'>";
             foreach ($opt as $val) {
-                $selected = ($default_val == $val) ? "selected" : "";
+                $selected = ($default_val == $val) ? 'selected' : '';
                 $main .= "<option value='{$val}' $selected>{$val}</option>";
             }
             $main .= "</select><input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
             break;
-
-        case "textarea":
+        case 'textarea':
             $default_val = (empty($db_ans)) ? $default_val : $db_ans;
-            $chktxt      = ($chk) ? "validate[required]" : "";
+            $chktxt = ($chk) ? 'validate[required]' : '';
             if (empty($size)) {
                 $size = 60;
             }
 
             $main = "<label for='tf{$csn}' style='display:none;'>{$csn}</label><textarea name='ans[$csn]' id='tf{$csn}' class='form-control {$chktxt}' style='height:{$size}px;'>{$default_val}</textarea><input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
             break;
-
-        case "date":
+        case 'date':
             $default_val = (empty($db_ans)) ? $default_val : $db_ans;
-            $span        = empty($size) ? 6 : round($size / 10, 0);
-            $chktxt      = ($chk) ? "validate[required]" : "";
-            $main        = "<div class='col-sm-{$span}'><label for='tf{$csn}' style='display:none;'>{$csn}</label><input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}' class='form-control {$chktxt}' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd' , startDate:'%y-%M-%d}'})\"></div>
+            $span = empty($size) ? 6 : round($size / 10, 0);
+            $chktxt = ($chk) ? 'validate[required]' : '';
+            $main = "<div class='col-sm-{$span}'><label for='tf{$csn}' style='display:none;'>{$csn}</label><input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}' class='form-control {$chktxt}' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd' , startDate:'%y-%M-%d}'})\"></div>
 								                <input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
             break;
-
-        case "datetime":
+        case 'datetime':
             $default_val = (empty($db_ans)) ? $default_val : $db_ans;
-            $span        = empty($size) ? 6 : round($size / 10, 0);
-            $chktxt      = ($chk) ? "validate[required]" : "";
-            $main        = "<div class='col-sm-{$span}'><label for='tf{$csn}' style='display:none;'>{$csn}</label><input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}'  class='form-control {$chktxt}' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm' , startDate:'%y-%M-%d %H:%m}'})\"></div>
+            $span = empty($size) ? 6 : round($size / 10, 0);
+            $chktxt = ($chk) ? 'validate[required]' : '';
+            $main = "<div class='col-sm-{$span}'><label for='tf{$csn}' style='display:none;'>{$csn}</label><input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}'  class='form-control {$chktxt}' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm' , startDate:'%y-%M-%d %H:%m}'})\"></div>
 								                <input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
             break;
-
-        case "show":
-            $main = "";
+        case 'show':
+            $main = '';
             break;
     }
+
     return $main;
 }
 
@@ -451,32 +445,33 @@ function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans 
 function replace_tad_form_fill()
 {
     global $xoopsDB;
-    $sql = "replace into " . $xoopsDB->prefix("tad_form_fill") . " (`ofsn`,`uid`,`man_name`,`email`,`fill_time` , `result_col` , `code`) values('{$_POST['ofsn']}','{$_POST['uid']}','{$_POST['man_name']}','{$_POST['email']}','{$_POST['fill_time']}' , '' , '')";
+    $sql = 'replace into ' . $xoopsDB->prefix('tad_form_fill') . " (`ofsn`,`uid`,`man_name`,`email`,`fill_time` , `result_col` , `code`) values('{$_POST['ofsn']}','{$_POST['uid']}','{$_POST['man_name']}','{$_POST['email']}','{$_POST['fill_time']}' , '' , '')";
     $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     //取得最後新增資料的流水編號
     $ofsnuid = $xoopsDB->getInsertId();
+
     return $ofsnuid;
 }
 
 //立即寄出
-function send_now($code = "")
+function send_now($code = '')
 {
     global $xoopsConfig, $xoopsDB;
 
-    $xoopsMailer                           = &getMailer();
-    $xoopsMailer->multimailer->ContentType = "text/html";
+    $xoopsMailer = &getMailer();
+    $xoopsMailer->multimailer->ContentType = 'text/html';
 
-    $sql                                                                  = "select a.`ofsn`,a.`man_name`,a.`email`, a.`fill_time`,a.`code`,b.`title`,b.`adm_email`  from " . $xoopsDB->prefix("tad_form_fill") . " as a left join " . $xoopsDB->prefix("tad_form_main") . " as b on a.ofsn=b.ofsn where a.code='$code'";
-    $result                                                               = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $sql = 'select a.`ofsn`,a.`man_name`,a.`email`, a.`fill_time`,a.`code`,b.`title`,b.`adm_email`  from ' . $xoopsDB->prefix('tad_form_fill') . ' as a left join ' . $xoopsDB->prefix('tad_form_main') . " as b on a.ofsn=b.ofsn where a.code='$code'";
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     list($ofsn, $man_name, $email, $fill_time, $code, $title, $adm_email) = $xoopsDB->fetchRow($result);
 
-    $xoopsMailer->addHeaders("MIME-Version: 1.0");
+    $xoopsMailer->addHeaders('MIME-Version: 1.0');
 
-    $all = view($code, "mail");
+    $all = view($code, 'mail');
 
-    $fill_time = date("Y-m-d H:i:s", xoops_getUserTimestamp(strtotime($fill_time)));
-    $content   = sprintf(_MD_TADFORM_MAIL_CONTENT, $man_name, $fill_time, $title, $all, XOOPS_URL . "/modules/tad_form/index.php?op=view&code={$code}");
-    $subject   = sprintf(_MD_TADFORM_MAIL_TITLE, $title, $man_name, $fill_time);
+    $fill_time = date('Y-m-d H:i:s', xoops_getUserTimestamp(strtotime($fill_time)));
+    $content = sprintf(_MD_TADFORM_MAIL_CONTENT, $man_name, $fill_time, $title, $all, XOOPS_URL . "/modules/tad_form/index.php?op=view&code={$code}");
+    $subject = sprintf(_MD_TADFORM_MAIL_TITLE, $title, $man_name, $fill_time);
 
     $sCharset = 'UTF-8';
     $sHeaders = "MIME-Version: 1.0\r\n" .
@@ -488,7 +483,7 @@ function send_now($code = "")
         }
     }
 
-    $email_arr = explode(";", $adm_email);
+    $email_arr = explode(';', $adm_email);
     foreach ($email_arr as $email) {
         //$email=trim($email);
         if (!empty($email)) {
@@ -497,38 +492,33 @@ function send_now($code = "")
             }
         }
     }
-
 }
 
 /*-----------執行動作判斷區----------*/
 include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op   = system_CleanVars($_REQUEST, 'op', '', 'string');
+$op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $ofsn = system_CleanVars($_REQUEST, 'ofsn', 0, 'int');
-$ssn  = system_CleanVars($_REQUEST, 'ssn', 0, 'int');
-$ans  = system_CleanVars($_REQUEST, 'ans', '', 'array');
+$ssn = system_CleanVars($_REQUEST, 'ssn', 0, 'int');
+$ans = system_CleanVars($_REQUEST, 'ans', '', 'array');
 $code = system_CleanVars($_REQUEST, 'vcode', '', 'string');
 
-
 switch ($op) {
-    case "sign":
+    case 'sign':
         sign_form($ofsn, $ssn);
         break;
-
-    case "delete_fill":
+    case 'delete_fill':
         delete_tad_form_ans($ssn);
         header("location:index.php?op=sign&ofsn={$ofsn}");
         exit;
 
-    case "save_val":
+    case 'save_val':
         $code = save_val($ofsn, $ans);
         send_now($code);
         redirect_header("index.php?op=view&vcode={$code}", 3, _MD_TADFORM_SAVE_OK);
         break;
-
-    case "view":
+    case 'view':
         view($code);
         break;
-
     default:
         list_tad_form_main();
         break;
@@ -536,5 +526,5 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 
-$xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
+$xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
 include_once XOOPS_ROOT_PATH . '/footer.php';
