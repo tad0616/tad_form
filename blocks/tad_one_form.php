@@ -51,8 +51,8 @@ function tad_one_form_edit($options)
     }
     $opt .= '';
 
-    $opt1_1 = $options[1] == 1 ? 'checked' : '';
-    $opt1_0 = $options[1] != 1 ? 'checked' : '';
+    $opt1_1 = 1 == $options[1] ? 'checked' : '';
+    $opt1_0 = 1 != $options[1] ? 'checked' : '';
 
     $form = "
     <ol class='my-form'>
