@@ -28,7 +28,7 @@ if (!function_exists('sign_form')) {
                     }
                 }
                 if (!$ok) {
-                    if ('return' == $mode) {
+                    if ('return' === $mode) {
                         $error['title'] = $form['title'];
                         $error['error'] = _TADFORM_ONLY_MEM;
                         return $error;
@@ -63,7 +63,7 @@ if (!function_exists('sign_form')) {
             $isAdmin  = false;
             $db_ans   = [];
             if (!empty($sign_group) and !in_array(3, $sign_group)) {
-                if ('return' == $mode) {
+                if ('return' === $mode) {
                     $error['title'] = $form['title'];
                     $error['error'] = _TADFORM_ONLY_MEM;
                     return $error;
@@ -78,7 +78,7 @@ if (!function_exists('sign_form')) {
 
         if (!$isAdmin) {
             if ('1' != $form['enable']) {
-                if ('return' == $mode) {
+                if ('return' === $mode) {
                     $error['title'] = $form['title'];
                     $error['error'] = sprintf(_TADFORM_UNABLE, $form['title']);
                     return $error;
@@ -92,7 +92,7 @@ if (!function_exists('sign_form')) {
 
             $form['start_date'] = date('Y-m-d H:i', xoops_getUserTimestamp(strtotime($form['start_date'])));
             if ($today < $form['start_date']) {
-                if ('return' == $mode) {
+                if ('return' === $mode) {
                     $error['title'] = $form['title'];
                     $error['error'] = sprintf(_TADFORM_NOT_START, $form['title'], $form['start_date']);
                     return $error;
@@ -106,7 +106,7 @@ if (!function_exists('sign_form')) {
 
             $form['end_date'] = date('Y-m-d H:i', xoops_getUserTimestamp(strtotime($form['end_date'])));
             if ($today > $form['end_date']) {
-                if ('return' == $mode) {
+                if ('return' === $mode) {
                     $error['title'] = $form['title'];
                     $error['error'] = sprintf(_TADFORM_OVERDUE, $form['title'], $form['end_date']);
                     return $error;
@@ -120,7 +120,7 @@ if (!function_exists('sign_form')) {
         }
 
         //若是用來報名的
-        if ('application' == $form['kind']) {
+        if ('application' === $form['kind']) {
             $man_name_list = '<table><caption>' . _TADFORM_OK_LIST . '</caption>';
             $sql           = 'select email,fill_time from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='{$ofsn}' and result_col='1'";
             $result        = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
@@ -159,7 +159,7 @@ if (!function_exists('sign_form')) {
 
             $chk_txt = ('1' == $chk) ? "<img src='" . XOOPS_URL . "/modules/tad_form/images/star.png' alt='" . _TADFORM_NEED_SIGN . "' hspace=3 align=absmiddle>" : '';
             $note    = (empty($descript)) ? '' : "<span class='note'>({$descript})</span>";
-            if ('show' == $kind) {
+            if ('show' === $kind) {
                 $show_title = $descript;
                 $show_col   = '';
             } else {
@@ -180,7 +180,7 @@ if (!function_exists('sign_form')) {
             $show_col
             ";
 
-            if ('show' != $kind) {
+            if ('show' !== $kind) {
                 $i++;
             }
         }
@@ -214,7 +214,7 @@ if (!function_exists('sign_form')) {
 
         $db_ans_ssn = isset($db_ans['ssn']) ? $db_ans['ssn'] : '';
 
-        if ('return' == $mode) {
+        if ('return' === $mode) {
             $f['op']           = 'sign';
             $f['chk_emeil_js'] = $chk_emeil_js;
             $f['form_title']   = $form['title'];

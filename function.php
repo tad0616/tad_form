@@ -128,16 +128,16 @@ function view($code = '', $mode = '')
 
     $form = get_tad_form_main($ofsn);
 
-    $tbl_set = ('mail' == $mode) ? 'border=1 ' : "class='table table-striped'";
-    $td_set = ('mail' == $mode) ? 'bgcolor=#F0F0F0' : '';
-    $content = ('mail' == $mode) ? '' : "<tr><td class='note' colspan=2>{$form['content']}</td></tr>";
+    $tbl_set = ('mail' === $mode) ? 'border=1 ' : "class='table table-striped'";
+    $td_set = ('mail' === $mode) ? 'bgcolor=#F0F0F0' : '';
+    $content = ('mail' === $mode) ? '' : "<tr><td class='note' colspan=2>{$form['content']}</td></tr>";
 
     $sql = 'select b.csn,b.val,a.title from ' . $xoopsDB->prefix('tad_form_col') . ' as a left join ' . $xoopsDB->prefix('tad_form_value') . " as b on a.csn=b.csn where b.ssn='{$ssn}' order by a.sort";
 
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i = 1;
     while (list($csn, $val, $title) = $xoopsDB->fetchRow($result)) {
-        if ('mail' == $mode) {
+        if ('mail' === $mode) {
             $all .= "
       <tr>
         <td {$td_set}>{$i}. <b>{$title}</b></td>
@@ -152,7 +152,7 @@ function view($code = '', $mode = '')
         $i++;
     }
 
-    if ('mail' == $mode) {
+    if ('mail' === $mode) {
         $main = "
     <table {$tbl_set}>
     {$content}

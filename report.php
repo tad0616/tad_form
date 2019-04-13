@@ -33,7 +33,7 @@ function view_user_result($ofsn)
     $i = 0;
     $csn_arr = $ff = $tt = $kk = [];
     while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
-        if ('show' == $kind) {
+        if ('show' === $kind) {
             continue;
         }
 
@@ -52,7 +52,7 @@ function view_user_result($ofsn)
         $all_csn = '';
     }
 
-    $funct_title = ('application' == $form['kind']) ? "<th $thSty>" . _MD_TADFORM_KIND1_TH . '</th>' : "<th $thSty>" . _TAD_FUNCTION . '</th>';
+    $funct_title = ('application' === $form['kind']) ? "<th $thSty>" . _MD_TADFORM_KIND1_TH . '</th>' : "<th $thSty>" . _TAD_FUNCTION . '</th>';
     //die(var_export($all_title));
     $xoopsTpl->assign('all_title', $all_title);
     $xoopsTpl->assign('funct_title', $funct_title);
@@ -86,9 +86,9 @@ function view_user_result($ofsn)
 
         $n = 0;
         foreach ($csn_arr as $csn) {
-            if ('textarea' == $kk[$csn]) {
+            if ('textarea' === $kk[$csn]) {
                 $csn_val = nl2br($col_v[$csn]);
-            } elseif ('checkbox' == $kk[$csn]) {
+            } elseif ('checkbox' === $kk[$csn]) {
                 $csn_val = (empty($col_v[$csn])) ? '' : '<ul><li>' . str_replace(';', '</li><li>', $col_v[$csn]) . '</li></ul>';
             } else {
                 $csn_val = $col_v[$csn];
@@ -101,7 +101,7 @@ function view_user_result($ofsn)
 
         //根據不同表單類型，提供不同的功能
 
-        if ('application' == $form['kind']) {
+        if ('application' === $form['kind']) {
             $result_col_pic = ('1' == $result_col) ? '001_06.gif' : '001_05.gif';
             $other_fun = "<img src='images/{$result_col_pic}' alt='{$result_col_pic}' title='{$result_col_pic}'>";
         } else {

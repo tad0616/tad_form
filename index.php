@@ -175,7 +175,7 @@ function sign_form($ofsn = '', $ssn = '')
     }
 
     //若是用來報名的
-    if ('application' == $form['kind']) {
+    if ('application' === $form['kind']) {
         $man_name_list = '<table><caption>' . _MD_TADFORM_OK_LIST . '</caption>';
         $sql = 'select email,fill_time from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='{$ofsn}' and result_col='1'";
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
@@ -214,7 +214,7 @@ function sign_form($ofsn = '', $ssn = '')
 
         $chk_txt = ('1' == $chk) ? "<img src='images/star.png' alt='" . _MD_TADFORM_NEED_SIGN . "' hspace=3 align=absmiddle>" : '';
         $note = (empty($descript)) ? '' : "<span class='note'>({$descript})</span>";
-        if ('show' == $kind) {
+        if ('show' === $kind) {
             $show_title = $descript;
             $show_col = '';
         } else {
@@ -235,7 +235,7 @@ function sign_form($ofsn = '', $ssn = '')
             $show_col
             ";
 
-        if ('show' != $kind) {
+        if ('show' !== $kind) {
             $i++;
         }
     }

@@ -358,10 +358,10 @@ switch ($op) {
         if ('1' == $_POST['end']) {
             header('location: main.php');
             exit;
-        } elseif ('update' == $_POST['mode']) {
+        } elseif ('update' === $_POST['mode']) {
             header("location: ../index.php?op=sign&ofsn={$ofsn}");
             exit;
-        } elseif ('modify' == $_POST['mode']) {
+        } elseif ('modify' === $_POST['mode']) {
             header("location: add.php?op=edit_all_opt&ofsn={$ofsn}");
             exit;
         }

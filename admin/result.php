@@ -30,7 +30,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
     $all_title = $tt = $tt = $kk = $csn_arr = [];
     $i = 0;
     while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
-        if ('show' == $kind) {
+        if ('show' === $kind) {
             continue;
         }
 
@@ -46,7 +46,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
     $all_csn = implode(',', $csn_arr);
 
     //根據不同表單類型，提供不同的功能
-    if ('application' == $form['kind']) {
+    if ('application' === $form['kind']) {
         $other_fun_th = "<th $thSty>" . _MA_TADFORM_KIND1_TH . '</th>';
     } else {
         $other_fun_th = '';
@@ -78,9 +78,9 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
 
         $n = 0;
         foreach ($csn_arr as $csn) {
-            if ('textarea' == $kk[$csn]) {
+            if ('textarea' === $kk[$csn]) {
                 $csn_val = nl2br($col_v[$csn]);
-            } elseif ('checkbox' == $kk[$csn]) {
+            } elseif ('checkbox' === $kk[$csn]) {
                 $csn_val = (empty($col_v[$csn])) ? '' : '<ul><li>' . str_replace(';', '</li><li>', $col_v[$csn]) . '</li></ul>';
             } else {
                 $csn_val = $col_v[$csn];
@@ -88,9 +88,9 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
             $ans_col[$n]['val'] = $csn_val;
             $n++;
 
-            if ('sum' == $ff[$csn]) {
+            if ('sum' === $ff[$csn]) {
                 $col[$csn]['sum'] += (int) $col_v[$csn];
-            } elseif ('count' == $ff[$csn]) {
+            } elseif ('count' === $ff[$csn]) {
                 $val_arr = explode(';', $col_v[$csn]);
                 foreach ($val_arr as $v) {
                     $col[$csn]['count'][$v]++;
@@ -104,7 +104,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
         $all_result_col[$i]['ans'] = $ans_col;
 
         //根據不同表單類型，提供不同的功能
-        if ('application' == $form['kind']) {
+        if ('application' === $form['kind']) {
             $checked = ('1' == $result_col) ? 'checked' : '';
             $other_fun = "<td nowrap>
 			<input type='hidden' name='ofsn' value='$ofsn'>
@@ -127,7 +127,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
 
     $xoopsTpl->assign('result_col', $all_result_col);
 
-    $submit = ('application' == $form['kind'] and $isAdmin) ? "
+    $submit = ('application' === $form['kind'] and $isAdmin) ? "
 	<p align='right'><input type='hidden' name='op' value='update_result'>
 	<input type='submit' value='" . _MA_TADFORM_UPDATE_RESULT . "'></p>" : '';
     $xoopsTpl->assign('submit', $submit);
@@ -142,10 +142,10 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
 
         $analysis[$i]['title'] = $tt[$csn];
         $allval = '';
-        if ('sum' == $func) {
+        if ('sum' === $func) {
             $analysis[$i]['func'] = _MA_TADFORM_COL_SUM;
             $analysis[$i]['val'] = $col[$csn]['sum'];
-        } elseif ('count' == $func) {
+        } elseif ('count' === $func) {
             $analysis[$i]['func'] = _MA_TADFORM_COL_COUNT;
             $val = '';
             if (isset($col[$csn]['count']) and is_array($col[$csn]['count'])) {
@@ -154,7 +154,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
                 }
             }
             $analysis[$i]['val'] = $allval;
-        } elseif ('avg' == $func) {
+        } elseif ('avg' === $func) {
             $avg = round($col[$csn]['sum'] / $col[$csn]['count'], 2);
             $analysis[$i]['func'] = _MA_TADFORM_COL_AVG;
             $analysis[$i]['val'] = $avg;

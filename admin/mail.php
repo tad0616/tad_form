@@ -16,7 +16,7 @@ function mail_form_main($ofsn = '')
     $sql = 'select csn,title,kind from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn='$ofsn'";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     while (list($csn, $title, $kind) = $xoopsDB->fetchRow($result)) {
-        if ('show' == $kind) {
+        if ('show' === $kind) {
             continue;
         }
 
