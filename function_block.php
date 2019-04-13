@@ -54,14 +54,14 @@ if (!function_exists('sign_form')) {
             if ($ssn) {
                 $db_ans = get_somebody_ans($ofsn, $uid, $ssn);
             } else {
-                $db_ans = ($form['multi_sign'] == '1') ? array() : get_somebody_ans($ofsn, $uid, $ssn);
+                $db_ans = ($form['multi_sign'] == '1') ? [] : get_somebody_ans($ofsn, $uid, $ssn);
             }
             $history = ($form['multi_sign'] == '1') ? get_history($ofsn, $uid) : "";
         } else {
             $uid_name = "";
             $email    = $history    = "";
             $isAdmin  = false;
-            $db_ans   = array();
+            $db_ans   = [];
             if (!empty($sign_group) and !in_array(3, $sign_group)) {
                 if ($mode == "return") {
                     $error['title'] = $form['title'];
@@ -294,7 +294,7 @@ if (!function_exists('get_somebody_ans')) {
             $sql = "select b.ssn,b.csn,b.val from " . $xoopsDB->prefix("tad_form_fill") . " as a left join  " . $xoopsDB->prefix("tad_form_value") . " as b on a.ssn=b.ssn where a.ofsn='$ofsn' and a.uid='$uid'";
         }
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-        $ans    = array();
+        $ans    = [];
         while (list($ssn, $csn, $val) = $xoopsDB->fetchRow($result)) {
             $ans[$csn]  = $myts->htmlSpecialChars($val);
             $ans['ssn'] = $ssn;
@@ -319,7 +319,7 @@ if (!function_exists('chk_emeil_js')) {
 
 //製作表單
 if (!function_exists('col_form')) {
-    function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans = array(), $chk = "")
+    function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans = [], $chk = "")
     {
         switch ($kind) {
             case "text":
