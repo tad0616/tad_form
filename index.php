@@ -320,7 +320,7 @@ function save_val($ofsn = '', $ans = [])
 
     $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
-    $_POST['ssn'] = (int)$_POST['ssn'];
+    $_POST['ssn'] = (int) $_POST['ssn'];
     //先存基本資料
     $sql = 'replace into ' . $xoopsDB->prefix('tad_form_fill') . " (`ssn`,`ofsn`,`uid`,`man_name`,`email`,`fill_time`,`result_col`,`code`) values('{$_POST['ssn']}','{$_POST['ofsn']}','{$uid}','{$_POST['man_name']}','{$_POST['email']}', '{$now}','','')";
     $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);

@@ -11,7 +11,6 @@ define('_MD_TADFORM_TITLE', 'Subject');
 define('_MD_TADFORM_START_DATE', 'Start Date');
 define('_MD_TADFORM_END_DATE', 'End Date');
 define('_MD_TADFORM_EDIT_FORM', 'Edit \'%s\'');
-define('_MD_TADFORM_VIEW_FORM', 'Analysis');
 
 define('_MD_TADFORM_OFSN', 'Serial Number');
 define('_MD_TADFORM_UID', 'UID');
@@ -21,9 +20,6 @@ define('_MD_TADFORM_FILL_TIME', 'Time');
 define('_MD_TADFORM_NEED_SIGN', 'Required');
 define('_MD_TADFORM_IS_NEED_SIGN', ' means Required');
 
-define('_MD_TADFORM_UNABLE', '"%s" is unavailable now!');
-define('_MD_TADFORM_NOT_START', '"%s" will be available until <b>%s</b>!');
-define('_MD_TADFORM_OVERDUE', '"%s" has been closed on <b>%s</b>!');
 define('_MD_TADFORM_SIGN_DATE', 'Date： <span class=\'start_date\'>%s</span> to <span class=\'end_date\'>%s</span>');
 define('_MD_TADFORM_ONLY_MEM', 'You do NOT belong to authorized group(s)!!<br>Please login first.<br>If you can\'t still take this form with login. Just give up!');
 define('_MD_TADFORM_KIND1_TH', 'Done?');
@@ -33,9 +29,6 @@ define('_MD_TADFORM_SIGN_NOW', 'Click Here for "%s"（Total: %s ）');
 define('_MD_TADFORM_SIGNNOW', 'Click Here for "%s"');
 define('_MD_TADFORM_MAIL_CONTENT', '%s (%s) filled out the form "%s", check followings：<br>%s<p align=\'right\'><a href="%s">Click Here for Complete Results</a></p>');
 define('_MD_TADFORM_MAIL_TITLE', '"%s" Form Nitification： %s (%s)');
-define('_MD_TADFORM_OK_LIST', 'Confirmed List');
-define('_MD_TADFORM_TXTLOCK', 'Locked: form can\'t be submited');
-define('_MD_TADFORM_TXTUNLOCK', 'Unlocked: form can be submitted');
 define('_MD_TADFORM_CAPTCHA_ERROR', 'Did not pass validation, can not be saved.');
 define('_MD_TADFORM_SAVE_OK', 'Saved successfully');
 define('_MD_TADFORM_COL_WHO', 'Name');

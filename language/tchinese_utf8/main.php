@@ -1,4 +1,5 @@
 <?php
+include_once "global.php";
 define('_TAD_NEED_TADTOOLS', ' 需要 modules/tadtools，可至<a href="http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1" target="_blank">XOOPS輕鬆架</a>下載。');
 
 define('_JS_EMAIL_CHK', 'Email不正確，請重新填寫');
@@ -12,7 +13,6 @@ define('_MD_TADFORM_TITLE', '問卷標題');
 define('_MD_TADFORM_START_DATE', '開始日期');
 define('_MD_TADFORM_END_DATE', '結束日期');
 define('_MD_TADFORM_EDIT_FORM', '編輯「%s」問卷');
-define('_MD_TADFORM_VIEW_FORM', '觀看本填報結果');
 
 define('_MD_TADFORM_OFSN', '問卷編號');
 define('_MD_TADFORM_UID', '填報人');
@@ -22,9 +22,6 @@ define('_MD_TADFORM_FILL_TIME', '填報時間');
 define('_MD_TADFORM_NEED_SIGN', '必填');
 define('_MD_TADFORM_IS_NEED_SIGN', '為必填');
 
-define('_MD_TADFORM_UNABLE', '「%s」沒有啟用囉！');
-define('_MD_TADFORM_NOT_START', '「%s」還沒開始填喔！<b>%s</b> 才開始');
-define('_MD_TADFORM_OVERDUE', '「%s」已於 <b>%s</b> 結束填寫囉！');
 define('_MD_TADFORM_SIGN_DATE', '填報日期：從 <span class="start_date">%s</span> 至<span class="end_date">%s</span>  止');
 define('_MD_TADFORM_ONLY_MEM', '您並不屬於本填報允許的群組喔！！<br>若您尚未登入者請先登入。<br>已登入者就放棄吧！');
 define('_MD_TADFORM_KIND1_TH', '報名完成？');
@@ -34,9 +31,6 @@ define('_MD_TADFORM_SIGN_NOW', '立即填報「%s」（目前已有 %s 人填寫
 define('_MD_TADFORM_SIGNNOW', '立即填報「%s」');
 define('_MD_TADFORM_MAIL_CONTENT', '%s 於 %s 填寫了「%s」問卷，其內容如下：<br>%s<p align="right"><a href="%s">點選這裡可以觀看完整填寫結果</a></p>');
 define('_MD_TADFORM_MAIL_TITLE', '「%s」問卷填寫通知： %s (%s)');
-define('_MD_TADFORM_OK_LIST', '確認名單');
-define('_MD_TADFORM_TXTLOCK', '鎖定中，滑動解鎖後才能執行送出');
-define('_MD_TADFORM_TXTUNLOCK', '已可執行送出');
 define('_MD_TADFORM_CAPTCHA_ERROR', '未通過驗證，無法儲存。');
 define('_MD_TADFORM_SAVE_OK', '您已填寫完畢！');
 define('_MD_TADFORM_COL_WHO', '填報者');
