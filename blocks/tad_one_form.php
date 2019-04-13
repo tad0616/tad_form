@@ -14,7 +14,7 @@ function tad_one_form($options)
     $sql = 'select * from ' . $xoopsDB->prefix('tad_form_main') . " where ofsn='{$options[0]}'";
     $result = $xoopsDB->query($sql);
 
-        list($ofsn, $title, $start_date, $end_date, $content, $uid, $post_date, $enable) = $xoopsDB->fetchRow($result);
+    list($ofsn, $title, $start_date, $end_date, $content, $uid, $post_date, $enable) = $xoopsDB->fetchRow($result);
 
     $start_date = date('Y-m-d', xoops_getUserTimestamp(strtotime($start_date)));
     $end_date = date('Y-m-d', xoops_getUserTimestamp(strtotime($end_date)));

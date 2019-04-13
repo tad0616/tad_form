@@ -82,7 +82,6 @@ if (!function_exists('sign_form')) {
                     $error['title'] = $form['title'];
                     $error['error'] = sprintf(_TADFORM_UNABLE, $form['title']);
                     return $error;
-
                 } else {
                     $xoopsTpl->assign('op', 'error');
                     $xoopsTpl->assign('title', $form['title']);
@@ -93,7 +92,6 @@ if (!function_exists('sign_form')) {
 
             $form['start_date'] = date("Y-m-d H:i", xoops_getUserTimestamp(strtotime($form['start_date'])));
             if ($today < $form['start_date']) {
-
                 if ($mode == "return") {
                     $error['title'] = $form['title'];
                     $error['error'] = sprintf(_TADFORM_NOT_START, $form['title'], $form['start_date']);
@@ -140,7 +138,6 @@ if (!function_exists('sign_form')) {
             $apply_ok = "<tr><td>{$man_name_list}</td></tr>";
         } elseif ($form['show_result'] and can_view_report($ofsn)) {
             $apply_ok = "<tr><td><a href='" . XOOPS_URL . "/modules/tad_form/report.php?ofsn=$ofsn' class='btn btn-info'>" . _TADFORM_VIEW_FORM . "</a></td></tr>";
-
         } else {
             $apply_ok = "";
         }
@@ -186,7 +183,6 @@ if (!function_exists('sign_form')) {
             if ($kind != 'show') {
                 $i++;
             }
-
         }
 
         $chk_emeil_js = chk_emeil_js("email", "myForm");
@@ -274,7 +270,6 @@ if (!function_exists('get_tad_form_main')) {
             $sql        = "select ofsn from " . $xoopsDB->prefix("tad_form_fill") . " where ssn='$ssn'";
             $result     = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
             list($ofsn) = $xoopsDB->fetchRow($result);
-
         }
         $sql    = "select * from " . $xoopsDB->prefix("tad_form_main") . " where ofsn='$ofsn'";
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
@@ -326,7 +321,6 @@ if (!function_exists('chk_emeil_js')) {
 if (!function_exists('col_form')) {
     function col_form($csn = "", $kind = "", $size = "", $default_val = "", $db_ans = array(), $chk = "")
     {
-
         switch ($kind) {
             case "text":
                 $default_val = (empty($db_ans)) ? $default_val : $db_ans;

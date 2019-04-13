@@ -104,7 +104,6 @@ function view_user_result($ofsn)
         if ('application' == $form['kind']) {
             $result_col_pic = ('1' == $result_col) ? '001_06.gif' : '001_05.gif';
             $other_fun = "<img src='images/{$result_col_pic}' alt='{$result_col_pic}' title='{$result_col_pic}'>";
-
         } else {
             $other_fun = '';
         }
