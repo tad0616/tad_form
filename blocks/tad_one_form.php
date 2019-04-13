@@ -68,11 +68,11 @@ function tad_one_form_edit($options)
             <lable class='my-label'>" . _MB_TADFORM_ONE_FORM_T2 . "</lable>
             <div class='my-content'>
                 <input type='radio' name='options[1]' id='opt1_1' value='1' $opt1_1>" . _YES . "
-                <input type='radio' name='options[1]' id='opt1_0' value='0' $opt1_0>" . _NO . "
+                <input type='radio' name='options[1]' id='opt1_0' value='0' $opt1_0>" . _NO . '
             </div>
         </li>
     </ol>
-    ";
+    ';
 
     return $form;
 }
