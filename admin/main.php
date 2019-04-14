@@ -1,8 +1,8 @@
 <?php
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = 'tad_form_adm_main.tpl';
-include_once 'header.php';
-include_once '../function.php';
+$GLOBALS['xoopsOption']['template_main'] = 'tad_form_adm_main.tpl';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
 
 /*-----------function區--------------*/
 //列出所有tad_form_main資料
@@ -23,7 +23,7 @@ function list_tad_form_main()
     $cols_num = get_form_col_count();
     $i = 0;
     $form = [];
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         foreach ($all as $k => $v) {
             $$k = $v;
         }
@@ -67,7 +67,7 @@ function get_form_count()
     $sql = 'SELECT ofsn,count(*) FROM ' . $xoopsDB->prefix('tad_form_fill') . ' GROUP BY ofsn';
     $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     $counter = [];
-    while (list($ofsn, $count) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($ofsn, $count) = $xoopsDB->fetchRow($result))) {
         $counter[$ofsn] = $count;
     }
 
@@ -81,7 +81,7 @@ function get_form_col_count()
     $sql = 'SELECT ofsn,count(*) FROM ' . $xoopsDB->prefix('tad_form_col') . ' GROUP BY ofsn';
     $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     $counter = [];
-    while (list($ofsn, $count) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($ofsn, $count) = $xoopsDB->fetchRow($result))) {
         $counter[$ofsn] = $count;
     }
 
@@ -95,7 +95,7 @@ function delete_tad_form_main($ofsn = '')
     //先找出有哪些人填了
     $sql = 'select ssn from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='$ofsn'";
     $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
-    while (list($ssn) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($ssn) = $xoopsDB->fetchRow($result))) {
         //刪了填報內容
         $sql = 'delete from ' . $xoopsDB->prefix('tad_form_value') . " where ssn='$ssn'";
         $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
@@ -136,7 +136,7 @@ function copy_form($ofsn = '')
     //讀出選項
     $sql = 'select `title`, `descript`, `kind`, `size`, `val`, `chk`, `func`, `sort` ,`public` from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn='$ofsn'";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    while (list($title, $descript, $kind, $size, $val, $chk, $func, $sort, $public) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($title, $descript, $kind, $size, $val, $chk, $func, $sort, $public) = $xoopsDB->fetchRow($result))) {
         //寫入選項
         $sql = 'insert into ' . $xoopsDB->prefix('tad_form_col') . " (`ofsn`,`title`,`descript`,`kind`,`size`,`val`,`chk`,`func`,`sort`,`public`) values('{$new_ofsn}','{$title}','{$descript}','{$kind}','{$size}','{$val}','{$chk}','{$func}','{$sort}','{$public}')";
         $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
@@ -144,7 +144,7 @@ function copy_form($ofsn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $ofsn = system_CleanVars($_REQUEST, 'ofsn', 0, 'int');
 
@@ -182,4 +182,4 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-include_once 'footer.php';
+require_once __DIR__ . '/footer.php';

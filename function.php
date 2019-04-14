@@ -5,7 +5,7 @@ if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php')) {
     redirect_header('http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1', 3, _TAD_NEED_TADTOOLS);
 }
 
-include_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
 
 //取得某人在某問卷的填寫結果
 function get_somebody_ans($ofsn = '', $uid = '', $ssn = '')
@@ -23,7 +23,7 @@ function get_somebody_ans($ofsn = '', $uid = '', $ssn = '')
     }
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $ans = [];
-    while (list($ssn, $csn, $val) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($ssn, $csn, $val) = $xoopsDB->fetchRow($result))) {
         $ans[$csn] = $myts->htmlSpecialChars($val);
         $ans['ssn'] = $ssn;
     }
@@ -101,7 +101,7 @@ function get_history($ofsn = '', $uid = '')
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     //`ssn`, `ofsn`, `uid`, `man_name`, `email`, `fill_time`, `result_col`
     $i = 0;
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         foreach ($all as $k => $v) {
             $data[$i][$k] = $v;
         }
@@ -136,7 +136,7 @@ function view($code = '', $mode = '')
 
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i = 1;
-    while (list($csn, $val, $title) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($csn, $val, $title) = $xoopsDB->fetchRow($result))) {
         if ('mail' === $mode) {
             $all .= "
       <tr>

@@ -1,8 +1,8 @@
 <?php
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = 'tad_form_adm_result.tpl';
-include_once 'header.php';
-include_once '../function.php';
+$GLOBALS['xoopsOption']['template_main'] = 'tad_form_adm_result.tpl';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
 
 /*-----------function區--------------*/
 
@@ -29,7 +29,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $all_title = $tt = $tt = $kk = $csn_arr = [];
     $i = 0;
-    while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result))) {
         if ('show' === $kind) {
             continue;
         }
@@ -63,7 +63,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i = 0;
     $col_v = $col = [];
-    while (list($ssn, $uid, $man_name, $email, $fill_time, $code, $result_col) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($ssn, $uid, $man_name, $email, $fill_time, $code, $result_col) = $xoopsDB->fetchRow($result))) {
         $url = "{$_SERVER['PHP_SELF']}?op=view&code=$code";
         $all_result_col[$i]['url'] = $myts->htmlSpecialChars($url);
         $all_result_col[$i]['man_name'] = $myts->htmlSpecialChars($man_name);
@@ -72,7 +72,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
 
         $result2 = $xoopsDB->query($sql2) or web_error($sql2);
 
-        while (list($csn, $val) = $xoopsDB->fetchRow($result2)) {
+        while (false !== (list($csn, $val) = $xoopsDB->fetchRow($result2))) {
             $col_v[$csn] = $myts->htmlSpecialChars($val);
         }
 
@@ -189,7 +189,7 @@ function update_result($ssn_arr = [], $result_col = [])
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $ofsn = system_CleanVars($_REQUEST, 'ofsn', 0, 'int');
 $ssn = system_CleanVars($_REQUEST, 'ssn', 0, 'int');
@@ -217,4 +217,4 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-include_once 'footer.php';
+require_once __DIR__ . '/footer.php';

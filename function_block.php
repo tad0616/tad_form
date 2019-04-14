@@ -125,7 +125,7 @@ if (!function_exists('sign_form')) {
             $sql           = 'select email,fill_time from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='{$ofsn}' and result_col='1'";
             $result        = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
             $n             = $i             = 3;
-            while (list($email, $fill_time) = $xoopsDB->fetchRow($result)) {
+            while (false !== (list($email, $fill_time) = $xoopsDB->fetchRow($result))) {
                 $fill_time  = date('Y-m-d H:i:s', xoops_getUserTimestamp(strtotime($fill_time)));
                 $email_data = explode('@', $email);
                 $man_name_list .= (0 == $n % $i) ? '<tr>' : '';
@@ -148,7 +148,7 @@ if (!function_exists('sign_form')) {
 
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
         $i      = 1;
-        while ($data = $xoopsDB->fetchArray($result)) {
+        while (false !== ($data = $xoopsDB->fetchArray($result))) {
             foreach ($data as $k => $v) {
                 $$k = $v;
             }
@@ -193,7 +193,7 @@ if (!function_exists('sign_form')) {
         $captcha_div = '';
         if ('1' == $form['captcha']) {
             $captcha_js = "
-            <link rel='stylesheet' type='text/css' href='" . XOOPS_URL . "/modules/tad_form/class/Qaptcha_v3.0/jquery/QapTcha.jquery.css' media='screen' />
+            <link rel='stylesheet' type='text/css' href='" . XOOPS_URL . "/modules/tad_form/class/Qaptcha_v3.0/jquery/QapTcha.jquery.css' media='screen'>
             <script type='text/javascript' src='class/Qaptcha_v3.0/jquery/jquery.ui.touch.js'></script>
             <script type='text/javascript' src='class/Qaptcha_v3.0/jquery/QapTcha.jquery.js'></script>
             <script type='text/javascript'>
@@ -251,7 +251,7 @@ if (!function_exists('sign_form')) {
         if (!file_exists(TADTOOLS_PATH . '/formValidator.php')) {
             redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
         }
-        include_once TADTOOLS_PATH . '/formValidator.php';
+        require_once TADTOOLS_PATH . '/formValidator.php';
         $formValidator = new formValidator('#myForm');
         $formValidator->render();
     }
@@ -295,7 +295,7 @@ if (!function_exists('get_somebody_ans')) {
         }
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
         $ans    = [];
-        while (list($ssn, $csn, $val) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($ssn, $csn, $val) = $xoopsDB->fetchRow($result))) {
             $ans[$csn]  = $myts->htmlSpecialChars($val);
             $ans['ssn'] = $ssn;
         }
@@ -335,7 +335,7 @@ if (!function_exists('col_form')) {
                 $i           = 0;
                 $main        = "<input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
                 foreach ($opt as $val) {
-                    $checked = ($default_val == $val) ? "checked='checked'" : '';
+                    $checked = ($default_val == $val) ? "checked" : '';
                     $chktxt  = ($chk) ? "class='validate[required] radio'" : '';
                     $main .= "
                   <label class='radio-inline'>
@@ -353,7 +353,7 @@ if (!function_exists('col_form')) {
                 $i    = 0;
                 $main = "<input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
                 foreach ($opt as $val) {
-                    $checked = (in_array($val, $db)) ? "checked='checked'" : '';
+                    $checked = (in_array($val, $db)) ? "checked" : '';
                     $chktxt  = ($chk) ? "class='validate[required] checkbox'" : '';
                     $main .= "
                   <label class='checkbox-inline'>

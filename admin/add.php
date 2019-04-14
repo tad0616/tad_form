@@ -1,14 +1,14 @@
 <?php
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = 'tad_form_adm_add.tpl';
-include_once 'header.php';
-include_once '../function.php';
+$GLOBALS['xoopsOption']['template_main'] = 'tad_form_adm_add.tpl';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
 /*-----------function區--------------*/
 //tad_form_main編輯表單
 function tad_form_main_form($ofsn = '')
 {
     global $xoopsDB, $xoopsUser, $xoopsTpl;
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     //抓取預設值
     if (!empty($ofsn)) {
@@ -46,7 +46,7 @@ function tad_form_main_form($ofsn = '')
     if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/ck.php')) {
         redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
     }
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/ck.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadtools/ck.php';
     $fck = new CKEditor('tad_form', 'content', $content);
     $editor = $fck->render();
 
@@ -60,7 +60,7 @@ function tad_form_main_form($ofsn = '')
     if (!file_exists(TADTOOLS_PATH . '/formValidator.php')) {
         redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
     }
-    include_once TADTOOLS_PATH . '/formValidator.php';
+    require_once TADTOOLS_PATH . '/formValidator.php';
     $formValidator = new formValidator('#myForm');
     $formValidator_code = $formValidator->render();
 
@@ -138,7 +138,7 @@ function update_tad_form_main($ofsn = '')
 function tad_form_col_form($the_ofsn = '', $csn = '', $mode = '')
 {
     global $xoopsDB, $xoopsTpl;
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     //抓取預設值
     if (!empty($csn)) {
@@ -260,7 +260,7 @@ function edit_all_opt($ofsn = '')
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i = 1;
 
-    while (list($csn, $title, $descript, $kind, $size, $val, $chk, $func, $sort, $public) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($csn, $title, $descript, $kind, $size, $val, $chk, $func, $sort, $public) = $xoopsDB->fetchRow($result))) {
         $descript = (empty($descript)) ? '' : "({$descript})";
 
         $public = ('1' == $public) ? '001_06' : '001_05';
@@ -302,7 +302,7 @@ function change_chk($csn = '', $chk = '0')
     $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 }
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $ofsn = system_CleanVars($_REQUEST, 'ofsn', 0, 'int');
 $csn = system_CleanVars($_REQUEST, 'csn', 0, 'int');
@@ -388,4 +388,4 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-include_once 'footer.php';
+require_once __DIR__ . '/footer.php';

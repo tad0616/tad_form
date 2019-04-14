@@ -1,5 +1,5 @@
 <?php
-include '../../../include/cp_header.php';
+require dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 $updateRecordsArray = $_POST['tr'];
 
 $sort = 1;

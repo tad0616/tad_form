@@ -1,8 +1,8 @@
 <?php
 /*-----------引入檔案區--------------*/
-include 'header.php';
-$xoopsOption['template_main'] = 'tad_form_report.tpl';
-include_once XOOPS_ROOT_PATH . '/header.php';
+require __DIR__ . '/header.php';
+$GLOBALS['xoopsOption']['template_main'] = 'tad_form_report.tpl';
+require_once XOOPS_ROOT_PATH . '/header.php';
 if (!can_view_report((int)$_REQUEST['ofsn'])) {
     redirect_header('index.php', 3, _MD_TADFORM_ONLY_MEM);
 }
@@ -32,7 +32,7 @@ function view_user_result($ofsn)
     $all_title = [];
     $i = 0;
     $csn_arr = $ff = $tt = $kk = [];
-    while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result))) {
         if ('show' === $kind) {
             continue;
         }
@@ -63,7 +63,7 @@ function view_user_result($ofsn)
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i = 0;
     $all_result_col = [];
-    while (list($ssn, $uid, $man_name, $email, $fill_time, $code, $result_col) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($ssn, $uid, $man_name, $email, $fill_time, $code, $result_col) = $xoopsDB->fetchRow($result))) {
         $fill_time = date('Y-m-d H:i:s', xoops_getUserTimestamp(strtotime($fill_time)));
         $email_data = explode('@', $email);
 
@@ -80,7 +80,7 @@ function view_user_result($ofsn)
         //$all="";
 
         $col_v = [];
-        while (list($csn, $val) = $xoopsDB->fetchRow($result2)) {
+        while (false !== (list($csn, $val) = $xoopsDB->fetchRow($result2))) {
             $col_v[$csn] = $myts->htmlSpecialChars($val);
         }
 
@@ -118,7 +118,7 @@ function view_user_result($ofsn)
     $xoopsTpl->assign('result_col', $all_result_col);
 }
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $ofsn = system_CleanVars($_REQUEST, 'ofsn', 0, 'int');
 $ssn = system_CleanVars($_REQUEST, 'ssn', 0, 'int');
@@ -131,4 +131,4 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-include_once XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

@@ -1,8 +1,8 @@
 <?php
 /*-----------引入檔案區--------------*/
-include 'header.php';
-$xoopsOption['template_main'] = 'tad_form_index.tpl';
-include_once XOOPS_ROOT_PATH . '/header.php';
+require __DIR__ . '/header.php';
+$GLOBALS['xoopsOption']['template_main'] = 'tad_form_index.tpl';
+require_once XOOPS_ROOT_PATH . '/header.php';
 /*-----------function區--------------*/
 
 //列出所有tad_form_main資料
@@ -19,7 +19,7 @@ function list_tad_form_main()
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i = 0;
     $all = [];
-    while ($data = $xoopsDB->fetchArray($result)) {
+    while (false !== ($data = $xoopsDB->fetchArray($result))) {
         foreach ($data as $k => $v) {
             $$k = $v;
         }
@@ -180,7 +180,7 @@ function sign_form($ofsn = '', $ssn = '')
         $sql = 'select email,fill_time from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='{$ofsn}' and result_col='1'";
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
         $n = $i = 3;
-        while (list($email, $fill_time) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($email, $fill_time) = $xoopsDB->fetchRow($result))) {
             $fill_time = date('Y-m-d H:i:s', xoops_getUserTimestamp(strtotime($fill_time)));
             $email_data = explode('@', $email);
             $man_name_list .= (0 == $n % $i) ? '<tr>' : '';
@@ -203,7 +203,7 @@ function sign_form($ofsn = '', $ssn = '')
 
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i = 1;
-    while ($data = $xoopsDB->fetchArray($result)) {
+    while (false !== ($data = $xoopsDB->fetchArray($result))) {
         foreach ($data as $k => $v) {
             $$k = $v;
         }
@@ -248,7 +248,7 @@ function sign_form($ofsn = '', $ssn = '')
     $captcha_div = '';
     if ('1' == $form['captcha']) {
         $captcha_js = "
-        <link rel='stylesheet' type='text/css' href='class/Qaptcha_v3.0/jquery/QapTcha.jquery.css' media='screen' />
+        <link rel='stylesheet' type='text/css' href='class/Qaptcha_v3.0/jquery/QapTcha.jquery.css' media='screen'>
         <script type='text/javascript' src='class/Qaptcha_v3.0/jquery/jquery.ui.touch.js'></script>
         <script type='text/javascript' src='class/Qaptcha_v3.0/jquery/QapTcha.jquery.js'></script>
         <script type='text/javascript'>
@@ -290,7 +290,7 @@ function sign_form($ofsn = '', $ssn = '')
     if (!file_exists(TADTOOLS_PATH . '/formValidator.php')) {
         redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
     }
-    include_once TADTOOLS_PATH . '/formValidator.php';
+    require_once TADTOOLS_PATH . '/formValidator.php';
     $formValidator = new formValidator('#myForm');
     $formValidator_code = $formValidator->render();
     $xoopsTpl->assign('formValidator_code', $formValidator_code);
@@ -373,7 +373,7 @@ function col_form($csn = '', $kind = '', $size = '', $default_val = '', $db_ans 
             $i = 0;
             $main = "<input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
             foreach ($opt as $val) {
-                $checked = ($default_val == $val) ? "checked='checked'" : '';
+                $checked = ($default_val == $val) ? "checked" : '';
                 $chktxt = ($chk) ? "class='validate[required] radio'" : '';
                 $main .= "
                   <label class='radio-inline'>
@@ -390,7 +390,7 @@ function col_form($csn = '', $kind = '', $size = '', $default_val = '', $db_ans 
             $i = 0;
             $main = "<input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
             foreach ($opt as $val) {
-                $checked = (in_array($val, $db, true)) ? "checked='checked'" : '';
+                $checked = (in_array($val, $db, true)) ? "checked" : '';
                 $chktxt = ($chk) ? "class='validate[required] checkbox'" : '';
                 $main .= "
                   <label class='checkbox-inline'>
@@ -495,7 +495,7 @@ function send_now($code = '')
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $ofsn = system_CleanVars($_REQUEST, 'ofsn', 0, 'int');
 $ssn = system_CleanVars($_REQUEST, 'ssn', 0, 'int');
@@ -527,4 +527,4 @@ switch ($op) {
 /*-----------秀出結果區--------------*/
 
 $xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
-include_once XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';
