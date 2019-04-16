@@ -103,8 +103,8 @@ function insert_tad_form_main()
 {
     global $xoopsDB, $xoopsUser;
     $uid = $xoopsUser->getVar('uid');
-    $sign_group = (in_array('', $_POST['sign_group'], true)) ? '' : implode(',', $_POST['sign_group']);
-    $view_result_group = (in_array('', $_POST['view_result_group'], true)) ? '' : implode(',', $_POST['view_result_group']);
+    $sign_group = (in_array('', $_POST['sign_group'])) ? '' : implode(',', $_POST['sign_group']);
+    $view_result_group = (in_array('', $_POST['view_result_group'])) ? '' : implode(',', $_POST['view_result_group']);
     $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
     $_POST['enable'] = empty($_POST['enable']) ? 0 : 1;
@@ -121,8 +121,8 @@ function insert_tad_form_main()
 function update_tad_form_main($ofsn = '')
 {
     global $xoopsDB;
-    $sign_group = (in_array('', $_POST['sign_group'], true)) ? '' : implode(',', $_POST['sign_group']);
-    $view_result_group = (in_array('', $_POST['view_result_group'], true)) ? '' : implode(',', $_POST['view_result_group']);
+    $sign_group = (in_array('', $_POST['sign_group'])) ? '' : implode(',', $_POST['sign_group']);
+    $view_result_group = (in_array('', $_POST['view_result_group'])) ? '' : implode(',', $_POST['view_result_group']);
     $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
     $_POST['enable'] = empty($_POST['enable']) ? 0 : 1;
@@ -334,8 +334,8 @@ switch ($op) {
             header("location: {$_SERVER['PHP_SELF']}?op=edit_opt&ofsn=$ofsn");
             exit;
         }
-            header('location: main.php');
-            exit;
+        header('location: main.php');
+        exit;
 
         break;
     //輸入表格
@@ -365,8 +365,8 @@ switch ($op) {
             header("location: add.php?op=edit_all_opt&ofsn={$ofsn}");
             exit;
         }
-            header("location: {$_SERVER['PHP_SELF']}?op=edit_opt&ofsn={$ofsn}");
-            exit;
+        header("location: {$_SERVER['PHP_SELF']}?op=edit_opt&ofsn={$ofsn}");
+        exit;
 
         break;
     //新增欄位資料
@@ -377,8 +377,8 @@ switch ($op) {
             header('location: main.php');
             exit;
         }
-            header("location: {$_SERVER['PHP_SELF']}?op=edit_opt&ofsn={$ofsn}");
-            exit;
+        header("location: {$_SERVER['PHP_SELF']}?op=edit_opt&ofsn={$ofsn}");
+        exit;
 
         break;
     //預設動作

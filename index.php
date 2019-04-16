@@ -37,7 +37,7 @@ function list_tad_form_main()
         $sign_ok = false;
         if (!empty($sign_group_arr)) {
             foreach ($sign_group_arr as $group) {
-                if (in_array($group, $User_Groups, true)) {
+                if (in_array($group, $User_Groups)) {
                     $sign_ok = true;
                     break;
                 }
@@ -47,7 +47,7 @@ function list_tad_form_main()
         $view_ok = false;
         if (!empty($view_result_group_arr)) {
             foreach ($view_result_group_arr as $group) {
-                if (in_array($group, $User_Groups, true)) {
+                if (in_array($group, $User_Groups)) {
                     $view_ok = true;
                     break;
                 }
@@ -100,10 +100,10 @@ function sign_form($ofsn = '', $ssn = '')
         $User_Groups = $xoopsUser->getGroups();
         $ugroup = implode(',', $User_Groups);
 
-        if (!empty($sign_group) and !in_array(1, $User_Groups, true)) {
+        if (!empty($sign_group) and !in_array(1, $User_Groups)) {
             $ok = false;
             foreach ($sign_group as $group) {
-                if (in_array($group, $User_Groups, true)) {
+                if (in_array($group, $User_Groups)) {
                     $ok = true;
                 }
             }
@@ -137,7 +137,7 @@ function sign_form($ofsn = '', $ssn = '')
         $email = $history = '';
         $isAdmin = false;
         $db_ans = [];
-        if (!empty($sign_group) and !in_array(3, $sign_group, true)) {
+        if (!empty($sign_group) and !in_array('3', $sign_group)) {
             $xoopsTpl->assign('op', 'error');
             $xoopsTpl->assign('title', $form['title']);
             $xoopsTpl->assign('msg', _MD_TADFORM_ONLY_MEM);
@@ -180,7 +180,7 @@ function sign_form($ofsn = '', $ssn = '')
         $sql = 'select email,fill_time from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='{$ofsn}' and result_col='1'";
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
         $n = $i = 3;
-        while (false !== (list($email, $fill_time) = $xoopsDB->fetchRow($result))) {
+        while (list($email, $fill_time) = $xoopsDB->fetchRow($result)) {
             $fill_time = date('Y-m-d H:i:s', xoops_getUserTimestamp(strtotime($fill_time)));
             $email_data = explode('@', $email);
             $man_name_list .= (0 == $n % $i) ? '<tr>' : '';
@@ -390,7 +390,7 @@ function col_form($csn = '', $kind = '', $size = '', $default_val = '', $db_ans 
             $i = 0;
             $main = "<input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
             foreach ($opt as $val) {
-                $checked = (in_array($val, $db, true)) ? "checked" : '';
+                $checked = (in_array($val, $db)) ? "checked='checked'" : '';
                 $chktxt = ($chk) ? "class='validate[required] checkbox'" : '';
                 $main .= "
                   <label class='checkbox-inline'>

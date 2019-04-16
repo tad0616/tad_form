@@ -53,7 +53,7 @@ function can_view_report($ofsn = '')
     $view_result_array = explode(',', $form['view_result_group']);
     if (!empty($view_result_array)) {
         foreach ($view_result_array as $group) {
-            if (in_array($group, $User_Groups, true)) {
+            if (in_array($group, $User_Groups)) {
                 return true;
             }
         }
