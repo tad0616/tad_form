@@ -39,3 +39,4 @@ define('_MD_TADFORM_EDIT_ALL', '編輯所有題目');
 define('_MD_TADFORM_BACK_TO_FORM', '回原填報表');
 define('_MD_TADFORM_HISTORY', '歷史填報紀錄');
 define('_MD_TADFORM_HIDE_RESULT', '本填報不開放結果查詢。');
+define('_MD_TADFORM_OK_LIST', '報名成功列表');

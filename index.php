@@ -137,7 +137,7 @@ function sign_form($ofsn = '', $ssn = '')
         $email = $history = '';
         $isAdmin = false;
         $db_ans = [];
-        if (!empty($sign_group) and !in_array(3, $sign_group, true)) {
+        if (!empty($sign_group) and !in_array('3', $sign_group, true)) {
             $xoopsTpl->assign('op', 'error');
             $xoopsTpl->assign('title', $form['title']);
             $xoopsTpl->assign('msg', _MD_TADFORM_ONLY_MEM);
@@ -332,7 +332,7 @@ function save_val($ofsn = '', $ans = [])
     foreach ($ans as $csn => $val) {
         $value = (is_array($val)) ? implode(';', $val) : $val;
         $value = $myts->addSlashes($value);
-        $ssn = (int)$ssn;
+        $ssn = (int) $ssn;
         $sql = 'replace into ' . $xoopsDB->prefix('tad_form_value') . " (`ssn`,`csn`,`val`) values('{$ssn}','{$csn}','{$value}')";
         $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
@@ -341,7 +341,7 @@ function save_val($ofsn = '', $ans = [])
 
     //把一些沒填的欄位也補上空值
     foreach ($need_csn_arr as $csn) {
-        $ssn = (int)$ssn;
+        $ssn = (int) $ssn;
         $sql = 'replace into ' . $xoopsDB->prefix('tad_form_value') . " (`ssn`,`csn`,`val`) values('{$ssn}','{$csn}','')";
         $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $sql);
     }

@@ -37,3 +37,4 @@ define('_MD_TADFORM_EDIT_ALL', 'Edit all questions');
 define('_MD_TADFORM_BACK_TO_FORM', 'Back to form');
 define('_MD_TADFORM_HISTORY', 'History');
 define('_MD_TADFORM_HIDE_RESULT', 'The result is not shown publicly.');
+define('_MD_TADFORM_OK_LIST', 'Registration success list');
