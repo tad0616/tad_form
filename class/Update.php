@@ -1,18 +1,20 @@
 <?php
 
+use XoopsModules\Tadtools\Utility;
+
 namespace XoopsModules\Tad_form;
 
 /*
- Utility Class Definition
+Update Class Definition
 
- You may not change or alter any portion of this comment or credits of
- supporting developers from this source code or any supporting source code
- which is considered copyrighted (c) material of the original comment or credit
- authors.
+You may not change or alter any portion of this comment or credits of
+supporting developers from this source code or any supporting source code
+which is considered copyrighted (c) material of the original comment or credit
+authors.
 
- This program is distributed in the hope that it will be useful, but
- WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 /**
@@ -22,9 +24,9 @@ namespace XoopsModules\Tad_form;
  */
 
 /**
- * Class Utility
+ * Class Update
  */
-class Utility
+class Update
 {
     //刪除錯誤的重複欄位及樣板檔
     public static function chk_tad_form_block()
@@ -41,8 +43,8 @@ class Utility
         }
 
         //找出目前所有的樣板檔
-        $sql = 'SELECT bid,name,visible,show_func,template FROM `' . $xoopsDB->prefix('newblocks') . "`
-    WHERE `dirname` = 'tad_form' ORDER BY `func_num`";
+        $sql = "SELECT bid,name,visible,show_func,template FROM `" . $xoopsDB->prefix('newblocks') . "`
+        WHERE `dirname` = 'tad_form' ORDER BY `func_num`";
         $result = $xoopsDB->query($sql);
         while (list($bid, $name, $visible, $show_func, $template) = $xoopsDB->fetchRow($result)) {
             //假如現有的區塊和樣板對不上就刪掉
@@ -52,13 +54,13 @@ class Utility
 
                 //連同樣板以及樣板實體檔案也要刪掉
                 $sql = 'delete from ' . $xoopsDB->prefix('tplfile') . ' as a
-            left join ' . $xoopsDB->prefix('tplsource') . "  as b on a.tpl_id=b.tpl_id
-            where a.tpl_refid='$bid' and a.tpl_module='tad_form' and a.tpl_type='block'";
+                left join ' . $xoopsDB->prefix('tplsource') . "  as b on a.tpl_id=b.tpl_id
+                where a.tpl_refid='$bid' and a.tpl_module='tad_form' and a.tpl_type='block'";
                 $xoopsDB->queryF($sql);
             } else {
                 $sql = 'update ' . $xoopsDB->prefix('tplfile') . "
-            set tpl_file='{$template}' , tpl_desc='{$tpl_desc_arr[$show_func]}'
-            where tpl_refid='{$bid}'";
+                set tpl_file='{$template}' , tpl_desc='{$tpl_desc_arr[$show_func]}'
+                where tpl_refid='{$bid}'";
                 $xoopsDB->queryF($sql);
             }
         }
@@ -80,7 +82,7 @@ class Utility
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_form_main') . ' ADD `kind` VARCHAR(255) NOT NULL';
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         return true;
     }
@@ -101,7 +103,7 @@ class Utility
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_form_fill') . ' ADD `result_col` VARCHAR(255) NOT NULL';
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         return true;
     }
@@ -122,7 +124,7 @@ class Utility
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_form_main') . ' ADD `adm_email` VARCHAR(255) NOT NULL';
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         return true;
     }
@@ -143,7 +145,7 @@ class Utility
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_form_main') . " ADD `captcha` ENUM('1','0') NOT NULL DEFAULT '1'";
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         return true;
     }
@@ -164,7 +166,7 @@ class Utility
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_form_main') . " ADD `show_result` ENUM('1','0') NOT NULL DEFAULT '1'";
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         return true;
     }
@@ -185,7 +187,7 @@ class Utility
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_form_main') . " ADD `view_result_group` VARCHAR(255) NOT NULL DEFAULT ''";
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         return true;
     }
@@ -206,7 +208,7 @@ class Utility
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_form_main') . " ADD `multi_sign` ENUM('0','1') NOT NULL DEFAULT '0'";
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         return true;
     }
@@ -227,7 +229,7 @@ class Utility
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_form_col') . " ADD `public`  ENUM('0','1') NOT NULL DEFAULT '0'";
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         return true;
     }
@@ -237,7 +239,7 @@ class Utility
     {
         global $xoopsDB;
         $sql = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
-  WHERE table_name = '" . $xoopsDB->prefix('tad_form_main') . "' AND COLUMN_NAME = 'uid'";
+        WHERE table_name = '" . $xoopsDB->prefix('tad_form_main') . "' AND COLUMN_NAME = 'uid'";
         $result = $xoopsDB->query($sql);
         list($type) = $xoopsDB->fetchRow($result);
         if ('smallint' === $type) {
@@ -252,9 +254,9 @@ class Utility
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE `' . $xoopsDB->prefix('tad_form_main') . '` CHANGE `uid` `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0';
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         $sql = 'ALTER TABLE `' . $xoopsDB->prefix('tad_form_fill') . '` CHANGE `uid` `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0';
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         return true;
     }
@@ -275,130 +277,12 @@ class Utility
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_form_fill') . ' ADD `code` VARCHAR(255) NOT NULL';
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         $sql = 'update ' . $xoopsDB->prefix('tad_form_fill') . ' set code=md5(CONCAT(`ofsn`,`uid`, `man_name`, `email`, `fill_time`)) ';
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         return true;
     }
 
-    //做縮圖
-    public static function thumbnail($filename = '', $thumb_name = '', $type = 'image/jpeg', $width = '120')
-    {
-        ini_set('memory_limit', '50M');
-        // Get new sizes
-        list($old_width, $old_height) = getimagesize($filename);
-
-        $percent = ($old_width > $old_height) ? round($width / $old_width, 2) : round($width / $old_height, 2);
-
-        $newwidth = ($old_width > $old_height) ? $width : $old_width * $percent;
-        $newheight = ($old_width > $old_height) ? $old_height * $percent : $width;
-
-        // Load
-        $thumb = imagecreatetruecolor($newwidth, $newheight);
-        if ('image/jpeg' === $type or 'image/jpg' === $type or 'image/pjpg' === $type or 'image/pjpeg' === $type) {
-            $source = imagecreatefromjpeg($filename);
-            $type = 'image/jpeg';
-        } elseif ('image/png' === $type) {
-            $source = imagecreatefrompng($filename);
-            $type = 'image/png';
-        } elseif ('image/gif' === $type) {
-            $source = imagecreatefromgif($filename);
-            $type = 'image/gif';
-        }
-
-        // Resize
-        imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $old_width, $old_height);
-
-        header('Content-type: image/png');
-        imagepng($thumb, $thumb_name);
-
-        return;
-        exit;
-    }
-
-    //建立目錄
-    public static function mk_dir($dir = '')
-    {
-        //若無目錄名稱秀出警告訊息
-        if (empty($dir)) {
-            return;
-        }
-
-        //若目錄不存在的話建立目錄
-        if (!is_dir($dir)) {
-            umask(000);
-            //若建立失敗秀出警告訊息
-            if (!mkdir($dir, 0777) && !is_dir($dir)) {
-                throw new \RuntimeException(sprintf('Directory "%s" was not created', $dir));
-            }
-        }
-    }
-
-    //拷貝目錄
-    public static function full_copy($source = '', $target = '')
-    {
-        if (is_dir($source)) {
-            if (!mkdir($target) && !is_dir($target)) {
-                throw new \RuntimeException(sprintf('Directory "%s" was not created', $target));
-            }
-            $d = dir($source);
-            while (false !== ($entry = $d->read())) {
-                if ('.' === $entry || '..' === $entry) {
-                    continue;
-                }
-
-                $Entry = $source . '/' . $entry;
-                if (is_dir($Entry)) {
-                    full_copy($Entry, $target . '/' . $entry);
-                    continue;
-                }
-                copy($Entry, $target . '/' . $entry);
-            }
-            $d->close();
-        } else {
-            copy($source, $target);
-        }
-    }
-
-    public static function rename_win($oldfile, $newfile)
-    {
-        if (!rename($oldfile, $newfile)) {
-            if (copy($oldfile, $newfile)) {
-                unlink($oldfile);
-
-                return true;
-            }
-
-            return false;
-        }
-
-        return true;
-    }
-
-    public static function delete_directory($dirname)
-    {
-        if (is_dir($dirname)) {
-            $dir_handle = opendir($dirname);
-        }
-
-        if (!$dir_handle) {
-            return false;
-        }
-
-        while ($file = readdir($dir_handle)) {
-            if ('.' !== $file && '..' !== $file) {
-                if (!is_dir($dirname . '/' . $file)) {
-                    unlink($dirname . '/' . $file);
-                } else {
-                    tad_form_delete_directory($dirname . '/' . $file);
-                }
-            }
-        }
-        closedir($dir_handle);
-        rmdir($dirname);
-
-        return true;
-    }
 }

@@ -1,11 +1,8 @@
 <?php
 
-//引入TadTools的函式庫
-if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php')) {
-    redirect_header('http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1', 3, _TAD_NEED_TADTOOLS);
-}
+use XoopsModules\Tadtools\Utility;
 
-include_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
+xoops_loadLanguage('main', 'tadtools');
 
 //取得某人在某問卷的填寫結果
 function get_somebody_ans($ofsn = '', $uid = '', $ssn = '')
@@ -21,7 +18,7 @@ function get_somebody_ans($ofsn = '', $uid = '', $ssn = '')
     } else {
         $sql = 'select b.ssn,b.csn,b.val from ' . $xoopsDB->prefix('tad_form_fill') . ' as a left join  ' . $xoopsDB->prefix('tad_form_value') . " as b on a.ssn=b.ssn where a.ofsn='$ofsn' and a.uid='$uid'";
     }
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $ans = [];
     while (list($ssn, $csn, $val) = $xoopsDB->fetchRow($result)) {
         $ans[$csn] = $myts->htmlSpecialChars($val);
@@ -79,7 +76,7 @@ function is_mine($ssn = '')
         $now_uid = $xoopsUser->uid();
 
         $sql = 'select uid from ' . $xoopsDB->prefix('tad_form_fill') . " where ssn='$ssn'";
-        $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         list($uid) = $xoopsDB->fetchRow($result);
         if ($now_uid == $uid) {
             return true;
@@ -98,7 +95,7 @@ function get_history($ofsn = '', $uid = '')
     }
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='$ofsn' and uid='$uid'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     //`ssn`, `ofsn`, `uid`, `man_name`, `email`, `fill_time`, `result_col`
     $i = 0;
     while ($all = $xoopsDB->fetchArray($result)) {
@@ -120,7 +117,7 @@ function view($code = '', $mode = '')
 
     $sql = 'select ofsn,ssn,uid,man_name,email,fill_time from ' . $xoopsDB->prefix('tad_form_fill') . " where code='{$code}'";
 
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($ofsn, $ssn, $uid, $man_name, $email, $fill_time) = $xoopsDB->fetchRow($result);
     if (empty($ssn)) {
         return;
@@ -134,7 +131,7 @@ function view($code = '', $mode = '')
 
     $sql = 'select b.csn,b.val,a.title from ' . $xoopsDB->prefix('tad_form_col') . ' as a left join ' . $xoopsDB->prefix('tad_form_value') . " as b on a.csn=b.csn where b.ssn='{$ssn}' order by a.sort";
 
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $i = 1;
     while (list($csn, $val, $title) = $xoopsDB->fetchRow($result)) {
         if ('mail' === $mode) {
@@ -189,10 +186,10 @@ function delete_tad_form_ans($ssn = '')
 
     if (is_mine($ssn)) {
         $sql = 'delete from ' . $xoopsDB->prefix('tad_form_fill') . " where ssn='$ssn'";
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         //die($sql);
         $sql = 'delete from ' . $xoopsDB->prefix('tad_form_value') . " where ssn='$ssn'";
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     }
 }
 
@@ -206,11 +203,11 @@ function get_tad_form_main($ofsn = '', $ssn = '')
 
     if ($ssn) {
         $sql = 'select ofsn from ' . $xoopsDB->prefix('tad_form_fill') . " where ssn='$ssn'";
-        $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         list($ofsn) = $xoopsDB->fetchRow($result);
     }
     $sql = 'select * from ' . $xoopsDB->prefix('tad_form_main') . " where ofsn='$ofsn'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $data = $xoopsDB->fetchArray($result);
 
     return $data;
@@ -225,7 +222,7 @@ function set_form_status($ofsn = '', $enable = '0')
     }
 
     $sql = 'update ' . $xoopsDB->prefix('tad_form_main') . " set enable='{$enable}' where ofsn='$ofsn'";
-    $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 //檢查Email的JS

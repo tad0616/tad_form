@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 /*-----------引入檔案區--------------*/
 include 'header.php';
 $xoopsOption['template_main'] = 'tad_form_index.tpl';
@@ -16,7 +18,7 @@ function list_tad_form_main()
         $User_Groups = [3];
     }
     $sql = 'select * from ' . $xoopsDB->prefix('tad_form_main') . " where enable='1' and start_date < '{$today}'  and end_date > '{$today}'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $i = 0;
     $all = [];
     while ($data = $xoopsDB->fetchArray($result)) {
@@ -76,7 +78,7 @@ function list_tad_form_main()
         $xoopsTpl->assign('title', '');
         $xoopsTpl->assign('msg', _MD_TADFORM_EMPTY);
     } else {
-        $xoopsTpl->assign('jquery', get_jquery(true));
+        $xoopsTpl->assign('jquery', Utility::get_jquery(true));
         $xoopsTpl->assign('all', $all);
     }
 }
@@ -178,7 +180,7 @@ function sign_form($ofsn = '', $ssn = '')
     if ('application' === $form['kind']) {
         $man_name_list = '<table><caption>' . _MD_TADFORM_OK_LIST . '</caption>';
         $sql = 'select email,fill_time from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='{$ofsn}' and result_col='1'";
-        $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         $n = $i = 3;
         while (list($email, $fill_time) = $xoopsDB->fetchRow($result)) {
             $fill_time = date('Y-m-d H:i:s', xoops_getUserTimestamp(strtotime($fill_time)));
@@ -201,7 +203,7 @@ function sign_form($ofsn = '', $ssn = '')
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn='{$ofsn}' order by sort";
 
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $i = 1;
     while ($data = $xoopsDB->fetchArray($result)) {
         foreach ($data as $k => $v) {
@@ -242,7 +244,7 @@ function sign_form($ofsn = '', $ssn = '')
 
     $chk_emeil_js = chk_emeil_js('email', 'myForm');
 
-    $jquery = get_jquery(true);
+    $jquery = Utility::get_jquery(true);
 
     $captcha_js = '';
     $captcha_div = '';
@@ -287,10 +289,10 @@ function sign_form($ofsn = '', $ssn = '')
     $xoopsTpl->assign('history', $history);
 
     //表單驗證
-    if (!file_exists(TADTOOLS_PATH . '/formValidator.php')) {
+    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/formValidator.php')) {
         redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
     }
-    include_once TADTOOLS_PATH . '/formValidator.php';
+    include_once XOOPS_ROOT_PATH . '/modules/tadtools/formValidator.php';
     $formValidator = new formValidator('#myForm');
     $formValidator_code = $formValidator->render();
     $xoopsTpl->assign('formValidator_code', $formValidator_code);
@@ -323,7 +325,7 @@ function save_val($ofsn = '', $ans = [])
     $_POST['ssn'] = (int) $_POST['ssn'];
     //先存基本資料
     $sql = 'replace into ' . $xoopsDB->prefix('tad_form_fill') . " (`ssn`,`ofsn`,`uid`,`man_name`,`email`,`fill_time`,`result_col`,`code`) values('{$_POST['ssn']}','{$_POST['ofsn']}','{$uid}','{$_POST['man_name']}','{$_POST['email']}', '{$now}','','')";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $ssn = $xoopsDB->getInsertId();
 
     $need_csn_arr = $_POST['need_csn'];
@@ -334,7 +336,7 @@ function save_val($ofsn = '', $ans = [])
         $value = $myts->addSlashes($value);
         $ssn = (int) $ssn;
         $sql = 'replace into ' . $xoopsDB->prefix('tad_form_value') . " (`ssn`,`csn`,`val`) values('{$ssn}','{$csn}','{$value}')";
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         unset($need_csn_arr[$csn]);
     }
@@ -348,10 +350,10 @@ function save_val($ofsn = '', $ans = [])
 
     //產生code
     $sql = 'update ' . $xoopsDB->prefix('tad_form_fill') . " set `code`=md5(CONCAT(`ofsn`,`uid`, `man_name`, `email`, `fill_time`)) where ssn='{$ssn}'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $sql = 'select `code` from ' . $xoopsDB->prefix('tad_form_fill') . " where ssn='{$ssn}'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($code) = $xoopsDB->fetchRow($result);
 
     return $code;
@@ -446,7 +448,7 @@ function replace_tad_form_fill()
 {
     global $xoopsDB;
     $sql = 'replace into ' . $xoopsDB->prefix('tad_form_fill') . " (`ofsn`,`uid`,`man_name`,`email`,`fill_time` , `result_col` , `code`) values('{$_POST['ofsn']}','{$_POST['uid']}','{$_POST['man_name']}','{$_POST['email']}','{$_POST['fill_time']}' , '' , '')";
-    $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     //取得最後新增資料的流水編號
     $ofsnuid = $xoopsDB->getInsertId();
 
@@ -462,7 +464,7 @@ function send_now($code = '')
     $xoopsMailer->multimailer->ContentType = 'text/html';
 
     $sql = 'select a.`ofsn`,a.`man_name`,a.`email`, a.`fill_time`,a.`code`,b.`title`,b.`adm_email`  from ' . $xoopsDB->prefix('tad_form_fill') . ' as a left join ' . $xoopsDB->prefix('tad_form_main') . " as b on a.ofsn=b.ofsn where a.code='$code'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($ofsn, $man_name, $email, $fill_time, $code, $title, $adm_email) = $xoopsDB->fetchRow($result);
 
     $xoopsMailer->addHeaders('MIME-Version: 1.0');
@@ -526,5 +528,5 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 
-$xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 include_once XOOPS_ROOT_PATH . '/footer.php';

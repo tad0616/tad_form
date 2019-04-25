@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tad_form_adm_add.tpl';
 include_once 'header.php';
@@ -57,10 +59,10 @@ function tad_form_main_form($ofsn = '')
     $kind_menu = kind_menu($kind);
 
     //表單驗證
-    if (!file_exists(TADTOOLS_PATH . '/formValidator.php')) {
+    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/formValidator.php')) {
         redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
     }
-    include_once TADTOOLS_PATH . '/formValidator.php';
+    include_once XOOPS_ROOT_PATH . '/modules/tadtools/formValidator.php';
     $formValidator = new formValidator('#myForm');
     $formValidator_code = $formValidator->render();
 
@@ -110,7 +112,7 @@ function insert_tad_form_main()
     $_POST['enable'] = empty($_POST['enable']) ? 0 : 1;
 
     $sql = 'insert into ' . $xoopsDB->prefix('tad_form_main') . " (`title`,`start_date`,`end_date`,`content`,`uid`,`post_date`,`enable`,`sign_group`,`kind`,`adm_email`,`captcha`,`show_result`,`view_result_group`,`multi_sign`) values('{$_POST['title']}','{$_POST['start_date']}','{$_POST['end_date']}','{$_POST['content']}','{$uid}', '{$now}' , '{$_POST['enable']}','{$sign_group}','{$_POST['kind']}','{$_POST['adm_email']}','{$_POST['captcha']}','{$_POST['show_result']}','{$view_result_group}','{$_POST['multi_sign']}')";
-    $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     //取得最後新增資料的流水編號
     $ofsn = $xoopsDB->getInsertId();
 
@@ -127,7 +129,7 @@ function update_tad_form_main($ofsn = '')
 
     $_POST['enable'] = empty($_POST['enable']) ? 0 : 1;
     $sql = 'update ' . $xoopsDB->prefix('tad_form_main') . " set  `title` = '{$_POST['title']}', `start_date` = '{$_POST['start_date']}', `end_date` = '{$_POST['end_date']}', `content` = '{$_POST['content']}', `post_date` = '{$now}', `enable` = '{$_POST['enable']}', `sign_group` = '{$sign_group}', `kind` = '{$_POST['kind']}',`adm_email` = '{$_POST['adm_email']}',`show_result` = '{$_POST['show_result']}',`captcha` = '{$_POST['captcha']}',`view_result_group` = '{$view_result_group}',`multi_sign` = '{$_POST['multi_sign']}' where ofsn='$ofsn'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     return $ofsn;
 }
@@ -190,7 +192,7 @@ function get_max_sort($ofsn = '')
 {
     global $xoopsDB;
     $sql = 'select max(sort) from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn={$ofsn}";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($sort) = $xoopsDB->fetchRow($result);
 
     return ++$sort;
@@ -201,7 +203,7 @@ function insert_tad_form_col()
 {
     global $xoopsDB;
     $sql = 'insert into ' . $xoopsDB->prefix('tad_form_col') . " (`ofsn`,`title`,`descript`,`kind`,`size`,`val`,`chk`,`func`,`sort`,`public`) values('{$_POST['ofsn']}','{$_POST['title']}','{$_POST['descript']}','{$_POST['kind']}','{$_POST['size']}','{$_POST['val']}','{$_POST['chk']}','{$_POST['func']}','{$_POST['sort']}','{$_POST['public']}')";
-    $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     //取得最後新增資料的流水編號
     $csn = $xoopsDB->getInsertId();
 
@@ -217,7 +219,7 @@ function get_tad_form_col($csn = '')
     }
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_form_col') . " where csn='$csn'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $data = $xoopsDB->fetchArray($result);
 
     return $data;
@@ -228,7 +230,7 @@ function update_tad_form_col($csn = '')
 {
     global $xoopsDB;
     $sql = 'update ' . $xoopsDB->prefix('tad_form_col') . " set  `ofsn` = '{$_POST['ofsn']}', `title` = '{$_POST['title']}', `descript` = '{$_POST['descript']}', `kind` = '{$_POST['kind']}', `size` = '{$_POST['size']}', `val` = '{$_POST['val']}', `chk` = '{$_POST['chk']}', `func` = '{$_POST['func']}', `sort` = '{$_POST['sort']}', `public` = '{$_POST['public']}' where csn='$csn'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     return $csn;
 }
@@ -238,7 +240,7 @@ function delete_tad_form_col($csn = '')
 {
     global $xoopsDB;
     $sql = 'delete from ' . $xoopsDB->prefix('tad_form_col') . " where csn='$csn'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 //編輯題目
@@ -255,9 +257,9 @@ function edit_all_opt($ofsn = '')
     $col_type['datetime'] = _MA_TADFORM_COL_DATETIME;
     $col_type['show'] = _MA_TADFORM_COL_SHOW;
 
-    $jquery = get_jquery(true);
+    $jquery = Utility::get_jquery(true);
     $sql = 'select csn,title,descript,kind,size,val,chk,func,sort,public from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn='{$ofsn}' order by sort";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $i = 1;
 
     while (list($csn, $title, $descript, $kind, $size, $val, $chk, $func, $sort, $public) = $xoopsDB->fetchRow($result)) {
@@ -291,7 +293,7 @@ function change_public($csn = '', $public = '0')
 {
     global $xoopsDB;
     $sql = 'update ' . $xoopsDB->prefix('tad_form_col') . " set  `public` = '{$public}' where csn='$csn'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 //更新欄位是否檢查
@@ -299,7 +301,7 @@ function change_chk($csn = '', $chk = '0')
 {
     global $xoopsDB;
     $sql = 'update ' . $xoopsDB->prefix('tad_form_col') . " set  `chk` = '{$chk}' where csn='$csn'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 /*-----------執行動作判斷區----------*/
 include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
