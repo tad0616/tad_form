@@ -1,7 +1,7 @@
 <?php
 
 use XoopsModules\Tadtools\Utility;
-
+use XoopsModules\Tadtools\FormValidator;
 //填寫表單
 if (!function_exists('sign_form')) {
     function sign_form($ofsn = '', $ssn = '', $mode = '')
@@ -250,12 +250,8 @@ if (!function_exists('sign_form')) {
         }
 
         //表單驗證
-        if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/formValidator.php')) {
-            redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
-        }
-        include_once XOOPS_ROOT_PATH . '/modules/tadtools/formValidator.php';
-        $formValidator = new formValidator('#myForm');
-        $formValidator->render();
+        $FormValidator = new FormValidator('#myForm');
+        $FormValidator->render();
     }
 }
 
@@ -288,7 +284,7 @@ if (!function_exists('get_somebody_ans')) {
         if (empty($uid)) {
             return false;
         }
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
 
         if ($ssn) {
             $sql = 'select b.ssn,b.csn,b.val from ' . $xoopsDB->prefix('tad_form_fill') . ' as a left join  ' . $xoopsDB->prefix('tad_form_value') . " as b on a.ssn=b.ssn where a.ssn='$ssn' and a.uid='$uid'";

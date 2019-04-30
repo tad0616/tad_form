@@ -1,7 +1,7 @@
 <?php
 use XoopsModules\Tadtools\Utility;
 include_once '../../../mainfile.php';
-include_once "../language/{$xoopsConfig['language']}/admin.php";
+xoops_loadLanguage('admin', 'tad_form');
 
 require_once XOOPS_ROOT_PATH . '/modules/tadtools/PHPExcel.php'; //引入 PHPExcel 物件庫
 require_once XOOPS_ROOT_PATH . '/modules/tadtools/PHPExcel/IOFactory.php'; //引入 PHPExcel_IOFactory 物件庫

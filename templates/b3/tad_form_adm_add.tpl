@@ -168,7 +168,6 @@
 
 
   <{else}>
-    <{$formValidator_code}>
     <script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/My97DatePicker/WdatePicker.js"></script>
     <form action="add.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
 

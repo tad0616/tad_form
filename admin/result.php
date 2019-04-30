@@ -19,7 +19,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
             redirect_header('index.php', 3, _MA_TADFORM_NOT_SHOW);
         }
     }
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $thSty = "style='width:135px;'";
 
     $jquery_path = Utility::get_jquery(); //一般只要此行即可

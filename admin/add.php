@@ -1,6 +1,7 @@
 <?php
+use XoopsModules\Tadtools\CkEditor;
+use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\Utility;
-
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tad_form_adm_add.tpl';
 include_once 'header.php';
@@ -45,12 +46,8 @@ function tad_form_main_form($ofsn = '')
     $SelectGroup_name2->setExtra("class='span12 form-control'");
     $view_result_group = $SelectGroup_name2->render();
 
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/ck.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
-    }
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/ck.php';
-    $fck = new CKEditor('tad_form', 'content', $content);
-    $editor = $fck->render();
+    $CkEditor = new CkEditor('tad_form', 'content', $content);
+    $editor = $CkEditor->render();
 
     $op = (empty($ofsn)) ? 'insert_tad_form_main' : 'update_tad_form_main';
 
@@ -59,16 +56,9 @@ function tad_form_main_form($ofsn = '')
     $kind_menu = kind_menu($kind);
 
     //表單驗證
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/formValidator.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
-    }
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/formValidator.php';
-    $formValidator = new formValidator('#myForm');
-    $formValidator_code = $formValidator->render();
+    $FormValidator = new FormValidator('#myForm');
+    $FormValidator->render();
 
-    //$op="replace_tad_form_main";
-
-    $xoopsTpl->assign('formValidator_code', $formValidator_code);
     $xoopsTpl->assign('title', $title);
     $xoopsTpl->assign('sign_group', $sign_group);
     $xoopsTpl->assign('kind_menu', $kind_menu);

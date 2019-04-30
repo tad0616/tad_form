@@ -1,6 +1,6 @@
 <?php
+use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\Utility;
-
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tad_form_adm_mail.tpl';
 include_once 'header.php';
@@ -25,14 +25,9 @@ function mail_form_main($ofsn = '')
         $tag .= "{{$title}}<br>";
     }
 
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/fck.php')) {
-        redirect_header('index.php', 3, _MD_NEED_TADTOOLS);
-    }
-
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/ck.php';
-    $ck = new CKEditor('tad_form', 'content', $content);
-    $ck->setHeight(400);
-    $editor = $ck->render();
+    $CkEditor = new CkEditor('tad_form', 'content', $content);
+    $CkEditor->setHeight(400);
+    $editor = $CkEditor->render();
 
     $sql = 'select man_name,email from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='{$ofsn}'";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);

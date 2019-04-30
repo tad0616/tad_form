@@ -11,7 +11,7 @@ function get_somebody_ans($ofsn = '', $uid = '', $ssn = '')
     if (empty($uid)) {
         return false;
     }
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     if ($ssn) {
         $sql = 'select b.ssn,b.csn,b.val from ' . $xoopsDB->prefix('tad_form_fill') . ' as a left join  ' . $xoopsDB->prefix('tad_form_value') . " as b on a.ssn=b.ssn where a.ssn='$ssn' and a.uid='$uid'";
@@ -113,7 +113,7 @@ function view($code = '', $mode = '')
 {
     global $xoopsDB, $xoopsUser, $xoopsTpl, $isAdmin;
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     $sql = 'select ofsn,ssn,uid,man_name,email,fill_time from ' . $xoopsDB->prefix('tad_form_fill') . " where code='{$code}'";
 

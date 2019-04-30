@@ -21,7 +21,7 @@ function view_user_result($ofsn)
         redirect_header('index.php', 3, _MD_TADFORM_HIDE_RESULT);
     }
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     $thSty = "style='width:135px;'";
 

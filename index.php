@@ -1,6 +1,6 @@
 <?php
 use XoopsModules\Tadtools\Utility;
-
+use XoopsModules\Tadtools\FormValidator;
 /*-----------引入檔案區--------------*/
 include 'header.php';
 $xoopsOption['template_main'] = 'tad_form_index.tpl';
@@ -289,13 +289,8 @@ function sign_form($ofsn = '', $ssn = '')
     $xoopsTpl->assign('history', $history);
 
     //表單驗證
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/formValidator.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
-    }
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/formValidator.php';
-    $formValidator = new formValidator('#myForm');
-    $formValidator_code = $formValidator->render();
-    $xoopsTpl->assign('formValidator_code', $formValidator_code);
+    $FormValidator = new FormValidator('#myForm');
+    $FormValidator->render();
 }
 
 //儲存問卷
@@ -309,7 +304,7 @@ function save_val($ofsn = '', $ans = [])
         $uid = '0';
     }
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $form = get_tad_form_main($ofsn);
 
     if ('1' == $form['captcha']) {
