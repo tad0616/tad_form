@@ -1,4 +1,6 @@
 <?php
+xoops_loadLanguage('main', 'tadtools');
+include_once 'global.php';
 define('_JS_EMAIL_CHK', 'Please check the E-mail address you offered again!');
 define('_JS_SIGN_CHK', '"%s" is required!');
 define('_JS_CHK_TOO_SHORT', 'Length of "%s" must be more than %s, please reset "%s"! Thank you!');
