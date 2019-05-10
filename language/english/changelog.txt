@@ -1,3 +1,10 @@
+Tad Form 3.4.6  (released from 2019-05-10)
+=========================================================
+1. "List the specified online form" block to add the function of directly displaying the form
+2. Fix Excel download problem
+3. Support XOOPS 2.5.10
+4. No longer supports PHP 5.3
+
 Tad Form 3.4.5 (2019-01-01 released)
 ================================================
 1.Support Bootstrap4
