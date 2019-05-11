@@ -1,5 +1,7 @@
 <?php
 
+use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tadtools\FormValidator;
 //填寫表單
 if (!function_exists('sign_form')) {
     function sign_form($ofsn = '', $ssn = '', $mode = '')
@@ -123,7 +125,7 @@ if (!function_exists('sign_form')) {
         if ('application' === $form['kind']) {
             $man_name_list = '<table><caption>' . _TADFORM_OK_LIST . '</caption>';
             $sql           = 'select email,fill_time from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='{$ofsn}' and result_col='1'";
-            $result        = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+            $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
             $n             = $i             = 3;
             while (list($email, $fill_time) = $xoopsDB->fetchRow($result)) {
                 $fill_time  = date('Y-m-d H:i:s', xoops_getUserTimestamp(strtotime($fill_time)));
@@ -146,7 +148,7 @@ if (!function_exists('sign_form')) {
 
         $sql = 'select * from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn='{$ofsn}' order by sort";
 
-        $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         $i      = 1;
         while (false !== ($data = $xoopsDB->fetchArray($result))) {
             foreach ($data as $k => $v) {
@@ -187,7 +189,7 @@ if (!function_exists('sign_form')) {
 
         $chk_emeil_js = chk_emeil_js('email', 'myForm');
 
-        get_jquery(true);
+        Utility::get_jquery(true);
 
         $captcha_js  = '';
         $captcha_div = '';
@@ -248,12 +250,8 @@ if (!function_exists('sign_form')) {
         }
 
         //表單驗證
-        if (!file_exists(TADTOOLS_PATH . '/formValidator.php')) {
-            redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
-        }
-        require_once TADTOOLS_PATH . '/formValidator.php';
-        $formValidator = new formValidator('#myForm');
-        $formValidator->render();
+        $FormValidator = new FormValidator('#myForm');
+        $FormValidator->render();
     }
 }
 
@@ -268,11 +266,11 @@ if (!function_exists('get_tad_form_main')) {
 
         if ($ssn) {
             $sql        = 'select ofsn from ' . $xoopsDB->prefix('tad_form_fill') . " where ssn='$ssn'";
-            $result     = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+            $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
             list($ofsn) = $xoopsDB->fetchRow($result);
         }
         $sql    = 'select * from ' . $xoopsDB->prefix('tad_form_main') . " where ofsn='$ofsn'";
-        $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         $data   = $xoopsDB->fetchArray($result);
         return $data;
     }
@@ -286,14 +284,14 @@ if (!function_exists('get_somebody_ans')) {
         if (empty($uid)) {
             return false;
         }
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
 
         if ($ssn) {
             $sql = 'select b.ssn,b.csn,b.val from ' . $xoopsDB->prefix('tad_form_fill') . ' as a left join  ' . $xoopsDB->prefix('tad_form_value') . " as b on a.ssn=b.ssn where a.ssn='$ssn' and a.uid='$uid'";
         } else {
             $sql = 'select b.ssn,b.csn,b.val from ' . $xoopsDB->prefix('tad_form_fill') . ' as a left join  ' . $xoopsDB->prefix('tad_form_value') . " as b on a.ssn=b.ssn where a.ofsn='$ofsn' and a.uid='$uid'";
         }
-        $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         $ans    = [];
         while (list($ssn, $csn, $val) = $xoopsDB->fetchRow($result)) {
             $ans[$csn]  = $myts->htmlSpecialChars($val);

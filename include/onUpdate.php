@@ -1,49 +1,55 @@
 <?php
 
-use XoopsModules\Tad_form\Utility;
-
+use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tad_form\Update;
+if (!class_exists('XoopsModules\Tadtools\Utility')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
+if (!class_exists('XoopsModules\Tad_form\Update')) {
+    include dirname(__DIR__) . '/preloads/autoloader.php';
+}
 function xoops_module_update_tad_form(&$module, $old_version)
 {
     global $xoopsDB;
 
-    if (!Utility::chk_chk1()) {
-        Utility::go_update1();
+    if (!Update::chk_chk1()) {
+        Update::go_update1();
     }
 
-    if (!Utility::chk_chk2()) {
-        Utility::go_update2();
+    if (!Update::chk_chk2()) {
+        Update::go_update2();
     }
 
-    if (!Utility::chk_chk3()) {
-        Utility::go_update3();
+    if (!Update::chk_chk3()) {
+        Update::go_update3();
     }
 
-    if (!Utility::chk_chk4()) {
-        Utility::go_update4();
+    if (!Update::chk_chk4()) {
+        Update::go_update4();
     }
 
-    if (!Utility::chk_chk5()) {
-        Utility::go_update5();
+    if (!Update::chk_chk5()) {
+        Update::go_update5();
     }
 
-    if (!Utility::chk_chk6()) {
-        Utility::go_update6();
+    if (!Update::chk_chk6()) {
+        Update::go_update6();
     }
 
-    if (!Utility::chk_chk7()) {
-        Utility::go_update7();
+    if (!Update::chk_chk7()) {
+        Update::go_update7();
     }
 
-    if (!Utility::chk_chk8()) {
-        Utility::go_update8();
+    if (!Update::chk_chk8()) {
+        Update::go_update8();
     }
 
-    if (Utility::chk_uid()) {
-        Utility::go_update_uid();
+    if (Update::chk_uid()) {
+        Update::go_update_uid();
     }
 
-    if (!Utility::chk_chk9()) {
-        Utility::go_update9();
+    if (!Update::chk_chk9()) {
+        Update::go_update9();
     }
 
     $old_fckeditor = XOOPS_ROOT_PATH . '/modules/tad_form/fckeditor';
@@ -51,7 +57,7 @@ function xoops_module_update_tad_form(&$module, $old_version)
         Utility::delete_directory($old_fckeditor);
     }
 
-    Utility::chk_tad_form_block();
+    Update::chk_tad_form_block();
 
     return true;
 }

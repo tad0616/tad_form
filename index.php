@@ -1,7 +1,9 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tadtools\FormValidator;
 /*-----------引入檔案區--------------*/
 require __DIR__ . '/header.php';
-$GLOBALS['xoopsOption']['template_main'] = 'tad_form_index.tpl';
+$xoopsOption['template_main']= 'tad_form_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 /*-----------function區--------------*/
 
@@ -16,7 +18,7 @@ function list_tad_form_main()
         $User_Groups = [3];
     }
     $sql = 'select * from ' . $xoopsDB->prefix('tad_form_main') . " where enable='1' and start_date < '{$today}'  and end_date > '{$today}'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $i = 0;
     $all = [];
     while (false !== ($data = $xoopsDB->fetchArray($result))) {
@@ -76,7 +78,7 @@ function list_tad_form_main()
         $xoopsTpl->assign('title', '');
         $xoopsTpl->assign('msg', _MD_TADFORM_EMPTY);
     } else {
-        $xoopsTpl->assign('jquery', get_jquery(true));
+        $xoopsTpl->assign('jquery', Utility::get_jquery(true));
         $xoopsTpl->assign('all', $all);
     }
 }
@@ -178,7 +180,7 @@ function sign_form($ofsn = '', $ssn = '')
     if ('application' === $form['kind']) {
         $man_name_list = '<table><caption>' . _MD_TADFORM_OK_LIST . '</caption>';
         $sql = 'select email,fill_time from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='{$ofsn}' and result_col='1'";
-        $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         $n = $i = 3;
         while (list($email, $fill_time) = $xoopsDB->fetchRow($result)) {
             $fill_time = date('Y-m-d H:i:s', xoops_getUserTimestamp(strtotime($fill_time)));
@@ -192,7 +194,7 @@ function sign_form($ofsn = '', $ssn = '')
 
         $apply_ok = "<tr><td>{$man_name_list}</td></tr>";
     } elseif ($form['show_result'] and can_view_report($ofsn)) {
-        $apply_ok = "<tr><td><a href='report.php?ofsn=$ofsn' class='btn btn-info'>" . _TADFORM_VIEW_FORM . '</a></td></tr>';
+        $apply_ok = "<tr><td><a href='report.php?ofsn=$ofsn' class='btn btn-info'>" . _MD_TADFORM_VIEW_FORM . '</a></td></tr>';
     } else {
         $apply_ok = '';
     }
@@ -201,7 +203,7 @@ function sign_form($ofsn = '', $ssn = '')
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn='{$ofsn}' order by sort";
 
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $i = 1;
     while (false !== ($data = $xoopsDB->fetchArray($result))) {
         foreach ($data as $k => $v) {
@@ -242,7 +244,7 @@ function sign_form($ofsn = '', $ssn = '')
 
     $chk_emeil_js = chk_emeil_js('email', 'myForm');
 
-    $jquery = get_jquery(true);
+    $jquery = Utility::get_jquery(true);
 
     $captcha_js = '';
     $captcha_div = '';
@@ -264,7 +266,7 @@ function sign_form($ofsn = '', $ssn = '')
         $tool = "
         <a href='admin/add.php?op=tad_form_main_form&ofsn={$ofsn}' class='btn btn-warning'>" . sprintf(_MD_TADFORM_EDIT_FORM, $form['title']) . "</a>
         <a href='admin/add.php?op=edit_all_opt&ofsn={$ofsn}' class='btn btn-warning'>" . _MD_TADFORM_EDIT_ALL . "</a>
-        <a href='admin/result.php?ofsn={$ofsn}' class='btn btn-primary'>" . _TADFORM_VIEW_FORM . '</a>';
+        <a href='admin/result.php?ofsn={$ofsn}' class='btn btn-primary'>" . _MD_TADFORM_VIEW_FORM . '</a>';
     }
 
     $db_ans_ssn = isset($db_ans['ssn']) ? $db_ans['ssn'] : '';
@@ -287,13 +289,8 @@ function sign_form($ofsn = '', $ssn = '')
     $xoopsTpl->assign('history', $history);
 
     //表單驗證
-    if (!file_exists(TADTOOLS_PATH . '/formValidator.php')) {
-        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
-    }
-    require_once TADTOOLS_PATH . '/formValidator.php';
-    $formValidator = new formValidator('#myForm');
-    $formValidator_code = $formValidator->render();
-    $xoopsTpl->assign('formValidator_code', $formValidator_code);
+    $FormValidator = new FormValidator('#myForm');
+    $FormValidator->render();
 }
 
 //儲存問卷
@@ -307,7 +304,7 @@ function save_val($ofsn = '', $ans = [])
         $uid = '0';
     }
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $form = get_tad_form_main($ofsn);
 
     if ('1' == $form['captcha']) {
@@ -323,7 +320,7 @@ function save_val($ofsn = '', $ans = [])
     $_POST['ssn'] = (int) $_POST['ssn'];
     //先存基本資料
     $sql = 'replace into ' . $xoopsDB->prefix('tad_form_fill') . " (`ssn`,`ofsn`,`uid`,`man_name`,`email`,`fill_time`,`result_col`,`code`) values('{$_POST['ssn']}','{$_POST['ofsn']}','{$uid}','{$_POST['man_name']}','{$_POST['email']}', '{$now}','','')";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $ssn = $xoopsDB->getInsertId();
 
     $need_csn_arr = $_POST['need_csn'];
@@ -332,26 +329,26 @@ function save_val($ofsn = '', $ans = [])
     foreach ($ans as $csn => $val) {
         $value = (is_array($val)) ? implode(';', $val) : $val;
         $value = $myts->addSlashes($value);
-        $ssn = (int)$ssn;
+        $ssn = (int) $ssn;
         $sql = 'replace into ' . $xoopsDB->prefix('tad_form_value') . " (`ssn`,`csn`,`val`) values('{$ssn}','{$csn}','{$value}')";
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         unset($need_csn_arr[$csn]);
     }
 
     //把一些沒填的欄位也補上空值
     foreach ($need_csn_arr as $csn) {
-        $ssn = (int)$ssn;
+        $ssn = (int) $ssn;
         $sql = 'replace into ' . $xoopsDB->prefix('tad_form_value') . " (`ssn`,`csn`,`val`) values('{$ssn}','{$csn}','')";
         $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $sql);
     }
 
     //產生code
     $sql = 'update ' . $xoopsDB->prefix('tad_form_fill') . " set `code`=md5(CONCAT(`ofsn`,`uid`, `man_name`, `email`, `fill_time`)) where ssn='{$ssn}'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $sql = 'select `code` from ' . $xoopsDB->prefix('tad_form_fill') . " where ssn='{$ssn}'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($code) = $xoopsDB->fetchRow($result);
 
     return $code;
@@ -446,7 +443,7 @@ function replace_tad_form_fill()
 {
     global $xoopsDB;
     $sql = 'replace into ' . $xoopsDB->prefix('tad_form_fill') . " (`ofsn`,`uid`,`man_name`,`email`,`fill_time` , `result_col` , `code`) values('{$_POST['ofsn']}','{$_POST['uid']}','{$_POST['man_name']}','{$_POST['email']}','{$_POST['fill_time']}' , '' , '')";
-    $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     //取得最後新增資料的流水編號
     $ofsnuid = $xoopsDB->getInsertId();
 
@@ -462,7 +459,7 @@ function send_now($code = '')
     $xoopsMailer->multimailer->ContentType = 'text/html';
 
     $sql = 'select a.`ofsn`,a.`man_name`,a.`email`, a.`fill_time`,a.`code`,b.`title`,b.`adm_email`  from ' . $xoopsDB->prefix('tad_form_fill') . ' as a left join ' . $xoopsDB->prefix('tad_form_main') . " as b on a.ofsn=b.ofsn where a.code='$code'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($ofsn, $man_name, $email, $fill_time, $code, $title, $adm_email) = $xoopsDB->fetchRow($result);
 
     $xoopsMailer->addHeaders('MIME-Version: 1.0');
@@ -526,5 +523,5 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 
-$xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 require_once XOOPS_ROOT_PATH . '/footer.php';

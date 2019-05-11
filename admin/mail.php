@@ -1,6 +1,8 @@
 <?php
+use XoopsModules\Tadtools\CkEditor;
+use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
-$GLOBALS['xoopsOption']['template_main'] = 'tad_form_adm_mail.tpl';
+$xoopsOption['template_main' = 'tad_form_adm_mail.tpl';
 require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 
@@ -14,7 +16,7 @@ function mail_form_main($ofsn = '')
 
     $tag = '{name}<br>';
     $sql = 'select csn,title,kind from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn='$ofsn'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     while (list($csn, $title, $kind) = $xoopsDB->fetchRow($result)) {
         if ('show' === $kind) {
             continue;
@@ -23,17 +25,12 @@ function mail_form_main($ofsn = '')
         $tag .= "{{$title}}<br>";
     }
 
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/fck.php')) {
-        redirect_header('index.php', 3, _MD_NEED_TADTOOLS);
-    }
-
-    require_once XOOPS_ROOT_PATH . '/modules/tadtools/ck.php';
-    $ck = new CKEditor('tad_form', 'content', $content);
-    $ck->setHeight(400);
-    $editor = $ck->render();
+    $CkEditor = new CkEditor('tad_form', 'content', $content);
+    $CkEditor->setHeight(400);
+    $editor = $CkEditor->render();
 
     $sql = 'select man_name,email from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='{$ofsn}'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $i = 0;
     while (list($man_name, $email) = $xoopsDB->fetchRow($result)) {
@@ -58,7 +55,7 @@ function send_all($ofsn)
     $xoopsMailer->addHeaders('MIME-Version: 1.0');
 
     $sql = 'select csn,title from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn='$ofsn'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     while (list($csn, $title) = $xoopsDB->fetchRow($result)) {
         $tag[$csn] = "{{$title}}";
     }
@@ -68,7 +65,7 @@ function send_all($ofsn)
         $content = $_POST['content'];
         $ans = [];
         $sql = 'select a.csn,a.val from ' . $xoopsDB->prefix('tad_form_value') . ' as a left join ' . $xoopsDB->prefix('tad_form_fill') . " as b on a.ssn=b.ssn where b.man_name='$man_name' and b.`ofsn`='{$ofsn}'";
-        $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         while (list($csn, $val) = $xoopsDB->fetchRow($result)) {
             $ans[$csn] = $val;
         }
@@ -98,7 +95,7 @@ function send_all($ofsn)
     }
 
     $sql = 'select a.`ofsn`,a.`man_name`,a.`email`, a.`fill_time`,b.`title`,b.`adm_email`  from ' . $xoopsDB->prefix('tad_form_fill') . ' as a left join ' . $xoopsDB->prefix('tad_form_main') . " as b on a.ofsn=b.ofsn where a.ssn='$ssn'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($ofsn, $man_name, $email, $fill_time, $title, $adm_email) = $xoopsDB->fetchRow($result);
 
     $email_arr = explode(';', $adm_email);
