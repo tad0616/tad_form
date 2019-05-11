@@ -125,7 +125,7 @@ if (!function_exists('sign_form')) {
             $sql           = 'select email,fill_time from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='{$ofsn}' and result_col='1'";
             $result        = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
             $n             = $i             = 3;
-            while (false !== (list($email, $fill_time) = $xoopsDB->fetchRow($result))) {
+            while (list($email, $fill_time) = $xoopsDB->fetchRow($result)) {
                 $fill_time  = date('Y-m-d H:i:s', xoops_getUserTimestamp(strtotime($fill_time)));
                 $email_data = explode('@', $email);
                 $man_name_list .= (0 == $n % $i) ? '<tr>' : '';
@@ -193,12 +193,12 @@ if (!function_exists('sign_form')) {
         $captcha_div = '';
         if ('1' == $form['captcha']) {
             $captcha_js = "
-            <link rel='stylesheet' type='text/css' href='" . XOOPS_URL . "/modules/tad_form/class/Qaptcha_v3.0/jquery/QapTcha.jquery.css' media='screen'>
-            <script type='text/javascript' src='class/Qaptcha_v3.0/jquery/jquery.ui.touch.js'></script>
-            <script type='text/javascript' src='class/Qaptcha_v3.0/jquery/QapTcha.jquery.js'></script>
+            <link rel='stylesheet' type='text/css' href='" . XOOPS_URL . "/modules/tad_form/class/Qaptcha3/jquery/QapTcha.jquery.css' media='screen'>
+            <script type='text/javascript' src='class/Qaptcha3/jquery/jquery.ui.touch.js'></script>
+            <script type='text/javascript' src='class/Qaptcha3/jquery/QapTcha.jquery.js'></script>
             <script type='text/javascript'>
                 $(document).ready(function(){
-                $('.QapTcha').QapTcha({disabledSubmit:true , autoRevert:true , PHPfile:'class/Qaptcha_v3.0/php/Qaptcha.jquery.php', txtLock:'" . _TADFORM_TXTLOCK . "' , txtUnlock:'" . _TADFORM_TXTUNLOCK . "'});
+                $('.QapTcha').QapTcha({disabledSubmit:true , autoRevert:true , PHPfile:'class/Qaptcha3/php/Qaptcha.jquery.php', txtLock:'" . _TADFORM_TXTLOCK . "' , txtUnlock:'" . _TADFORM_TXTUNLOCK . "'});
                 });
             </script>";
             $captcha_div = "<div class='QapTcha'></div>";
@@ -249,7 +249,7 @@ if (!function_exists('sign_form')) {
 
         //表單驗證
         if (!file_exists(TADTOOLS_PATH . '/formValidator.php')) {
-            redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
+            redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
         }
         require_once TADTOOLS_PATH . '/formValidator.php';
         $formValidator = new formValidator('#myForm');
@@ -295,7 +295,7 @@ if (!function_exists('get_somebody_ans')) {
         }
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
         $ans    = [];
-        while (false !== (list($ssn, $csn, $val) = $xoopsDB->fetchRow($result))) {
+        while (list($ssn, $csn, $val) = $xoopsDB->fetchRow($result)) {
             $ans[$csn]  = $myts->htmlSpecialChars($val);
             $ans['ssn'] = $ssn;
         }

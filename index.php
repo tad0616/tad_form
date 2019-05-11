@@ -192,7 +192,7 @@ function sign_form($ofsn = '', $ssn = '')
 
         $apply_ok = "<tr><td>{$man_name_list}</td></tr>";
     } elseif ($form['show_result'] and can_view_report($ofsn)) {
-        $apply_ok = "<tr><td><a href='report.php?ofsn=$ofsn' class='btn btn-info'>" . _MD_TADFORM_VIEW_FORM . '</a></td></tr>';
+        $apply_ok = "<tr><td><a href='report.php?ofsn=$ofsn' class='btn btn-info'>" . _TADFORM_VIEW_FORM . '</a></td></tr>';
     } else {
         $apply_ok = '';
     }
@@ -248,12 +248,12 @@ function sign_form($ofsn = '', $ssn = '')
     $captcha_div = '';
     if ('1' == $form['captcha']) {
         $captcha_js = "
-        <link rel='stylesheet' type='text/css' href='class/Qaptcha_v3.0/jquery/QapTcha.jquery.css' media='screen'>
-        <script type='text/javascript' src='class/Qaptcha_v3.0/jquery/jquery.ui.touch.js'></script>
-        <script type='text/javascript' src='class/Qaptcha_v3.0/jquery/QapTcha.jquery.js'></script>
+        <link rel='stylesheet' type='text/css' href='class/Qaptcha3/jquery/QapTcha.jquery.css' media='screen'>
+        <script type='text/javascript' src='class/Qaptcha3/jquery/jquery.ui.touch.js'></script>
+        <script type='text/javascript' src='class/Qaptcha3/jquery/QapTcha.jquery.js'></script>
         <script type='text/javascript'>
           $(document).ready(function(){
-           $('.QapTcha').QapTcha({disabledSubmit:true , autoRevert:true , PHPfile:'class/Qaptcha_v3.0/php/Qaptcha.jquery.php', txtLock:'" . _MD_TADFORM_TXTLOCK . "' , txtUnlock:'" . _MD_TADFORM_TXTUNLOCK . "'});
+           $('.QapTcha').QapTcha({disabledSubmit:true , autoRevert:true , PHPfile:'class/Qaptcha3/php/Qaptcha.jquery.php', txtLock:'" . _MD_TADFORM_TXTLOCK . "' , txtUnlock:'" . _MD_TADFORM_TXTUNLOCK . "'});
           });
         </script>";
         $captcha_div = "<div class='QapTcha'></div>";
@@ -264,7 +264,7 @@ function sign_form($ofsn = '', $ssn = '')
         $tool = "
         <a href='admin/add.php?op=tad_form_main_form&ofsn={$ofsn}' class='btn btn-warning'>" . sprintf(_MD_TADFORM_EDIT_FORM, $form['title']) . "</a>
         <a href='admin/add.php?op=edit_all_opt&ofsn={$ofsn}' class='btn btn-warning'>" . _MD_TADFORM_EDIT_ALL . "</a>
-        <a href='admin/result.php?ofsn={$ofsn}' class='btn btn-primary'>" . _MD_TADFORM_VIEW_FORM . '</a>';
+        <a href='admin/result.php?ofsn={$ofsn}' class='btn btn-primary'>" . _TADFORM_VIEW_FORM . '</a>';
     }
 
     $db_ans_ssn = isset($db_ans['ssn']) ? $db_ans['ssn'] : '';
@@ -288,7 +288,7 @@ function sign_form($ofsn = '', $ssn = '')
 
     //表單驗證
     if (!file_exists(TADTOOLS_PATH . '/formValidator.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
+        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
     }
     require_once TADTOOLS_PATH . '/formValidator.php';
     $formValidator = new formValidator('#myForm');

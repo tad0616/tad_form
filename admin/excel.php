@@ -27,7 +27,7 @@ $objActSheet->setCellValueByColumnAndRow(1, 1, _MA_TADFORM_SIGN_DATE);
 $sql = 'select csn,title,kind,func from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn='{$ofsn}' order by sort";
 $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 $col = 2;
-while (false !== (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result))) {
+while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
     if ('show' === $kind) {
         continue;
     }
@@ -40,7 +40,7 @@ while (false !== (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)
 $n = 2;
 $sql = 'select ssn,uid,man_name,email,fill_time from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='{$ofsn}' order by fill_time desc";
 $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-while (false !== (list($ssn, $uid, $man_name, $email, $fill_time) = $xoopsDB->fetchRow($result))) {
+while (list($ssn, $uid, $man_name, $email, $fill_time) = $xoopsDB->fetchRow($result)) {
     $fill_time = date('Y-m-d H:i:s', xoops_getUserTimestamp(strtotime($fill_time)));
     $objActSheet->setCellValueByColumnAndRow(0, $n, $man_name);
     $objActSheet->setCellValueByColumnAndRow(1, $n, $fill_time);
@@ -49,7 +49,7 @@ while (false !== (list($ssn, $uid, $man_name, $email, $fill_time) = $xoopsDB->fe
     $result2 = $xoopsDB->query($sql2) or web_error($sql2);
 
     $m = 2;
-    while (false !== (list($csn, $val) = $xoopsDB->fetchRow($result2))) {
+    while (list($csn, $val) = $xoopsDB->fetchRow($result2)) {
         if ('fck' === $kk[$csn]) {
             $val = strip_tags($val);
         }

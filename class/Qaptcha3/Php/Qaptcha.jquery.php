@@ -1,4 +1,5 @@
-<?php
+<?php namespace XoopsModules\Tad_form\Qaptcha3\Php;
+
 require_once dirname(dirname(dirname(dirname(__DIR__)))) . '/../mainfile.php';
 
 $aResponse['error'] = false;

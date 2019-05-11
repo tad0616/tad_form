@@ -32,7 +32,7 @@ function view_user_result($ofsn)
     $all_title = [];
     $i = 0;
     $csn_arr = $ff = $tt = $kk = [];
-    while (false !== (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result))) {
+    while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
         if ('show' === $kind) {
             continue;
         }
@@ -63,7 +63,7 @@ function view_user_result($ofsn)
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i = 0;
     $all_result_col = [];
-    while (false !== (list($ssn, $uid, $man_name, $email, $fill_time, $code, $result_col) = $xoopsDB->fetchRow($result))) {
+    while (list($ssn, $uid, $man_name, $email, $fill_time, $code, $result_col) = $xoopsDB->fetchRow($result)) {
         $fill_time = date('Y-m-d H:i:s', xoops_getUserTimestamp(strtotime($fill_time)));
         $email_data = explode('@', $email);
 
@@ -80,7 +80,7 @@ function view_user_result($ofsn)
         //$all="";
 
         $col_v = [];
-        while (false !== (list($csn, $val) = $xoopsDB->fetchRow($result2))) {
+        while (list($csn, $val) = $xoopsDB->fetchRow($result2)) {
             $col_v[$csn] = $myts->htmlSpecialChars($val);
         }
 
@@ -97,7 +97,7 @@ function view_user_result($ofsn)
             $n++;
         }
 
-        $all_result_col[$i]['ans'] = $ans_col;
+        $all_result_col[$i]['ans'] = isset($ans_col)? $ans_col : '';
 
         //根據不同表單類型，提供不同的功能
 

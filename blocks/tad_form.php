@@ -11,7 +11,7 @@ function tad_form($options)
     $result = $xoopsDB->query($sql) or die($sql);
     $i = 0;
     $block = [];
-    while (false !== (list($ofsn, $title, $start_date, $end_date, $content, $uid, $post_date, $enable) = $xoopsDB->fetchRow($result))) {
+    while (list($ofsn, $title, $start_date, $end_date, $content, $uid, $post_date, $enable) = $xoopsDB->fetchRow($result)) {
         //$block.="<a href='".XOOPS_URL."/modules/tad_form/index.php?op=sign&ofsn=$ofsn' >$title</a>";
         $block['form'][$i]['ofsn'] = $ofsn;
         $block['form'][$i]['title'] = $title;

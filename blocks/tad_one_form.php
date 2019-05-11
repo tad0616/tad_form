@@ -45,7 +45,7 @@ function tad_one_form_edit($options)
     $result = $xoopsDB->query($sql);
 
     $opt = '';
-    while (false !== (list($ofsn, $title, $start_date, $end_date, $content, $uid, $post_date, $enable) = $xoopsDB->fetchRow($result))) {
+    while (list($ofsn, $title, $start_date, $end_date, $content, $uid, $post_date, $enable) = $xoopsDB->fetchRow($result)) {
         $selected = ($ofsn == $options[0]) ? 'selected' : '';
         $opt .= "<option value='{$ofsn}' $selected>$title</option>\n";
     }

@@ -35,16 +35,16 @@ function tad_form_main_form($ofsn = '')
     $view_result_group = (!isset($DBV['view_result_group'])) ? [1] : explode(',', $DBV['view_result_group']);
     $multi_sign = (!isset($DBV['multi_sign'])) ? '0' : $DBV['multi_sign'];
 
-    $SelectGroup_name = new XoopsFormSelectGroup('', 'sign_group', true, $sign_group, 5, true);
+    $SelectGroup_name = new \XoopsFormSelectGroup('', 'sign_group', true, $sign_group, 5, true);
     $SelectGroup_name->setExtra("class='span12 form-control'");
     $sign_group = $SelectGroup_name->render();
 
-    $SelectGroup_name2 = new XoopsFormSelectGroup('', 'view_result_group', true, $view_result_group, 5, true);
+    $SelectGroup_name2 = new \XoopsFormSelectGroup('', 'view_result_group', true, $view_result_group, 5, true);
     $SelectGroup_name2->setExtra("class='span12 form-control'");
     $view_result_group = $SelectGroup_name2->render();
 
     if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/ck.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
+        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
     }
     require_once XOOPS_ROOT_PATH . '/modules/tadtools/ck.php';
     $fck = new CKEditor('tad_form', 'content', $content);
@@ -58,7 +58,7 @@ function tad_form_main_form($ofsn = '')
 
     //表單驗證
     if (!file_exists(TADTOOLS_PATH . '/formValidator.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
+        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
     }
     require_once TADTOOLS_PATH . '/formValidator.php';
     $formValidator = new formValidator('#myForm');
@@ -246,6 +246,7 @@ function edit_all_opt($ofsn = '')
 {
     global $xoopsDB, $xoopsTpl;
 
+    $question = [];
     $col_type['text'] = _MA_TADFORM_COL_TEXT;
     $col_type['radio'] = _MA_TADFORM_COL_RADIO;
     $col_type['checkbox'] = _MA_TADFORM_COL_CHECKBOX;
@@ -260,7 +261,7 @@ function edit_all_opt($ofsn = '')
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i = 1;
 
-    while (false !== (list($csn, $title, $descript, $kind, $size, $val, $chk, $func, $sort, $public) = $xoopsDB->fetchRow($result))) {
+    while (list($csn, $title, $descript, $kind, $size, $val, $chk, $func, $sort, $public) = $xoopsDB->fetchRow($result)) {
         $descript = (empty($descript)) ? '' : "({$descript})";
 
         $public = ('1' == $public) ? '001_06' : '001_05';

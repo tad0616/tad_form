@@ -18,8 +18,7 @@ define('_TADFORM_UNABLE', '"%s" is unavailable now!');
 define('_TADFORM_NOT_START', '"%s" will be available until <b>%s</b>!');
 define('_TADFORM_OVERDUE', '"%s" has been closed on <b>%s</b>!');
 define('_TADFORM_OK_LIST', 'Confirmed List');
-
-define('_TADFORM_VIEW_FORM', 'Analysis');
+define('_TADFORM_HISTORY', 'History');
 
 define('_TADFORM_TXTLOCK', 'Locked: form can\'t be submited');
 define('_TADFORM_TXTUNLOCK', 'Unlocked: form can be submitted');

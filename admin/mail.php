@@ -15,7 +15,7 @@ function mail_form_main($ofsn = '')
     $tag = '{name}<br>';
     $sql = 'select csn,title,kind from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn='$ofsn'";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    while (false !== (list($csn, $title, $kind) = $xoopsDB->fetchRow($result))) {
+    while (list($csn, $title, $kind) = $xoopsDB->fetchRow($result)) {
         if ('show' === $kind) {
             continue;
         }
@@ -36,7 +36,7 @@ function mail_form_main($ofsn = '')
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     $i = 0;
-    while (false !== (list($man_name, $email) = $xoopsDB->fetchRow($result))) {
+    while (list($man_name, $email) = $xoopsDB->fetchRow($result)) {
         $data[$i]['man_name'] = $man_name;
         $data[$i]['email'] = $email;
         $i++;
@@ -59,7 +59,7 @@ function send_all($ofsn)
 
     $sql = 'select csn,title from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn='$ofsn'";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    while (false !== (list($csn, $title) = $xoopsDB->fetchRow($result))) {
+    while (list($csn, $title) = $xoopsDB->fetchRow($result)) {
         $tag[$csn] = "{{$title}}";
     }
 
@@ -69,7 +69,7 @@ function send_all($ofsn)
         $ans = [];
         $sql = 'select a.csn,a.val from ' . $xoopsDB->prefix('tad_form_value') . ' as a left join ' . $xoopsDB->prefix('tad_form_fill') . " as b on a.ssn=b.ssn where b.man_name='$man_name' and b.`ofsn`='{$ofsn}'";
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-        while (false !== (list($csn, $val) = $xoopsDB->fetchRow($result))) {
+        while (list($csn, $val) = $xoopsDB->fetchRow($result)) {
             $ans[$csn] = $val;
         }
 

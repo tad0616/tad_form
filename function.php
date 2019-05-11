@@ -23,7 +23,7 @@ function get_somebody_ans($ofsn = '', $uid = '', $ssn = '')
     }
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $ans = [];
-    while (false !== (list($ssn, $csn, $val) = $xoopsDB->fetchRow($result))) {
+    while (list($ssn, $csn, $val) = $xoopsDB->fetchRow($result)) {
         $ans[$csn] = $myts->htmlSpecialChars($val);
         $ans['ssn'] = $ssn;
     }
@@ -136,7 +136,7 @@ function view($code = '', $mode = '')
 
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i = 1;
-    while (false !== (list($csn, $val, $title) = $xoopsDB->fetchRow($result))) {
+    while (list($csn, $val, $title) = $xoopsDB->fetchRow($result)) {
         if ('mail' === $mode) {
             $all .= "
       <tr>
@@ -162,9 +162,9 @@ function view($code = '', $mode = '')
     ";
 
         if ($show_report) {
-            $main .= '<a href="' . XOOPS_URL . "/modules/tad_form/report.php?ofsn={$ofsn}\" class=\"btn btn-info\">" . _MD_TADFORM_VIEW_FORM . '</a>';
+            $main .= '<a href="' . XOOPS_URL . "/modules/tad_form/report.php?ofsn={$ofsn}\" class=\"btn btn-info\">" . _TADFORM_VIEW_FORM . '</a>';
         }
-        $main .= '<a href="' . XOOPS_URL . "/modules/tad_form/index.php?op=sign&ofsn={$ofsn}\" class=\"btn btn-success\">" . _MD_TADFORM_BACK_TO_FORM . '</a>
+        $main .= '<a href="' . XOOPS_URL . "/modules/tad_form/index.php?op=sign&ofsn={$ofsn}\" class=\"btn btn-success\">" ._TADFORM_BACK_TO_FORM . '</a>
     </div>';
 
         return $main;

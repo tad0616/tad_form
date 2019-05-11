@@ -11,9 +11,10 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
 {
     global $xoopsDB, $xoopsUser, $xoopsTpl;
 
+
     $form = get_tad_form_main($ofsn);
     if (!$isAdmin) {
-        if ('1' != $form['show_result'] or '1' != $form['enable']) {
+        if ('1' != $form['show_result'] || '1' != $form['enable']) {
             redirect_header('index.php', 3, _MA_TADFORM_NOT_SHOW);
         }
     }
@@ -27,9 +28,9 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
 
     $sql = 'select csn,title,kind,func from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn='{$ofsn}' order by sort";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    $all_title = $tt = $tt = $kk = $csn_arr = [];
+    $all_title = $tt = $tt = $kk = $csn_arr = $all_result_col = $ff =[];
     $i = 0;
-    while (false !== (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result))) {
+    while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
         if ('show' === $kind) {
             continue;
         }
@@ -63,7 +64,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i = 0;
     $col_v = $col = [];
-    while (false !== (list($ssn, $uid, $man_name, $email, $fill_time, $code, $result_col) = $xoopsDB->fetchRow($result))) {
+    while (list($ssn, $uid, $man_name, $email, $fill_time, $code, $result_col) = $xoopsDB->fetchRow($result)) {
         $url = "{$_SERVER['PHP_SELF']}?op=view&code=$code";
         $all_result_col[$i]['url'] = $myts->htmlSpecialChars($url);
         $all_result_col[$i]['man_name'] = $myts->htmlSpecialChars($man_name);
@@ -72,7 +73,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
 
         $result2 = $xoopsDB->query($sql2) or web_error($sql2);
 
-        while (false !== (list($csn, $val) = $xoopsDB->fetchRow($result2))) {
+        while (list($csn, $val) = $xoopsDB->fetchRow($result2)) {
             $col_v[$csn] = $myts->htmlSpecialChars($val);
         }
 
@@ -83,7 +84,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
             } elseif ('checkbox' === $kk[$csn]) {
                 $csn_val = (empty($col_v[$csn])) ? '' : '<ul><li>' . str_replace(';', '</li><li>', $col_v[$csn]) . '</li></ul>';
             } else {
-                $csn_val = $col_v[$csn];
+                $csn_val = isset($col_v[$csn]) ? $col_v[$csn] : 0 ;
             }
             $ans_col[$n]['val'] = $csn_val;
             $n++;
@@ -96,7 +97,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
                     $col[$csn]['count'][$v]++;
                 }
             } else {
-                $col[$csn]['sum'] += $col_v[$csn];
+                $col[$csn]['sum'] += isset($col_v[$csn]) ? $col_v[$csn] : 0;
                 $col[$csn]['count']++;
             }
         }
