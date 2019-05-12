@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tad_form;
+<?php
+
+namespace XoopsModules\Tad_form;
 
 use XoopsModules\Tadtools\Utility;
 
