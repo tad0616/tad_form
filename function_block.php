@@ -333,7 +333,7 @@ if (!function_exists('col_form')) {
                 $i           = 0;
                 $main        = "<input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
                 foreach ($opt as $val) {
-                    $checked = ($default_val == $val) ? "checked" : '';
+                    $checked = ($default_val == $val) ? 'checked' : '';
                     $chktxt  = ($chk) ? "class='validate[required] radio'" : '';
                     $main .= "
                   <label class='radio-inline'>
@@ -351,7 +351,7 @@ if (!function_exists('col_form')) {
                 $i    = 0;
                 $main = "<input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
                 foreach ($opt as $val) {
-                    $checked = (in_array($val, $db)) ? "checked" : '';
+                    $checked = (in_array($val, $db)) ? 'checked' : '';
                     $chktxt  = ($chk) ? "class='validate[required] checkbox'" : '';
                     $main .= "
                   <label class='checkbox-inline'>
