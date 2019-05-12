@@ -370,7 +370,7 @@ function col_form($csn = '', $kind = '', $size = '', $default_val = '', $db_ans 
             $i = 0;
             $main = "<input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
             foreach ($opt as $val) {
-                $checked = ($default_val == $val) ? "checked" : '';
+                $checked = ($default_val == $val) ? 'checked' : '';
                 $chktxt = ($chk) ? "class='validate[required] radio'" : '';
                 $main .= "
                   <label class='radio-inline'>

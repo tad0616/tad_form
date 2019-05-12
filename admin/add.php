@@ -124,7 +124,11 @@ function update_tad_form_main($ofsn = '')
     return $ofsn;
 }
 
-/*************************************欄位部份****************************************/
+/*************************************欄位部份***************************************
+ * @param string $the_ofsn
+ * @param string $csn
+ * @param string $mode
+ */
 
 //tad_form_col編輯表單
 function tad_form_col_form($the_ofsn = '', $csn = '', $mode = '')
