@@ -1,7 +1,7 @@
 <link href="<{$xoops_url}>/modules/tadtools/css/font-awesome/css/font-awesome.css" rel="stylesheet">
 <div class="container-fluid">
 
-  <link href="<{$xoops_url}>/modules/tad_form/class/ScrollTable/superTables.css" rel="stylesheet" type="text/css" />
+  <link href="<{$xoops_url}>/modules/tad_form/class/ScrollTable/superTables.css" rel="stylesheet" type="text/css">
   <script type="text/javascript" src="<{$xoops_url}>/modules/tad_form/class/ScrollTable/superTables.js"></script>
   <script type="text/javascript" src="<{$xoops_url}>/modules/tad_form/class/ScrollTable/jquery.superTable.js"></script>
 

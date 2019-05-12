@@ -18,7 +18,7 @@ define('_TADFORM_UNABLE', '「%s」沒有啟用囉！');
 define('_TADFORM_NOT_START', '「%s」還沒開始填喔！<b>%s</b> 才開始');
 define('_TADFORM_OVERDUE', '「%s」已於 <b>%s</b> 結束填寫囉！');
 define('_TADFORM_OK_LIST', '確認名單');
-define('_TADFORM_VIEW_FORM', '觀看本填報結果');
+define('_TADFORM_HISTORY', 'History');
 
 define('_TADFORM_TXTLOCK', '鎖定中，滑動解鎖後才能執行送出');
 define('_TADFORM_TXTUNLOCK', '已可執行送出');

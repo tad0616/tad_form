@@ -2,10 +2,10 @@
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
-include 'header.php';
+require __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'tad_form_report.tpl';
-include_once XOOPS_ROOT_PATH . '/header.php';
-if (!can_view_report((int) $_REQUEST['ofsn'])) {
+require_once XOOPS_ROOT_PATH . '/header.php';
+if (!can_view_report((int)$_REQUEST['ofsn'])) {
     redirect_header('index.php', 3, _MD_TADFORM_ONLY_MEM);
 }
 
@@ -99,7 +99,7 @@ function view_user_result($ofsn)
             $n++;
         }
 
-        $all_result_col[$i]['ans'] = $ans_col;
+        $all_result_col[$i]['ans'] = isset($ans_col)? $ans_col : '';
 
         //根據不同表單類型，提供不同的功能
 
@@ -120,7 +120,7 @@ function view_user_result($ofsn)
     $xoopsTpl->assign('result_col', $all_result_col);
 }
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $ofsn = system_CleanVars($_REQUEST, 'ofsn', 0, 'int');
 $ssn = system_CleanVars($_REQUEST, 'ssn', 0, 'int');
@@ -133,4 +133,4 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-include_once XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

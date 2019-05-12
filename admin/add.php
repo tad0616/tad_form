@@ -4,14 +4,14 @@ use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tad_form_adm_add.tpl';
-include_once 'header.php';
-include_once '../function.php';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
 /*-----------function區--------------*/
 //tad_form_main編輯表單
 function tad_form_main_form($ofsn = '')
 {
     global $xoopsDB, $xoopsUser, $xoopsTpl;
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     //抓取預設值
     if (!empty($ofsn)) {
@@ -38,11 +38,11 @@ function tad_form_main_form($ofsn = '')
     $view_result_group = (!isset($DBV['view_result_group'])) ? [1] : explode(',', $DBV['view_result_group']);
     $multi_sign = (!isset($DBV['multi_sign'])) ? '0' : $DBV['multi_sign'];
 
-    $SelectGroup_name = new XoopsFormSelectGroup('', 'sign_group', true, $sign_group, 5, true);
+    $SelectGroup_name = new \XoopsFormSelectGroup('', 'sign_group', true, $sign_group, 5, true);
     $SelectGroup_name->setExtra("class='span12 form-control'");
     $sign_group = $SelectGroup_name->render();
 
-    $SelectGroup_name2 = new XoopsFormSelectGroup('', 'view_result_group', true, $view_result_group, 5, true);
+    $SelectGroup_name2 = new \XoopsFormSelectGroup('', 'view_result_group', true, $view_result_group, 5, true);
     $SelectGroup_name2->setExtra("class='span12 form-control'");
     $view_result_group = $SelectGroup_name2->render();
 
@@ -130,7 +130,7 @@ function update_tad_form_main($ofsn = '')
 function tad_form_col_form($the_ofsn = '', $csn = '', $mode = '')
 {
     global $xoopsDB, $xoopsTpl;
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     //抓取預設值
     if (!empty($csn)) {
@@ -238,6 +238,7 @@ function edit_all_opt($ofsn = '')
 {
     global $xoopsDB, $xoopsTpl;
 
+    $question = [];
     $col_type['text'] = _MA_TADFORM_COL_TEXT;
     $col_type['radio'] = _MA_TADFORM_COL_RADIO;
     $col_type['checkbox'] = _MA_TADFORM_COL_CHECKBOX;
@@ -294,7 +295,7 @@ function change_chk($csn = '', $chk = '0')
     $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $ofsn = system_CleanVars($_REQUEST, 'ofsn', 0, 'int');
 $csn = system_CleanVars($_REQUEST, 'csn', 0, 'int');
@@ -380,4 +381,4 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-include_once 'footer.php';
+require_once __DIR__ . '/footer.php';

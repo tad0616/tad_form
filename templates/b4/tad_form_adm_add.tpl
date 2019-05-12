@@ -54,11 +54,11 @@
         </label>
         <div class="col-sm-2">
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="public" id="public_1" value="1" <{if $public == "1"}>checked="checked"<{/if}>>
+            <input class="form-check-input" type="radio" name="public" id="public_1" value="1" <{if $public == "1"}>checked<{/if}>>
             <label class="form-check-label" for="public_1"><{$smarty.const._YES}></label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="public" id="public_0" value="0" <{if $public != "1"}>checked="checked"<{/if}>>
+            <input class="form-check-input" type="radio" name="public" id="public_0" value="0" <{if $public != "1"}>checked<{/if}>>
             <label class="form-check-label" for="public_0"><{$smarty.const._NO}></label>
           </div>
           <input type="hidden" name="sort" value="<{$sort}>">
@@ -69,11 +69,11 @@
         </label>
         <div class="col-sm-2">
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="chk" id="chk_1" value="1" <{if $chk == "1"}>checked="checked"<{/if}>>
+            <input class="form-check-input" type="radio" name="chk" id="chk_1" value="1" <{if $chk == "1"}>checked<{/if}>>
             <label class="form-check-label" for="chk_1"><{$smarty.const._YES}></label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="chk" id="chk_0" value="0" <{if $chk != "1"}>checked="checked"<{/if}>>
+            <input class="form-check-input" type="radio" name="chk" id="chk_0" value="0" <{if $chk != "1"}>checked<{/if}>>
             <label class="form-check-label" for="chk_0"><{$smarty.const._NO}></label>
           </div>
         </div>
@@ -167,7 +167,7 @@
     <div class="text-right">
       <a href="add.php?op=edit_opt&ofsn=<{$ofsn}>" class="btn btn-info"><{$smarty.const._MA_TADFORM_ADD_COL}></a>
     </div>
-    <br style="clear:both" />
+    <br style="clear:both">
 
 
 
@@ -227,11 +227,11 @@
                 <{$smarty.const._MA_TADFORM_USE_CAPTCHA}>
               </label>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="captcha" id="captcha_1" value="1" <{if $captcha == "1"}>checked="checked"<{/if}>>
+                <input class="form-check-input" type="radio" name="captcha" id="captcha_1" value="1" <{if $captcha == "1"}>checked<{/if}>>
                 <label class="form-check-label" for="captcha_1"><{$smarty.const._YES}></label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="captcha" id="captcha_0" value="0" <{if $captcha != "1"}>checked="checked"<{/if}>>
+                <input class="form-check-input" type="radio" name="captcha" id="captcha_0" value="0" <{if $captcha != "1"}>checked<{/if}>>
                 <label class="form-check-label" for="captcha_0"><{$smarty.const._NO}></label>
               </div>
             </div>
@@ -241,11 +241,11 @@
                 <{$smarty.const._MA_TADFORM_MULTI_SIGN}>
               </label>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="multi_sign" id="multi_sign_1" value="1" <{if $multi_sign == "1"}>checked="checked"<{/if}>>
+                <input class="form-check-input" type="radio" name="multi_sign" id="multi_sign_1" value="1" <{if $multi_sign == "1"}>checked<{/if}>>
                 <label class="form-check-label" for="multi_sign_1"><{$smarty.const._YES}></label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="multi_sign" id="multi_sign_0" value="0" <{if $multi_sign != "1"}>checked="checked"<{/if}>>
+                <input class="form-check-input" type="radio" name="multi_sign" id="multi_sign_0" value="0" <{if $multi_sign != "1"}>checked<{/if}>>
                 <label class="form-check-label" for="multi_sign_0"><{$smarty.const._NO}></label>
               </div>
             </div>
@@ -255,11 +255,11 @@
                 <{$smarty.const._MA_TADFORM_SHOW_RESULT}>
               </label>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="show_result" id="show_result_1" value="1" <{if $show_result == "1"}>checked="checked"<{/if}>>
+                <input class="form-check-input" type="radio" name="show_result" id="show_result_1" value="1" <{if $show_result == "1"}>checked<{/if}>>
                 <label class="form-check-label" for="show_result_1"><{$smarty.const._YES}></label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="show_result" id="show_result_0" value="0" <{if $show_result != "1"}>checked="checked"<{/if}>>
+                <input class="form-check-input" type="radio" name="show_result" id="show_result_0" value="0" <{if $show_result != "1"}>checked<{/if}>>
                 <label class="form-check-label" for="show_result_0"><{$smarty.const._NO}></label>
               </div>
             </div>

@@ -2,9 +2,9 @@
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = 'tad_form_adm_mail.tpl';
-include_once 'header.php';
-include_once '../function.php';
+$xoopsOption['template_main' = 'tad_form_adm_mail.tpl';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
 
 /*-----------function區--------------*/
 //列出所有tad_form_main資料
@@ -107,7 +107,7 @@ function send_all($ofsn)
     }
 }
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $ofsn = system_CleanVars($_REQUEST, 'ofsn', 0, 'int');
 
@@ -122,4 +122,4 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-include_once 'footer.php';
+require_once __DIR__ . '/footer.php';

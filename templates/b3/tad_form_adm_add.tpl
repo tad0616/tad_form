@@ -163,7 +163,7 @@
     <div class="text-right">
       <a href="add.php?op=edit_opt&ofsn=<{$ofsn}>" class="btn btn-info"><{$smarty.const._MA_TADFORM_ADD_COL}></a>
     </div>
-    <br style="clear:both" />
+    <br style="clear:both">
 
 
 
@@ -223,10 +223,10 @@
                 <{$smarty.const._MA_TADFORM_USE_CAPTCHA}>
               </label>
               <label class="radio-inline">
-                <input type="radio" name="captcha" id="captcha_1" value="1" <{if $captcha == "1"}>checked="checked"<{/if}>><{$smarty.const._YES}>
+                <input type="radio" name="captcha" id="captcha_1" value="1" <{if $captcha == "1"}>checked<{/if}>><{$smarty.const._YES}>
               </label>
               <label class="radio-inline">
-                <input type="radio" name="captcha" id="captcha_0" value="0" <{if $captcha != "1"}>checked="checked"<{/if}>><{$smarty.const._NO}>
+                <input type="radio" name="captcha" id="captcha_0" value="0" <{if $captcha != "1"}>checked<{/if}>><{$smarty.const._NO}>
               </label>
             </div>
 
@@ -235,10 +235,10 @@
                 <{$smarty.const._MA_TADFORM_MULTI_SIGN}>
               </label>
               <label class="radio-inline">
-                <input type="radio" name="multi_sign" id="multi_sign_1" value="1" <{if $multi_sign == "1"}>checked="checked"<{/if}>><{$smarty.const._YES}>
+                <input type="radio" name="multi_sign" id="multi_sign_1" value="1" <{if $multi_sign == "1"}>checked<{/if}>><{$smarty.const._YES}>
               </label>
               <label class="radio-inline">
-                <input type="radio" name="multi_sign" id="multi_sign_0" value="0" <{if $multi_sign != "1"}>checked="checked"<{/if}>><{$smarty.const._NO}>
+                <input type="radio" name="multi_sign" id="multi_sign_0" value="0" <{if $multi_sign != "1"}>checked<{/if}>><{$smarty.const._NO}>
               </label>
             </div>
 
@@ -247,10 +247,10 @@
                 <{$smarty.const._MA_TADFORM_SHOW_RESULT}>
               </label>
               <label class="radio-inline">
-                <input type="radio" name="show_result" id="show_result_1" value="1" <{if $show_result == "1"}>checked="checked"<{/if}>><{$smarty.const._YES}>
+                <input type="radio" name="show_result" id="show_result_1" value="1" <{if $show_result == "1"}>checked<{/if}>><{$smarty.const._YES}>
               </label>
               <label class="radio-inline">
-                <input type="radio" name="show_result" id="show_result_0" value="0" <{if $show_result != "1"}>checked="checked"<{/if}>><{$smarty.const._NO}>
+                <input type="radio" name="show_result" id="show_result_0" value="0" <{if $show_result != "1"}>checked<{/if}>><{$smarty.const._NO}>
               </label>
             </div>
           </div>

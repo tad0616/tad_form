@@ -98,7 +98,7 @@ function get_history($ofsn = '', $uid = '')
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     //`ssn`, `ofsn`, `uid`, `man_name`, `email`, `fill_time`, `result_col`
     $i = 0;
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         foreach ($all as $k => $v) {
             $data[$i][$k] = $v;
         }

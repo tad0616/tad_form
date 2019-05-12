@@ -3,8 +3,8 @@ use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tad_form_adm_result.tpl';
-include_once 'header.php';
-include_once '../function.php';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
 
 /*-----------function區--------------*/
 
@@ -13,9 +13,10 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
 {
     global $xoopsDB, $xoopsUser, $xoopsTpl;
 
+
     $form = get_tad_form_main($ofsn);
     if (!$isAdmin) {
-        if ('1' != $form['show_result'] or '1' != $form['enable']) {
+        if ('1' != $form['show_result'] || '1' != $form['enable']) {
             redirect_header('index.php', 3, _MA_TADFORM_NOT_SHOW);
         }
     }
@@ -29,7 +30,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
 
     $sql = 'select csn,title,kind,func from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn='{$ofsn}' order by sort";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-    $all_title = $tt = $tt = $kk = $csn_arr = [];
+    $all_title = $tt = $tt = $kk = $csn_arr = $all_result_col = $ff =[];
     $i = 0;
     while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
         if ('show' === $kind) {
@@ -85,7 +86,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
             } elseif ('checkbox' === $kk[$csn]) {
                 $csn_val = (empty($col_v[$csn])) ? '' : '<ul><li>' . str_replace(';', '</li><li>', $col_v[$csn]) . '</li></ul>';
             } else {
-                $csn_val = $col_v[$csn];
+                $csn_val = isset($col_v[$csn]) ? $col_v[$csn] : 0 ;
             }
             $ans_col[$n]['val'] = $csn_val;
             $n++;
@@ -98,7 +99,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
                     $col[$csn]['count'][$v]++;
                 }
             } else {
-                $col[$csn]['sum'] += $col_v[$csn];
+                $col[$csn]['sum'] += isset($col_v[$csn]) ? $col_v[$csn] : 0;
                 $col[$csn]['count']++;
             }
         }
@@ -191,7 +192,7 @@ function update_result($ssn_arr = [], $result_col = [])
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $ofsn = system_CleanVars($_REQUEST, 'ofsn', 0, 'int');
 $ssn = system_CleanVars($_REQUEST, 'ssn', 0, 'int');
@@ -219,4 +220,4 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-include_once 'footer.php';
+require_once __DIR__ . '/footer.php';

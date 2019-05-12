@@ -1,13 +1,14 @@
 <?php
 use XoopsModules\Tadtools\Utility;
-include_once '../../../mainfile.php';
+
+require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 xoops_loadLanguage('admin', 'tad_form');
 
 require_once XOOPS_ROOT_PATH . '/modules/tadtools/PHPExcel.php'; //引入 PHPExcel 物件庫
 require_once XOOPS_ROOT_PATH . '/modules/tadtools/PHPExcel/IOFactory.php'; //引入 PHPExcel_IOFactory 物件庫
 $objPHPExcel = new PHPExcel(); //實體化Excel
 
-$ofsn = isset($_REQUEST['ofsn']) ? (int) $_REQUEST['ofsn'] : 0;
+$ofsn = isset($_REQUEST['ofsn']) ? (int)$_REQUEST['ofsn'] : 0;
 $sql = 'select * from ' . $xoopsDB->prefix('tad_form_main') . " where ofsn='$ofsn'";
 $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 $form_main = $xoopsDB->fetchArray($result);
