@@ -159,7 +159,7 @@ function view($code = '', $mode = '')
     ";
 
         if ($show_report) {
-            $main .= '<a href="' . XOOPS_URL . "/modules/tad_form/report.php?ofsn={$ofsn}\" class=\"btn btn-info\">" . _MD_TADFORM_VIEW_FORM . '</a>';
+            $main .= '<a href="' . XOOPS_URL . "/modules/tad_form/report.php?ofsn={$ofsn}\" class=\"btn btn-info\">" . _TADFORM_VIEW_FORM . '</a>';
         }
         $main .= '<a href="' . XOOPS_URL . "/modules/tad_form/index.php?op=sign&ofsn={$ofsn}\" class=\"btn btn-success\">" . _MD_TADFORM_BACK_TO_FORM . '</a>
     </div>';
@@ -223,20 +223,6 @@ function set_form_status($ofsn = '', $enable = '0')
 
     $sql = 'update ' . $xoopsDB->prefix('tad_form_main') . " set enable='{$enable}' where ofsn='$ofsn'";
     $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-}
-
-//檢查Email的JS
-function chk_emeil_js($email_col = 'email', $form_name = 'myForm')
-{
-    $js = "
-  var regPatten=/^.+@.+\..{2,3}$/;
-  if (document.{$form_name}.elements['{$email_col}'].value.match(regPatten)==null){
-    alert('" . _JS_EMAIL_CHK . "');
-    return false;
-  }
-  ";
-
-    return $js;
 }
 
 /*

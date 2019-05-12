@@ -2,7 +2,7 @@
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main' = 'tad_form_adm_mail.tpl';
+$xoopsOption['template_main'] = 'tad_form_adm_mail.tpl';
 require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 

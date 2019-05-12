@@ -1,15 +1,9 @@
 
 <script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/My97DatePicker/WdatePicker.js"></script>
 
-<script type="text/javascript">
-    function check_data(){
-        <{$chk_emeil_js}>
-        return true;
-    }
-    </script>
 <h1><{$form_title}></h1>
 
-<form action="<{$xoops_URL}>/modules/tad_form/index.php" method="post" name="myForm" id="myForm" enctype="multipart/form-data" onSubmit="return check_data()" class="form-horizontal" role="form">
+<form action="<{$xoops_URL}>/modules/tad_form/index.php" method="post" name="myForm" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
     <table class="table table-striped table-bordered">
     <tr><td><{$form_content}></td></tr>
     <{$apply_ok}>

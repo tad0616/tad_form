@@ -1,9 +1,9 @@
 <?php
-use XoopsModules\Tadtools\Utility;
 use XoopsModules\Tadtools\FormValidator;
+use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 require __DIR__ . '/header.php';
-$xoopsOption['template_main']= 'tad_form_index.tpl';
+$xoopsOption['template_main'] = 'tad_form_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 /*-----------function區--------------*/
 
@@ -194,7 +194,7 @@ function sign_form($ofsn = '', $ssn = '')
 
         $apply_ok = "<tr><td>{$man_name_list}</td></tr>";
     } elseif ($form['show_result'] and can_view_report($ofsn)) {
-        $apply_ok = "<tr><td><a href='report.php?ofsn=$ofsn' class='btn btn-info'>" . _MD_TADFORM_VIEW_FORM . '</a></td></tr>';
+        $apply_ok = "<tr><td><a href='report.php?ofsn=$ofsn' class='btn btn-info'>" . _TADFORM_VIEW_FORM . '</a></td></tr>';
     } else {
         $apply_ok = '';
     }
@@ -242,8 +242,6 @@ function sign_form($ofsn = '', $ssn = '')
         }
     }
 
-    $chk_emeil_js = chk_emeil_js('email', 'myForm');
-
     $jquery = Utility::get_jquery(true);
 
     $captcha_js = '';
@@ -254,9 +252,9 @@ function sign_form($ofsn = '', $ssn = '')
         <script type='text/javascript' src='class/Qaptcha3/jquery/jquery.ui.touch.js'></script>
         <script type='text/javascript' src='class/Qaptcha3/jquery/QapTcha.jquery.js'></script>
         <script type='text/javascript'>
-          $(document).ready(function(){
-           $('.QapTcha').QapTcha({disabledSubmit:true , autoRevert:true , PHPfile:'class/Qaptcha3/php/Qaptcha.jquery.php', txtLock:'" . _MD_TADFORM_TXTLOCK . "' , txtUnlock:'" . _MD_TADFORM_TXTUNLOCK . "'});
-          });
+            $(document).ready(function(){
+                $('.QapTcha').QapTcha({disabledSubmit:true , autoRevert:true , PHPfile:'class/Qaptcha3/php/Qaptcha.jquery.php', txtLock:'" . _TADFORM_TXTLOCK . "' , txtUnlock:'" . _TADFORM_TXTLOCK . "'});
+            });
         </script>";
         $captcha_div = "<div class='QapTcha'></div>";
     }
@@ -266,7 +264,7 @@ function sign_form($ofsn = '', $ssn = '')
         $tool = "
         <a href='admin/add.php?op=tad_form_main_form&ofsn={$ofsn}' class='btn btn-warning'>" . sprintf(_MD_TADFORM_EDIT_FORM, $form['title']) . "</a>
         <a href='admin/add.php?op=edit_all_opt&ofsn={$ofsn}' class='btn btn-warning'>" . _MD_TADFORM_EDIT_ALL . "</a>
-        <a href='admin/result.php?ofsn={$ofsn}' class='btn btn-primary'>" . _MD_TADFORM_VIEW_FORM . '</a>';
+        <a href='admin/result.php?ofsn={$ofsn}' class='btn btn-primary'>" . _TADFORM_VIEW_FORM . '</a>';
     }
 
     $db_ans_ssn = isset($db_ans['ssn']) ? $db_ans['ssn'] : '';
@@ -274,7 +272,6 @@ function sign_form($ofsn = '', $ssn = '')
     $xoopsTpl->assign('op', 'sign');
     $xoopsTpl->assign('jquery', $jquery);
     //$xoopsTpl->assign('needfill_js',$needfill_js);
-    $xoopsTpl->assign('chk_emeil_js', $chk_emeil_js);
     $xoopsTpl->assign('form_title', $form['title']);
     $xoopsTpl->assign('form_content', $form['content']);
     $xoopsTpl->assign('apply_ok', $apply_ok);

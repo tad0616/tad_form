@@ -1,7 +1,7 @@
 <?php
 
-use XoopsModules\Tadtools\Utility;
 use XoopsModules\Tadtools\FormValidator;
+use XoopsModules\Tadtools\Utility;
 //填寫表單
 if (!function_exists('sign_form')) {
     function sign_form($ofsn = '', $ssn = '', $mode = '')
@@ -9,18 +9,18 @@ if (!function_exists('sign_form')) {
         global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsTpl;
 
         $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
-        $form  = get_tad_form_main($ofsn, $ssn);
-        $ofsn  = $form['ofsn'];
+        $form = get_tad_form_main($ofsn, $ssn);
+        $ofsn = $form['ofsn'];
 
         $sign_group = (empty($form['sign_group'])) ? '' : explode(',', $form['sign_group']);
 
         if ($xoopsUser) {
             $module_id = $xoopsModule->getVar('mid');
-            $isAdmin   = $xoopsUser->isAdmin($module_id);
-            $email     = $xoopsUser->getVar('email');
+            $isAdmin = $xoopsUser->isAdmin($module_id);
+            $email = $xoopsUser->getVar('email');
 
             $User_Groups = $xoopsUser->getGroups();
-            $ugroup      = implode(',', $User_Groups);
+            $ugroup = implode(',', $User_Groups);
 
             if (!empty($sign_group) and !in_array(1, $User_Groups)) {
                 $ok = false;
@@ -43,7 +43,7 @@ if (!function_exists('sign_form')) {
                 }
             }
 
-            $uid      = $xoopsUser->getVar('uid');
+            $uid = $xoopsUser->getVar('uid');
             $uid_name = $xoopsUser->getVar('name');
             if (empty($uid_name)) {
                 $uid_name = $xoopsUser->getVar('uname');
@@ -61,9 +61,9 @@ if (!function_exists('sign_form')) {
             $history = ('1' == $form['multi_sign']) ? get_history($ofsn, $uid) : '';
         } else {
             $uid_name = '';
-            $email    = $history    = '';
-            $isAdmin  = false;
-            $db_ans   = [];
+            $email = $history = '';
+            $isAdmin = false;
+            $db_ans = [];
             if (!empty($sign_group) and !in_array(3, $sign_group)) {
                 if ('return' === $mode) {
                     $error['title'] = $form['title'];
@@ -124,11 +124,11 @@ if (!function_exists('sign_form')) {
         //若是用來報名的
         if ('application' === $form['kind']) {
             $man_name_list = '<table><caption>' . _TADFORM_OK_LIST . '</caption>';
-            $sql           = 'select email,fill_time from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='{$ofsn}' and result_col='1'";
+            $sql = 'select email,fill_time from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='{$ofsn}' and result_col='1'";
             $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-            $n             = $i             = 3;
+            $n = $i = 3;
             while (list($email, $fill_time) = $xoopsDB->fetchRow($result)) {
-                $fill_time  = date('Y-m-d H:i:s', xoops_getUserTimestamp(strtotime($fill_time)));
+                $fill_time = date('Y-m-d H:i:s', xoops_getUserTimestamp(strtotime($fill_time)));
                 $email_data = explode('@', $email);
                 $man_name_list .= (0 == $n % $i) ? '<tr>' : '';
                 $man_name_list .= "<td>{$email_data[0]}@{$fill_time}</td> ";
@@ -149,21 +149,21 @@ if (!function_exists('sign_form')) {
         $sql = 'select * from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn='{$ofsn}' order by sort";
 
         $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-        $i      = 1;
+        $i = 1;
         while (false !== ($data = $xoopsDB->fetchArray($result))) {
             foreach ($data as $k => $v) {
                 $$k = $v;
             }
 
-            $edit_btn   = ($isAdmin) ? "<a href='" . XOOPS_URL . "/modules/tad_form/admin/add.php?op=edit_opt&ofsn=$ofsn&csn=$csn&mode=update' class='btn btn-mini btn-warning pull-right'>" . _TAD_EDIT . '</a>' : '';
+            $edit_btn = ($isAdmin) ? "<a href='" . XOOPS_URL . "/modules/tad_form/admin/add.php?op=edit_opt&ofsn=$ofsn&csn=$csn&mode=update' class='btn btn-mini btn-warning pull-right'>" . _TAD_EDIT . '</a>' : '';
             $db_ans_csn = isset($db_ans[$csn]) ? $db_ans[$csn] : '';
-            $col_form   = col_form($csn, $kind, $size, $val, $db_ans_csn, $chk);
+            $col_form = col_form($csn, $kind, $size, $val, $db_ans_csn, $chk);
 
             $chk_txt = ('1' == $chk) ? "<img src='" . XOOPS_URL . "/modules/tad_form/images/star.png' alt='" . _TADFORM_NEED_SIGN . "' hspace=3 align=absmiddle>" : '';
-            $note    = (empty($descript)) ? '' : "<span class='note'>({$descript})</span>";
+            $note = (empty($descript)) ? '' : "<span class='note'>({$descript})</span>";
             if ('show' === $kind) {
                 $show_title = $descript;
-                $show_col   = '';
+                $show_col = '';
             } else {
                 $show_title = "
                 <div class='q_col'>
@@ -187,11 +187,9 @@ if (!function_exists('sign_form')) {
             }
         }
 
-        $chk_emeil_js = chk_emeil_js('email', 'myForm');
-
         Utility::get_jquery(true);
 
-        $captcha_js  = '';
+        $captcha_js = '';
         $captcha_div = '';
         if ('1' == $form['captcha']) {
             $captcha_js = "
@@ -217,24 +215,22 @@ if (!function_exists('sign_form')) {
         $db_ans_ssn = isset($db_ans['ssn']) ? $db_ans['ssn'] : '';
 
         if ('return' === $mode) {
-            $f['op']           = 'sign';
-            $f['chk_emeil_js'] = $chk_emeil_js;
-            $f['form_title']   = $form['title'];
+            $f['op'] = 'sign';
+            $f['form_title'] = $form['title'];
             $f['form_content'] = $form['content'];
-            $f['apply_ok']     = $apply_ok;
-            $f['main_form']    = $main_form;
-            $f['db_ans_ssn']   = $db_ans_ssn;
-            $f['ofsn']         = $ofsn;
-            $f['captcha_div']  = $captcha_div;
-            $f['uid_name']     = $uid_name;
-            $f['email']        = $email;
-            $f['captcha_js']   = $captcha_js;
-            $f['tool']         = $tool;
-            $f['history']      = $history;
+            $f['apply_ok'] = $apply_ok;
+            $f['main_form'] = $main_form;
+            $f['db_ans_ssn'] = $db_ans_ssn;
+            $f['ofsn'] = $ofsn;
+            $f['captcha_div'] = $captcha_div;
+            $f['uid_name'] = $uid_name;
+            $f['email'] = $email;
+            $f['captcha_js'] = $captcha_js;
+            $f['tool'] = $tool;
+            $f['history'] = $history;
             return $f;
         } else {
             $xoopsTpl->assign('op', 'sign');
-            $xoopsTpl->assign('chk_emeil_js', $chk_emeil_js);
             $xoopsTpl->assign('form_title', $form['title']);
             $xoopsTpl->assign('form_content', $form['content']);
             $xoopsTpl->assign('apply_ok', $apply_ok);
@@ -265,13 +261,13 @@ if (!function_exists('get_tad_form_main')) {
         }
 
         if ($ssn) {
-            $sql        = 'select ofsn from ' . $xoopsDB->prefix('tad_form_fill') . " where ssn='$ssn'";
+            $sql = 'select ofsn from ' . $xoopsDB->prefix('tad_form_fill') . " where ssn='$ssn'";
             $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
             list($ofsn) = $xoopsDB->fetchRow($result);
         }
-        $sql    = 'select * from ' . $xoopsDB->prefix('tad_form_main') . " where ofsn='$ofsn'";
+        $sql = 'select * from ' . $xoopsDB->prefix('tad_form_main') . " where ofsn='$ofsn'";
         $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-        $data   = $xoopsDB->fetchArray($result);
+        $data = $xoopsDB->fetchArray($result);
         return $data;
     }
 }
@@ -292,26 +288,12 @@ if (!function_exists('get_somebody_ans')) {
             $sql = 'select b.ssn,b.csn,b.val from ' . $xoopsDB->prefix('tad_form_fill') . ' as a left join  ' . $xoopsDB->prefix('tad_form_value') . " as b on a.ssn=b.ssn where a.ofsn='$ofsn' and a.uid='$uid'";
         }
         $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-        $ans    = [];
+        $ans = [];
         while (list($ssn, $csn, $val) = $xoopsDB->fetchRow($result)) {
-            $ans[$csn]  = $myts->htmlSpecialChars($val);
+            $ans[$csn] = $myts->htmlSpecialChars($val);
             $ans['ssn'] = $ssn;
         }
         return $ans;
-    }
-}
-//檢查Email的JS
-if (!function_exists('chk_emeil_js')) {
-    function chk_emeil_js($email_col = 'email', $form_name = 'myForm')
-    {
-        $js = "
-        var regPatten=/^.+@.+\..{2,3}$/;
-        if (document.{$form_name}.elements['{$email_col}'].value.match(regPatten)==null){
-            alert('" . _JS_EMAIL_CHK . "');
-            return false;
-        }
-        ";
-        return $js;
     }
 }
 
@@ -322,19 +304,19 @@ if (!function_exists('col_form')) {
         switch ($kind) {
             case 'text':
                 $default_val = (empty($db_ans)) ? $default_val : $db_ans;
-                $chktxt      = ($chk) ? ' validate[required]' : '';
-                $span        = empty($size) ? 6 : round($size / 10, 0);
-                $main        = "<div class='col-sm-{$span}'><label for='tf{$csn}' style='display:none;'>{$csn}</label><input type='text' name='ans[$csn]' id='tf{$csn}' class='form-control {$chktxt}' value='{$default_val}'><input type='hidden' name='need_csn[{$csn}]' value='{$csn}'></div>";
+                $chktxt = ($chk) ? ' validate[required]' : '';
+                $span = empty($size) ? 6 : round($size / 10, 0);
+                $main = "<div class='col-sm-{$span}'><label for='tf{$csn}' style='display:none;'>{$csn}</label><input type='text' name='ans[$csn]' id='tf{$csn}' class='form-control {$chktxt}' value='{$default_val}'><input type='hidden' name='need_csn[{$csn}]' value='{$csn}'></div>";
                 break;
 
             case 'radio':
                 $default_val = (empty($db_ans)) ? $default_val : $db_ans;
-                $opt         = explode(';', $size);
-                $i           = 0;
-                $main        = "<input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
+                $opt = explode(';', $size);
+                $i = 0;
+                $main = "<input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
                 foreach ($opt as $val) {
                     $checked = ($default_val == $val) ? 'checked' : '';
-                    $chktxt  = ($chk) ? "class='validate[required] radio'" : '';
+                    $chktxt = ($chk) ? "class='validate[required] radio'" : '';
                     $main .= "
                   <label class='radio-inline'>
                     <input type='radio' name='ans[$csn]' value='{$val}' $checked $chktxt>{$val}
@@ -345,14 +327,14 @@ if (!function_exists('col_form')) {
 
             case 'checkbox':
                 $default_val = (empty($db_ans)) ? $default_val : $db_ans;
-                $db          = explode(';', $default_val);
+                $db = explode(';', $default_val);
 
-                $opt  = explode(';', $size);
-                $i    = 0;
+                $opt = explode(';', $size);
+                $i = 0;
                 $main = "<input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
                 foreach ($opt as $val) {
                     $checked = (in_array($val, $db)) ? 'checked' : '';
-                    $chktxt  = ($chk) ? "class='validate[required] checkbox'" : '';
+                    $chktxt = ($chk) ? "class='validate[required] checkbox'" : '';
                     $main .= "
                   <label class='checkbox-inline'>
                     <input type='checkbox' name='ans[$csn][]' value='{$val}' $checked $chktxt>{$val}
@@ -363,9 +345,9 @@ if (!function_exists('col_form')) {
 
             case 'select':
                 $default_val = (empty($db_ans)) ? $default_val : $db_ans;
-                $chktxt      = ($chk) ? 'validate[required]' : '';
-                $opt         = explode(';', $size);
-                $main        = "<label for='tf{$csn}' style='display:none;'>{$csn}</label><select name='ans[$csn]' id='tf{$csn}' class='form-control {$chktxt}'>";
+                $chktxt = ($chk) ? 'validate[required]' : '';
+                $opt = explode(';', $size);
+                $main = "<label for='tf{$csn}' style='display:none;'>{$csn}</label><select name='ans[$csn]' id='tf{$csn}' class='form-control {$chktxt}'>";
                 foreach ($opt as $val) {
                     $selected = ($default_val == $val) ? 'selected' : '';
                     $main .= "<option value='{$val}' $selected>{$val}</option>";
@@ -375,7 +357,7 @@ if (!function_exists('col_form')) {
 
             case 'textarea':
                 $default_val = (empty($db_ans)) ? $default_val : $db_ans;
-                $chktxt      = ($chk) ? 'validate[required]' : '';
+                $chktxt = ($chk) ? 'validate[required]' : '';
                 if (empty($size)) {
                     $size = 60;
                 }
@@ -385,17 +367,17 @@ if (!function_exists('col_form')) {
 
             case 'date':
                 $default_val = (empty($db_ans)) ? $default_val : $db_ans;
-                $span        = empty($size) ? 6 : round($size / 10, 0);
-                $chktxt      = ($chk) ? 'validate[required]' : '';
-                $main        = "<div class='col-sm-{$span}'><label for='tf{$csn}' style='display:none;'>{$csn}</label><input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}' class='form-control {$chktxt}' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd' , startDate:'%y-%M-%d}'})\"></div>
+                $span = empty($size) ? 6 : round($size / 10, 0);
+                $chktxt = ($chk) ? 'validate[required]' : '';
+                $main = "<div class='col-sm-{$span}'><label for='tf{$csn}' style='display:none;'>{$csn}</label><input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}' class='form-control {$chktxt}' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd' , startDate:'%y-%M-%d}'})\"></div>
 								                <input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
                 break;
 
             case 'datetime':
                 $default_val = (empty($db_ans)) ? $default_val : $db_ans;
-                $span        = empty($size) ? 6 : round($size / 10, 0);
-                $chktxt      = ($chk) ? 'validate[required]' : '';
-                $main        = "<div class='col-sm-{$span}'><label for='tf{$csn}' style='display:none;'>{$csn}</label><input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}'  class='form-control {$chktxt}' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm' , startDate:'%y-%M-%d %H:%m}'})\"></div>
+                $span = empty($size) ? 6 : round($size / 10, 0);
+                $chktxt = ($chk) ? 'validate[required]' : '';
+                $main = "<div class='col-sm-{$span}'><label for='tf{$csn}' style='display:none;'>{$csn}</label><input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}'  class='form-control {$chktxt}' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm' , startDate:'%y-%M-%d %H:%m}'})\"></div>
 								                <input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
                 break;
 
