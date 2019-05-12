@@ -1,8 +1,6 @@
-<?php
+<?php namespace XoopsModules\Tad_form;
 
 use XoopsModules\Tadtools\Utility;
-
-namespace XoopsModules\Tad_form;
 
 /*
 Update Class Definition
