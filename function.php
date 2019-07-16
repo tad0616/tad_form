@@ -2,62 +2,9 @@
 
 use XoopsModules\Tadtools\Utility;
 
+require_once "function_block.php";
+
 xoops_loadLanguage('main', 'tadtools');
-
-//取得某人在某問卷的填寫結果
-function get_somebody_ans($ofsn = '', $uid = '', $ssn = '')
-{
-    global $xoopsDB;
-    if (empty($uid)) {
-        return false;
-    }
-    $myts = \MyTextSanitizer::getInstance();
-
-    if ($ssn) {
-        $sql = 'select b.ssn,b.csn,b.val from ' . $xoopsDB->prefix('tad_form_fill') . ' as a left join  ' . $xoopsDB->prefix('tad_form_value') . " as b on a.ssn=b.ssn where a.ssn='$ssn' and a.uid='$uid'";
-    } else {
-        $sql = 'select b.ssn,b.csn,b.val from ' . $xoopsDB->prefix('tad_form_fill') . ' as a left join  ' . $xoopsDB->prefix('tad_form_value') . " as b on a.ssn=b.ssn where a.ofsn='$ofsn' and a.uid='$uid'";
-    }
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-    $ans = [];
-    while (list($ssn, $csn, $val) = $xoopsDB->fetchRow($result)) {
-        $ans[$csn] = $myts->htmlSpecialChars($val);
-        $ans['ssn'] = $ssn;
-    }
-
-    return $ans;
-}
-
-//看某人是否可看填報結果
-function can_view_report($ofsn = '')
-{
-    global $xoopsUser, $isAdmin;
-    if ($xoopsUser) {
-        if ($isAdmin) {
-            return true;
-        }
-
-        $User_Groups = $xoopsUser->getGroups();
-    } else {
-        $User_Groups = [3];
-    }
-
-    $form = get_tad_form_main($ofsn);
-    if ('1' != $form['show_result']) {
-        return false;
-    }
-
-    $view_result_array = explode(',', $form['view_result_group']);
-    if (!empty($view_result_array)) {
-        foreach ($view_result_array as $group) {
-            if (in_array($group, $User_Groups)) {
-                return true;
-            }
-        }
-    }
-
-    return false;
-}
 
 //查填報答案是否為某人或管理者
 function is_mine($ssn = '')
@@ -84,28 +31,6 @@ function is_mine($ssn = '')
     }
 
     return false;
-}
-
-//取得某人在某問卷的填寫記錄
-function get_history($ofsn = '', $uid = '')
-{
-    global $xoopsDB;
-    if (empty($uid)) {
-        return false;
-    }
-
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='$ofsn' and uid='$uid'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-    //`ssn`, `ofsn`, `uid`, `man_name`, `email`, `fill_time`, `result_col`
-    $i = 0;
-    while (false !== ($all = $xoopsDB->fetchArray($result))) {
-        foreach ($all as $k => $v) {
-            $data[$i][$k] = $v;
-        }
-        $i++;
-    }
-
-    return $data;
 }
 
 //觀看填報結果
@@ -191,26 +116,6 @@ function delete_tad_form_ans($ssn = '')
         $sql = 'delete from ' . $xoopsDB->prefix('tad_form_value') . " where ssn='$ssn'";
         $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     }
-}
-
-//以流水號取得某筆tad_form_main資料
-function get_tad_form_main($ofsn = '', $ssn = '')
-{
-    global $xoopsDB;
-    if (empty($ofsn) and empty($ssn)) {
-        return;
-    }
-
-    if ($ssn) {
-        $sql = 'select ofsn from ' . $xoopsDB->prefix('tad_form_fill') . " where ssn='$ssn'";
-        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-        list($ofsn) = $xoopsDB->fetchRow($result);
-    }
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_form_main') . " where ofsn='$ofsn'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-    $data = $xoopsDB->fetchArray($result);
-
-    return $data;
 }
 
 //變更狀態

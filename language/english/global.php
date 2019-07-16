@@ -1,7 +1,6 @@
 <?php
 define('_TADFORM_OFSN', 'Serial Number');
 define('_TADFORM_UID', 'UID');
-define('_TADFORM_MAN_NAME', 'Name');
 define('_TADFORM_EMAIL', 'E-mail');
 define('_TADFORM_FILL_TIME', 'Time');
 define('_TADFORM_NEED_SIGN', 'Required');
@@ -22,3 +21,4 @@ define('_TADFORM_HISTORY', 'History');
 
 define('_TADFORM_TXTLOCK', 'Locked: form can\'t be submited');
 define('_TADFORM_TXTUNLOCK', 'Unlocked: form can be submitted');
+define('_TADFORM_CAPTCHA', 'Please enter the number in the picture');

@@ -13,15 +13,8 @@ define('_MD_TADFORM_SUBMIT_FORM', '送出問卷');
 define('_MD_TADFORM_TITLE', '問卷標題');
 define('_MD_TADFORM_START_DATE', '開始日期');
 define('_MD_TADFORM_END_DATE', '結束日期');
-define('_MD_TADFORM_EDIT_FORM', '編輯「%s」問卷');
 
-define('_MD_TADFORM_OFSN', '問卷編號');
-define('_MD_TADFORM_UID', '填報人');
-define('_MD_TADFORM_MAN_NAME', '填報者姓名');
-define('_MD_TADFORM_EMAIL', '填報者Email');
 define('_MD_TADFORM_FILL_TIME', '填報時間');
-define('_MD_TADFORM_NEED_SIGN', '必填');
-define('_MD_TADFORM_IS_NEED_SIGN', '為必填');
 
 define('_MD_TADFORM_SIGN_DATE', '填報日期：從 <span class="start_date">%s</span> 至<span class="end_date">%s</span>  止');
 define('_MD_TADFORM_ONLY_MEM', '您並不屬於本填報允許的群組喔！！<br>若您尚未登入者請先登入。<br>已登入者就放棄吧！');

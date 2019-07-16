@@ -22,3 +22,4 @@ define('_TADFORM_HISTORY', 'History');
 
 define('_TADFORM_TXTLOCK', '鎖定中，滑動解鎖後才能執行送出');
 define('_TADFORM_TXTUNLOCK', '已可執行送出');
+define('_TADFORM_CAPTCHA', '請輸入圖片中的數字');

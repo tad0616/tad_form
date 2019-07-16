@@ -2,7 +2,7 @@
 
 <h1><{$form_title}></h1>
 
-<form action="<{$xoops_URL}>/modules/tad_form/index.php" method="post" name="myForm" id="myForm" enctype="multipart/form-data" role="form">
+<form action="<{$xoops_url}>/modules/tad_form/index.php" method="post" name="myForm" id="myForm" enctype="multipart/form-data" role="form">
     <table class="table table-striped table-bordered">
     <tr><td><{$form_content}></td></tr>
     <{$apply_ok}>
@@ -12,40 +12,51 @@
     <input type="hidden" name="ssn" value="<{$db_ans_ssn}>">
     <input type="hidden" name="ofsn" value="<{$ofsn}>">
     <input type="hidden" name="op" value="save_val">
-    <p>
-    <{$captcha_div}>
-    </p>
+
+    <{if $Captcha}>
+        <div class="form-group row">
+            <label class="col-sm-6 col-form-label text-sm-right">
+                <{$smarty.const._TADFORM_CAPTCHA}>
+            </label>
+            <div class="col-sm-2">
+                    <img src="<{$xoops_url}>/modules/tad_form/mkpic.php?ofsn=<{$ofsn}>">
+            </div>
+            <div class="col-sm-2">
+                <input type='text' name='security_images_<{$ofsn}>' class="form-control">
+            </div>
+        </div>
+    <{/if}>
 
     <div class="form-group row">
-    <label class="col-sm-2 col-form-label text-sm-right">
-        <{$smarty.const._TADFORM_MAN_NAME}>
-    </label>
-    <div class="col-sm-2">
-        <label for='tfman_name' style='display:none;'>tfman_name</label>
-        <input type="text" name="man_name" id="tfman_name" class='form-control validate[required]' <{if $uid_name}>value="<{$uid_name}>"<{/if}>>
-    </div>
-    <label class="col-sm-2 col-form-label text-sm-right">
-        <{$smarty.const._TADFORM_EMAIL}>
-    </label>
-    <div class="col-sm-4">
-        <label for='tfemail' style='display:none;'>tfemail</label>
-        <input type="text" name="email" id="tfemail"  class='form-control validate[required]' <{if $email}>value="<{$email}>"<{/if}>>
-    </div>
-    <div class="col-sm-2">
-        <button type="submit" name="submit" class="btn btn-primary"><{$smarty.const._TADFORM_SUBMIT_FORM}></button>
-    </div>
+        <label class="col-sm-2 col-form-label text-sm-right">
+            <{$smarty.const._TADFORM_MAN_NAME}>
+        </label>
+        <div class="col-sm-2">
+            <label for='man_name' style='display:none;'>man_name</label>
+            <input type="text" name="man_name" id="man_name" class='form-control validate[required]' <{if $uid_name}>value="<{$uid_name}>"<{/if}>>
+        </div>
+        <label class="col-sm-2 col-form-label text-sm-right">
+            <{$smarty.const._TADFORM_EMAIL}>
+        </label>
+        <div class="col-sm-4">
+            <label for='tfemail' style='display:none;'>tfemail</label>
+            <input type="text" name="email" id="tfemail"  class='form-control validate[required]' <{if $email}>value="<{$email}>"<{/if}>>
+        </div>
+        <div class="col-sm-2">
+            <button type="submit" name="submit" class="btn btn-primary"><{$smarty.const._TADFORM_SUBMIT_FORM}></button>
+        </div>
     </div>
 
 </form>
-<{$captcha_js}>
-<div style="border-top:1px dotted gray;padding-top:6px;"><img src="<{$xoops_URL}>/modules/tad_form/images/star.png" alt="<{$smarty.const._TADFORM_NEED_SIGN}>" hspace=3 align="absmiddle"><{$smarty.const._TADFORM_IS_NEED_SIGN}></div>
+
+<div style="border-top:1px dotted gray;padding-top:6px;"><img src="<{$xoops_url}>/modules/tad_form/images/star.png" alt="<{$smarty.const._TADFORM_NEED_SIGN}>" hspace=3 align="absmiddle"><{$smarty.const._TADFORM_IS_NEED_SIGN}></div>
 
 <{if $history}>
     <script>
         function delete_fill(ssn){
         var sure = window.confirm("<{$smarty.const._TAD_DEL_CONFIRM}>");
         if (!sure)  return;
-        location.href="<{$xoops_URL}>/modules/tad_form/index.php?op=delete_fill&ofsn=<{$ofsn}>&ssn=" + ssn;
+        location.href="<{$xoops_url}>/modules/tad_form/index.php?op=delete_fill&ofsn=<{$ofsn}>&ssn=" + ssn;
         }
     </script>
     <div class="card card-body bg-light m-1" style="margin-top:30px;">

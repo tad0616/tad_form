@@ -1,6 +1,6 @@
 <?php
 xoops_loadLanguage('main', 'tadtools');
-include_once 'global.php';
+require_once __DIR__ . '/global.php';
 define('_JS_EMAIL_CHK', 'Please check the E-mail address you offered again!');
 define('_JS_SIGN_CHK', '"%s" is required!');
 define('_JS_CHK_TOO_SHORT', 'Length of "%s" must be more than %s, please reset "%s"! Thank you!');
@@ -14,15 +14,8 @@ define('_MD_TADFORM_SUBMIT_FORM', 'Submit');
 define('_MD_TADFORM_TITLE', 'Subject');
 define('_MD_TADFORM_START_DATE', 'Start Date');
 define('_MD_TADFORM_END_DATE', 'End Date');
-define('_MD_TADFORM_EDIT_FORM', 'Edit \'%s\'');
 
-define('_MD_TADFORM_OFSN', 'Serial Number');
-define('_MD_TADFORM_UID', 'UID');
-define('_MD_TADFORM_MAN_NAME', 'Name');
-define('_MD_TADFORM_EMAIL', 'E-mail');
 define('_MD_TADFORM_FILL_TIME', 'Time');
-define('_MD_TADFORM_NEED_SIGN', 'Required');
-define('_MD_TADFORM_IS_NEED_SIGN', ' means Required');
 
 define('_MD_TADFORM_SIGN_DATE', 'Date： <span class=\'start_date\'>%s</span> to <span class=\'end_date\'>%s</span>');
 define('_MD_TADFORM_ONLY_MEM', 'You do NOT belong to authorized group(s)!!<br>Please login first.<br>If you can\'t still take this form with login. Just give up!');

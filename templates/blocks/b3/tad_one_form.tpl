@@ -1,8 +1,9 @@
 
 <{if $block.show_form=='1'}>
-    <{foreach from=$block key=k item=v}>
+    <{foreach from=$block.sign_form key=k item=v}>
         <{assign var=$k value=$v}>
     <{/foreach}>
+
     <{if $error}>
         <h3><{$title}></h3>
         <div class="alert alert-danger">

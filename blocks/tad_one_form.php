@@ -3,6 +3,7 @@
 function tad_one_form($options)
 {
     global $xoopsDB, $xoTheme;
+    require_once XOOPS_ROOT_PATH . "/modules/tad_form/function_block.php";
 
     $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
@@ -23,6 +24,11 @@ function tad_one_form($options)
         return '';
     }
 
+    if ($options[1] == '1') {
+        $block['sign_form'] = sign_form($ofsn, $ssn, 'return');
+    }
+
+    $block['show_form'] = $options[1];
     $block['ofsn'] = $ofsn;
     $block['title'] = $title;
     $block['start_date'] = $start_date;
@@ -31,7 +37,6 @@ function tad_one_form($options)
     $block['post_date'] = $post_date;
     $block['sign_now'] = sprintf(_MB_TADFORM_SIGN_NOW, $title, $counter);
     $block['date'] = sprintf(_MB_TADFORM_SIGN_DATE, $start_date, $end_date);
-
 
     return $block;
 }
