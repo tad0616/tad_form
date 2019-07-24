@@ -202,7 +202,7 @@ $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $ofsn = system_CleanVars($_REQUEST, 'ofsn', 0, 'int');
 $ssn = system_CleanVars($_REQUEST, 'ssn', 0, 'int');
 $ans = system_CleanVars($_REQUEST, 'ans', '', 'array');
-$code = system_CleanVars($_REQUEST, 'vcode', '', 'string');
+$code = system_CleanVars($_REQUEST, 'code', '', 'string');
 
 switch ($op) {
     case 'sign':

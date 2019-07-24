@@ -1,5 +1,6 @@
 <?php
 require_once "../../mainfile.php";
+session_start();
 $sn = (int) $_GET['ofsn'];
 $num1 = rand(0, 9);
 $num2 = rand(0, 9);
