@@ -23,8 +23,8 @@ define('_MD_TADFORM_EMPTY', '目前沒有任何表單可以填寫！');
 
 define('_MD_TADFORM_SIGN_NOW', '立即填報「%s」（目前已有 %s 人填寫）');
 define('_MD_TADFORM_SIGNNOW', '立即填報「%s」');
-define('_MD_TADFORM_MAIL_CONTENT', '%s 於 %s 填寫了「%s」問卷，其內容如下：<br>%s<p align="right"><a href="%s">點選這裡可以觀看完整填寫結果</a></p>');
-define('_MD_TADFORM_MAIL_TITLE', '「%s」問卷填寫通知： %s (%s)');
+define('_MD_TADFORM_MAIL_CONTENT', '%s 於 %s 填寫了「%s」，其內容如下：<br>%s<p align="right"><a href="%s">點選這裡可以觀看完整填寫結果</a></p>');
+define('_MD_TADFORM_MAIL_TITLE', '「%s」填寫通知： %s (%s)');
 define('_MD_TADFORM_CAPTCHA_ERROR', '未通過驗證，無法儲存。');
 define('_MD_TADFORM_SAVE_OK', '您已填寫完畢！');
 define('_MD_TADFORM_COL_WHO', '填報者');

@@ -42,7 +42,8 @@ CREATE TABLE `tad_form_fill` (
   `fill_time` datetime NOT NULL,
   `result_col` varchar(255) NOT NULL default '',
   `code` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`ssn`)
+  PRIMARY KEY  (`ssn`),  
+  UNIQUE KEY `ofsn_code` (`ofsn`,`code`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 

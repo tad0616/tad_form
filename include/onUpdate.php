@@ -59,5 +59,9 @@ function xoops_module_update_tad_form(&$module, $old_version)
 
     Update::chk_tad_form_block();
 
+    //修正區塊索引
+    if (Update::chk_chk10()) {
+        Update::go_update10();
+    }
     return true;
 }
