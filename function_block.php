@@ -105,12 +105,12 @@ if (!function_exists('sign_form')) {
                 if ('return' === $mode) {
                     $msg['op'] = 'error';
                     $msg['title'] = $form['title'];
-                    $msg['msg'] = sprintf(_MD_TADFORM_NOT_START, $form['title'], $form['start_date']);
+                    $msg['msg'] = sprintf(_TADFORM_NOT_START, $form['title'], $form['start_date']);
                     return $msg;
                 } else {
                     $xoopsTpl->assign('op', 'error');
                     $xoopsTpl->assign('title', $form['title']);
-                    $xoopsTpl->assign('msg', sprintf(_MD_TADFORM_NOT_START, $form['title'], $form['start_date']));
+                    $xoopsTpl->assign('msg', sprintf(_TADFORM_NOT_START, $form['title'], $form['start_date']));
                     return;
                 }
             }
