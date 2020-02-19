@@ -110,12 +110,17 @@ function save_val($ofsn = '', $ans = [])
 
     // 不允許多次填寫時
     if ($form['multi_sign'] != 1) {
-        $sql = 'select ssn from ' . $xoopsDB->prefix('tad_form_fill') . "  where `ofsn`='{$ofsn}',`uid`='{$uid}'";
+        $sql = 'select ssn from ' . $xoopsDB->prefix('tad_form_fill') . "  where `ofsn`='{$ofsn}' and `uid`='{$uid}'";
         $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         list($ssn) = $xoopsDB->fetchRow($result);
-
-        $sql = 'update ' . $xoopsDB->prefix('tad_form_fill') . " set `uid`='{$uid}',`man_name`='{$man_name}',`email`='{$email}',`fill_time`='{$now}' where `ssn`='{$ssn}'";
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        if ($ssn) {
+            $sql = 'update ' . $xoopsDB->prefix('tad_form_fill') . " set `uid`='{$uid}',`man_name`='{$man_name}',`email`='{$email}',`fill_time`='{$now}' where `ssn`='{$ssn}'";
+            $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        } else {
+            $sql = 'insert into ' . $xoopsDB->prefix('tad_form_fill') . " (`ofsn`,`uid`,`man_name`,`email`,`fill_time`,`result_col`,`code`) values('{$ofsn}','{$uid}','{$man_name}','{$email}', '{$now}','',md5(CONCAT(`ofsn`,`uid`, `man_name`, `email`, '$now')))";
+            $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+            $ssn = $xoopsDB->getInsertId();
+        }
     } else {
         //先存基本資料
         $sql = 'replace into ' . $xoopsDB->prefix('tad_form_fill') . " (`ssn`,`ofsn`,`uid`,`man_name`,`email`,`fill_time`,`result_col`,`code`) values('{$ssn}','{$ofsn}','{$uid}','{$man_name}','{$email}', '{$now}','',md5(CONCAT(`ofsn`,`uid`, `man_name`, `email`, '$now')))";
@@ -179,13 +184,15 @@ function send_now($code = '')
     $sHeaders = "MIME-Version: 1.0\r\n" .
         "Content-type: text/html; charset=$sCharset\r\n";
 
+    $email_arr = explode(';', $adm_email);
+    $xoopsMailer->setFromEmail($email_arr[0]);
+
     if (!empty($email)) {
         if (!$xoopsMailer->sendMail($email, $subject, $content, $headers)) {
             mail($email, $subject, $content, $sHeaders);
         }
     }
 
-    $email_arr = explode(';', $adm_email);
     foreach ($email_arr as $email) {
         //$email=trim($email);
         if (!empty($email)) {

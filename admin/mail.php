@@ -60,6 +60,12 @@ function send_all($ofsn)
         $tag[$csn] = "{{$title}}";
     }
 
+    $sql = 'select `adm_email` from ' . $xoopsDB->prefix('tad_form_main') . " where ofsn='$ofsn'";
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    list($adm_email) = $xoopsDB->fetchRow($result);
+    $email_arr = explode(';', $adm_email);
+    $xoopsMailer->setFromEmail($email_arr[0]);
+
     $i = 0;
     foreach ($_POST['email'] as $man_name => $mail) {
         $content = $_POST['content'];
