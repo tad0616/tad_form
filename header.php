@@ -13,5 +13,8 @@ if ($xoopsUser) {
 
 $interface_menu[_TAD_TO_MOD] = 'index.php';
 if ($isAdmin) {
+    $interface_menu[_MD_TADFORM_MANAGER] = 'manager.php';
+    $interface_menu[_MD_TADFORM_ADD] = 'add.php';
+
     $interface_menu[_TAD_TO_ADMIN] = 'admin/index.php';
 }

@@ -2,9 +2,9 @@
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
-$GLOBALS['xoopsOption']['template_main'] = 'tad_form_adm_main.tpl';
-require_once __DIR__ . '/header.php';
-require_once dirname(__DIR__) . '/function.php';
+require __DIR__ . '/header.php';
+$xoopsOption['template_main'] = 'tad_form_manager.tpl';
+require_once XOOPS_ROOT_PATH . '/header.php';
 
 /*-----------function區--------------*/
 //列出所有tad_form_main資料
@@ -31,9 +31,9 @@ function list_tad_form_main()
         }
 
         $pic = ('1' == $enable) ? '001_06.gif' : '001_05.gif';
-        $enable_tool = ('1' == $enable) ? "<a href='main.php?op=set_form_status&ofsn=$ofsn&enable=0'><img src='" . XOOPS_URL . "/modules/tad_form/images/$pic' align='absmiddle' hspace=6 alt='" . _MA_TADFORM_COL_ENABLE . "' title='" . _MA_TADFORM_COL_ENABLE . "'></a>" : "<a href='main.php?op=set_form_status&ofsn=$ofsn&enable=1'><img src='" . XOOPS_URL . "/modules/tad_form/images/$pic' align='absmiddle' hspace=6 alt='" . _MA_TADFORM_COL_ACTIVE . "' title='" . _MA_TADFORM_COL_ACTIVE . "'></a>";
-        $multi_sign_pic = ('1' == $multi_sign) ? "<img src='" . XOOPS_URL . "/modules/tad_form/images/report_check.png' align='absmiddle' hspace=6 alt='" . _MA_TADFORM_MULTI_SIGN . "' title='" . _MA_TADFORM_MULTI_SIGN . "'>" : '';
-        $show_result_pic = ('1' == $show_result) ? "<img src='" . XOOPS_URL . "/modules/tad_form/images/report.png' align='absmiddle' hspace=6 alt='" . _MA_TADFORM_SHOW_RESULT . "' title='" . _MA_TADFORM_SHOW_RESULT . "'>" : '';
+        $enable_tool = ('1' == $enable) ? "<a href='main.php?op=set_form_status&ofsn=$ofsn&enable=0'><img src='" . XOOPS_URL . "/modules/tad_form/images/$pic' align='absmiddle' hspace=6 alt='" . _MD_TADFORM_COL_ENABLE . "' title='" . _MD_TADFORM_COL_ENABLE . "'></a>" : "<a href='main.php?op=set_form_status&ofsn=$ofsn&enable=1'><img src='" . XOOPS_URL . "/modules/tad_form/images/$pic' align='absmiddle' hspace=6 alt='" . _MD_TADFORM_COL_ACTIVE . "' title='" . _MD_TADFORM_COL_ACTIVE . "'></a>";
+        $multi_sign_pic = ('1' == $multi_sign) ? "<img src='" . XOOPS_URL . "/modules/tad_form/images/report_check.png' align='absmiddle' hspace=6 alt='" . _MD_TADFORM_MULTI_SIGN . "' title='" . _MD_TADFORM_MULTI_SIGN . "'>" : '';
+        $show_result_pic = ('1' == $show_result) ? "<img src='" . XOOPS_URL . "/modules/tad_form/images/report.png' align='absmiddle' hspace=6 alt='" . _MD_TADFORM_SHOW_RESULT . "' title='" . _MD_TADFORM_SHOW_RESULT . "'>" : '';
 
         $start_date = date('Y-m-d', xoops_getUserTimestamp(strtotime($start_date)));
         $end_date = date('Y-m-d', xoops_getUserTimestamp(strtotime($end_date)));
@@ -46,7 +46,7 @@ function list_tad_form_main()
         $form[$i]['ofsn'] = $ofsn;
         $form[$i]['enable_tool'] = $enable_tool;
         $form[$i]['title'] = $title;
-        $form[$i]['counter'] = sprintf(_MA_TADFORM_SIGN_MEMS, $counter);
+        $form[$i]['counter'] = sprintf(_MD_TADFORM_SIGN_MEMS, $counter);
         $form[$i]['start_date'] = $start_date;
         $form[$i]['end_date'] = $end_date;
         $form[$i]['cols_num'] = $cols_num[$ofsn];
@@ -154,29 +154,25 @@ switch ($op) {
     case 'excel':
         download_excel($ofsn);
         exit;
-        break;
-    //輸入表格
-    case 'tad_form_main_form':
-        tad_form_main_form($ofsn);
-        break;
+
     //刪除資料
     case 'delete_tad_form_main':
         delete_tad_form_main($ofsn);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
-        break;
+
     //變更狀態資料
     case 'set_form_status':
         set_form_status($ofsn, $_GET['enable']);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
-        break;
+
     //複製問卷
     case 'copy':
         copy_form($ofsn);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
-        break;
+
     //預設動作
     default:
         list_tad_form_main();
@@ -184,4 +180,7 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-require_once __DIR__ . '/footer.php';
+$xoopsTpl->assign('now_op', $op);
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_form/css/module.css');
+require_once XOOPS_ROOT_PATH . '/footer.php';

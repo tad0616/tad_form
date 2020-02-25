@@ -3,9 +3,9 @@ use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = 'tad_form_adm_add.tpl';
-require_once __DIR__ . '/header.php';
-require_once dirname(__DIR__) . '/function.php';
+require __DIR__ . '/header.php';
+$xoopsOption['template_main'] = 'tad_form_add.tpl';
+require_once XOOPS_ROOT_PATH . '/header.php';
 /*-----------function區--------------*/
 //tad_form_main編輯表單
 function tad_form_main_form($ofsn = '')
@@ -38,12 +38,12 @@ function tad_form_main_form($ofsn = '')
     $view_result_group = (!isset($DBV['view_result_group'])) ? [1] : explode(',', $DBV['view_result_group']);
     $multi_sign = (!isset($DBV['multi_sign'])) ? '0' : $DBV['multi_sign'];
 
-    $SelectGroup_name = new \XoopsFormSelectGroup('', 'sign_group', true, $sign_group, 5, true);
-    $SelectGroup_name->setExtra("class='span12 form-control'");
+    $SelectGroup_name = new \XoopsFormSelectGroup('', 'sign_group', true, $sign_group, 3, true);
+    $SelectGroup_name->setExtra("class='form-control'");
     $sign_group = $SelectGroup_name->render();
 
-    $SelectGroup_name2 = new \XoopsFormSelectGroup('', 'view_result_group', true, $view_result_group, 5, true);
-    $SelectGroup_name2->setExtra("class='span12 form-control'");
+    $SelectGroup_name2 = new \XoopsFormSelectGroup('', 'view_result_group', true, $view_result_group, 3, true);
+    $SelectGroup_name2->setExtra("class='form-control'");
     $view_result_group = $SelectGroup_name2->render();
 
     $CkEditor = new CkEditor('tad_form', 'content', $content);
@@ -51,7 +51,7 @@ function tad_form_main_form($ofsn = '')
 
     $op = (empty($ofsn)) ? 'insert_tad_form_main' : 'update_tad_form_main';
 
-    $next = (empty($ofsn)) ? "<label class='checkbox inline'><input type='checkbox' name='edit_option' value='1' checked>" . _MA_TADFORM_EDIT_OPTION . '</label>' : '';
+    $next = (empty($ofsn)) ? "<label class='checkbox inline'><input type='checkbox' name='edit_option' value='1' checked>" . _MD_TADFORM_EDIT_OPTION . '</label>' : '';
 
     $kind_menu = kind_menu($kind);
 
@@ -79,9 +79,9 @@ function tad_form_main_form($ofsn = '')
 //表單用途
 function kind_menu($db_kind = '')
 {
-    $kind_array['application'] = _MA_TADFORM_KIND1;
-    //$kind_array['examination']=_MA_TADFORM_KIND2;
-    $opt = "<option value=''>" . _MA_TADFORM_KIND0 . '</option>';
+    $kind_array['application'] = _MD_TADFORM_KIND1;
+    //$kind_array['examination']=_MD_TADFORM_KIND2;
+    $opt = "<option value=''>" . _MD_TADFORM_KIND0 . '</option>';
     foreach ($kind_array as $kind => $kind_txt) {
         $selected = ($db_kind == $kind) ? 'selected' : '';
         $opt .= "<option value='$kind' $selected>$kind_txt</option>";
@@ -162,7 +162,7 @@ function tad_form_col_form($the_ofsn = '', $csn = '', $mode = '')
     $op = (empty($csn)) ? 'insert_tad_form_col' : 'update_tad_form_col';
     //$op="replace_tad_form_col";
 
-    $end_txt = (!empty($mode)) ? "<input type='hidden' name='mode' value='$mode'>" : "<label class='checkbox inline'><input type='checkbox' name='end' value='1'>" . _MA_TADFORM_COL_END . '</label>';
+    $end_txt = (!empty($mode)) ? "<input type='hidden' name='mode' value='$mode'>" : "<label class='checkbox inline'><input type='checkbox' name='end' value='1'>" . _MD_TADFORM_COL_END . '</label>';
 
     $xoopsTpl->assign('op', 'edit_opt');
     $xoopsTpl->assign('csn', $csn);
@@ -243,14 +243,14 @@ function edit_all_opt($ofsn = '')
     global $xoopsDB, $xoopsTpl;
 
     $question = [];
-    $col_type['text'] = _MA_TADFORM_COL_TEXT;
-    $col_type['radio'] = _MA_TADFORM_COL_RADIO;
-    $col_type['checkbox'] = _MA_TADFORM_COL_CHECKBOX;
-    $col_type['select'] = _MA_TADFORM_COL_SELECT;
-    $col_type['textarea'] = _MA_TADFORM_COL_TEXTAREA;
-    $col_type['date'] = _MA_TADFORM_COL_DATE;
-    $col_type['datetime'] = _MA_TADFORM_COL_DATETIME;
-    $col_type['show'] = _MA_TADFORM_COL_SHOW;
+    $col_type['text'] = _MD_TADFORM_COL_TEXT;
+    $col_type['radio'] = _MD_TADFORM_COL_RADIO;
+    $col_type['checkbox'] = _MD_TADFORM_COL_CHECKBOX;
+    $col_type['select'] = _MD_TADFORM_COL_SELECT;
+    $col_type['textarea'] = _MD_TADFORM_COL_TEXTAREA;
+    $col_type['date'] = _MD_TADFORM_COL_DATE;
+    $col_type['datetime'] = _MD_TADFORM_COL_DATETIME;
+    $col_type['show'] = _MD_TADFORM_COL_SHOW;
 
     $jquery = Utility::get_jquery(true);
     $sql = 'select csn,title,descript,kind,size,val,chk,func,sort,public from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn='{$ofsn}' order by sort";
@@ -271,9 +271,9 @@ function edit_all_opt($ofsn = '')
         $question[$i]['col_type'] = $col_type[$kind];
         $question[$i]['size'] = str_replace(';', '<br>', $size);
         $question[$i]['val'] = $val;
-        $question[$i]['chk'] = "<a href='add.php?op=change_chk&chk={$new_chk}&csn={$csn}&ofsn={$ofsn}'><img src='../images/{$chk}.gif'></a>";
+        $question[$i]['chk'] = "<a href='add.php?op=change_chk&chk={$new_chk}&csn={$csn}&ofsn={$ofsn}'><img src='" . XOOPS_URL . "/modules/tad_form/images/{$chk}.gif'></a>";
         $question[$i]['func'] = $func;
-        $question[$i]['public'] = "<a href='add.php?op=change_public&public={$new_public}&csn={$csn}&ofsn={$ofsn}'><img src='../images/{$public}.gif'></a>";
+        $question[$i]['public'] = "<a href='add.php?op=change_public&public={$new_public}&csn={$csn}&ofsn={$ofsn}'><img src='" . XOOPS_URL . "/modules/tad_form/images/{$public}.gif'></a>";
         $i++;
     }
 
@@ -311,19 +311,19 @@ switch ($op) {
         change_public($csn, $_GET['public']);
         header("location: {$_SERVER['PHP_SELF']}?op=edit_all_opt&ofsn=$ofsn");
         exit;
-        break;
+
     //更新欄位是否檢查
     case 'change_chk':
         change_chk($csn, $_GET['chk']);
         header("location: {$_SERVER['PHP_SELF']}?op=edit_all_opt&ofsn=$ofsn");
         exit;
-        break;
+
     //新增資料
     case 'insert_tad_form_main':
         $ofsn = insert_tad_form_main();
         header("location: {$_SERVER['PHP_SELF']}?op=edit_opt&ofsn=$ofsn");
         exit;
-        break;
+
     //更新資料
     case 'update_tad_form_main':
         $ofsn = update_tad_form_main($ofsn);
@@ -334,21 +334,22 @@ switch ($op) {
         header('location: main.php');
         exit;
 
-        break;
     //輸入表格
     case 'edit_opt':
         tad_form_col_form($ofsn, $csn, $mode);
         break;
+
     //刪除欄位
     case 'delete_tad_form_col':
         delete_tad_form_col($csn);
         header("location: {$_SERVER['PHP_SELF']}?op=edit_all_opt&ofsn={$ofsn}");
         exit;
-        break;
+
     //編輯所有題目
     case 'edit_all_opt':
         edit_all_opt($ofsn);
         break;
+
     //更新資料
     case 'update_tad_form_col':
         update_tad_form_col($csn);
@@ -356,7 +357,7 @@ switch ($op) {
             header('location: main.php');
             exit;
         } elseif ('update' === $_POST['mode']) {
-            header("location: ../index.php?op=sign&ofsn={$ofsn}");
+            header("location: " . XOOPS_URL . "/modules/tad_form/index.php?op=sign&ofsn={$ofsn}");
             exit;
         } elseif ('modify' === $_POST['mode']) {
             header("location: add.php?op=edit_all_opt&ofsn={$ofsn}");
@@ -365,7 +366,6 @@ switch ($op) {
         header("location: {$_SERVER['PHP_SELF']}?op=edit_opt&ofsn={$ofsn}");
         exit;
 
-        break;
     //新增欄位資料
     case 'insert_tad_form_col':
         insert_tad_form_col();
@@ -377,12 +377,15 @@ switch ($op) {
         header("location: {$_SERVER['PHP_SELF']}?op=edit_opt&ofsn={$ofsn}");
         exit;
 
-        break;
     //預設動作
     default:
         tad_form_main_form($ofsn);
+        $op = 'tad_form_main_form';
         break;
 }
 
 /*-----------秀出結果區--------------*/
-require_once __DIR__ . '/footer.php';
+$xoopsTpl->assign('now_op', $op);
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_form/css/module.css');
+require_once XOOPS_ROOT_PATH . '/footer.php';

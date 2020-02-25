@@ -2,10 +2,9 @@
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = 'tad_form_adm_mail.tpl';
-require_once __DIR__ . '/header.php';
-require_once dirname(__DIR__) . '/function.php';
-
+require __DIR__ . '/header.php';
+$xoopsOption['template_main'] = 'tad_form_mail.tpl';
+require_once XOOPS_ROOT_PATH . '/header.php';
 /*-----------function區--------------*/
 //列出所有tad_form_main資料
 function mail_form_main($ofsn = '')
@@ -43,7 +42,7 @@ function mail_form_main($ofsn = '')
     $xoopsTpl->assign('editor', $editor);
     $xoopsTpl->assign('ofsn', $ofsn);
     $xoopsTpl->assign('tag', $tag);
-    $xoopsTpl->assign('title', sprintf(_MA_TADFORM_MAIL_TITLE_VAL, $form['title']));
+    $xoopsTpl->assign('title', sprintf(_MD_TADFORM_MAIL_TITLE_VAL, $form['title']));
 }
 
 //立即寄出
@@ -88,9 +87,9 @@ function send_all($ofsn)
             $i++;
         } else {
             if ($xoopsMailer->sendMail($mail, $_POST['title'], $content, $headers)) {
-                $main .= "{$mail} " . _MA_TADFORM_SEND_OK . '<br>';
+                $main .= "{$mail} " . _MD_TADFORM_SEND_OK . '<br>';
             } else {
-                $main .= "{$mail} " . _MA_TADFORM_SEND_ERROR . '<br>';
+                $main .= "{$mail} " . _MD_TADFORM_SEND_ERROR . '<br>';
             }
         }
     }
@@ -128,4 +127,7 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-require_once __DIR__ . '/footer.php';
+$xoopsTpl->assign('now_op', $op);
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_form/css/module.css');
+require_once XOOPS_ROOT_PATH . '/footer.php';

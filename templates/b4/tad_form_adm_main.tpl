@@ -23,25 +23,25 @@
   <{foreach item=form from=$form}>
     <tr>
   		<td><{$form.ofsn}></td>
-  		<td><{$form.enable_tool}> <a href="../index.php?op=sign&ofsn=<{$form.ofsn}>"><{$form.title}></a></td>
+  		<td><{$form.enable_tool}> <a href="<{$xoops_url}>/modules/tad_form/index.php?op=sign&ofsn=<{$form.ofsn}>"><{$form.title}></a></td>
   		<td>
-        <a href="result.php?ofsn=<{$form.ofsn}>" class="btn btn-sm btn-info"><{$form.counter}></a>
-    		<a href="excel.php?ofsn=<{$form.ofsn}>" class="btn btn-sm btn-info">Excel</a>
-    		<a href="mail.php?ofsn=<{$form.ofsn}>" class="btn btn-sm btn-info">mail</a>
+        <a href="<{$xoops_url}>/modules/tad_form/result.php?ofsn=<{$form.ofsn}>" class="btn btn-xs btn-info"><{$form.counter}></a>
+    		<a href="<{$xoops_url}>/modules/tad_form/excel.php?ofsn=<{$form.ofsn}>" class="btn btn-xs btn-info">Excel</a>
+    		<a href="<{$xoops_url}>/modules/tad_form/mail.php?ofsn=<{$form.ofsn}>" class="btn btn-xs btn-info">mail</a>
     		<{$form.show_result_pic}>
     		<{$form.multi_sign_pic}>
   		</td>
   		<td><{$form.start_date}></td>
   		<td><{$form.end_date}></td>
   		<td>
-    		<a href="main.php?op=copy&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-success"><{$smarty.const._MA_TADFORM_COPY_FORM}></a>
-    		<a href="javascript:delete_tad_form_main_func(<{$form.ofsn}>);" class="btn btn-sm btn-danger"><{$smarty.const._TAD_DEL}></a>
-    		<a href="add.php?op=tad_form_main_form&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-warning"><{$smarty.const._TAD_EDIT}></a>
+    		<a href="main.php?op=copy&ofsn=<{$form.ofsn}>" class="btn btn-xs btn-success"><{$smarty.const._MA_TADFORM_COPY_FORM}></a>
+    		<a href="javascript:delete_tad_form_main_func(<{$form.ofsn}>);" class="btn btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
+    		<a href="<{$xoops_url}>/modules/tad_form/add.php?op=tad_form_main_form&ofsn=<{$form.ofsn}>" class="btn btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>
   		</td>
   		<td class="text-center"><{$form.cols_num}></td>
   		<td>
-    		<a href="add.php?op=edit_opt&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-info"><{$smarty.const._TAD_ADD}></a>
-        <a href="add.php?op=edit_all_opt&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-warning"><{$smarty.const._TAD_EDIT}></a>
+    		<a href="<{$xoops_url}>/modules/tad_form/add.php?op=edit_opt&ofsn=<{$form.ofsn}>" class="btn btn-xs btn-info"><{$smarty.const._TAD_ADD}></a>
+        <a href="<{$xoops_url}>/modules/tad_form/add.php?op=edit_all_opt&ofsn=<{$form.ofsn}>" class="btn btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>
       </td>
   	</tr>
   <{/foreach}>

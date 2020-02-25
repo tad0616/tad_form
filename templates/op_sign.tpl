@@ -2,11 +2,12 @@
 
 <h1><{$form_title}></h1>
 
-<form action="<{$xoops_url}>/modules/tad_form/index.php" method="post" name="myForm" id="myForm" enctype="multipart/form-data" role="form">
-    <table class="table table-striped table-bordered">
-    <tr><td><{$form_content}></td></tr>
-    <{$apply_ok}>
-    <{$main_form}>
+<form action="<{$xoops_url}>/modules/tad_form/index.php" method="post" name="myForm" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
+
+    <table class="table">
+        <tr><td><{$form_content}></td></tr>
+        <{$apply_ok}>
+        <{$main_form}>
     </table>
 
     <input type="hidden" name="ssn" value="<{$db_ans_ssn}>">
@@ -15,7 +16,7 @@
 
     <{if $Captcha}>
         <div class="form-group row">
-            <label class="col-sm-6 col-form-label text-sm-right">
+            <label class="col-sm-6 col-form-label text-sm-right control-label">
                 <{$smarty.const._TADFORM_CAPTCHA}>
             </label>
             <div class="col-sm-2">
@@ -28,14 +29,14 @@
     <{/if}>
 
     <div class="form-group row">
-        <label class="col-sm-2 col-form-label text-sm-right">
+        <label class="col-sm-2 col-form-label text-sm-right control-label">
             <{$smarty.const._TADFORM_MAN_NAME}>
         </label>
         <div class="col-sm-2">
             <label for='man_name' style='display:none;'>man_name</label>
             <input type="text" name="man_name" id="man_name" class='form-control validate[required]' <{if $uid_name}>value="<{$uid_name}>"<{/if}>>
         </div>
-        <label class="col-sm-2 col-form-label text-sm-right">
+        <label class="col-sm-2 col-form-label text-sm-right control-label">
             <{$smarty.const._TADFORM_EMAIL}>
         </label>
         <div class="col-sm-4">
@@ -59,7 +60,7 @@
         location.href="<{$xoops_url}>/modules/tad_form/index.php?op=delete_fill&ofsn=<{$ofsn}>&ssn=" + ssn;
         }
     </script>
-    <div class="card card-body bg-light m-1" style="margin-top:30px;">
+    <div class="well card card-body bg-light" style="margin-top:30px;">
         <h3><{$smarty.const._TADFORM_HISTORY}></h3>
         <table class="table table-striped">
         <{foreach item=history from=$history}>
@@ -67,8 +68,8 @@
                 <td><{$history.fill_time}></td>
                 <td><{$history.man_name}></td>
                 <td class="text-right">
-                <a href="javascript:delete_fill(<{$history.ssn}>)" class="btn btn-sm btn-danger"><{$smarty.const._TAD_DEL}></a>
-                <a href="<{$xoops_url}>/modules/tad_form/index.php?op=sign&ssn=<{$history.ssn}>" class="btn btn-sm btn-warning"><{$smarty.const._TAD_EDIT}></a>
+                    <a href="javascript:delete_fill(<{$history.ssn}>)" class="btn btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
+                    <a href="<{$xoops_url}>/modules/tad_form/index.php?op=sign&ssn=<{$history.ssn}>" class="btn btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>
                 </td>
             </tr>
         <{/foreach}>

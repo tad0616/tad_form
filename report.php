@@ -5,7 +5,7 @@ use XoopsModules\Tadtools\Utility;
 require __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'tad_form_report.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
-if (!can_view_report((int)$_REQUEST['ofsn'])) {
+if (!can_view_report((int) $_REQUEST['ofsn'])) {
     redirect_header('index.php', 3, _MD_TADFORM_ONLY_MEM);
 }
 
@@ -39,7 +39,6 @@ function view_user_result($ofsn)
             continue;
         }
 
-        //$all_title.="<th $thSty>$title</th>";
         $all_title[$i]['title'] = $title;
         $i++;
         $ff[$csn] = $func;
@@ -99,7 +98,7 @@ function view_user_result($ofsn)
             $n++;
         }
 
-        $all_result_col[$i]['ans'] = isset($ans_col)? $ans_col : '';
+        $all_result_col[$i]['ans'] = isset($ans_col) ? $ans_col : '';
 
         //根據不同表單類型，提供不同的功能
 
@@ -133,4 +132,7 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
+$xoopsTpl->assign('now_op', $op);
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_form/css/module.css');
 require_once XOOPS_ROOT_PATH . '/footer.php';

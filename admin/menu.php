@@ -15,12 +15,6 @@ $adminmenu[$i]['desc'] = _MI_TADFORM_ADMENU1;
 $adminmenu[$i]['icon'] = 'images/admin/forms.png';
 
 $i++;
-$adminmenu[$i]['title'] = _MI_TADFORM_ADMENU2;
-$adminmenu[$i]['link'] = 'admin/add.php';
-$adminmenu[$i]['desc'] = _MI_TADFORM_ADMENU2;
-$adminmenu[$i]['icon'] = 'images/admin/application_form_add.png';
-
-$i++;
 $adminmenu[$i]['title'] = _MI_TAD_ADMIN_ABOUT;
 $adminmenu[$i]['link'] = 'admin/about.php';
 $adminmenu[$i]['desc'] = _MI_TAD_ADMIN_ABOUT_DESC;

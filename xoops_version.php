@@ -62,21 +62,26 @@ $modversion['templates'] = [];
 $i = 1;
 $modversion['templates'][$i]['file'] = 'tad_form_index.tpl';
 $modversion['templates'][$i]['description'] = 'tad_form_index.tpl';
+
 $i++;
 $modversion['templates'][$i]['file'] = 'tad_form_adm_main.tpl';
 $modversion['templates'][$i]['description'] = 'tad_form_adm_main.tpl';
 
 $i++;
-$modversion['templates'][$i]['file'] = 'tad_form_adm_mail.tpl';
-$modversion['templates'][$i]['description'] = 'tad_form_adm_mail.tpl';
+$modversion['templates'][$i]['file'] = 'tad_form_manager.tpl';
+$modversion['templates'][$i]['description'] = 'tad_form_manager.tpl';
 
 $i++;
-$modversion['templates'][$i]['file'] = 'tad_form_adm_result.tpl';
-$modversion['templates'][$i]['description'] = 'tad_form_adm_result.tpl';
+$modversion['templates'][$i]['file'] = 'tad_form_mail.tpl';
+$modversion['templates'][$i]['description'] = 'tad_form_mail.tpl';
 
 $i++;
-$modversion['templates'][$i]['file'] = 'tad_form_adm_add.tpl';
-$modversion['templates'][$i]['description'] = 'tad_form_adm_add.tpl';
+$modversion['templates'][$i]['file'] = 'tad_form_result.tpl';
+$modversion['templates'][$i]['description'] = 'tad_form_result.tpl';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'tad_form_add.tpl';
+$modversion['templates'][$i]['description'] = 'tad_form_add.tpl';
 
 $i++;
 $modversion['templates'][$i]['file'] = 'tad_form_report.tpl';

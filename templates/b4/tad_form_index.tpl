@@ -3,7 +3,7 @@
 
 
 <{if $op=="sign"}>
-    <{includeq file="$xoops_rootpath/modules/$xoops_dirname/templates/b4/op_sign.tpl"}>
+    <{includeq file="$xoops_rootpath/modules/$xoops_dirname/templates/op_`$op`.tpl"}>
 <{elseif $op=="error"}>
     <div class="jumbotron">
         <h3><{$title}></h3>

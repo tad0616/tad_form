@@ -1,19 +1,19 @@
 <?php
 use XoopsModules\Tadtools\Utility;
-
-require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
+/*-----------引入檔案區--------------*/
+require_once "../../mainfile.php";
 xoops_loadLanguage('admin', 'tad_form');
 
 require_once XOOPS_ROOT_PATH . '/modules/tadtools/PHPExcel.php'; //引入 PHPExcel 物件庫
 require_once XOOPS_ROOT_PATH . '/modules/tadtools/PHPExcel/IOFactory.php'; //引入 PHPExcel_IOFactory 物件庫
 $objPHPExcel = new PHPExcel(); //實體化Excel
 
-$ofsn = isset($_REQUEST['ofsn']) ? (int)$_REQUEST['ofsn'] : 0;
+$ofsn = isset($_REQUEST['ofsn']) ? (int) $_REQUEST['ofsn'] : 0;
 $sql = 'select * from ' . $xoopsDB->prefix('tad_form_main') . " where ofsn='$ofsn'";
 $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 $form_main = $xoopsDB->fetchArray($result);
 $form_title = str_replace(['[', ']', ' '], '', $form_main['title']);
-$ff = sprintf(_MA_TADFORM_EXCEL_TITLE, $form_title) . '.xlsx';
+$ff = sprintf(_MD_TADFORM_EXCEL_TITLE, $form_title) . '.xlsx';
 $dl_name = (_CHARSET === 'UTF-8') ? iconv('UTF-8', 'Big5', $ff) : $ff;
 $dl_name = (false !== mb_strpos('MSIE', $_SERVER['HTTP_USER_AGENT'])) ? urlencode($dl_name) : $dl_name;
 
@@ -22,8 +22,8 @@ $objActSheet = $objPHPExcel->getActiveSheet(); //指定預設工作表為 $objAc
 $objActSheet->setTitle('data'); //設定標題
 $objPHPExcel->createSheet(); //建立新的工作表，上面那三行再來一次，編號要改
 
-$objActSheet->setCellValue("A1", _MA_TADFORM_COL_WHO);
-$objActSheet->setCellValue("B1", _MA_TADFORM_SIGN_DATE);
+$objActSheet->setCellValue("A1", _MD_TADFORM_COL_WHO);
+$objActSheet->setCellValue("B1", _MD_TADFORM_SIGN_DATE);
 
 $sql = 'select csn,title,kind,func from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn='{$ofsn}' order by sort";
 $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);

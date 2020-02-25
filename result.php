@@ -1,10 +1,9 @@
 <?php
 use XoopsModules\Tadtools\Utility;
-
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = 'tad_form_adm_result.tpl';
-require_once __DIR__ . '/header.php';
-require_once dirname(__DIR__) . '/function.php';
+require __DIR__ . '/header.php';
+$xoopsOption['template_main'] = 'tad_form_result.tpl';
+require_once XOOPS_ROOT_PATH . '/header.php';
 
 /*-----------function區--------------*/
 
@@ -13,11 +12,10 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
 {
     global $xoopsDB, $xoopsUser, $xoopsTpl;
 
-
     $form = get_tad_form_main($ofsn);
     if (!$isAdmin) {
         if ('1' != $form['show_result'] || '1' != $form['enable']) {
-            redirect_header('index.php', 3, _MA_TADFORM_NOT_SHOW);
+            redirect_header('index.php', 3, _MD_TADFORM_NOT_SHOW);
         }
     }
     $myts = \MyTextSanitizer::getInstance();
@@ -30,7 +28,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
 
     $sql = 'select csn,title,kind,func from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn='{$ofsn}' order by sort";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-    $all_title = $tt = $tt = $kk = $csn_arr = $all_result_col = $ff =[];
+    $all_title = $tt = $tt = $kk = $csn_arr = $all_result_col = $ff = [];
     $i = 0;
     while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
         if ('show' === $kind) {
@@ -50,7 +48,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
 
     //根據不同表單類型，提供不同的功能
     if ('application' === $form['kind']) {
-        $other_fun_th = "<th $thSty>" . _MA_TADFORM_KIND1_TH . '</th>';
+        $other_fun_th = "<th $thSty>" . _MD_TADFORM_KIND1_TH . '</th>';
     } else {
         $other_fun_th = '';
     }
@@ -86,7 +84,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
             } elseif ('checkbox' === $kk[$csn]) {
                 $csn_val = (empty($col_v[$csn])) ? '' : '<ul><li>' . str_replace(';', '</li><li>', $col_v[$csn]) . '</li></ul>';
             } else {
-                $csn_val = isset($col_v[$csn]) ? $col_v[$csn] : 0 ;
+                $csn_val = isset($col_v[$csn]) ? $col_v[$csn] : 0;
             }
             $ans_col[$n]['val'] = $csn_val;
             $n++;
@@ -112,7 +110,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
             $other_fun = "<td nowrap>
 			<input type='hidden' name='ofsn' value='$ofsn'>
 			<input type='hidden' name='ssn[]' value='$ssn'>
-			<input type='checkbox' name='result_col[$ssn]' value='1' $checked>" . _MA_TADFORM_KIND1_OK . '</td>';
+			<input type='checkbox' name='result_col[$ssn]' value='1' $checked>" . _MD_TADFORM_KIND1_OK . '</td>';
         } else {
             $other_fun = '';
         }
@@ -132,7 +130,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
 
     $submit = ('application' === $form['kind'] and $isAdmin) ? "
 	<p align='right'><input type='hidden' name='op' value='update_result'>
-	<input type='submit' value='" . _MA_TADFORM_UPDATE_RESULT . "'></p>" : '';
+	<input type='submit' value='" . _MD_TADFORM_UPDATE_RESULT . "'></p>" : '';
     $xoopsTpl->assign('submit', $submit);
 
     $analysis = [];
@@ -146,10 +144,10 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
         $analysis[$i]['title'] = $tt[$csn];
         $allval = '';
         if ('sum' === $func) {
-            $analysis[$i]['func'] = _MA_TADFORM_COL_SUM;
+            $analysis[$i]['func'] = _MD_TADFORM_COL_SUM;
             $analysis[$i]['val'] = $col[$csn]['sum'];
         } elseif ('count' === $func) {
-            $analysis[$i]['func'] = _MA_TADFORM_COL_COUNT;
+            $analysis[$i]['func'] = _MD_TADFORM_COL_COUNT;
             $val = '';
             if (isset($col[$csn]['count']) and is_array($col[$csn]['count'])) {
                 foreach ($col[$csn]['count'] as $val => $count) {
@@ -159,7 +157,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
             $analysis[$i]['val'] = $allval;
         } elseif ('avg' === $func) {
             $avg = round($col[$csn]['sum'] / $col[$csn]['count'], 2);
-            $analysis[$i]['func'] = _MA_TADFORM_COL_AVG;
+            $analysis[$i]['func'] = _MD_TADFORM_COL_AVG;
             $analysis[$i]['val'] = $avg;
         } else {
             $analysis[$i]['func'] = '';
@@ -220,4 +218,7 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-require_once __DIR__ . '/footer.php';
+$xoopsTpl->assign('now_op', $op);
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_form/css/module.css');
+require_once XOOPS_ROOT_PATH . '/footer.php';

@@ -6,7 +6,6 @@ define('_MI_TADFORM_AUTHOR', 'Tad');
 define('_MI_TADFORM_CREDITS', 'tad');
 define('_MI_TADFORM_DESC', 'Easy On-line Forms Module');
 define('_MI_TADFORM_ADMENU1', 'Form List');
-define('_MI_TADFORM_ADMENU2', 'Add Form');
 define('_MI_TADFORM_ADMENU3', 'Table Update');
 define('_MI_TADFORM_BNAME1', 'Last Forms');
 define('_MI_TADFORM_BDESC1', 'List Form(s) in Proceeding');

@@ -18,7 +18,7 @@
     <div class="clearfix"></div>
 
     <{else}>
-        <form action="mail.php" method="post" id="myForm" role="form">
+        <form action="<{$xoops_url}>/modules/tad_form/mail.php" method="post" id="myForm" role="form">
         <div class="form-group row">
             <div class="col-sm-12">
             <input type="text" name="title" class="form-control" value="<{$title}>" placeholder="<{$smarty.const._MA_TADFORM_MAIL_TITLE}>">

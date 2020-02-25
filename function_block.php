@@ -166,7 +166,7 @@ if (!function_exists('sign_form')) {
                 $$k = $v;
             }
 
-            $edit_btn = ($isAdmin) ? "<a href='" . XOOPS_URL . "/modules/tad_form/admin/add.php?op=edit_opt&ofsn=$ofsn&csn=$csn&mode=update' class='btn btn-mini btn-warning pull-right'>" . _TAD_EDIT . '</a>' : '';
+            $edit_btn = ($isAdmin) ? "<a href='" . XOOPS_URL . "/modules/tad_formß/add.php?op=edit_opt&ofsn=$ofsn&csn=$csn&mode=update' class='btn btn-xs btn-warning pull-right'>" . _TAD_EDIT . '</a>' : '';
             $db_ans_csn = isset($db_ans[$csn]) ? $db_ans[$csn] : '';
             $col_form = col_form($csn, $kind, $size, $val, $db_ans_csn, $chk);
 
@@ -177,18 +177,16 @@ if (!function_exists('sign_form')) {
                 $show_col = '';
             } else {
                 $show_title = "
-                <div class='q_col'>
-                    $edit_btn
-                    <span class='question'>{$i}. $chk_txt<b>$title</b></span>
-                    $note
-                </div>";
+                $edit_btn
+                <span class='question'>{$i}. $chk_txt<b>$title</b></span>
+                $note";
                 $show_col = "<tr><td class='show_col'>$col_form</td></tr>";
             }
             $main_form .= "
                 <tr>
-                <td>
-                $show_title
-                </td>
+                    <td class='q_col'>
+                    $show_title
+                    </td>
                 </tr>
                 $show_col
                 ";
@@ -203,9 +201,9 @@ if (!function_exists('sign_form')) {
         $tool = '';
         if ($isAdmin) {
             $tool = "
-            <a href='" . XOOPS_URL . "/modules/tad_form/admin/add.php?op=tad_form_main_form&ofsn={$ofsn}' class='btn btn-warning'>" . sprintf(_TADFORM_EDIT_FORM, $form['title']) . "</a>
-            <a href='" . XOOPS_URL . "/modules/tad_form/admin/add.php?op=edit_all_opt&ofsn={$ofsn}' class='btn btn-warning'>" . _TADFORM_EDIT_ALL . "</a>
-            <a href='" . XOOPS_URL . "/modules/tad_form/admin/result.php?ofsn={$ofsn}' class='btn btn-primary'>" . _TADFORM_VIEW_FORM . '</a>';
+            <a href='" . XOOPS_URL . "/modules/tad_form/add.php?op=tad_form_main_form&ofsn={$ofsn}' class='btn btn-warning'>" . sprintf(_TADFORM_EDIT_FORM, $form['title']) . "</a>
+            <a href='" . XOOPS_URL . "/modules/tad_form/add.php?op=edit_all_opt&ofsn={$ofsn}' class='btn btn-warning'>" . _TADFORM_EDIT_ALL . "</a>
+            <a href='" . XOOPS_URL . "/modules/tad_form/result.php?ofsn={$ofsn}' class='btn btn-primary'>" . _TADFORM_VIEW_FORM . '</a>';
         }
 
         $db_ans_ssn = isset($db_ans['ssn']) ? $db_ans['ssn'] : '';
