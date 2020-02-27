@@ -4,8 +4,8 @@ use XoopsModules\Tadtools\Utility;
 require_once "../../mainfile.php";
 xoops_loadLanguage('admin', 'tad_form');
 
-require_once XOOPS_ROOT_PATH . '/modules/tadtools/PHPExcel.php'; //引入 PHPExcel 物件庫
-require_once XOOPS_ROOT_PATH . '/modules/tadtools/PHPExcel/IOFactory.php'; //引入 PHPExcel_IOFactory 物件庫
+require_once XOOPS_ROOT_PATH . '/modules/tadtools/vendor/phpoffice/phpexcel/Classes/PHPExcel.php'; //引入 PHPExcel 物件庫
+require_once XOOPS_ROOT_PATH . '/modules/tadtools/vendor/phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php'; //引入 PHPExcel_IOFactory 物件庫
 $objPHPExcel = new PHPExcel(); //實體化Excel
 
 $ofsn = isset($_REQUEST['ofsn']) ? (int) $_REQUEST['ofsn'] : 0;
@@ -62,13 +62,11 @@ while (list($ssn, $uid, $man_name, $email, $fill_time) = $xoopsDB->fetchRow($res
 }
 
 //----------內容-----------//
-
-header('Content-Type: application/vnd.ms-excel');
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 header("Content-Disposition: attachment;filename={$dl_name}");
 header('Cache-Control: max-age=0');
-
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-//$objWriter->setPreCalculateFormulas(false);
+$objWriter->setPreCalculateFormulas(false);
 $objWriter->save('php://output');
 exit;
 
