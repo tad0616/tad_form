@@ -1,10 +1,19 @@
-Tad Form 3.4.7 (released from 2019-07-02)
+Tad Form 3.4.8 (2020-03-14 released)
+====================================================
+1.Fix the issue that anonymous forms cannot be submitted smoothly
+2.Fixed the problem of repeated writing
+3. Added "Select All" function for mailing function
+4. The sender's mailbox of the letter is changed to the management mailbox of the form
+5. Use PHPExcel 1.8.2
+6. Amendment for accessibility 2.0 AA standard
+
+Tad Form 3.4.7 (2019-07-02 released)
 =========================================================
 1. Fixed the problem that the verification code could not be used.
 2. Block adds the function of directly displaying the form
 
 
-Tad Form 3.4.6  (released from 2019-05-10)
+Tad Form 3.4.6  (2019-05-10 released)
 =========================================================
 1. "List the specified online form" block to add the function of directly displaying the form
 2. Fix Excel download problem

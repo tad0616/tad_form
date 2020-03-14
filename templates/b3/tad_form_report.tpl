@@ -27,7 +27,7 @@ $(document).ready(function(){
   <tr>
     <td style="text-align:center;">
       <a href="<{$col.url}>"><{$col.man_name}></a>
-      <div style='font-size:9px'><{$col.fill_time}></div>
+      <div style='font-size: 0.7em'><{$col.fill_time}></div>
     </td>
     <{foreach item=ans from=$col.ans}>
     <td><{$ans.val}></td>

@@ -14,7 +14,7 @@
 
 .button {
 	padding: 5px;
-	font-size: 11pt;
+	font-size: 0.75em;
 }
 
 .note {
@@ -24,7 +24,7 @@
 .question {
 	color: rgb(153, 0, 0);
 	font-weight: bolder;
-	font-size: 16px;
+	font-size: 1em;
 }
 
 td.q_col {
@@ -39,7 +39,7 @@ td.q_col {
 .btn-group-xs>.btn,
 .btn-xs {
 	padding: 1px 5px;
-	font-size: 12px;
+	font-size: 0.8em;
 	line-height: 1.5;
 	border-radius: 3px;
 }
