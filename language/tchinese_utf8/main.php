@@ -16,6 +16,7 @@ define('_MD_TADFORM_END_DATE', '結束日期');
 define('_MD_TADFORM_FILL_TIME', '填報時間');
 
 define('_MD_TADFORM_SIGN_DATE', '填報日期：從 <span class="start_date">%s</span> 至<span class="end_date">%s</span>  止');
+define('_MD_TADFORM_ONLY_ADMIN', '您沒有執行此動作的權限喔。');
 define('_MD_TADFORM_ONLY_MEM', '您並不屬於本填報允許的群組喔！！<br>若您尚未登入者請先登入。<br>已登入者就放棄吧！');
 define('_MD_TADFORM_KIND1_TH', '報名完成？');
 define('_MD_TADFORM_EMPTY', '目前沒有任何表單可以填寫！');

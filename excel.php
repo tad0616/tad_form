@@ -2,7 +2,12 @@
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 require_once "../../mainfile.php";
+require __DIR__ . '/header.php';
 xoops_loadLanguage('admin', 'tad_form');
+
+if (!$isAdmin) {
+    redirect_header('index.php', 3, _MD_TADFORM_ONLY_ADMIN);
+}
 
 require_once XOOPS_ROOT_PATH . '/modules/tadtools/vendor/phpoffice/phpexcel/Classes/PHPExcel.php'; //引入 PHPExcel 物件庫
 require_once XOOPS_ROOT_PATH . '/modules/tadtools/vendor/phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php'; //引入 PHPExcel_IOFactory 物件庫

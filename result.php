@@ -4,7 +4,9 @@ use XoopsModules\Tadtools\Utility;
 require __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'tad_form_result.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
-
+if (!$isAdmin) {
+    redirect_header('index.php', 3, _MD_TADFORM_ONLY_ADMIN);
+}
 /*-----------function區--------------*/
 
 //觀看結果

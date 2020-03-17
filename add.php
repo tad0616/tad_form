@@ -6,6 +6,10 @@ use XoopsModules\Tadtools\Utility;
 require __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'tad_form_add.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
+if (!$isAdmin) {
+    redirect_header('index.php', 3, _MD_TADFORM_ONLY_ADMIN);
+}
+
 /*-----------function區--------------*/
 //tad_form_main編輯表單
 function tad_form_main_form($ofsn = '')
@@ -331,7 +335,7 @@ switch ($op) {
             header("location: {$_SERVER['PHP_SELF']}?op=edit_opt&ofsn=$ofsn");
             exit;
         }
-        header('location: main.php');
+        header('location: manager.php');
         exit;
 
     //輸入表格
@@ -354,7 +358,7 @@ switch ($op) {
     case 'update_tad_form_col':
         update_tad_form_col($csn);
         if ('1' == $_POST['end']) {
-            header('location: main.php');
+            header('location: manager.php');
             exit;
         } elseif ('update' === $_POST['mode']) {
             header("location: " . XOOPS_URL . "/modules/tad_form/index.php?op=sign&ofsn={$ofsn}");
@@ -371,7 +375,7 @@ switch ($op) {
         insert_tad_form_col();
         if ('1' == $_POST['end']) {
             set_form_status($ofsn, 1);
-            header('location: main.php');
+            header('location: manager.php');
             exit;
         }
         header("location: {$_SERVER['PHP_SELF']}?op=edit_opt&ofsn={$ofsn}");

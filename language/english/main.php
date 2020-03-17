@@ -15,6 +15,7 @@ define('_MD_TADFORM_END_DATE', 'End Date');
 define('_MD_TADFORM_FILL_TIME', 'Time');
 
 define('_MD_TADFORM_SIGN_DATE', 'Date： <span class=\'start_date\'>%s</span> to <span class=\'end_date\'>%s</span>');
+define('_MD_TADFORM_ONLY_ADMIN', 'You do not have permission to perform this action.');
 define('_MD_TADFORM_ONLY_MEM', 'You do NOT belong to authorized group(s)!!<br>Please login first.<br>If you can\'t still take this form with login. Just give up!');
 define('_MD_TADFORM_KIND1_TH', 'Done?');
 define('_MD_TADFORM_EMPTY', 'There are currently no forms to be filled!');
