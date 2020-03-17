@@ -131,3 +131,6 @@ define('_MD_TADFORM_SEND_OK', '發送成功！');
 define('_MD_TADFORM_SEND_ERROR', '發送失敗！');
 define('_MD_TADFORM_MAIL_TEST', '僅測試（線上顯示不寄送）');
 define('_MD_TADFORM_SEND_TAG', '標籤（會秀出該使用者填的答案）');
+
+define('_MA_TADFORM_PUBLISH_PERMISSIONS', '發布表單權限');
+define('_MA_TAD_FORM_PERMISSIONS_SETUP', '權限設定');

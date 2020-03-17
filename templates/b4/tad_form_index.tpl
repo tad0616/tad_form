@@ -29,9 +29,9 @@
 <{else}>
     <{foreach item=form from=$all}>
         <div class="card card-body bg-light m-1">
-        <div class="pull-right"><{$form.multi_sign}><span class="badge badge-info"><{$form.date}></span></div>
         <h3><{$form.title}></h3>
-
+        <div><{$form.multi_sign}><{$form.date}></div>
+        <hr>
         <{$form.content}>
 
         <div class="text-center">

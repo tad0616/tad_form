@@ -5,6 +5,9 @@ use XoopsModules\Tadtools\Utility;
 require __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'tad_form_mail.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
+if (!Utility::power_chk('tad_form_post', 1) and !$isAdmin) {
+    redirect_header('index.php', 3, _TAD_PERMISSION_DENIED);
+}
 /*-----------function區--------------*/
 //列出所有tad_form_main資料
 function mail_form_main($ofsn = '')

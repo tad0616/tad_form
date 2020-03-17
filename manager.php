@@ -5,9 +5,12 @@ use XoopsModules\Tadtools\Utility;
 require __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'tad_form_manager.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
-if (!$isAdmin) {
-    redirect_header('index.php', 3, _MD_TADFORM_ONLY_ADMIN);
+if (!Utility::power_chk('tad_form_post', 1) and !$isAdmin) {
+    redirect_header('index.php', 3, _TAD_PERMISSION_DENIED);
+} else {
+    $xoopsTpl->assign('now_uid', $xoopsUser->uid());
 }
+
 /*-----------function區--------------*/
 //列出所有tad_form_main資料
 function list_tad_form_main()
@@ -54,6 +57,7 @@ function list_tad_form_main()
         $form[$i]['cols_num'] = $cols_num[$ofsn];
         $form[$i]['multi_sign_pic'] = $multi_sign_pic;
         $form[$i]['show_result_pic'] = $show_result_pic;
+        $form[$i]['uid'] = $uid;
         $i++;
     }
     if (empty($form)) {
@@ -95,7 +99,14 @@ function get_form_col_count()
 //刪除tad_form_main某筆資料資料
 function delete_tad_form_main($ofsn = '')
 {
-    global $xoopsDB;
+    global $xoopsDB, $xoopsUser, $isAdmin;
+
+    $form = get_tad_form_main($ofsn);
+
+    if (!$isAdmin and $form['uid'] != $xoopsUser->uid()) {
+        redirect_header('index.php', 3, _TAD_PERMISSION_DENIED);
+    }
+
     //先找出有哪些人填了
     $sql = 'select ssn from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='$ofsn'";
     $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
@@ -183,6 +194,7 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('now_op', $op);
+$xoopsTpl->assign('isAdmin', $isAdmin);
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_form/css/module.css');
 require_once XOOPS_ROOT_PATH . '/footer.php';

@@ -6,15 +6,15 @@ use XoopsModules\Tadtools\Utility;
 require __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'tad_form_add.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
-if (!$isAdmin) {
-    redirect_header('index.php', 3, _MD_TADFORM_ONLY_ADMIN);
+if (!Utility::power_chk('tad_form_post', 1) and !$isAdmin) {
+    redirect_header('index.php', 3, _TAD_PERMISSION_DENIED);
 }
 
 /*-----------function區--------------*/
 //tad_form_main編輯表單
 function tad_form_main_form($ofsn = '')
 {
-    global $xoopsDB, $xoopsUser, $xoopsTpl;
+    global $xoopsDB, $xoopsUser, $xoopsTpl, $isAdmin;
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     //抓取預設值
@@ -41,6 +41,10 @@ function tad_form_main_form($ofsn = '')
     $show_result = (!isset($DBV['show_result'])) ? '0' : $DBV['show_result'];
     $view_result_group = (!isset($DBV['view_result_group'])) ? [1] : explode(',', $DBV['view_result_group']);
     $multi_sign = (!isset($DBV['multi_sign'])) ? '0' : $DBV['multi_sign'];
+
+    if (!$isAdmin and ($uid != '' and $uid != $xoopsUser->uid())) {
+        redirect_header('index.php', 3, _TAD_PERMISSION_DENIED);
+    }
 
     $SelectGroup_name = new \XoopsFormSelectGroup('', 'sign_group', true, $sign_group, 3, true);
     $SelectGroup_name->setExtra("class='form-control'");
@@ -116,12 +120,19 @@ function insert_tad_form_main()
 //更新tad_form_main某一筆資料
 function update_tad_form_main($ofsn = '')
 {
-    global $xoopsDB;
+    global $xoopsDB, $isAdmin, $xoopsUser;
+    $form = get_tad_form_main($ofsn);
+
+    if (!$isAdmin and $form['uid'] != $xoopsUser->uid()) {
+        redirect_header('index.php', 3, _TAD_PERMISSION_DENIED);
+    }
+
     $sign_group = (in_array('', $_POST['sign_group'])) ? '' : implode(',', $_POST['sign_group']);
     $view_result_group = (in_array('', $_POST['view_result_group'])) ? '' : implode(',', $_POST['view_result_group']);
     $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
     $_POST['enable'] = empty($_POST['enable']) ? 0 : 1;
+
     $sql = 'update ' . $xoopsDB->prefix('tad_form_main') . " set  `title` = '{$_POST['title']}', `start_date` = '{$_POST['start_date']}', `end_date` = '{$_POST['end_date']}', `content` = '{$_POST['content']}', `post_date` = '{$now}', `enable` = '{$_POST['enable']}', `sign_group` = '{$sign_group}', `kind` = '{$_POST['kind']}',`adm_email` = '{$_POST['adm_email']}',`show_result` = '{$_POST['show_result']}',`captcha` = '{$_POST['captcha']}',`view_result_group` = '{$view_result_group}',`multi_sign` = '{$_POST['multi_sign']}' where ofsn='$ofsn'";
     $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
@@ -137,7 +148,7 @@ function update_tad_form_main($ofsn = '')
 //tad_form_col編輯表單
 function tad_form_col_form($the_ofsn = '', $csn = '', $mode = '')
 {
-    global $xoopsDB, $xoopsTpl;
+    global $xoopsDB, $xoopsTpl, $isAdmin, $xoopsUser;
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     //抓取預設值
@@ -148,6 +159,10 @@ function tad_form_col_form($the_ofsn = '', $csn = '', $mode = '')
     }
 
     $form = get_tad_form_main($the_ofsn);
+
+    if (!$isAdmin and $form['uid'] != $xoopsUser->uid()) {
+        redirect_header('index.php', 3, _TAD_PERMISSION_DENIED);
+    }
 
     //預設值設定
 
@@ -227,6 +242,7 @@ function get_tad_form_col($csn = '')
 function update_tad_form_col($csn = '')
 {
     global $xoopsDB;
+
     $sql = 'update ' . $xoopsDB->prefix('tad_form_col') . " set  `ofsn` = '{$_POST['ofsn']}', `title` = '{$_POST['title']}', `descript` = '{$_POST['descript']}', `kind` = '{$_POST['kind']}', `size` = '{$_POST['size']}', `val` = '{$_POST['val']}', `chk` = '{$_POST['chk']}', `func` = '{$_POST['func']}', `sort` = '{$_POST['sort']}', `public` = '{$_POST['public']}' where csn='$csn'";
     $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
