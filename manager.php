@@ -36,7 +36,7 @@ function list_tad_form_main()
         }
 
         $pic = ('1' == $enable) ? '001_06.gif' : '001_05.gif';
-        $enable_tool = ('1' == $enable) ? "<a href='main.php?op=set_form_status&ofsn=$ofsn&enable=0'><img src='" . XOOPS_URL . "/modules/tad_form/images/$pic' align='absmiddle' hspace=6 alt='" . _MD_TADFORM_COL_ENABLE . "' title='" . _MD_TADFORM_COL_ENABLE . "'></a>" : "<a href='main.php?op=set_form_status&ofsn=$ofsn&enable=1'><img src='" . XOOPS_URL . "/modules/tad_form/images/$pic' align='absmiddle' hspace=6 alt='" . _MD_TADFORM_COL_ACTIVE . "' title='" . _MD_TADFORM_COL_ACTIVE . "'></a>";
+        $enable_tool = ('1' == $enable) ? "<a href='manager.php?op=set_form_status&ofsn=$ofsn&enable=0'><img src='" . XOOPS_URL . "/modules/tad_form/images/$pic' align='absmiddle' hspace=6 alt='" . _MD_TADFORM_COL_ENABLE . "' title='" . _MD_TADFORM_COL_ENABLE . "'></a>" : "<a href='manager.php?op=set_form_status&ofsn=$ofsn&enable=1'><img src='" . XOOPS_URL . "/modules/tad_form/images/$pic' align='absmiddle' hspace=6 alt='" . _MD_TADFORM_COL_ACTIVE . "' title='" . _MD_TADFORM_COL_ACTIVE . "'></a>";
         $multi_sign_pic = ('1' == $multi_sign) ? "<img src='" . XOOPS_URL . "/modules/tad_form/images/report_check.png' align='absmiddle' hspace=6 alt='" . _MD_TADFORM_MULTI_SIGN . "' title='" . _MD_TADFORM_MULTI_SIGN . "'>" : '';
         $show_result_pic = ('1' == $show_result) ? "<img src='" . XOOPS_URL . "/modules/tad_form/images/report.png' align='absmiddle' hspace=6 alt='" . _MD_TADFORM_SHOW_RESULT . "' title='" . _MD_TADFORM_SHOW_RESULT . "'>" : '';
 

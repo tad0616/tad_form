@@ -4,7 +4,7 @@
     function delete_tad_form_main_func(ofsn){
         var sure = window.confirm("<{$smarty.const._TAD_DEL_CONFIRM}>");
         if (!sure)	return;
-        location.href="main.php?op=delete_tad_form_main&ofsn=" + ofsn;
+        location.href="manager.php?op=delete_tad_form_main&ofsn=" + ofsn;
     }
 </script>
 
@@ -37,7 +37,7 @@
                 <td><{$form.start_date}></td>
                 <td><{$form.end_date}></td>
                 <td>
-                    <a href="main.php?op=copy&ofsn=<{$form.ofsn}>" class="btn btn-xs btn-success"><{$smarty.const._MD_TADFORM_COPY_FORM}></a>
+                    <a href="manager.php?op=copy&ofsn=<{$form.ofsn}>" class="btn btn-xs btn-success"><{$smarty.const._MD_TADFORM_COPY_FORM}></a>
                     <a href="javascript:delete_tad_form_main_func(<{$form.ofsn}>);" class="btn btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
                     <a href="<{$xoops_url}>/modules/tad_form/add.php?op=tad_form_main_form&ofsn=<{$form.ofsn}>" class="btn btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>
                 </td>

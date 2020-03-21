@@ -1,3 +1,9 @@
+Tad Form 3.4.9 (2020-03-21 released)
+====================================================
+1.Fixed the problem of unable to copy and delete forms
+2. Move the management interface to the foreground, and specify groups that can write forms in the background
+3. Fixed the situation where the setting of "Does the front desk show that several people have filled in" does not work properly?
+
 Tad Form 3.4.8 (2020-03-14 released)
 ====================================================
 1.Fix the issue that anonymous forms cannot be submitted smoothly

@@ -68,7 +68,7 @@ function list_tad_form_main()
         $all[$i]['post_date'] = $post_date;
         $all[$i]['enable'] = $enable;
         $all[$i]['multi_sign'] = $multi_sign_pic;
-        $all[$i]['button'] = $xoopsModuleConfig['show_amount'] ? _MD_TADFORM_SIGNNOW : sprintf(_MD_TADFORM_SIGN_NOW, $title, $counter);
+        $all[$i]['button'] = $xoopsModuleConfig['show_amount'] == 1 ? sprintf(_MD_TADFORM_SIGN_NOW, $title, $counter) : sprintf(_MD_TADFORM_SIGNNOW, $title);
         $all[$i]['date'] = sprintf(_MD_TADFORM_SIGN_DATE, $start_date, $end_date);
         $i++;
     }
