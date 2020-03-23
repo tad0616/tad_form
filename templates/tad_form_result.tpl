@@ -24,7 +24,7 @@
             <{foreach item=tt from=$all_title}>
                 <th><{$tt.title}></th>
             <{/foreach}>
-            <th><{$smarty.const._MD_TADFORM_SIGN_DATE}></th><{$funct_title}></tr>
+            <th><{$smarty.const._MD_TADFORM_FILL_TIME}></th><{$funct_title}></tr>
             <{foreach item=col from=$result_col}>
                 <tr><td><a href="<{$col.url}>"><{$col.man_name}></a></td>
             <{foreach item=ans from=$col.ans}>
