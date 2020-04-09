@@ -54,10 +54,10 @@ define('_MD_TADFORM_EDIT_OPTION', '接著編輯選項');
 
 define('_MD_INPUT_COL_FORM', '題目設定');
 define('_MD_TADFORM_CSN', '流水號');
-define('_MD_TADFORM_COL_TITLE', '問題');
-define('_MD_TADFORM_COL_DESCRIPT', '問題描述');
+define('_MD_TADFORM_COL_TITLE', '題目');
+define('_MD_TADFORM_COL_DESCRIPT', '題目描述');
 define('_MD_TADFORM_COL_KIND', '種類');
-define('_MD_TADFORM_COL_SIZE', '欄位長度（或選項）');
+define('_MD_TADFORM_COL_SIZE', '答案選項');
 define('_MD_TADFORM_COL_VAL', '預設值');
 define('_MD_TADFORM_COL_CHK', '必填？');
 define('_MD_TADFORM_COL_FUNC', '統計');

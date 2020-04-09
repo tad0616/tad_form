@@ -1,3 +1,9 @@
+Tad Form 3.5 (2020-04-09 released)
+1. Fix the problem that the "Online Form" block is not available in some cases.
+2. Fix the linking error of the title edit button
+3. Fixed permission management page title
+
+
 Tad Form 3.4.9 (2020-03-21 released)
 ====================================================
 1.Fixed the problem of unable to copy and delete forms

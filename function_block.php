@@ -6,11 +6,15 @@ use XoopsModules\Tadtools\Utility;
 if (!function_exists('sign_form')) {
     function sign_form($ofsn = '', $ssn = '', $mode = '')
     {
-        global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsTpl;
+        global $xoopsDB, $xoopsUser, $xoopsTpl, $xoTheme;
 
+        $xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_form/css/module.css');
         $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
         $form = get_tad_form_main($ofsn, $ssn);
-        $ofsn = $form['ofsn'];
+        $ofsn = (int) $form['ofsn'];
+
+        $modhandler = xoops_gethandler('module');
+        $xoopsModule = $modhandler->getByDirname("tad_form");
 
         $sign_group = (empty($form['sign_group'])) ? '' : explode(',', $form['sign_group']);
 
@@ -166,7 +170,7 @@ if (!function_exists('sign_form')) {
                 $$k = $v;
             }
 
-            $edit_btn = ($isAdmin) ? "<a href='" . XOOPS_URL . "/modules/tad_formß/add.php?op=edit_opt&ofsn=$ofsn&csn=$csn&mode=update' class='btn btn-xs btn-warning pull-right'>" . _TAD_EDIT . '</a>' : '';
+            $edit_btn = ($isAdmin) ? "<a href='" . XOOPS_URL . "/modules/tad_form/add.php?op=edit_opt&ofsn=$ofsn&csn=$csn&mode=update' class='btn btn-xs btn-warning pull-right'>" . _TAD_EDIT . '</a>' : '';
             $db_ans_csn = isset($db_ans[$csn]) ? $db_ans[$csn] : '';
             $col_form = col_form($csn, $kind, $size, $val, $db_ans_csn, $chk);
 
