@@ -15,15 +15,15 @@ function is_mine($ssn = '')
 
     if ($xoopsUser) {
         $module_id = $xoopsModule->getVar('mid');
-        $isAdmin   = $xoopsUser->isAdmin($module_id);
+        $isAdmin = $xoopsUser->isAdmin($module_id);
         if ($isAdmin) {
             return true;
         }
 
         $now_uid = $xoopsUser->uid();
 
-        $sql       = 'select uid from ' . $xoopsDB->prefix('tad_form_fill') . " where ssn='$ssn'";
-        $result    = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql = 'select uid from ' . $xoopsDB->prefix('tad_form_fill') . " where ssn='$ssn'";
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         list($uid) = $xoopsDB->fetchRow($result);
         if ($now_uid == $uid) {
             return true;
@@ -42,7 +42,7 @@ function view($code = '', $mode = '')
 
     $sql = 'select ofsn,ssn,uid,man_name,email,fill_time from ' . $xoopsDB->prefix('tad_form_fill') . " where code='{$code}'";
 
-    $result                                                = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($ofsn, $ssn, $uid, $man_name, $email, $fill_time) = $xoopsDB->fetchRow($result);
     if (empty($ssn)) {
         return;
@@ -51,13 +51,13 @@ function view($code = '', $mode = '')
     $form = get_tad_form_main($ofsn);
 
     $tbl_set = ('mail' === $mode) ? 'border=1 ' : "class='table table-striped'";
-    $td_set  = ('mail' === $mode) ? 'bgcolor=#F0F0F0' : '';
+    $td_set = ('mail' === $mode) ? 'bgcolor=#F0F0F0' : '';
     $content = ('mail' === $mode) ? '' : "<tr><td class='note' colspan=2>{$form['content']}</td></tr>";
 
     $sql = 'select b.csn,b.val,a.title from ' . $xoopsDB->prefix('tad_form_col') . ' as a left join ' . $xoopsDB->prefix('tad_form_value') . " as b on a.csn=b.csn where b.ssn='{$ssn}' order by a.sort";
 
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-    $i      = 1;
+    $i = 1;
     while (list($csn, $val, $title) = $xoopsDB->fetchRow($result)) {
         if ('mail' === $mode) {
             $all .= "
@@ -67,21 +67,21 @@ function view($code = '', $mode = '')
       </tr>";
         } else {
             $all[$i]['td_set'] = $td_set;
-            $all[$i]['i']      = $i;
-            $all[$i]['title']  = $myts->htmlSpecialChars($title);
-            $all[$i]['val']    = $myts->htmlSpecialChars($val);
+            $all[$i]['i'] = $i;
+            $all[$i]['title'] = $myts->htmlSpecialChars($title);
+            $all[$i]['val'] = $myts->htmlSpecialChars($val);
         }
         $i++;
     }
 
     if ('mail' === $mode) {
         $main = "
-    <table {$tbl_set}>
-    {$content}
-    {$all}
-    </table>
-    <div class=\"text-center\">
-    ";
+        <table {$tbl_set}>
+        {$content}
+        {$all}
+        </table>
+        <div class=\"text-center\">
+        ";
 
         if ($show_report) {
             $main .= '<a href="' . XOOPS_URL . "/modules/tad_form/report.php?ofsn={$ofsn}\" class=\"btn btn-info\">" . _TADFORM_VIEW_FORM . '</a>';
@@ -91,7 +91,7 @@ function view($code = '', $mode = '')
 
         return $main;
     }
-    $xoopsTpl->assign('op', 'view');
+
     $xoopsTpl->assign('form_title', $form['title']);
     $xoopsTpl->assign('tbl_set', $tbl_set);
     $xoopsTpl->assign('content', $content);
@@ -126,7 +126,7 @@ function set_form_status($ofsn = '', $enable = '0')
         return;
     }
 
-    $sql    = 'update ' . $xoopsDB->prefix('tad_form_main') . " set enable='{$enable}' where ofsn='$ofsn'";
+    $sql = 'update ' . $xoopsDB->prefix('tad_form_main') . " set enable='{$enable}' where ofsn='$ofsn'";
     $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 

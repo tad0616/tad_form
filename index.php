@@ -228,7 +228,7 @@ switch ($op) {
     case 'save_val':
         $code = save_val($ofsn, $ans);
         send_now($code);
-        redirect_header("index.php?op=view&vcode={$code}", 3, _MD_TADFORM_SAVE_OK);
+        redirect_header("index.php?op=view&code={$code}", 3, _MD_TADFORM_SAVE_OK);
         break;
 
     case 'view':

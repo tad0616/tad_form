@@ -7,7 +7,7 @@
         <h3><{$title}></h3>
         <p><{$msg}></p>
     </div>
-<{elseif $op=="view"}>
+<{elseif $now_op=="view"}>
     <h1><{$form_title}></h1>
     <table <{$tbl_set}>>
     <{$content}>
