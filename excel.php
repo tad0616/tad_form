@@ -28,7 +28,7 @@ $objActSheet->setTitle('data'); //設定標題
 $objPHPExcel->createSheet(); //建立新的工作表，上面那三行再來一次，編號要改
 
 $objActSheet->setCellValue("A1", _MD_TADFORM_COL_WHO);
-$objActSheet->setCellValue("B1", _MD_TADFORM_SIGN_DATE);
+$objActSheet->setCellValue("B1", strip_tags(sprintf(_MD_TADFORM_SIGN_DATE, $form_main['start_date'], $form_main['end_date'])));
 
 $sql = 'select csn,title,kind,func from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn='{$ofsn}' order by sort";
 $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
