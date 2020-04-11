@@ -69,7 +69,7 @@ function view_user_result($ofsn)
         $email_data = explode('@', $email);
 
         //$url=!empty($uid)?"".XOOPS_URL."/userinfo.php?uid=$uid":"#";
-        $url = ($isAdmin) ? "{$_SERVER['PHP_SELF']}?op=view&code=$code" : '#';
+        $url = ($isAdmin) ? "{$_SERVER['PHP_SELF']}?op=view&mycode=$code" : '#';
         //$main.="<tr><td><a href='$url'>$man_name</a></td>";
         $all_result_col[$i]['url'] = $myts->htmlSpecialChars($url);
         $all_result_col[$i]['man_name'] = ($isAdmin) ? $myts->htmlSpecialChars($man_name) : $email_data[0];

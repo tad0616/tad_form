@@ -1,4 +1,10 @@
+Tad Form 3.6 (2020-04-11 released)
+====================================================
+1. Fix the problem that visitors may not be able to see the results correctly after filling out the form.
+2. Fix the problem that the verification code does not work.
+
 Tad Form 3.5 (2020-04-09 released)
+====================================================
 1. Fix the problem that the "Online Form" block is not available in some cases.
 2. Fix the linking error of the title edit button
 3. Fixed permission management page title

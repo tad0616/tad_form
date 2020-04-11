@@ -1,4 +1,4 @@
-﻿/*                 JQuery header comments
+/*                 JQuery header comments
 *          for Visual Studio IntelliSense support
 * 
 * **************************************************************

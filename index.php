@@ -93,13 +93,13 @@ function save_val($ofsn = '', $ans = [])
     $myts = \MyTextSanitizer::getInstance();
     $form = get_tad_form_main($ofsn);
 
-    // if ('1' == $form['captcha']) {
-    //     if ($_SESSION['security_code_' . $ofsn] != $_POST['security_images_' . $ofsn] or empty($_POST['security_images_' . $ofsn])) {
-    //         redirect_header($_SERVER['PHP_SELF'] . "?op=sign&ofsn=$ofsn", 3, $_SESSION['security_code_' . $ofsn] . '!=' . $_POST['security_images_' . $ofsn] . _MD_TADFORM_CAPTCHA_ERROR);
-    //     }
+    if ('1' == $form['captcha']) {
+        if ($_SESSION['security_code_' . $ofsn] != $_POST['security_images_' . $ofsn] or empty($_POST['security_images_' . $ofsn])) {
+            redirect_header($_SERVER['PHP_SELF'] . "?op=sign&ofsn=$ofsn", 3, _MD_TADFORM_CAPTCHA_ERROR);
+        }
 
-    //     unset($_SESSION['security_code_' . $ofsn]);
-    // }
+        unset($_SESSION['security_code_' . $ofsn]);
+    }
 
     $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
@@ -177,7 +177,7 @@ function send_now($code = '')
     $all = view($code, 'mail');
 
     $fill_time = date('Y-m-d H:i:s', xoops_getUserTimestamp(strtotime($fill_time)));
-    $content = sprintf(_MD_TADFORM_MAIL_CONTENT, $man_name, $fill_time, $title, $all, XOOPS_URL . "/modules/tad_form/index.php?op=view&code={$code}");
+    $content = sprintf(_MD_TADFORM_MAIL_CONTENT, $man_name, $fill_time, $title, $all, XOOPS_URL . "/modules/tad_form/index.php?op=view&mycode={$code}");
     $subject = sprintf(_MD_TADFORM_MAIL_TITLE, $title, $man_name, $fill_time);
 
     $sCharset = 'UTF-8';
@@ -209,7 +209,7 @@ $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $ofsn = system_CleanVars($_REQUEST, 'ofsn', 0, 'int');
 $ssn = system_CleanVars($_REQUEST, 'ssn', 0, 'int');
 $ans = system_CleanVars($_REQUEST, 'ans', '', 'array');
-$code = system_CleanVars($_REQUEST, 'code', '', 'string');
+$code = system_CleanVars($_REQUEST, 'mycode', '', 'string');
 
 switch ($op) {
     case 'sign':
@@ -228,7 +228,7 @@ switch ($op) {
     case 'save_val':
         $code = save_val($ofsn, $ans);
         send_now($code);
-        redirect_header("index.php?op=view&code={$code}", 3, _MD_TADFORM_SAVE_OK);
+        redirect_header("index.php?op=view&mycode={$code}", 3, _MD_TADFORM_SAVE_OK);
         break;
 
     case 'view':

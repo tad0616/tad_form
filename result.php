@@ -65,7 +65,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
     $i = 0;
     $col_v = $col = [];
     while (list($ssn, $uid, $man_name, $email, $fill_time, $code, $result_col) = $xoopsDB->fetchRow($result)) {
-        $url = "{$_SERVER['PHP_SELF']}?op=view&code=$code";
+        $url = "{$_SERVER['PHP_SELF']}?op=view&mycode=$code";
         $all_result_col[$i]['url'] = $myts->htmlSpecialChars($url);
         $all_result_col[$i]['man_name'] = $myts->htmlSpecialChars($man_name);
 
