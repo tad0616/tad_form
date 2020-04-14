@@ -313,15 +313,23 @@ if (!function_exists('col_form')) {
             case 'radio':
                 $default_val = (empty($db_ans)) ? $default_val : $db_ans;
                 $opt = explode(';', $size);
-                $i = 0;
+                $i = 1;
                 $main = "<input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
                 foreach ($opt as $val) {
                     $checked = ($default_val == $val) ? 'checked' : '';
                     $chktxt = ($chk) ? "class='validate[required] radio'" : '';
-                    $main .= "
-                    <label class='radio-inline'>
-                    <input type='radio' name='ans[$csn]' value='{$val}' $checked $chktxt>{$val}
-                    </label>";
+                    if ($_SESSION['bootstrap'] == 4) {
+                        $main .= "
+                        <div class='form-check form-check-inline'>
+                            <input class='form-check-input' type='radio' name='ans[$csn]' id='inlineRadio{$i}' value='{$val}' $checked $chktxt>
+                            <label class='form-check-label' for='inlineRadio{$i}'>{$val}</label>
+                        </div>";
+                    } else {
+                        $main .= "
+                        <label class='radio-inline'>
+                            <input type='radio' name='ans[$csn]' value='{$val}' $checked $chktxt>{$val}
+                        </label>";
+                    }
                     $i++;
                 }
                 break;
@@ -330,15 +338,23 @@ if (!function_exists('col_form')) {
                 $db = explode(';', $default_val);
 
                 $opt = explode(';', $size);
-                $i = 0;
+                $i = 1;
                 $main = "<input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
                 foreach ($opt as $val) {
                     $checked = (in_array($val, $db)) ? "checked='checked'" : '';
                     $chktxt = ($chk) ? "class='validate[required] checkbox'" : '';
-                    $main .= "
-                    <label class='checkbox-inline'>
-                    <input type='checkbox' name='ans[$csn][]' value='{$val}' $checked $chktxt>{$val}
-                    </label>";
+                    if ($_SESSION['bootstrap'] == 4) {
+                        $main .= "
+                        <div class='form-check form-check-inline'>
+                            <input class='form-check-input' type='checkbox' name='ans[$csn][]' id='inlineCheckbox{$i}' value='{$val}' $checked $chktxt>
+                            <label class='form-check-label' for='inlineCheckbox{$i}'>{$val}</label>
+                        </div>";
+                    } else {
+                        $main .= "
+                        <label class='checkbox-inline'>
+                            <input type='checkbox' name='ans[$csn][]' value='{$val}' $checked $chktxt>{$val}
+                        </label>";
+                    }
                     $i++;
                 }
                 break;
