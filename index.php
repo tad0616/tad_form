@@ -110,9 +110,12 @@ function save_val($ofsn = '', $ans = [])
 
     // 不允許多次填寫時
     if ($form['multi_sign'] != 1) {
-        $sql = 'select ssn from ' . $xoopsDB->prefix('tad_form_fill') . "  where `ofsn`='{$ofsn}' and `uid`='{$uid}'";
-        $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-        list($ssn) = $xoopsDB->fetchRow($result);
+        // 不然訪客會重複填
+        if ($uid > 0) {
+            $sql = 'select ssn from ' . $xoopsDB->prefix('tad_form_fill') . "  where `ofsn`='{$ofsn}' and `uid`='{$uid}'";
+            $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+            list($ssn) = $xoopsDB->fetchRow($result);
+        }
         if ($ssn) {
             $sql = 'update ' . $xoopsDB->prefix('tad_form_fill') . " set `uid`='{$uid}',`man_name`='{$man_name}',`email`='{$email}',`fill_time`='{$now}' where `ssn`='{$ssn}'";
             $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);

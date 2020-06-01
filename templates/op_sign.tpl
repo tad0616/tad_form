@@ -20,7 +20,7 @@
                 <{$smarty.const._TADFORM_CAPTCHA}>
             </label>
             <div class="col-sm-2">
-                    <img src="<{$xoops_url}>/modules/tad_form/mkpic.php?ofsn=<{$ofsn}>">
+                    <img src="<{$xoops_url}>/modules/tad_form/mkpic.php?ofsn=<{$ofsn}>" alt="captcha">
             </div>
             <div class="col-sm-2">
                 <input type='text' name='security_images_<{$ofsn}>' class="form-control">
