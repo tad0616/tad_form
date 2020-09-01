@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
@@ -159,9 +160,8 @@ function copy_form($ofsn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$ofsn = system_CleanVars($_REQUEST, 'ofsn', 0, 'int');
+$op = Request::getString('op');
+$ofsn = Request::getInt('ofsn');
 
 switch ($op) {
     case 'excel':

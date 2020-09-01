@@ -1,3 +1,7 @@
+Tad Form 3.6.1 (Released on 2020-09-01)
+=============================================================
+1.Correct the problem of overwriting other people's data when filling out the form when multiple entries are not allowed.
+
 Tad Form 3.6 (2020-04-11 released)
 ====================================================
 1. Fix the problem that visitors may not be able to see the results correctly after filling out the form.

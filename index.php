@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
@@ -207,12 +208,11 @@ function send_now($code = '')
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$ofsn = system_CleanVars($_REQUEST, 'ofsn', 0, 'int');
-$ssn = system_CleanVars($_REQUEST, 'ssn', 0, 'int');
-$ans = system_CleanVars($_REQUEST, 'ans', '', 'array');
-$code = system_CleanVars($_REQUEST, 'mycode', '', 'string');
+$op = Request::getString('op');
+$ofsn = Request::getInt('ofsn');
+$ssn = Request::getInt('ssn');
+$ans = Request::getArray('ans');
+$mycode = Request::getString('mycode');
 
 switch ($op) {
     case 'sign':

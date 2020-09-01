@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\Utility;
@@ -319,11 +320,10 @@ function change_chk($csn = '', $chk = '0')
     $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$ofsn = system_CleanVars($_REQUEST, 'ofsn', 0, 'int');
-$csn = system_CleanVars($_REQUEST, 'csn', 0, 'int');
-$mode = system_CleanVars($_REQUEST, 'mode', '', 'string');
+$op = Request::getString('op');
+$ofsn = Request::getInt('ofsn');
+$csn = Request::getInt('csn');
+$mode = Request::getString('mode');
 
 switch ($op) {
     //更新欄位是否公開

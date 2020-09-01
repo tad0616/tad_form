@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
@@ -119,10 +120,9 @@ function view_user_result($ofsn)
     $xoopsTpl->assign('result_col', $all_result_col);
 }
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$ofsn = system_CleanVars($_REQUEST, 'ofsn', 0, 'int');
-$ssn = system_CleanVars($_REQUEST, 'ssn', 0, 'int');
+$op = Request::getString('op');
+$ofsn = Request::getInt('ofsn');
+$ssn = Request::getInt('ssn');
 
 switch ($op) {
     //預設動作
