@@ -315,13 +315,14 @@ if (!function_exists('col_form')) {
                 $opt = explode(';', $size);
                 $i = 1;
                 $main = "<input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
+                $class4 = ($_SESSION['bootstrap'] == 4) ? 'form-check-input' : '';
                 foreach ($opt as $val) {
                     $checked = ($default_val == $val) ? 'checked' : '';
-                    $chktxt = ($chk) ? "class='validate[required] radio'" : '';
+                    $chktxt = ($chk) ? "class='{$class4} validate[required] radio'" : '';
                     if ($_SESSION['bootstrap'] == 4) {
                         $main .= "
                         <div class='form-check form-check-inline'>
-                            <input class='form-check-input' type='radio' name='ans[$csn]' id='inlineRadio{$i}' value='{$val}' $checked $chktxt>
+                            <input type='radio' name='ans[$csn]' id='inlineRadio{$i}' value='{$val}' $checked $chktxt>
                             <label class='form-check-label' for='inlineRadio{$i}'>{$val}</label>
                         </div>";
                     } else {
@@ -340,13 +341,14 @@ if (!function_exists('col_form')) {
                 $opt = explode(';', $size);
                 $i = 1;
                 $main = "<input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
+                $class4 = ($_SESSION['bootstrap'] == 4) ? 'form-check-input' : '';
                 foreach ($opt as $val) {
                     $checked = (in_array($val, $db)) ? "checked='checked'" : '';
-                    $chktxt = ($chk) ? "class='validate[required] checkbox'" : '';
+                    $chktxt = ($chk) ? "class='{$class4} validate[required] checkbox'" : '';
                     if ($_SESSION['bootstrap'] == 4) {
                         $main .= "
                         <div class='form-check form-check-inline'>
-                            <input class='form-check-input' type='checkbox' name='ans[$csn][]' id='inlineCheckbox{$i}' value='{$val}' $checked $chktxt>
+                            <input type='checkbox' name='ans[$csn][]' id='inlineCheckbox{$i}' value='{$val}' $checked $chktxt>
                             <label class='form-check-label' for='inlineCheckbox{$i}'>{$val}</label>
                         </div>";
                     } else {
