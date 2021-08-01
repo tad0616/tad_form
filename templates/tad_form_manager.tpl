@@ -21,7 +21,7 @@
     <tbody>
 
     <{foreach item=form from=$form}>
-        <{if $isAdmin or $form.uid==$now_uid}>
+        <{if $smarty.session.tad_form_adm or $form.uid==$now_uid}>
             <tr>
                 <td>
                     <{$form.ofsn}><{$form.enable_tool}>

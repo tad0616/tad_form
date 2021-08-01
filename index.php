@@ -217,12 +217,8 @@ $mycode = Request::getString('mycode');
 switch ($op) {
     case 'sign':
         sign_form($ofsn, $ssn);
-        // if ($isAdmin) {
-        //     echo "<pre>";
-        //     var_export($_SESSION);
-        //     echo "</pre>";
-        // }
         break;
+
     case 'delete_fill':
         delete_tad_form_ans($ssn);
         header("location:index.php?op=sign&ofsn={$ofsn}");

@@ -205,6 +205,7 @@ switch ($op) {
     case 'view':
         view_result($ofsn, true, $ssn);
         break;
+
     //刪除資料
     case 'delete_tad_form_ans':
         delete_tad_form_ans($ssn);

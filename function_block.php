@@ -19,8 +19,11 @@ if (!function_exists('sign_form')) {
         $sign_group = (empty($form['sign_group'])) ? '' : explode(',', $form['sign_group']);
 
         if ($xoopsUser) {
-            $module_id = $xoopsModule->mid();
-            $isAdmin = $xoopsUser->isAdmin($module_id);
+            if (!isset($_SESSION['tad_form_adm'])) {
+                $module_id = $xoopsModule->mid();
+                $_SESSION['tad_form_adm'] = ($xoopsUser) ? $xoopsUser->isAdmin($module_id) : false;
+            }
+
             $email = $xoopsUser->email();
 
             $User_Groups = $xoopsUser->getGroups();
@@ -68,7 +71,7 @@ if (!function_exists('sign_form')) {
         } else {
             $uid_name = '';
             $email = $history = '';
-            $isAdmin = false;
+            $_SESSION['tad_form_adm'] = false;
             $db_ans = [];
             if (!empty($sign_group) and !in_array('3', $sign_group)) {
 
@@ -87,7 +90,7 @@ if (!function_exists('sign_form')) {
             }
         }
 
-        if (!$isAdmin) {
+        if (!$_SESSION['tad_form_adm']) {
             if ('1' != $form['enable']) {
 
                 if ('return' === $mode) {
@@ -170,7 +173,7 @@ if (!function_exists('sign_form')) {
                 $$k = $v;
             }
 
-            $edit_btn = ($isAdmin) ? "<a href='" . XOOPS_URL . "/modules/tad_form/add.php?op=edit_opt&ofsn=$ofsn&csn=$csn&mode=update' class='btn btn-xs btn-warning pull-right'>" . _TAD_EDIT . '</a>' : '';
+            $edit_btn = ($_SESSION['tad_form_adm']) ? "<a href='" . XOOPS_URL . "/modules/tad_form/add.php?op=edit_opt&ofsn=$ofsn&csn=$csn&mode=update' class='btn btn-xs btn-warning pull-right'>" . _TAD_EDIT . '</a>' : '';
             $db_ans_csn = isset($db_ans[$csn]) ? $db_ans[$csn] : '';
             $col_form = col_form($csn, $kind, $size, $val, $db_ans_csn, $chk);
 
@@ -203,7 +206,7 @@ if (!function_exists('sign_form')) {
         $jquery = Utility::get_jquery(true);
 
         $tool = '';
-        if ($isAdmin) {
+        if ($_SESSION['tad_form_adm']) {
             $tool = "
             <a href='" . XOOPS_URL . "/modules/tad_form/add.php?op=tad_form_main_form&ofsn={$ofsn}' class='btn btn-warning'>" . sprintf(_TADFORM_EDIT_FORM, $form['title']) . "</a>
             <a href='" . XOOPS_URL . "/modules/tad_form/add.php?op=edit_all_opt&ofsn={$ofsn}' class='btn btn-warning'>" . _TADFORM_EDIT_ALL . "</a>
@@ -431,9 +434,9 @@ if (!function_exists('get_history')) {
 if (!function_exists('can_view_report')) {
     function can_view_report($ofsn = '')
     {
-        global $xoopsUser, $isAdmin;
+        global $xoopsUser;
         if ($xoopsUser) {
-            if ($isAdmin) {
+            if ($_SESSION['tad_form_adm']) {
                 return true;
             }
 

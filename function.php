@@ -9,14 +9,13 @@ xoops_loadLanguage('main', 'tadtools');
 //查填報答案是否為某人或管理者
 function is_mine($ssn = '')
 {
-    global $xoopsDB, $isAdmin, $xoopsUser, $xoopsModule;
-
-    $isAdmin = false;
+    global $xoopsDB, $xoopsUser, $xoopsModule;
 
     if ($xoopsUser) {
-        $module_id = $xoopsModule->getVar('mid');
-        $isAdmin = $xoopsUser->isAdmin($module_id);
-        if ($isAdmin) {
+        if (!isset($_SESSION['tad_form_adm'])) {
+            $_SESSION['tad_form_adm'] = ($xoopsUser) ? $xoopsUser->isAdmin() : false;
+        }
+        if ($_SESSION['tad_form_adm']) {
             return true;
         }
 
@@ -36,7 +35,7 @@ function is_mine($ssn = '')
 //觀看填報結果
 function view($code = '', $mode = '')
 {
-    global $xoopsDB, $xoopsUser, $xoopsTpl, $isAdmin;
+    global $xoopsDB, $xoopsUser, $xoopsTpl;
 
     $myts = \MyTextSanitizer::getInstance();
 
@@ -107,7 +106,7 @@ function view($code = '', $mode = '')
 //刪除某人的填寫資料
 function delete_tad_form_ans($ssn = '')
 {
-    global $xoopsDB, $isAdmin;
+    global $xoopsDB;
 
     if (is_mine($ssn)) {
         $sql = 'delete from ' . $xoopsDB->prefix('tad_form_fill') . " where ssn='$ssn'";

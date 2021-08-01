@@ -6,7 +6,7 @@ use XoopsModules\Tadtools\Utility;
 require __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'tad_form_mail.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
-if (!Utility::power_chk('tad_form_post', 1) and !$isAdmin) {
+if (!Utility::power_chk('tad_form_post', 1) and !$_SESSION['tad_form_adm']) {
     redirect_header('index.php', 3, _TAD_PERMISSION_DENIED);
 }
 /*-----------function區--------------*/

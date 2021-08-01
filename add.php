@@ -7,7 +7,7 @@ use XoopsModules\Tadtools\Utility;
 require __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'tad_form_add.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
-if (!Utility::power_chk('tad_form_post', 1) and !$isAdmin) {
+if (!Utility::power_chk('tad_form_post', 1) and !$_SESSION['tad_form_adm']) {
     redirect_header('index.php', 3, _TAD_PERMISSION_DENIED);
 }
 
@@ -15,7 +15,7 @@ if (!Utility::power_chk('tad_form_post', 1) and !$isAdmin) {
 //tad_form_main編輯表單
 function tad_form_main_form($ofsn = '')
 {
-    global $xoopsDB, $xoopsUser, $xoopsTpl, $isAdmin;
+    global $xoopsDB, $xoopsUser, $xoopsTpl;
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     //抓取預設值
@@ -43,7 +43,7 @@ function tad_form_main_form($ofsn = '')
     $view_result_group = (!isset($DBV['view_result_group'])) ? [1] : explode(',', $DBV['view_result_group']);
     $multi_sign = (!isset($DBV['multi_sign'])) ? '0' : $DBV['multi_sign'];
 
-    if (!$isAdmin and ($uid != '' and $uid != $xoopsUser->uid())) {
+    if (!$_SESSION['tad_form_adm'] and ($uid != '' and $uid != $xoopsUser->uid())) {
         redirect_header('index.php', 3, _TAD_PERMISSION_DENIED);
     }
 
@@ -121,10 +121,10 @@ function insert_tad_form_main()
 //更新tad_form_main某一筆資料
 function update_tad_form_main($ofsn = '')
 {
-    global $xoopsDB, $isAdmin, $xoopsUser;
+    global $xoopsDB, $xoopsUser;
     $form = get_tad_form_main($ofsn);
 
-    if (!$isAdmin and $form['uid'] != $xoopsUser->uid()) {
+    if (!$_SESSION['tad_form_adm'] and $form['uid'] != $xoopsUser->uid()) {
         redirect_header('index.php', 3, _TAD_PERMISSION_DENIED);
     }
 
@@ -149,7 +149,7 @@ function update_tad_form_main($ofsn = '')
 //tad_form_col編輯表單
 function tad_form_col_form($the_ofsn = '', $csn = '', $mode = '')
 {
-    global $xoopsDB, $xoopsTpl, $isAdmin, $xoopsUser;
+    global $xoopsDB, $xoopsTpl, $xoopsUser;
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     //抓取預設值
@@ -161,7 +161,7 @@ function tad_form_col_form($the_ofsn = '', $csn = '', $mode = '')
 
     $form = get_tad_form_main($the_ofsn);
 
-    if (!$isAdmin and $form['uid'] != $xoopsUser->uid()) {
+    if (!$_SESSION['tad_form_adm'] and $form['uid'] != $xoopsUser->uid()) {
         redirect_header('index.php', 3, _TAD_PERMISSION_DENIED);
     }
 

@@ -14,7 +14,7 @@ if (!can_view_report((int) $_REQUEST['ofsn'])) {
 
 function view_user_result($ofsn)
 {
-    global $xoopsDB, $xoopsUser, $xoopsTpl, $interface_menu, $isAdmin;
+    global $xoopsDB, $xoopsUser, $xoopsTpl, $interface_menu;
 
     $form = get_tad_form_main($ofsn);
 
@@ -70,10 +70,10 @@ function view_user_result($ofsn)
         $email_data = explode('@', $email);
 
         //$url=!empty($uid)?"".XOOPS_URL."/userinfo.php?uid=$uid":"#";
-        $url = ($isAdmin) ? "{$_SERVER['PHP_SELF']}?op=view&mycode=$code" : '#';
+        $url = ($_SESSION['tad_form_adm']) ? "{$_SERVER['PHP_SELF']}?op=view&mycode=$code" : '#';
         //$main.="<tr><td><a href='$url'>$man_name</a></td>";
         $all_result_col[$i]['url'] = $myts->htmlSpecialChars($url);
-        $all_result_col[$i]['man_name'] = ($isAdmin) ? $myts->htmlSpecialChars($man_name) : $email_data[0];
+        $all_result_col[$i]['man_name'] = ($_SESSION['tad_form_adm']) ? $myts->htmlSpecialChars($man_name) : $email_data[0];
         $all_result_col[$i]['fill_time'] = $fill_time;
 
         $sql2 = 'select csn,val from ' . $xoopsDB->prefix('tad_form_value') . "  where ssn='{$ssn}'";

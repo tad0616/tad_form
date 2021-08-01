@@ -6,7 +6,7 @@ use XoopsModules\Tadtools\Utility;
 require __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'tad_form_manager.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
-if (!Utility::power_chk('tad_form_post', 1) and !$isAdmin) {
+if (!Utility::power_chk('tad_form_post', 1) and !$_SESSION['tad_form_adm']) {
     redirect_header('index.php', 3, _TAD_PERMISSION_DENIED);
 } else {
     $xoopsTpl->assign('now_uid', $xoopsUser->uid());
@@ -100,11 +100,11 @@ function get_form_col_count()
 //刪除tad_form_main某筆資料資料
 function delete_tad_form_main($ofsn = '')
 {
-    global $xoopsDB, $xoopsUser, $isAdmin;
+    global $xoopsDB, $xoopsUser;
 
     $form = get_tad_form_main($ofsn);
 
-    if (!$isAdmin and $form['uid'] != $xoopsUser->uid()) {
+    if (!$_SESSION['tad_form_adm'] and $form['uid'] != $xoopsUser->uid()) {
         redirect_header('index.php', 3, _TAD_PERMISSION_DENIED);
     }
 
@@ -194,7 +194,6 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('now_op', $op);
-$xoopsTpl->assign('isAdmin', $isAdmin);
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_form/css/module.css');
 require_once XOOPS_ROOT_PATH . '/footer.php';

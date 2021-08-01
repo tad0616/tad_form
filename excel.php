@@ -5,7 +5,7 @@ require_once "../../mainfile.php";
 require __DIR__ . '/header.php';
 xoops_loadLanguage('admin', 'tad_form');
 
-if (!Utility::power_chk('tad_form_post', 1) and !$isAdmin) {
+if (!Utility::power_chk('tad_form_post', 1) and !$_SESSION['tad_form_adm']) {
     redirect_header('index.php', 3, _TAD_PERMISSION_DENIED);
 }
 
