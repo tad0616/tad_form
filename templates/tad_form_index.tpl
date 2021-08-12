@@ -5,8 +5,7 @@
     <{includeq file="$xoops_rootpath/modules/$xoops_dirname/templates/op_`$op`.tpl"}>
 <{elseif $op=="error"}>
     <div class="jumbotron">
-        <h3><{$title}></h3>
-        <p><{$msg}></p>
+        <h3><{$msg}></h3>
     </div>
 <{elseif $now_op=="view"}>
     <h1><{$form_title}></h1>
@@ -30,18 +29,20 @@
         <div class="well card card-body bg-light m-1">
         <h3><{$form.title}></h3>
         <div><{$form.multi_sign}><{$form.date}></div>
-        <hr>
-        <{$form.content}>
+            <hr>
+            <{$form.content}>
 
-        <div class="text-center">
+            <div class="text-center">
 
-            <a href="index.php?op=sign&ofsn=<{$form.ofsn}>" class="btn btn-lg btn-block <{if $form.sign_ok}>btn-primary<{else}>disabled<{/if}>"><{$form.button}></a>
+                <a href="index.php?op=sign&ofsn=<{$form.ofsn}>" class="btn btn-lg btn-block <{if $form.sign_ok}>btn-primary<{else}>disabled<{/if}>"><{$form.button}></a>
 
-            <{if $form.view_ok}>
-            <a href="report.php?ofsn=<{$form.ofsn}>" class="btn btn-info btn-lg btn-block"><{$smarty.const._TADFORM_VIEW_FORM}></a>
-            <{/if}>
+                <{if $form.view_ok}>
+                <a href="report.php?ofsn=<{$form.ofsn}>" class="btn btn-info btn-lg btn-block"><{$smarty.const._TADFORM_VIEW_FORM}></a>
+                <{/if}>
 
+            </div>
         </div>
-        </div>
+    <{foreachelse}>
+        <h3><{$smarty.const._MD_TADFORM_EMPTY}></h3>
     <{/foreach}>
 <{/if}>
