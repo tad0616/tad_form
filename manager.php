@@ -1,6 +1,7 @@
 <?php
 use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tadtools\Wcag;
 
 /*-----------引入檔案區--------------*/
 require __DIR__ . '/header.php';
@@ -141,6 +142,8 @@ function copy_form($ofsn = '')
     list($title, $start_date, $end_date, $content, $uid, $post_date, $enable, $sign_group, $kind, $adm_email, $captcha, $show_result, $view_result_group, $multi_sign) = $xoopsDB->fetchRow($result);
 
     $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
+
+    $content = Wcag::amend($content);
 
     //寫入新問卷
     $sql = 'insert into ' . $xoopsDB->prefix('tad_form_main') . " (`title`,`start_date`,`end_date`,`content`,`uid`,`post_date`,`enable`,`sign_group`, `kind`, `adm_email`, `captcha`, `show_result`, `view_result_group`, `multi_sign`) values('copy_{$title}','{$start_date}','{$end_date}','{$content}','{$uid}','{$now}','0','{$sign_group}','{$kind}','{$adm_email}','{$captcha}','{$show_result}','{$view_result_group}','{$multi_sign}')";
