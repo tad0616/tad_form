@@ -51,7 +51,7 @@
     </tbody>
 </table>
 
-<div class="text-right">
+<div class="text-right text-end">
     <a href="add.php?op=edit_opt&ofsn=<{$ofsn}>" class="btn btn-info"><{$smarty.const._MD_TADFORM_ADD_COL}></a>
 </div>
 

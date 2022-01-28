@@ -15,7 +15,7 @@
     <input type="hidden" name="op" value="save_val">
 
     <{if $Captcha}>
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <label class="col-sm-6 col-form-label text-sm-right control-label">
                 <{$smarty.const._TADFORM_CAPTCHA}>
             </label>
@@ -28,7 +28,7 @@
         </div>
     <{/if}>
 
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label class="col-sm-2 col-form-label text-sm-right control-label">
             <{$smarty.const._TADFORM_MAN_NAME}>
         </label>
@@ -67,7 +67,7 @@
             <tr>
                 <td><{$history.fill_time}></td>
                 <td><{$history.man_name}></td>
-                <td class="text-right">
+                <td class="text-right text-end">
                     <a href="javascript:delete_fill(<{$history.ssn}>)" class="btn btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
                     <a href="<{$xoops_url}>/modules/tad_form/index.php?op=sign&ssn=<{$history.ssn}>" class="btn btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>
                 </td>
@@ -76,4 +76,4 @@
         </table>
     </div>
 <{/if}>
-<div class="pull-right"><{$tool}></div>
+<div class="pull-right float-right pull-end"><{$tool}></div>

@@ -173,7 +173,7 @@ if (!function_exists('sign_form')) {
                 $$k = $v;
             }
 
-            $edit_btn = ($_SESSION['tad_form_adm']) ? "<a href='" . XOOPS_URL . "/modules/tad_form/add.php?op=edit_opt&ofsn=$ofsn&csn=$csn&mode=update' class='btn btn-xs btn-warning pull-right'>" . _TAD_EDIT . '</a>' : '';
+            $edit_btn = ($_SESSION['tad_form_adm']) ? "<a href='" . XOOPS_URL . "/modules/tad_form/add.php?op=edit_opt&ofsn=$ofsn&csn=$csn&mode=update' class='btn btn-xs btn-warning pull-right float-right pull-end'>" . _TAD_EDIT . '</a>' : '';
             $db_ans_csn = isset($db_ans[$csn]) ? $db_ans[$csn] : '';
             $col_form = col_form($csn, $kind, $size, $val, $db_ans_csn, $chk);
 

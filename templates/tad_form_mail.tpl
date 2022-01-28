@@ -18,13 +18,13 @@
 
 <{else}>
     <form action="<{$xoops_url}>/modules/tad_form/mail.php" method="post" id="myForm" class="form-horizontal" role="form">
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <div class="col-sm-12">
         <input type="text" name="title" class="form-control" value="<{$title}>" placeholder="<{$smarty.const._MD_TADFORM_MAIL_TITLE}>">
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <div class="col-sm-10">
         <{$editor}>
         </div>
@@ -34,7 +34,7 @@
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <div class="col-sm-12">
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="checkbox" id="checkAll" checked>

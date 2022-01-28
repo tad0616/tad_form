@@ -1,6 +1,6 @@
 <form action="add.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
     <div class="alert alert-info">
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <label class="col-sm-2 control-label col-form-label text-sm-right">
                 <{$smarty.const._MD_TADFORM_COL_TITLE}><{$sort}>
             </label>
@@ -9,7 +9,7 @@
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <label class="col-sm-2 control-label col-form-label text-sm-right">
                 <{$smarty.const._MD_TADFORM_COL_DESCRIPT}>
             </label>
@@ -20,7 +20,7 @@
     </div>
 
 
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label class="col-sm-1 control-label col-form-label text-sm-right">
             <{$smarty.const._MD_TADFORM_COL_KIND}>
         </label>
@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label class="col-sm-1 control-label col-form-label text-sm-right">
             <{$smarty.const._MD_TADFORM_COL_PUBLIC}>
         </label>

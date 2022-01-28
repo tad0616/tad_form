@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-sm-5">
 
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label class="col-sm-4 control-label col-form-label text-sm-right">
                     <{$smarty.const._MD_TADFORM_TITLE}>
                 </label>
@@ -15,7 +15,7 @@
             </div>
 
 
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label class="col-sm-4 control-label col-form-label text-sm-right">
                     <{$smarty.const._MD_TADFORM_ADM_EMAIL}>
                 </label>
@@ -25,7 +25,7 @@
             </div>
 
 
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label class="col-sm-4 control-label col-form-label text-sm-right">
                     <{$smarty.const._MD_TADFORM_START_DATE}>
                 </label>
@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label class="col-sm-4 control-label col-form-label text-sm-right">
                     <{$smarty.const._MD_TADFORM_END_DATE}>
                 </label>

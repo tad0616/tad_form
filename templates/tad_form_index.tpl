@@ -32,7 +32,7 @@
             <hr>
             <{$form.content}>
 
-            <div class="text-center">
+            <div class="text-center d-grid gap-2">
 
                 <a href="index.php?op=sign&ofsn=<{$form.ofsn}>" class="btn btn-lg btn-block <{if $form.sign_ok}>btn-primary<{else}>disabled<{/if}>"><{$form.button}></a>
 

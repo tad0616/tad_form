@@ -1,3 +1,7 @@
+Tad Form 3.6.4 (Released on 2022-01-28)
+====================================
+1.Support BootStrap5
+
 Tad Form 3.6.3 (Released on 2021-08-22)
 ====================================
 1. Fix for 2021/07 new version of AA accessibility standard
@@ -8,7 +12,7 @@ Tad Form 3.6.2 (released on 2021-08-01)
 ================================================
 1. Fix the problem that single and multiple selections are not required under BootStrap4.
 2. Comply with the new version 2021/07 AA accessibility standard
-3.Combine BootStrap3 and 4 templates
+3. Combine BootStrap3 and 4 templates
 
 Tad Form 3.6.1 (Released on 2020-09-01)
 =============================================================

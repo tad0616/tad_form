@@ -6,7 +6,7 @@
 <{if $form_title}>
   <h1><{$form_title}></h1>
 <{else}>
-  <h2 class="sr-only">report</h2>
+  <h2 class="sr-only visually-hidden">report</h2>
 <{/if}>
 
 <script>
