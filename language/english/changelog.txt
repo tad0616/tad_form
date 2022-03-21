@@ -1,3 +1,7 @@
+Tad Form 3.6.5 (Released on 2022-03-21)
+====================================
+1.Fixed the problem of misjudgment of viewing permission.
+
 Tad Form 3.6.4 (Released on 2022-01-28)
 ====================================
 1.Support BootStrap5

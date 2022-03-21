@@ -11,7 +11,7 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 //列出所有tad_form_main資料
 function list_tad_form_main()
 {
-    global $xoopsDB, $xoopsTpl, $xoopsUser, $xoopsModule;
+    global $xoopsDB, $xoopsTpl, $xoopsUser;
     $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
     if ($xoopsUser) {
         $User_Groups = $xoopsUser->getGroups();

@@ -214,7 +214,7 @@ switch ($op) {
 
     //預設動作
     default:
-        view_result($ofsn, true);
+        view_result($ofsn, $_SESSION['tad_form_adm']);
         break;
 }
 
