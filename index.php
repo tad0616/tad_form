@@ -34,7 +34,7 @@ function list_tad_form_main()
         $start_date = date('Y-m-d', xoops_getUserTimestamp(strtotime($start_date)));
         $end_date = date('Y-m-d', xoops_getUserTimestamp(strtotime($end_date)));
 
-        $multi_sign_pic = ('1' == $multi_sign) ? "<img src='images/report_check.png' align='absmiddle' hspace=6 alt='" . _MD_TADFORM_MULTI_SIGN . "' title='" . _MD_TADFORM_MULTI_SIGN . "'><span class='badge badge-success'>" . _MD_TADFORM_MULTI_SIGN . '</span> ' : '';
+        $multi_sign_pic = ('1' == $multi_sign) ? "<img src='images/report_check.png' align='absmiddle' hspace=6 alt='" . _MD_TADFORM_MULTI_SIGN . "' title='" . _MD_TADFORM_MULTI_SIGN . "'><span class='badge badge-success bg-success'>" . _MD_TADFORM_MULTI_SIGN . '</span> ' : '';
 
         $sign_group_arr = (empty($sign_group)) ? '' : explode(',', $sign_group);
         $sign_ok = false;

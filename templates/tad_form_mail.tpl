@@ -6,8 +6,8 @@
     <{foreach item=data from=$main}>
     <{if !$i}><div class="row"><{/if}>
         <div class="jumbotron col-sm-5">
-        <span class="badge badge-info">To: <{$data.mail}></span>
-        <span class="badge badge-success"><{$data.title}></span>
+        <span class="badge badge-info bg-info">To: <{$data.mail}></span>
+        <span class="badge badge-success bg-success"><{$data.title}></span>
         <div><{$data.content}></div>
         </div>
     <{assign var="i" value=$i+1}>
@@ -29,7 +29,7 @@
         <{$editor}>
         </div>
         <div class="col-sm-2">
-        <span class="badge badge-danger"><{$smarty.const._MD_TADFORM_SEND_TAG}></span>
+        <span class="badge badge-danger bg-danger"><{$smarty.const._MD_TADFORM_SEND_TAG}></span>
         <{$tag}>
         </div>
     </div>
