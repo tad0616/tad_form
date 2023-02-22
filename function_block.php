@@ -155,7 +155,8 @@ if (!function_exists('sign_form')) {
             }
             $man_name_list .= '</table>';
 
-            $apply_ok = "<tr><td>{$man_name_list}</td></tr>";
+            $apply_ok = "<tr><td><a href='" . XOOPS_URL . "/modules/tad_form/report.php?ofsn=$ofsn' class='btn btn-info'>" . _TADFORM_VIEW_FORM . '</a></td></tr>';
+            $apply_ok .= "<tr><td>{$man_name_list}</td></tr>";
         } elseif ($form['show_result'] and can_view_report($ofsn)) {
             $apply_ok = "<tr><td><a href='" . XOOPS_URL . "/modules/tad_form/report.php?ofsn=$ofsn' class='btn btn-info'>" . _TADFORM_VIEW_FORM . '</a></td></tr>';
         } else {

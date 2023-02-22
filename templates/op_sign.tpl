@@ -42,11 +42,13 @@
         <div class="col-sm-4">
             <label for='tfemail' style='display:none;'>tfemail</label>
             <input type="text" name="email" id="tfemail"  class='form-control validate[required]' <{if $email}>value="<{$email}>"<{/if}>>
+                <div class="text-danger"><{$smarty.const._TADFORM_EMAIL_TIP}></div>
         </div>
         <div class="col-sm-2">
             <button type="submit" name="submit" class="btn btn-primary"><{$smarty.const._TADFORM_SUBMIT_FORM}></button>
         </div>
     </div>
+
 
 </form>
 

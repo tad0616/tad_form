@@ -19,8 +19,8 @@ $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 $form_main = $xoopsDB->fetchArray($result);
 $form_title = str_replace(['[', ']', ' '], '', $form_main['title']);
 $ff = sprintf(_MD_TADFORM_EXCEL_TITLE, $form_title) . '.xlsx';
-$dl_name = (_CHARSET === 'UTF-8') ? iconv('UTF-8', 'Big5', $ff) : $ff;
-$dl_name = (false !== mb_strpos('MSIE', $_SERVER['HTTP_USER_AGENT'])) ? urlencode($dl_name) : $dl_name;
+// $dl_name = (_CHARSET === 'UTF-8') ? iconv('UTF-8', 'Big5', $ff) : $ff;
+// $dl_name = (false !== mb_strpos('MSIE', $_SERVER['HTTP_USER_AGENT'])) ? urlencode($dl_name) : $dl_name;
 
 $objPHPExcel->setActiveSheetIndex(0); //設定預設顯示的工作表
 $objActSheet = $objPHPExcel->getActiveSheet(); //指定預設工作表為 $objActSheet
@@ -68,11 +68,15 @@ while (list($ssn, $uid, $man_name, $email, $fill_time) = $xoopsDB->fetchRow($res
 
 //----------內容-----------//
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header("Content-Disposition: attachment;filename={$dl_name}");
+// header("Content-Disposition: attachment;filename={$ff}");
 header('Cache-Control: max-age=0');
+
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 $objWriter->setPreCalculateFormulas(false);
-$objWriter->save('php://output');
+// $objWriter->save('php://output');
+
+$objWriter->save(XOOPS_ROOT_PATH . "/uploads/tad_form/{$ff}");
+header("location:" . XOOPS_URL . "/uploads/tad_form/{$ff}");
 exit;
 
 function num2alpha($n)

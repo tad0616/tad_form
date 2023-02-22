@@ -37,3 +37,7 @@ $(document).ready(function(){
   </tr>
   <{/foreach}>
 </table>
+
+<div class="bar">
+  <a href="<{$xoops_url}>/modules/tad_form/index.php?op=sign&ofsn=<{$smarty.get.ofsn}>" class="btn btn-primary"><{$smarty.const._MD_TADFORM_BACK_TO_FORM}></a>
+</div>

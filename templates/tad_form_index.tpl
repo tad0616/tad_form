@@ -20,9 +20,9 @@
     </table>
     <div class="text-center">
     <{if $show_report}>
-        <a href="report.php?ofsn=<{$ofsn}>" class="btn btn-info"><{$smarty.const._TADFORM_VIEW_FORM}></a>
+        <a href="report.php?ofsn=<{$smarty.get.ofsn}>" class="btn btn-info"><{$smarty.const._TADFORM_VIEW_FORM}></a>
     <{/if}>
-    <a href="index.php?op=sign&ofsn=<{$ofsn}>" class="btn btn-success"><{$smarty.const._MD_TADFORM_BACK_TO_FORM}></a>
+    <a href="index.php?op=sign&ofsn=<{$smarty.get.ofsn}>" class="btn btn-success"><{$smarty.const._MD_TADFORM_BACK_TO_FORM}></a>
     </div>
 <{else}>
     <{foreach item=form from=$all}>

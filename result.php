@@ -69,6 +69,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
         $url = "{$_SERVER['PHP_SELF']}?op=view&mycode=$code";
         $all_result_col[$i]['url'] = $myts->htmlSpecialChars($url);
         $all_result_col[$i]['man_name'] = $myts->htmlSpecialChars($man_name);
+        $all_result_col[$i]['email'] = $myts->htmlSpecialChars($email);
 
         $sql2 = 'select csn,val from ' . $xoopsDB->prefix('tad_form_value') . "  where ssn='{$ssn}'";
 
@@ -108,10 +109,7 @@ function view_result($ofsn = '', $isAdmin = false, $view_ssn = '')
         //根據不同表單類型，提供不同的功能
         if ('application' === $form['kind']) {
             $checked = ('1' == $result_col) ? 'checked' : '';
-            $other_fun = "<td nowrap>
-			<input type='hidden' name='ofsn' value='$ofsn'>
-			<input type='hidden' name='ssn[]' value='$ssn'>
-			<input type='checkbox' name='result_col[$ssn]' value='1' $checked>" . _MD_TADFORM_KIND1_OK . '</td>';
+            $other_fun = "<td nowrap><input type='hidden' name='ofsn' value='$ofsn'><input type='hidden' name='ssn[]' value='$ssn'><input type='checkbox' name='result_col[$ssn]' value='1' $checked> " . _MD_TADFORM_KIND1_OK . '</td>';
         } else {
             $other_fun = '';
         }

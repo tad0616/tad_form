@@ -2,6 +2,7 @@
 define('_TADFORM_OFSN', 'Serial Number');
 define('_TADFORM_UID', 'UID');
 define('_TADFORM_EMAIL', 'E-mail');
+define('_TADFORM_EMAIL_TIP', 'Please fill in the email box where you can receive the letter');
 define('_TADFORM_FILL_TIME', 'Time');
 define('_TADFORM_NEED_SIGN', 'Required');
 define('_TADFORM_IS_NEED_SIGN', ' means Required');

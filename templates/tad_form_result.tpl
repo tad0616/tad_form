@@ -8,6 +8,7 @@
 <{else}>
   <h2 class="sr-only visually-hidden">report</h2>
 <{/if}>
+<a href="index.php?op=sign&ofsn=<{$smarty.get.ofsn}>" class="btn btn-success"><{$smarty.const._MD_TADFORM_BACK_TO_FORM}></a>
 
 <script>
     $(document).ready(function(){
@@ -21,7 +22,7 @@
 </script>
 
 <form action="<{$xoops_url}>/modules/tad_form/result.php" method="post" id="myForm" enctype="multipart/form-data">
-    <table class="table table-striped " id="result">
+    <table class="table table-striped" id="result">
         <tr>
             <th><{$smarty.const._MD_TADFORM_COL_WHO}></th>
             <{foreach item=tt from=$all_title}>
@@ -29,7 +30,8 @@
             <{/foreach}>
             <th><{$smarty.const._MD_TADFORM_FILL_TIME}></th><{$funct_title}></tr>
             <{foreach item=col from=$result_col}>
-                <tr><td><a href="<{$col.url}>"><{$col.man_name}></a></td>
+                <tr>
+                <td><a href="<{$col.url}>"><{$col.man_name}></a><br><{$col.email}></td>
             <{foreach item=ans from=$col.ans}>
                 <td><{$ans.val}></td>
             <{/foreach}>
