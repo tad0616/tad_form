@@ -213,6 +213,7 @@ $ofsn = Request::getInt('ofsn');
 $ssn = Request::getInt('ssn');
 $ans = Request::getArray('ans');
 $mycode = Request::getString('mycode');
+$code = Request::getString('code');
 
 switch ($op) {
     case 'sign':
@@ -224,9 +225,21 @@ switch ($op) {
         header("location:index.php?op=sign&ofsn={$ofsn}");
         exit;
 
+    case 'send_now':
+        send_now($code);
+        exit;
+
     case 'save_val':
         $code = save_val($ofsn, $ans);
-        send_now($code);
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, XOOPS_URL . '/modules/tad_form/index.php'); // 通知信處理腳本的 URL
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query(['op' => 'send_now', 'code' => $code]));
+        curl_setopt($curl, CURLOPT_TIMEOUT, 1); // 设置超时时间，确保不等待太长时间
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 1);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($curl);
+        curl_close($curl);
         redirect_header("index.php?op=view&ofsn={$ofsn}&mycode={$code}", 3, _MD_TADFORM_SAVE_OK);
         break;
 

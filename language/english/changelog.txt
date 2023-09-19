@@ -1,3 +1,8 @@
+Tad Form 3.6.7 (released 2023-09-19)
+====================================
+1. Change to send notification letter by background to avoid sending letter to block the filling process.
+
+
 Tad Form 3.6.6 (Released on 2023-02-22)
 ====================================
 1.Fix various minor problems
