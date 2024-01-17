@@ -15,10 +15,10 @@ $objPHPExcel = new PHPExcel(); //實體化Excel
 
 $ofsn = isset($_REQUEST['ofsn']) ? (int) $_REQUEST['ofsn'] : 0;
 $sql = 'select * from ' . $xoopsDB->prefix('tad_form_main') . " where ofsn='$ofsn'";
-$result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+$result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
 $form_main = $xoopsDB->fetchArray($result);
 $form_title = str_replace(['[', ']', ' '], '', $form_main['title']);
-$ff = sprintf(_MD_TADFORM_EXCEL_TITLE, $form_title) . '.xlsx';
+$ff = sprintf(_MD_TAD_FORM_EXCEL_TITLE, $form_title) . '.xlsx';
 // $dl_name = (_CHARSET === 'UTF-8') ? iconv('UTF-8', 'Big5', $ff) : $ff;
 // $dl_name = (false !== mb_strpos('MSIE', $_SERVER['HTTP_USER_AGENT'])) ? urlencode($dl_name) : $dl_name;
 
@@ -27,11 +27,11 @@ $objActSheet = $objPHPExcel->getActiveSheet(); //指定預設工作表為 $objAc
 $objActSheet->setTitle('data'); //設定標題
 $objPHPExcel->createSheet(); //建立新的工作表，上面那三行再來一次，編號要改
 
-$objActSheet->setCellValue("A1", _MD_TADFORM_COL_WHO);
-$objActSheet->setCellValue("B1", strip_tags(sprintf(_MD_TADFORM_SIGN_DATE, $form_main['start_date'], $form_main['end_date'])));
+$objActSheet->setCellValue("A1", _MD_TAD_FORM_COL_WHO);
+$objActSheet->setCellValue("B1", strip_tags(sprintf(_MD_TAD_FORM_FORMAT_SIGN_DATE, $form_main['start_date'], $form_main['end_date'])));
 
 $sql = 'select csn,title,kind,func from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn='{$ofsn}' order by sort";
-$result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+$result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
 $n = 2;
 while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
     if ('show' === $kind) {
@@ -45,7 +45,7 @@ while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
 
 $n = 2;
 $sql = 'select ssn,uid,man_name,email,fill_time from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='{$ofsn}' order by fill_time desc";
-$result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+$result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
 while (list($ssn, $uid, $man_name, $email, $fill_time) = $xoopsDB->fetchRow($result)) {
     $fill_time = date('Y-m-d H:i:s', xoops_getUserTimestamp(strtotime($fill_time)));
     $objActSheet->setCellValueByColumnAndRow(0, $n, $man_name);

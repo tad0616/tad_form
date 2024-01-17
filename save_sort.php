@@ -1,11 +1,11 @@
 <?php
+use XoopsModules\Tad_form\Tad_form_col;
 require_once "../../mainfile.php";
 $updateRecordsArray = $_POST['tr'];
 
 $sort = 1;
 foreach ($updateRecordsArray as $recordIDValue) {
-    $sql = 'update ' . $xoopsDB->prefix('tad_form_col') . " set `sort`='{$sort}' where `csn`='{$recordIDValue}'";
-    $xoopsDB->queryF($sql) or die('Save Sort Fail! (' . date('Y-m-d H:i:s') . ')');
+    Tad_form_col::update($ofsn, ['csn' => $recordIDValue], ['sort' => $sort]);
     $sort++;
 }
 

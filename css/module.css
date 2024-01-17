@@ -23,12 +23,12 @@
 
 .question {
 	color: rgb(153, 0, 0);
-	font-weight: bolder;
-	font-size: 1em;
+	/* font-weight: bolder; */
+	font-size: 1.1rem;
 }
 
-td.q_col {
-	padding: 4px 6px 0px 6px;
+.q_col {
+	/* padding: 4px 6px 0px 6px; */
 	background-color: rgb(222, 228, 243);
 }
 
@@ -37,16 +37,22 @@ td.q_col {
 }
 
 .btn-group-xs>.btn,
-.btn-xs {
+.btn-sm {
 	padding: 1px 5px;
 	font-size: 0.8em;
 	line-height: 1.5;
 	border-radius: 3px;
 }
 
-#result td, #result th{
+#result td,
+#result th {
 	min-width: 150px;
 	max-width: 400px;
 	word-break: break-all;
-	white-space:pre-wrap;
+	white-space: pre-wrap;
+}
+
+.bar {
+	text-align: center;
+	margin: 3em auto;
 }

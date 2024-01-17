@@ -28,6 +28,60 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 class Update
 {
+
+    public static function chk_add_files_center()
+    {
+        global $xoopsDB;
+        $sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = '" . XOOPS_DB_NAME . "' AND table_name = '" . $xoopsDB->prefix('tad_form_files_center') . "'";
+        $result = $xoopsDB->query($sql);
+        list($table_name) = $xoopsDB->fetchRow($result);
+        if (empty($table_name)) {
+            $sql = "CREATE TABLE `" . $xoopsDB->prefix('tad_form_files_center') . "` (
+                `files_sn` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT '檔案流水號',
+                `col_name` varchar(255) NOT NULL DEFAULT '' COMMENT '欄位名稱',
+                `col_sn` varchar(255) NOT NULL DEFAULT '' COMMENT '欄位編號',
+                `sort` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+                `kind` enum('img','file') NOT NULL DEFAULT 'img' COMMENT '檔案種類',
+                `file_name` varchar(255) NOT NULL DEFAULT '' COMMENT '檔案名稱',
+                `file_type` varchar(255) NOT NULL DEFAULT '' COMMENT '檔案類型',
+                `file_size` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '檔案大小',
+                `description` text NOT NULL COMMENT '檔案說明',
+                `counter` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '下載人次',
+                `original_filename` varchar(255) NOT NULL DEFAULT '' COMMENT '檔案名稱',
+                `hash_filename` varchar(255) NOT NULL DEFAULT '' COMMENT '加密檔案名稱',
+                `sub_dir` varchar(255) NOT NULL DEFAULT '' COMMENT '檔案子路徑',
+                `upload_date` datetime NOT NULL COMMENT '上傳時間',
+                `uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '上傳者',
+                `tag` varchar(255) NOT NULL DEFAULT '' COMMENT '註記',
+                PRIMARY KEY (`files_sn`)
+            ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+            $xoopsDB->queryF($sql);
+        }
+    }
+
+    public static function chk_add_data_center()
+    {
+        global $xoopsDB;
+        $sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = '" . XOOPS_DB_NAME . "' AND table_name = '" . $xoopsDB->prefix('tad_form_data_center') . "'";
+        $result = $xoopsDB->query($sql);
+        list($table_name) = $xoopsDB->fetchRow($result);
+        if (empty($table_name)) {
+            $sql = "CREATE TABLE `" . $xoopsDB->prefix('tad_form_data_center') . "` (
+                `mid` mediumint(9) unsigned NOT NULL AUTO_INCREMENT COMMENT '模組編號',
+                `col_name` varchar(100) NOT NULL DEFAULT '' COMMENT '欄位名稱',
+                `col_sn` mediumint(9) unsigned NOT NULL DEFAULT '0' COMMENT '欄位編號',
+                `data_name` varchar(100) NOT NULL DEFAULT '' COMMENT '資料名稱',
+                `data_value` text NOT NULL COMMENT '儲存值',
+                `data_sort` mediumint(9) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+                `col_id` varchar(100) NOT NULL COMMENT '辨識字串',
+                `sort` mediumint(9) unsigned DEFAULT NULL COMMENT '排序',
+                `update_time` datetime NOT NULL COMMENT '更新時間',
+                PRIMARY KEY (`mid`, `col_name`, `col_sn`, `data_name`, `data_sort`)
+            ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+            $xoopsDB->queryF($sql);
+        }
+    }
+
     //刪除錯誤的重複欄位及樣板檔
     public static function chk_tad_form_block()
     {
@@ -37,7 +91,7 @@ class Update
 
         //先找出該有的區塊以及對應樣板
         foreach ($modversion['blocks'] as $i => $block) {
-            $show_func                = $block['show_func'];
+            $show_func = $block['show_func'];
             $tpl_file_arr[$show_func] = $block['template'];
             $tpl_desc_arr[$show_func] = $block['description'];
         }
@@ -69,7 +123,7 @@ class Update
     public static function chk_chk1()
     {
         global $xoopsDB;
-        $sql    = 'SELECT count(`kind`) FROM ' . $xoopsDB->prefix('tad_form_main');
+        $sql = 'SELECT count(`kind`) FROM ' . $xoopsDB->prefix('tad_form_main');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return false;
@@ -82,7 +136,7 @@ class Update
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_form_main') . ' ADD `kind` VARCHAR(255) NOT NULL';
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
 
         return true;
     }
@@ -90,7 +144,7 @@ class Update
     public static function chk_chk2()
     {
         global $xoopsDB;
-        $sql    = 'SELECT count(`result_col`) FROM ' . $xoopsDB->prefix('tad_form_fill');
+        $sql = 'SELECT count(`result_col`) FROM ' . $xoopsDB->prefix('tad_form_fill');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return false;
@@ -103,7 +157,7 @@ class Update
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_form_fill') . ' ADD `result_col` VARCHAR(255) NOT NULL';
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
 
         return true;
     }
@@ -111,7 +165,7 @@ class Update
     public static function chk_chk3()
     {
         global $xoopsDB;
-        $sql    = 'SELECT count(`adm_email`) FROM ' . $xoopsDB->prefix('tad_form_main');
+        $sql = 'SELECT count(`adm_email`) FROM ' . $xoopsDB->prefix('tad_form_main');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return false;
@@ -124,7 +178,7 @@ class Update
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_form_main') . ' ADD `adm_email` VARCHAR(255) NOT NULL';
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
 
         return true;
     }
@@ -132,7 +186,7 @@ class Update
     public static function chk_chk4()
     {
         global $xoopsDB;
-        $sql    = 'SELECT count(`captcha`) FROM ' . $xoopsDB->prefix('tad_form_main');
+        $sql = 'SELECT count(`captcha`) FROM ' . $xoopsDB->prefix('tad_form_main');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return false;
@@ -145,7 +199,7 @@ class Update
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_form_main') . " ADD `captcha` ENUM('1','0') NOT NULL DEFAULT '1'";
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
 
         return true;
     }
@@ -153,7 +207,7 @@ class Update
     public static function chk_chk5()
     {
         global $xoopsDB;
-        $sql    = 'SELECT count(`show_result`) FROM ' . $xoopsDB->prefix('tad_form_main');
+        $sql = 'SELECT count(`show_result`) FROM ' . $xoopsDB->prefix('tad_form_main');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return false;
@@ -166,7 +220,7 @@ class Update
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_form_main') . " ADD `show_result` ENUM('1','0') NOT NULL DEFAULT '1'";
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
 
         return true;
     }
@@ -174,7 +228,7 @@ class Update
     public static function chk_chk6()
     {
         global $xoopsDB;
-        $sql    = 'SELECT count(`view_result_group`) FROM ' . $xoopsDB->prefix('tad_form_main');
+        $sql = 'SELECT count(`view_result_group`) FROM ' . $xoopsDB->prefix('tad_form_main');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return false;
@@ -187,7 +241,7 @@ class Update
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_form_main') . " ADD `view_result_group` VARCHAR(255) NOT NULL DEFAULT ''";
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
 
         return true;
     }
@@ -195,7 +249,7 @@ class Update
     public static function chk_chk7()
     {
         global $xoopsDB;
-        $sql    = 'SELECT count(`multi_sign`) FROM ' . $xoopsDB->prefix('tad_form_main');
+        $sql = 'SELECT count(`multi_sign`) FROM ' . $xoopsDB->prefix('tad_form_main');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return false;
@@ -208,7 +262,7 @@ class Update
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_form_main') . " ADD `multi_sign` ENUM('0','1') NOT NULL DEFAULT '0'";
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
 
         return true;
     }
@@ -216,7 +270,7 @@ class Update
     public static function chk_chk8()
     {
         global $xoopsDB;
-        $sql    = 'SELECT count(`public`) FROM ' . $xoopsDB->prefix('tad_form_col');
+        $sql = 'SELECT count(`public`) FROM ' . $xoopsDB->prefix('tad_form_col');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return false;
@@ -229,7 +283,7 @@ class Update
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_form_col') . " ADD `public`  ENUM('0','1') NOT NULL DEFAULT '0'";
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
 
         return true;
     }
@@ -240,7 +294,7 @@ class Update
         global $xoopsDB;
         $sql = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
         WHERE table_name = '" . $xoopsDB->prefix('tad_form_main') . "' AND COLUMN_NAME = 'uid'";
-        $result     = $xoopsDB->query($sql);
+        $result = $xoopsDB->query($sql);
         list($type) = $xoopsDB->fetchRow($result);
         if ('smallint' === $type) {
             return true;
@@ -254,9 +308,9 @@ class Update
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE `' . $xoopsDB->prefix('tad_form_main') . '` CHANGE `uid` `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0';
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
         $sql = 'ALTER TABLE `' . $xoopsDB->prefix('tad_form_fill') . '` CHANGE `uid` `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0';
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
 
         return true;
     }
@@ -264,7 +318,7 @@ class Update
     public static function chk_chk9()
     {
         global $xoopsDB;
-        $sql    = 'SELECT count(`code`) FROM ' . $xoopsDB->prefix('tad_form_fill');
+        $sql = 'SELECT count(`code`) FROM ' . $xoopsDB->prefix('tad_form_fill');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return false;
@@ -277,10 +331,10 @@ class Update
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_form_fill') . ' ADD `code` VARCHAR(255) NOT NULL';
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
 
-        $sql = 'update ' . $xoopsDB->prefix('tad_form_fill') . ' set code=md5(CONCAT(`ofsn`,`uid`, `man_name`, `email`, `fill_time`)) ';
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql = 'update ' . $xoopsDB->prefix('tad_form_fill') . ' set code=md5(CONCAT(`ofsn`, `uid`, `man_name`, `email`, `fill_time`)) ';
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
 
         return true;
     }
@@ -289,7 +343,7 @@ class Update
     public static function chk_chk10()
     {
         global $xoopsDB;
-        $sql    = 'show keys from ' . $xoopsDB->prefix('tad_form_fill') . " where Key_name='ofsn_code'";
+        $sql = 'show keys from ' . $xoopsDB->prefix('tad_form_fill') . " where Key_name='ofsn_code'";
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return true;

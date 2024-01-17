@@ -10,7 +10,8 @@ if (!class_exists('XoopsModules\Tad_form\Update')) {
 }
 function xoops_module_update_tad_form(&$module, $old_version)
 {
-    global $xoopsDB;
+    Update::chk_add_files_center();
+    Update::chk_add_data_center();
 
     if (!Update::chk_chk1()) {
         Update::go_update1();
