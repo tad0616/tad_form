@@ -179,12 +179,13 @@ class Tools
                 $all_tad_form = Tad_form_main::get_all(['enable' => '1'], [], [], [], 'ofsn');
                 $_SESSION['all_enable_tad_form'] = array_keys($all_tad_form);
                 foreach ($all_tad_form as $ofsn => $tad_form) {
+                    unset($tad_form['content']);
                     if ($xoopsUser) {
                         if ($tad_form['uid'] == $_SESSION['now_user']['uid']) {
                             $_SESSION['my_form'][$ofsn] = $ofsn;
                         }
                     }
-                    $_SESSION['tad_form'][$ofsn] = $tad_form;
+                    // $_SESSION['tad_form'][$ofsn] = $tad_form;
                 }
             }
         }

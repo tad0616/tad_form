@@ -217,7 +217,7 @@ class Tad_form_col
         if ($ofsn) {
             Tools::chk_is_adm('my_form', $ofsn, __FILE__, __LINE__);
         } else {
-            Tools::chk_is_adm('', '', __FILE__, __LINE__);
+            Tools::chk_is_adm('tad_form_manager', '', __FILE__, __LINE__);
         }
 
         //抓取預設值
@@ -259,7 +259,7 @@ class Tad_form_col
         if ($ofsn) {
             Tools::chk_is_adm('my_form', $ofsn, __FILE__, __LINE__);
         } else {
-            Tools::chk_is_adm('', '', __FILE__, __LINE__);
+            Tools::chk_is_adm('tad_form_manager', '', __FILE__, __LINE__);
         }
 
         //XOOPS表單安全檢查
@@ -315,7 +315,7 @@ class Tad_form_col
             if ($ofsn) {
                 Tools::chk_is_adm('my_form', $ofsn, __FILE__, __LINE__);
             } else {
-                Tools::chk_is_adm('', '', __FILE__, __LINE__);
+                Tools::chk_is_adm('tad_form_manager', '', __FILE__, __LINE__);
             }
 
             $col_arr = [];

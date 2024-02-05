@@ -193,6 +193,7 @@ class Tad_form_value
         foreach ($col as $k => $v) {
             $$k = $v;
         }
+        $default_val = $val;
         switch ($kind) {
             case 'text':
                 $default_val = (empty($db_ans)) ? $default_val : $db_ans;

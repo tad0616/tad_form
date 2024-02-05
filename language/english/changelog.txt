@@ -1,7 +1,14 @@
+Tad Form 3.7 (released 2024-02-05)
+====================================
+1. rewrite the whole module
+2. Add upload function
+3. Fixed the problem that name and Email cannot be added automatically.
+4. Fixed the problem that you can't add a new form even though you have publishing privileges.
+5. Fixed the problem that too many forms will be logged out.
+
 Tad Form 3.6.7 (released 2023-09-19)
 ====================================
 1. Change to send notification letter by background to avoid sending letter to block the filling process.
-
 
 Tad Form 3.6.6 (Released on 2023-02-22)
 ====================================
