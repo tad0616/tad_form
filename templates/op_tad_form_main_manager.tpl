@@ -20,7 +20,7 @@
                 <{/if}>
                 <a href="<{$xoops_url}>/modules/tad_form/index.php?op=tad_form_fill_create&ofsn=<{$ofsn}>" data-toggle="tooltip" data-bs-toggle="tooltip" title="<{$smarty.const._MD_TAD_FORM_SIGN_GROUP}>: <{"、"|implode:$form.sign_group_title}>"><{$form.title}></a>
             </td>
-            <td nowrap>
+            <td>
                 <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_index&ofsn=<{$ofsn}>" class="btn btn-sm btn-info"><{$form.fill_count|intval}></a>
                 <a href="<{$xoops_url}>/modules/tad_form/excel.php?ofsn=<{$ofsn}>" class="btn btn-sm btn-info">Excel</a>
                 <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_mail&ofsn=<{$ofsn}>" class="btn btn-sm btn-info">mail</a>
@@ -38,15 +38,15 @@
 
             </td>
             <td nowrap><{$form.start_date|substr:0:16}><br><{$form.end_date|substr:0:16}></td>
-            <td nowrap>
-                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$ofsn}>" class="btn btn-sm btn-warning"><{$smarty.const._MD_TAD_FORM_MANAGER}></a>
+            <td>
+                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$ofsn}>" class="btn btn-sm btn-warning"><{$smarty.const._MD_TAD_FORM_EDIT}></a>
                 <a href="manager.php?op=copy&ofsn=<{$ofsn}>" class="btn btn-sm btn-success"><{$smarty.const._MD_TAD_FORM_COPY_FORM}></a>
                 <{if !$form.enable}>
                     <a href="javascript:tad_form_main_destroy_func(<{$ofsn}>);" class="btn btn-sm btn-danger"><{$smarty.const._TAD_DEL}></a>
                 <{/if}>
             </td>
             <td class="text-center"><{$form.col_count}></td>
-            <td nowrap>
+            <td>
                 <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_index&ofsn=<{$ofsn}>" class="btn btn-sm btn-warning"><{$smarty.const._MD_TAD_FORM_EDIT_ALL}></a>
                 <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_create&ofsn=<{$ofsn}>" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-toggle="tooltip" title="<{$smarty.const._MD_TAD_FORM_ADD_COL}>"><i class="fa fa-plus" aria-hidden="true"></i>
                 </a>

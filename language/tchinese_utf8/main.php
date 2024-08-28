@@ -103,7 +103,7 @@ define('_MD_TAD_FORM_KIND0', '一般調查表單');
 define('_MD_TAD_FORM_KIND1', '報名表');
 define('_MD_TAD_FORM_KIND2', '線上測驗');
 define('_MD_TAD_FORM_KIND1_OK', '錄取');
-define('_MD_TAD_FORM_UPDATE_RESULT', '儲存');
+define('_MD_TAD_FORM_UPDATE_RESULT', '儲存錄取名單');
 
 define('_MD_TAD_FORM_USE_CAPTCHA', '是否使用驗證碼？');
 define('_MD_TAD_FORM_SHOW_RESULT', '顯示結果？');
@@ -134,7 +134,7 @@ define('_MD_TAD_FORM_EMAIL', '填報者Email');
 define('_MD_TAD_FORM_EMAIL_TIP', '請填寫可以收到信的 Email 信箱');
 define('_MD_TAD_FORM_NEED_SIGN', '必填');
 define('_MD_TAD_FORM_IS_NEED_SIGN', '為必填');
-define('_MD_TAD_FORM_EDIT_FORM', '表單管理');
+define('_MD_TAD_FORM_EDIT', '編輯表單');
 define('_MD_TAD_FORM_VIEW_RESULT', '觀看本填報結果');
 define('_MD_TAD_FORM_CANT_VIEW_RESULT', '無權限觀看本填報結果');
 define('_MD_TAD_FORM_EDIT_ALL', '題目管理');

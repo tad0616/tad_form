@@ -30,6 +30,9 @@ $email_ssn = Request::getArray('email_ssn');
 $title = Request::getString('title');
 $content = $_POST['content'];
 $send_test = Request::getInt('send_test');
+$result_col = Request::getArray('result_col');
+$admitted = Request::getInt('admitted');
+$ssn = Request::getInt('ssn');
 
 if ($ofsn) {
     Tools::chk_is_adm('my_form', $ofsn, __FILE__, __LINE__);
@@ -152,6 +155,18 @@ switch ($op) {
     case 'tad_form_fill_send':
         Tad_form_fill::send($ofsn, $email_ssn, $title, $content, $send_test);
         break;
+
+    //更新結果
+    case 'update_result':
+
+        if (Tad_form_fill::update(['ssn' => $ssn], ['result_col' => $admitted])) {
+            echo 'ok';
+        }
+        // foreach ($result_col as $ssn => $value) {
+        //     Tad_form_fill::update(['ssn' => $ssn], ['result_col' => $value]);
+        // }
+        // header("location: manager.php?op=tad_form_fill_index&ofsn={$ofsn}");
+        exit;
 
     //預設動作
     default:

@@ -1,3 +1,11 @@
+<h2><{$form.title}></h2>
+<div class="my-3">
+    <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_index&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-info"><{$smarty.const._MD_TAD_FORM_EDIT_ALL}></a>
+    <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_index&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-primary"><{$smarty.const._MD_TAD_FORM_VIEW_RESULT}></a>
+    <a href="<{$xoops_url}>/modules/tad_form/index.php?op=tad_form_fill_create&ofsn=<{$smarty.get.ofsn}>&ssn=<{$smarty.get.ssn}>&code=<{$smarty.get.code}>" class="btn btn-sm btn-success"><{$smarty.const._MD_TAD_FORM_BACK_TO_FORM}></a>
+</div>
+
+
 <form action="manager.php" method="post" id="myForm" enctype="multipart/form-data" role="form" class="form-horizontal">
 
     <div class="row">

@@ -263,9 +263,9 @@ class Tad_form_fill
     }
 
     //tad_form_fill 編輯表單
-    public static function create($ofsn = '', $ssn = '', $code = '')
+    public static function create($ofsn = '', $ssn = '', $code = '', $mode = '')
     {
-        global $xoopsTpl, $xoopsUser;
+        global $xoopsTpl;
         $form_other = ['can_fill', 'col'];
         if ($ssn) {
             $form_other['ssn'] = $ssn;
@@ -306,7 +306,12 @@ class Tad_form_fill
         // }
 
         if (!$form['can_fill']) {
-            redirect_header($_SERVER['PHP_SELF'], 3, sprintf(_MD_TAD_FORM_CANT_SIGN, $form['title']));
+            if ($mode == 'return') {
+                return sprintf(_MD_TAD_FORM_CANT_SIGN, $form['title']);
+            } else {
+                redirect_header($_SERVER['PHP_SELF'], 3, sprintf(_MD_TAD_FORM_CANT_SIGN, $form['title']));
+            }
+
         }
 
         //預設值設定
@@ -343,6 +348,8 @@ class Tad_form_fill
             $SweetAlert->render('tad_form_fill_destroy_func', "{$_SERVER['PHP_SELF']}?op=tad_form_fill_destroy&ofsn={$ofsn}&ssn=", 'ssn');
         }
         $xoopsTpl->assign('history_fill', $history_fill);
+        $xoopsTpl->assign('man_name', $_SESSION['now_user']['name']);
+        $xoopsTpl->assign('email', $_SESSION['now_user']['email']);
 
     }
 
@@ -556,19 +563,20 @@ class Tad_form_fill
         $i = 0;
         $mail_test = [];
         $mail_rersult = '';
+        // Utility::dd($form);
         foreach ($email_ssn as $ssn => $mail) {
-            $content = str_replace('{name}', $form['all_apply'][$ssn]['man_name'], $content);
+            $new_content = str_replace('{name}', $form['all_apply'][$ssn]['man_name'], $content);
             foreach ($form['col'] as $csn => $col) {
-                $content = str_replace("{{$col['title']}}", $form['all_apply'][$ssn]['ans'][$csn], $content);
+                $new_content = str_replace("{{$col['title']}}", $form['all_apply'][$ssn]['ans'][$csn], $new_content);
             }
 
             if ($send_test) {
                 $mail_test[$i]['mail'] = $mail;
                 $mail_test[$i]['title'] = $title;
-                $mail_test[$i]['content'] = $content;
+                $mail_test[$i]['content'] = $new_content;
                 $i++;
             } else {
-                if ($xoopsMailer->sendMail($mail, $title, $content, [])) {
+                if ($xoopsMailer->sendMail($mail, $title, $new_content, [])) {
                     $mail_rersult .= "{$mail} " . _MD_TAD_FORM_SEND_OK . '<br>';
                 } else {
                     $mail_rersult .= "{$mail} " . _MD_TAD_FORM_SEND_ERROR . '<br>';

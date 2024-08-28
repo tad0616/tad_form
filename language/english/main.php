@@ -134,7 +134,7 @@ define('_MD_TAD_FORM_EMAIL', 'E-mail');
 define('_MD_TAD_FORM_EMAIL_TIP', 'Please fill in the email box where you can receive the letter');
 define('_MD_TAD_FORM_NEED_SIGN', 'Required');
 define('_MD_TAD_FORM_IS_NEED_SIGN', ' means Required');
-define('_MD_TAD_FORM_EDIT_FORM', 'Edit Form');
+define('_MD_TAD_FORM_EDIT', 'Edit Form');
 define('_MD_TAD_FORM_VIEW_RESULT', 'View Results');
 define('_MD_TAD_FORM_CANT_VIEW_RESULT', 'No permission to view results');
 define('_MD_TAD_FORM_UNABLE', '"%s" is unavailable now!');

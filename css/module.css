@@ -36,13 +36,13 @@
 	background-color: white;
 }
 
-.btn-group-xs>.btn,
+/* .btn-group-xs>.btn,
 .btn-sm {
 	padding: 1px 5px;
 	font-size: 0.8em;
 	line-height: 1.5;
 	border-radius: 3px;
-}
+} */
 
 #result td,
 #result th {
@@ -55,4 +55,15 @@
 .bar {
 	text-align: center;
 	margin: 3em auto;
+}
+
+.form-tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s;
 }

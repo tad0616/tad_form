@@ -1,7 +1,7 @@
 <?php
 use XoopsModules\Tad_form\Tad_form_main;
 if (!class_exists('XoopsModules\Tad_form\Tad_form_main')) {
-    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+    require XOOPS_ROOT_PATH . '/modules/tad_form/preloads/autoloader.php';
 }
 
 //區塊主函式 (列出目前執行中的線上調查表)

@@ -3,24 +3,25 @@
 
 <div class="my-2">
     <{if $smarty.session.tad_form_manager}>
-        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$form.ofsn}>" class="btn btn-warning"><{$smarty.const._MD_TAD_FORM_MANAGER}></a>
-        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_index&ofsn=<{$form.ofsn}>" class="btn btn-info"><{$smarty.const._MD_TAD_FORM_EDIT_ALL}></a>
-        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_index&ofsn=<{$form.ofsn}>" class="btn btn-primary"><{$smarty.const._MD_TAD_FORM_VIEW_RESULT}></a>
+        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-warning"><{$smarty.const._MD_TAD_FORM_EDIT}></a>
+        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_index&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-info"><{$smarty.const._MD_TAD_FORM_EDIT_ALL}></a>
+        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_index&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-primary"><{$smarty.const._MD_TAD_FORM_VIEW_RESULT}></a>
     <{elseif $form.can_view_result && $code}>
-        <a href="index.php?op=tad_form_fill_show&ofsn=<{$form.ofsn}>&code=<{$code}>" class="btn btn-info"><{$smarty.const._MD_TAD_FORM_VIEW_RESULT}></a>
+        <a href="index.php?op=tad_form_fill_show&ofsn=<{$form.ofsn}>&code=<{$code}>" class="btn btn-sm btn-info"><{$smarty.const._MD_TAD_FORM_VIEW_RESULT}></a>
     <{/if}>
 </div>
 
 
 <form action="<{$xoops_url}>/modules/tad_form/index.php" method="post" name="myForm" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
-    <{if $form.kind=="application" || $form.show_result==1 && $form.can_view_result}>
-
-        <{if $form.kind=="application"}>
-            <b><{$smarty.const._MD_TAD_FORM_OK_LIST}></b>
-            <div class="row">
-            <{foreach from=$form.all_apply key=email item=fill}>
-                <div class="col-sm-4 mb-2"><{$fill.email}>@<{$fill.fill_time}></div>
-            <{/foreach}>
+    <{if $form.kind=="application" || ($form.show_result==1 && $form.can_view_result)}>
+        <{if $form.kind=="application" && $form.all_apply}>
+            <h4><{$smarty.const._MD_TAD_FORM_OK_LIST}></h4>
+            <div class="alert alert-success">
+                <div class="row">
+                <{foreach from=$form.all_apply key=email item=fill}>
+                    <div class="col-sm-4 mb-2"><{$fill.email}>@<{$fill.fill_time}></div>
+                <{/foreach}>
+                </div>
             </div>
         <{/if}>
     <{/if}>

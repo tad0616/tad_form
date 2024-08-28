@@ -79,12 +79,6 @@ switch ($op) {
         $BootstrapTable = BootstrapTable::render();
         break;
 
-    //更新結果
-    case 'update_result':
-        update_result($_POST['ssn'], $_POST['result_col']);
-        header("location: {$_SERVER['PHP_SELF']}?ofsn={$ofsn}");
-        exit;
-
     default:
         $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
         Tad_form_main::index(['enable' => 1, "start_date < '{$today}'", "end_date > '{$today}'"], ['fill_count', 'can_fill', 'can_view_result'], [], ['post_date' => 'desc'], 'ofsn');

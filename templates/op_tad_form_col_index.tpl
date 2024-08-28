@@ -17,8 +17,9 @@
 <div><{$smarty.const._MD_TAD_FORM_SIGN_GROUP}>: <{"、"|implode:$form.sign_group_title}><{$form.title}></div>
 <div><{$smarty.const._MD_TAD_FORM_VIEW_RESULT_GROUP}>: <{"、"|implode:$form.view_result_group_title}></div>
 <div class="my-3">
-    <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$form.ofsn}>" class="btn btn-warning"><{$smarty.const._MD_TAD_FORM_MANAGER}></a>
-    <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_index&ofsn=<{$form.ofsn}>" class="btn btn-primary"><{$smarty.const._MD_TAD_FORM_VIEW_RESULT}></a>
+    <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-warning"><{$smarty.const._MD_TAD_FORM_EDIT}></a>
+    <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_index&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-primary"><{$smarty.const._MD_TAD_FORM_VIEW_RESULT}></a>
+    <a href="<{$xoops_url}>/modules/tad_form/index.php?op=tad_form_fill_create&ofsn=<{$smarty.get.ofsn}>&ssn=<{$smarty.get.ssn}>&code=<{$smarty.get.code}>" class="btn btn-sm btn-success"><{$smarty.const._MD_TAD_FORM_BACK_TO_FORM}></a>
 </div>
 
 <div id="save_msg"></div>

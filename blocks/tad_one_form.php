@@ -5,24 +5,28 @@ if (!class_exists('XoopsModules\Tadtools\TadUpFiles')) {
 }
 use XoopsModules\Tad_form\Tad_form_fill;
 if (!class_exists('XoopsModules\Tad_form\Tad_form_fill')) {
-    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+    require XOOPS_ROOT_PATH . '/modules/tad_form/preloads/autoloader.php';
 }
 use XoopsModules\Tad_form\Tad_form_main;
 if (!class_exists('XoopsModules\Tad_form\Tad_form_main')) {
-    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+    require XOOPS_ROOT_PATH . '/modules/tad_form/preloads/autoloader.php';
 }
 //區塊主函式 (列指定的調查表)
 function tad_one_form($options)
 {
-    $block = [];
+    global $xoopsUser;
+    $block = $fill = [];
     $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
     if ($options[0]) {
         $ofsn = $options[0];
+        if ($xoopsUser) {
+            $fill = Tad_form_fill::get($ofsn, ['uid' => $xoopsUser->uid()]);
+        }
 
         $block['form'] = Tad_form_main::get(['ofsn' => $ofsn, 'enable' => 1, "start_date < '{$today}'", "end_date > '{$today}'"], ['fill_count', 'can_fill', 'can_view_result']);
-
+        $block['fill'] = $options[1];
         if ($options[1] == '1') {
-            $block['fill'] = Tad_form_fill::create($ofsn, $ssn);
+            Tad_form_fill::create($ofsn, $fill['ssn'], $fill['code'], 'return');
         }
         Utility::test($block, 'tad_one_form');
 
