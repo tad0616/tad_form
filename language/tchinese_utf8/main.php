@@ -82,7 +82,7 @@ define('_MD_TAD_FORM_COL_PUBLIC', '結果');
 define('_MD_TAD_FORM_COL_PUBLIC1', '顯示');
 define('_MD_TAD_FORM_COL_PUBLIC0', '不顯示');
 
-define('_MD_TAD_FORM_COL_NOTE', '選項請用「;」隔開。上傳格式限制範例：「.pdf, .jpg」');
+define('_MD_TAD_FORM_COL_NOTE', "下拉選單、單選、複選的選項請用「;」隔開。<br>上傳格式限制用「,」隔開，例如：「.pdf,.jpg,.docx」");
 define('_MD_TAD_FORM_SIGN_GROUP', '可填寫的群組');
 define('_MD_TAD_FORM_VIEW_RESULT_GROUP', '可看結果的群組');
 define('_MD_TAD_FORM_MULTI_SIGN', '允許多次填寫');

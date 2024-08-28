@@ -10,7 +10,7 @@
             <p><{$error}></p>
         </div>
     <{else}>
-        <{includeq file="$xoops_rootpath/modules/tad_form/templates/op_sign.tpl"}>
+        <{include file="$xoops_rootpath/modules/tad_form/templates/op_sign.tpl"}>
     <{/if}>
 <{else}>
     <div class="well well-small card card-body bg-light m-1-small">

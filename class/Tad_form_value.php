@@ -97,7 +97,7 @@ class Tad_form_value
             if ($data['val'] == "upload{$data['csn']}") {
                 $TadUpFiles = new TadUpFiles("tad_form", "/{$ofsn}/{$data['csn']}");
                 $TadUpFiles->set_col('ofsn-csn-ssn', "{$ofsn}-{$data['csn']}-{$data['ssn']}");
-                $data['val'] = $TadUpFiles->show_files("upload{$data['csn']}", true, 'filename', true, false, null, null, true);
+                $data['val'] = $TadUpFiles->show_files("upload{$data['csn']}", true, 'filename', true, false);
             }
 
             $new_key = $key_name ? $data[$key_name] : $i;
@@ -166,7 +166,7 @@ class Tad_form_value
         if ($data['val'] == "upload{$data['csn']}") {
             $TadUpFiles = new TadUpFiles("tad_form", "/{$ofsn}/{$data['csn']}");
             $TadUpFiles->set_col('ofsn-csn-ssn', "{$ofsn}-{$data['csn']}-{$data['ssn']}");
-            $data['val'] = $TadUpFiles->show_files("upload{$data['csn']}", true, 'filename', true, false, null, null, true);
+            $data['val'] = $TadUpFiles->show_files("upload{$data['csn']}", true, 'filename', true, false);
         }
 
         foreach (self::$filter_arr['explode'] as $item) {
@@ -198,7 +198,7 @@ class Tad_form_value
             case 'text':
                 $default_val = (empty($db_ans)) ? $default_val : $db_ans;
                 $chktxt = ($chk) ? ' validate[required]' : '';
-                $span = empty($size) ? 6 : round($size / 10, 0);
+                $span = empty($size) ? 12 : round($size / 10, 0);
                 $main = "
                 <div class='col-sm-{$span}'>
                     <label for='tf{$csn}' style='display:none;'>{$csn}</label>
@@ -277,7 +277,7 @@ class Tad_form_value
                 // $default_val = (empty($db_ans)) ? $default_val : $db_ans;
                 $span = empty($size) ? 6 : round($size / 10, 0);
                 $TadUpFiles = new TadUpFiles("tad_form", "/{$ofsn}/{$csn}");
-                if ($chk) {
+                if ($chk and empty($db_ans)) {
                     $TadUpFiles->set_var('require', true);
                 }
                 $TadUpFiles->set_var("show_tip", false);

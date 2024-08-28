@@ -1,5 +1,6 @@
 <?php
 use Xmf\Request;
+use XoopsModules\Tadtools\BootstrapTable;
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
 use XoopsModules\Tad_form\Tad_form_fill;
@@ -46,7 +47,7 @@ switch ($op) {
 
     case 'tad_form_value_save':
     case 'save_val':
-        list($ssn, $code) = Tad_form_fill::save($ofsn);
+        list($ssn, $code) = Tad_form_fill::save($ofsn, $ssn);
 
         Tools::send_now($ofsn, $code);
 
@@ -75,9 +76,7 @@ switch ($op) {
     //觀看所有結果
     case 'tad_form_fill_index':
         Tad_form_fill::index($ofsn, ['ofsn' => $ofsn], ['ans', 'form'], [], ['ssn' => 'asc'], 'ssn');
-        $xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_form/class/ScrollTable/superTables.css');
-        $xoTheme->addScript("browse.php?modules/tad_form/class/ScrollTable/superTables.js");
-        $xoTheme->addScript("browse.php?modules/tad_form/class/ScrollTable/jquery.superTable.js");
+        $BootstrapTable = BootstrapTable::render();
         break;
 
     //更新結果

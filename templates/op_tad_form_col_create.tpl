@@ -49,7 +49,7 @@
             <{$smarty.const._MD_TAD_FORM_COL_OPTIONS}>
         </label>
         <div class="col-sm-7 options" <{if $kind != 'radio' && $kind != 'checkbox' && $kind != 'select' && $kind != 'upload'}>style="display: none;"<{/if}>>
-            <input type="text" name="size" value="<{if $size}><{$size}><{else}>.pdf,.jpg,.png,.gif,.docx,.pptx,.xlsx,.odt,.zip<{/if}>" class="form-control" placeholder="<{$smarty.const._MD_TAD_FORM_COL_NOTE}>" data-toggle="tooltip" data-bs-toggle="tooltip" title="<{$smarty.const._MD_TAD_FORM_COL_NOTE}>">
+            <input type="text" name="size" value="<{if $size}><{$size}><{elseif $kind=="upload"}>.pdf,.jpg,.png,.gif,.docx,.pptx,.xlsx,.odt,.zip<{/if}>" class="form-control" placeholder="<{$smarty.const._MD_TAD_FORM_COL_NOTE}>" data-toggle="tooltip" data-html="true" data-bs-toggle="tooltip" data-bs-html="true" title="<{$smarty.const._MD_TAD_FORM_COL_NOTE}>">
         </div>
     </div>
 

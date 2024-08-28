@@ -1,4 +1,5 @@
 <?php
+
 namespace XoopsModules\Tad_form;
 
 use XoopsModules\Tadtools\Utility;
@@ -10,16 +11,11 @@ use XoopsModules\Tad_form\Tad_form_main;
  */
 class Tools
 {
-    // 資料庫變數過濾
-    public static function addSlashes($value)
-    {
-        $myts = \MyTextSanitizer::getInstance();
-        return $myts->addSlashes($value);
-    }
 
     // 變數過濾
     public static function filter($key, $value, $mode = "read", $filter_arr = [])
     {
+        global $xoopsDB;
         $myts = \MyTextSanitizer::getInstance();
 
         if (isset($filter_arr['pass']) && in_array($key, $filter_arr['pass'])) {
@@ -46,30 +42,29 @@ class Tools
                 if ($mode == 'edit') {
                     $value = $myts->htmlSpecialChars($value);
                 } else {
-                    $value = ($mode == 'write') ? $myts->addSlashes(Wcag::amend(trim($value))) : $myts->displayTarea($value, 1, 1, 1, 1, 0);
+                    $value = ($mode == 'write') ? $xoopsDB->escape(Wcag::amend(trim($value))) : $myts->displayTarea($value, 1, 1, 1, 1, 0);
                 }
             } elseif (isset($filter_arr['text']) && in_array($key, $filter_arr['text'], true)) {
                 if ($mode == 'edit') {
                     $value = $myts->htmlSpecialChars($value);
                 } else {
-                    $value = ($mode == 'write') ? $myts->addSlashes(trim($value)) : $myts->displayTarea($value, 0, 0, 0, 1, 1);
+                    $value = ($mode == 'write') ? $xoopsDB->escape(trim($value)) : $myts->displayTarea($value, 0, 0, 0, 1, 1);
                 }
             } elseif (isset($filter_arr['json']) && in_array($key, $filter_arr['json'], true)) {
 
                 if ($mode == 'write') {
-                    $value = $myts->addSlashes(trim($value));
+                    $value = $xoopsDB->escape(trim($value));
                 } else {
                     $value = json_decode($value, true);
                     foreach ($value as $k => $v) {
                         $value[$k] = self::filter($k, $v, $mode);
                     }
                 }
-
             } elseif (!isset($filter_arr['pass']) || !in_array($key, $filter_arr['pass'], true)) {
                 if ($mode == 'edit') {
                     $value = $myts->htmlSpecialChars($value);
                 } else {
-                    $value = ($mode == 'write') ? $myts->addSlashes(trim($value)) : $myts->htmlSpecialChars($value);
+                    $value = ($mode == 'write') ? $xoopsDB->escape(trim($value)) : $myts->htmlSpecialChars($value);
                 }
             }
         }
@@ -94,10 +89,11 @@ class Tools
     // 取得資料庫條件
     public static function get_and_where($where_arr = '', $prefix = '')
     {
+        global $xoopsDB;
         if (is_array($where_arr)) {
             $and_where_arr = '';
             foreach ($where_arr as $col => $value) {
-                $and_where_arr .= !is_string($col) ? " and {$value}" : " and {$prefix}`{$col}` = '" . Tools::addSlashes($value) . "'";
+                $and_where_arr .= !is_string($col) ? " and {$value}" : " and {$prefix}`{$col}` = '" . $xoopsDB->escape($value) . "'";
             }
         } else {
             $and_where_arr = $where_arr;
@@ -202,6 +198,12 @@ class Tools
             if (!empty($id) && $_SESSION[$other]) {
                 if (in_array($id, $_SESSION[$other]) || $id == $_SESSION[$other]) {
                     return true;
+                } elseif ($other == "my_form") {
+                    if ($_SESSION['now_user']['uid'] == Tad_form_main::get(['ofsn' => $id], [], 'read', 'uid')) {
+                        return true;
+                    } else {
+                        redirect_header('index.php', 3, "您對筆資料 ($id) 無操作權限 {$file} ($line)");
+                    }
                 } else {
                     if ($mode == 'return') {
                         return false;
@@ -216,7 +218,6 @@ class Tools
             } else {
                 redirect_header('index.php', 3, "無操作權限 {$file} ($line)");
             }
-
         }
     }
 
@@ -333,14 +334,17 @@ class Tools
             if (empty($fill['ssn'])) {
                 redirect_header('index.php', 3, "查無填報紀錄");
             }
+            if ($code != $fill['code']) {
+                redirect_header('index.php', 3, "驗證碼錯誤 {$code} != {$fill['code']}");
+            }
             $all_ans = "";
             $i = 1;
             foreach ($fill['ans'] as $csn => $val) {
                 $all_ans .= "
-            <tr>
-                <td bgcolor='#F0F0F0'>{$i}. <b>{$fill['form']['col'][$csn]['title']}</b></td>
-                <td>{$val}</td>
-            </tr>";
+                <tr>
+                    <td bgcolor='#F0F0F0'>{$i}. <b>{$fill['form']['col'][$csn]['title']}</b></td>
+                    <td>{$val}</td>
+                </tr>";
                 $i++;
             }
 
@@ -355,7 +359,7 @@ class Tools
             {$all_ans}
             </table>
             {$view_result}
-            <p><a href='" . XOOPS_URL . "/modules/tad_form/index.php?op=tad_form_fill_show&ofsn={$fill['ofsn']}&code=$code'>" . _MD_TAD_FORM_MY_ANS . "</a></p>
+            <p><a href='" . XOOPS_URL . "/modules/tad_form/index.php?op=tad_form_fill_show&ofsn={$fill['ofsn']}&code={$fill['code']}'>" . _MD_TAD_FORM_MY_ANS . "</a></p>
             ";
 
             $subject = sprintf(_MD_TAD_FORM_MAIL_FORMAT_TITLE, $fill['form']['title'], $fill['man_name'], $fill['fill_time']);
@@ -382,5 +386,4 @@ class Tools
             }
         }
     }
-
 }

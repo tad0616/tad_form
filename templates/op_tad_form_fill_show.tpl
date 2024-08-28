@@ -23,7 +23,7 @@
     </div>
     <div class="p-2 mb-3">
         <{if $col.kind!=""}>
-            <td style="max-width:20rem; white-space: unset;">
+            <div style="max-width:20rem; white-space: unset;">
             <{if $col.kind=="checkbox"}>
                 <{$ans.$csn|replace:';':'<br>'}>
             <{elseif $col.kind=="textarea"}>
@@ -31,7 +31,7 @@
             <{else}>
                 <{$ans.$csn}>
             <{/if}>
-            </td>
+            </div>
         <{/if}>
     </div>
 <{/foreach}>
@@ -42,4 +42,4 @@
 </div>
 
 
-<{includeq file="$xoops_rootpath/modules/tad_form/templates/tad_form_fill_history.tpl"}>
+<{include file="$xoops_rootpath/modules/tad_form/templates/tad_form_fill_history.tpl"}>

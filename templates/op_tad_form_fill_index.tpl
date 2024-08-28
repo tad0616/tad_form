@@ -1,8 +1,10 @@
-<script>
+<!-- <script>
     $(document).ready(function(){
         $("#GridView1").toSuperTable({ width:"98%" , height: "600px", fixedCols: 1 });
     });
-</script>
+</script> -->
+
+<{$bootstrap_table}>
 
 <{if $form.title}>
     <h2><{$form.title}></h2>
@@ -16,15 +18,17 @@
     <{/if}>
     <a href="<{$xoops_url}>/modules/tad_form/index.php?op=tad_form_fill_create&ofsn=<{$smarty.get.ofsn}>&ssn=<{$smarty.get.ssn}>&code=<{$smarty.get.code}>" class="btn btn-success"><{$smarty.const._MD_TAD_FORM_BACK_TO_FORM}></a>
 </div>
-<table class="table table-striped " id="GridView1">
-    <tr>
-        <th><{$smarty.const._MD_TAD_FORM_COL_WHO}></th>
-        <{foreach from=$form.col key=csn item=col}>
-            <{if $col.public || $smarty.session.tad_form_manager}>
-                <th style="max-width:20rem; overflow: hidden;"><{$col.title}></th>
-            <{/if}>
-        <{/foreach}>
-    </tr>
+<table class="table table-striped " id="GridView1"  data-toggle="table" data-pagination="true" data-search="true" data-mobile-responsive="true">
+    <thead>
+        <tr>
+            <th><{$smarty.const._MD_TAD_FORM_COL_WHO}></th>
+            <{foreach from=$form.col key=csn item=col}>
+                <{if $col.public || $smarty.session.tad_form_manager}>
+                    <th style="max-width:20rem; overflow: hidden;"><{$col.title}></th>
+                <{/if}>
+            <{/foreach}>
+        </tr>
+    </thead>
     <{foreach from=$all_tad_form_fill key=ssn item=fill}>
         <tr>
             <td style="text-align:center;">

@@ -265,23 +265,45 @@ class Tad_form_fill
     //tad_form_fill 編輯表單
     public static function create($ofsn = '', $ssn = '', $code = '')
     {
-        global $xoopsTpl;
+        global $xoopsTpl, $xoopsUser;
         $form_other = ['can_fill', 'col'];
         if ($ssn) {
             $form_other['ssn'] = $ssn;
         }
 
-        $form = Tad_form_main::get(['ofsn' => $ofsn], $form_other);
+        $where_arr['ofsn'] = $ofsn;
+        if (!$_SESSION['tad_form_adm'] && !$_SESSION['tad_form_manager']) {
+            $where_arr['enable'] = 1;
+        }
+        $form = Tad_form_main::get($where_arr, $form_other);
+
         $xoopsTpl->assign('form', $form);
 
-        //抓取預設值
-        if (!empty($code)) {
-            $tad_form_fill = self::get($ofsn, ['ssn' => $ssn]);
-        } elseif (!empty($ofsn) and !$form['multi_sign']) {
-            $tad_form_fill = self::get($ofsn, ['ofsn' => $ofsn, 'uid' => $_SESSION['now_user']['uid']]);
-        } else {
-            $tad_form_fill = [];
+        $where_tad_form_fill = [];
+        if ($ssn) {
+            $where_tad_form_fill['ssn'] = $ssn;
         }
+
+        if ($_SESSION['now_user']['uid']) {
+            $where_tad_form_fill['ssn'] = $ssn;
+        } else {
+            if ($code) {
+                $where_tad_form_fill['code'] = $code;
+            }
+        }
+
+        $tad_form_fill = self::get($ofsn, ['ssn' => $ssn]);
+
+        //抓取預設值
+        // if (!empty($ssn) && $uid) {
+        //     $tad_form_fill = self::get($ofsn, ['ssn' => $ssn]);
+        // } elseif (!empty($code)) {
+        //     $tad_form_fill = self::get($ofsn, ['code' => $code]);
+        // } elseif (!empty($ofsn) and !$form['multi_sign']) {
+        //     $tad_form_fill = self::get($ofsn, ['ofsn' => $ofsn, 'uid' => $_SESSION['now_user']['uid']]);
+        // } else {
+        //     $tad_form_fill = [];
+        // }
 
         if (!$form['can_fill']) {
             redirect_header($_SERVER['PHP_SELF'], 3, sprintf(_MD_TAD_FORM_CANT_SIGN, $form['title']));
@@ -325,9 +347,9 @@ class Tad_form_fill
     }
 
     //儲存資料到 Tad_form_fill::save() 中
-    public static function save($ofsn, $data_arr = [])
+    public static function save($ofsn, $ssn = '', $data_arr = [])
     {
-
+        global $xoopsDB;
         //XOOPS表單安全檢查
         if (empty($data_arr)) {
             Utility::xoops_security_check(__FILE__, __LINE__);
@@ -364,14 +386,18 @@ class Tad_form_fill
                 $ssn = self::store(['ofsn' => $ofsn, 'uid' => $_SESSION['now_user']['uid'], 'man_name' => $man_name, 'email' => $email, 'fill_time' => $now, 'code' => $code]);
             }
         } else {
-            $code = md5("{$ofsn}{$_SESSION['now_user']['uid']}{$man_name}{$email}{$now}");
-            $ssn = self::store(['ssn' => $ssn, 'ofsn' => $ofsn, 'uid' => $_SESSION['now_user']['uid'], 'man_name' => $man_name, 'email' => $email, 'fill_time' => $now, 'code' => $code], 'REPLACE');
+            if ($ssn) {
+                self::update(['ssn' => $ssn], ['uid' => $_SESSION['now_user']['uid'], 'man_name' => $man_name, 'email' => $email, 'fill_time' => $now]);
+            } else {
+                $code = md5("{$ofsn}{$_SESSION['now_user']['uid']}{$man_name}{$email}{$now}");
+                $ssn = self::store(['ssn' => $ssn, 'ofsn' => $ofsn, 'uid' => $_SESSION['now_user']['uid'], 'man_name' => $man_name, 'email' => $email, 'fill_time' => $now, 'code' => $code], 'REPLACE');
+            }
+
         }
 
         $ssn = (int) $ssn;
         //再存填寫資料
         $data_arr = [];
-        $myts = \MyTextSanitizer::getInstance();
         foreach ($ans as $csn => $val) {
             if ($val == "upload{$csn}") {
                 $TadUpFiles = new TadUpFiles("tad_form", "/{$ofsn}/{$csn}");
@@ -383,7 +409,7 @@ class Tad_form_fill
                 $value = (is_array($val)) ? implode(';', $val) : $val;
             }
 
-            $value = $myts->addSlashes($value);
+            $value = $xoopsDB->escape($value);
 
             $data_arr[$csn] = "('{$ssn}', '{$csn}', '{$value}')";
             unset($need_csn[$csn]);

@@ -1,5 +1,7 @@
 <?php
+
 use Xmf\Request;
+use XoopsModules\Tadtools\BootstrapTable;
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
 use XoopsModules\Tad_form\Tad_form_col;
@@ -8,10 +10,10 @@ use XoopsModules\Tad_form\Tad_form_main;
 use XoopsModules\Tad_form\Tools;
 
 /*-----------引入檔案區--------------*/
+
 require __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'tad_form_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
-Tools::chk_is_adm('my_form', $ofsn, __FILE__, __LINE__);
 
 /*-----------執行動作判斷區----------*/
 $op = Request::getString('op');
@@ -28,6 +30,12 @@ $email_ssn = Request::getArray('email_ssn');
 $title = Request::getString('title');
 $content = $_POST['content'];
 $send_test = Request::getInt('send_test');
+
+if ($ofsn) {
+    Tools::chk_is_adm('my_form', $ofsn, __FILE__, __LINE__);
+} else {
+    Tools::chk_is_adm('tad_form_manager', '', __FILE__, __LINE__);
+}
 
 switch ($op) {
     //下載檔案
@@ -132,9 +140,7 @@ switch ($op) {
     //觀看所有結果
     case 'tad_form_fill_index':
         Tad_form_fill::index($ofsn, ['ofsn' => $ofsn], ['ans', 'analysis', 'form'], [], ['ssn' => 'asc'], 'ssn');
-        $xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_form/class/ScrollTable/superTables.css');
-        $xoTheme->addScript("browse.php?modules/tad_form/class/ScrollTable/superTables.js");
-        $xoTheme->addScript("browse.php?modules/tad_form/class/ScrollTable/jquery.superTable.js");
+        $BootstrapTable = BootstrapTable::render();
         break;
 
     //寄信給填報者

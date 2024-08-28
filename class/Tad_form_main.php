@@ -152,7 +152,7 @@ class Tad_form_main
                 $TadUpFiles = new TadUpFiles("tad_form");
                 $TadUpFiles->set_dir('subdir', '/' . $data['ofsn']);
                 $TadUpFiles->set_col("ofsn", $data['ofsn']);
-                $data['files'] = $TadUpFiles->show_files('ofsn', true, 'filename', true, false, null, null, true);
+                $data['files'] = $TadUpFiles->show_files('ofsn', true, 'filename', true, false);
             }
 
             $new_key = $key_name ? $data[$key_name] : $i;
@@ -252,7 +252,7 @@ class Tad_form_main
             $TadUpFiles = new TadUpFiles("tad_form");
             $TadUpFiles->set_dir('subdir', '/' . $data['ofsn']);
             $TadUpFiles->set_col("ofsn", $data['ofsn']);
-            $data['files'] = $TadUpFiles->show_files('ofsn', true, 'filename', true, false, null, null, true);
+            $data['files'] = $TadUpFiles->show_files('ofsn', true, 'filename', true, false);
         }
 
         foreach (self::$filter_arr['explode'] as $item) {
@@ -378,7 +378,7 @@ class Tad_form_main
         $sql = "INSERT INTO `" . $xoopsDB->prefix("tad_form_main") . "` (
             `title`, `start_date`, `end_date`, `content`, `uid`, `post_date`, `enable`, `sign_group`, `kind`, `adm_email`, `captcha`, `show_result`, `view_result_group`, `multi_sign`
         ) VALUES(
-            '{$title}','{$start_date}','{$end_date}','{$content}','{$uid}', '{$now}' , '{$enable}','{$sign_group}','{$kind}','{$adm_email}','{$captcha}','{$show_result}','{$view_result_group}','{$multi_sign}'
+            '{$title}','{$start_date}','{$end_date}','{$content}','{$uid}', now() , '{$enable}','{$sign_group}','{$kind}','{$adm_email}','{$captcha}','{$show_result}','{$view_result_group}','{$multi_sign}'
         )";
         $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
 
@@ -431,7 +431,7 @@ class Tad_form_main
             $view_result_group = implode(',', $view_result_group);
 
             $sql = "UPDATE `" . $xoopsDB->prefix("tad_form_main") . "` SET
-            `title` = '{$title}', `start_date` = '{$start_date}', `end_date` = '{$end_date}', `content` = '{$content}', `post_date` = '{$now}', `enable` = '{$enable}', `sign_group` = '{$sign_group}', `kind` = '{$kind}',`adm_email` = '{$adm_email}',`show_result` = '{$show_result}',`captcha` = '{$captcha}',`view_result_group` = '{$view_result_group}',`multi_sign` = '{$multi_sign}'
+            `title` = '{$title}', `start_date` = '{$start_date}', `end_date` = '{$end_date}', `content` = '{$content}', `post_date` = now(), `enable` = '{$enable}', `sign_group` = '{$sign_group}', `kind` = '{$kind}',`adm_email` = '{$adm_email}',`show_result` = '{$show_result}',`captcha` = '{$captcha}',`view_result_group` = '{$view_result_group}',`multi_sign` = '{$multi_sign}'
             WHERE 1 $and";
         }
 
@@ -475,7 +475,7 @@ class Tad_form_main
     {
         //讀出原有資料
         $form = self::get(['ofsn' => $ofsn]);
-        $form['post_date'] = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
+        $form['post_date'] = date('Y-m-d H:i:s');
         $form['title'] = "copy_{$form['title']}";
         $form['enable'] = 0;
         $form['start_date'] = date('Y-m-d H:i:s', strtotime('+1 day'));
@@ -483,10 +483,10 @@ class Tad_form_main
         $form['content'] = Wcag::amend($form['content']);
         $new_ofsn = self::store($form);
 
-        $cols = Tad_form_col::get_all($ofsn, ['ofsn' => $ofsn]);
+        $cols = Tad_form_col::get_all($ofsn, ['ofsn' => $ofsn], [], [], ['sort' => 'asc']);
         foreach ($cols as $key => $col) {
             $col['ofsn'] = $new_ofsn;
-            Tad_form_col::store($new_ofsn, $col);
+            Tad_form_col::store($new_ofsn, $col, false);
         }
     }
 }

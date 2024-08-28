@@ -1,4 +1,5 @@
 <?php
+
 namespace XoopsModules\Tad_form;
 
 use XoopsModules\Tadtools\FormValidator;
@@ -249,17 +250,18 @@ class Tad_form_col
 
         //加入Token安全機制
         Tools::token_form();
-
     }
 
     //新增資料到 tad_form_col 中
-    public static function store($ofsn, $data_arr = [])
+    public static function store($ofsn, $data_arr = [], $chk = true)
     {
         global $xoopsDB;
-        if ($ofsn) {
-            Tools::chk_is_adm('my_form', $ofsn, __FILE__, __LINE__);
-        } else {
-            Tools::chk_is_adm('tad_form_manager', '', __FILE__, __LINE__);
+        if ($chk) {
+            if ($ofsn) {
+                Tools::chk_is_adm('my_form', $ofsn, __FILE__, __LINE__);
+            } else {
+                Tools::chk_is_adm('tad_form_manager', '', __FILE__, __LINE__);
+            }
         }
 
         //XOOPS表單安全檢查
@@ -372,5 +374,4 @@ class Tad_form_col
             Tad_form_value::destroy($ofsn, ['csn' => $destroy_item['csn']]);
         }
     }
-
 }

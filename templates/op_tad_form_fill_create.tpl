@@ -46,13 +46,16 @@
                 <{if $col.descript}><span class="note">(<{$col.descript}>)</span><{/if}>
             <{/if}>
         </div>
-        <div class="p-2 mb-3">
-            <{$col.col_form}>
+        <div class="row">
+            <div class="p-2 mb-3">
+                <{$col.col_form}>
+            </div>
         </div>
     <{/foreach}>
 
     <{$token_form}>
-    <input type="hidden" name="ssn" value="<{$db_ans_ssn}>">
+    <input type="hidden" name="ssn" value="<{$ssn}>">
+    <input type="hidden" name="code" value="<{$code}>">
     <input type="hidden" name="ofsn" value="<{$form.ofsn}>">
     <input type="hidden" name="op" value="tad_form_value_save">
 
@@ -92,4 +95,4 @@
     </div>
 </form>
 
-<{includeq file="$xoops_rootpath/modules/tad_form/templates/tad_form_fill_history.tpl"}>
+<{include file="$xoops_rootpath/modules/tad_form/templates/tad_form_fill_history.tpl"}>

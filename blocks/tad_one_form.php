@@ -1,8 +1,16 @@
 <?php
 use XoopsModules\Tadtools\Utility;
+if (!class_exists('XoopsModules\Tadtools\TadUpFiles')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
 use XoopsModules\Tad_form\Tad_form_fill;
+if (!class_exists('XoopsModules\Tad_form\Tad_form_fill')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
 use XoopsModules\Tad_form\Tad_form_main;
-
+if (!class_exists('XoopsModules\Tad_form\Tad_form_main')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
 //區塊主函式 (列指定的調查表)
 function tad_one_form($options)
 {
