@@ -74,6 +74,7 @@ class Tad_form_col
         $SweetAlert->render('tad_form_col_destroy_func', "{$_SERVER['PHP_SELF']}?op=tad_form_col_destroy&ofsn={$where_arr['ofsn']}&csn=", 'csn');
 
         $form = Tad_form_main::get(['ofsn' => $where_arr['ofsn']], ['sign_group_title', 'view_result_group_title']);
+        // Utility::dd($form);
         $xoopsTpl->assign('form', $form);
     }
 

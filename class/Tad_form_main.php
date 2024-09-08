@@ -218,8 +218,24 @@ class Tad_form_main
         $data = $xoopsDB->fetchArray($result);
         $data = Tools::filter_all_data($filter, $data, self::$filter_arr);
 
+        if (in_array('sign_group_title', $other_arr) || in_array('view_result_group_title', $other_arr) || in_array('all', $other_arr)) {
+            $group_title = Tools::get_group();
+        }
+
         $data['sign_group'] = $data['sign_group'] ? explode(',', $data['sign_group']) : [1, 2];
         $data['view_result_group'] = $data['view_result_group'] ? explode(',', $data['view_result_group']) : [1];
+
+        if (in_array('sign_group_title', $other_arr) || in_array('all', $other_arr)) {
+            foreach ($data['sign_group'] as $group_id) {
+                $data['sign_group_title'][$group_id] = $group_title[$group_id];
+            }
+        }
+
+        if (in_array('view_result_group_title', $other_arr) || in_array('all', $other_arr)) {
+            foreach ($data['view_result_group'] as $group_id) {
+                $data['view_result_group_title'][$group_id] = $group_title[$group_id];
+            }
+        }
 
         if ($data['kind'] == 'application') {
             $data['all_apply'] = Tad_form_fill::get_all(['ofsn' => $data['ofsn'], 'result_col' => 1], ['email_id'], ['email', 'fill_time']);
@@ -372,8 +388,12 @@ class Tad_form_main
         if (in_array(3, $sign_group)) {
             $multi_sign = 0;
         }
-        $sign_group = implode(',', $sign_group);
-        $view_result_group = implode(',', $view_result_group);
+        if (isset($sign_group) && \is_array($sign_group)) {
+            $sign_group = implode(',', $sign_group);
+        }
+        if (isset($view_result_group) && \is_array($view_result_group)) {
+            $view_result_group = implode(',', $view_result_group);
+        }
 
         $sql = "INSERT INTO `" . $xoopsDB->prefix("tad_form_main") . "` (
             `title`, `start_date`, `end_date`, `content`, `uid`, `post_date`, `enable`, `sign_group`, `kind`, `adm_email`, `captcha`, `show_result`, `view_result_group`, `multi_sign`
@@ -427,8 +447,12 @@ class Tad_form_main
                 $multi_sign = 0;
             }
 
-            $sign_group = implode(',', $sign_group);
-            $view_result_group = implode(',', $view_result_group);
+            if (isset($sign_group) && \is_array($sign_group)) {
+                $sign_group = implode(',', $sign_group);
+            }
+            if (isset($view_result_group) && \is_array($view_result_group)) {
+                $view_result_group = implode(',', $view_result_group);
+            }
 
             $sql = "UPDATE `" . $xoopsDB->prefix("tad_form_main") . "` SET
             `title` = '{$title}', `start_date` = '{$start_date}', `end_date` = '{$end_date}', `content` = '{$content}', `post_date` = now(), `enable` = '{$enable}', `sign_group` = '{$sign_group}', `kind` = '{$kind}',`adm_email` = '{$adm_email}',`show_result` = '{$show_result}',`captcha` = '{$captcha}',`view_result_group` = '{$view_result_group}',`multi_sign` = '{$multi_sign}'

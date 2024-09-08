@@ -18,14 +18,14 @@
                 <{else}>
                     <a href="manager.php?op=tad_form_main_update_enable&ofsn=<{$ofsn}>&enable=1"><img src="<{$xoops_url}>/modules/tad_form/images/001_05.gif" hspace=2 alt="<{$smarty.const._MD_TAD_FORM_COL_ACTIVE}>" title="<{$smarty.const._MD_TAD_FORM_COL_ACTIVE}>"></a>
                 <{/if}>
-                <a href="<{$xoops_url}>/modules/tad_form/index.php?op=tad_form_fill_create&ofsn=<{$ofsn}>" data-toggle="tooltip" data-bs-toggle="tooltip" title="<{$smarty.const._MD_TAD_FORM_SIGN_GROUP}>: <{"、"|implode:$form.sign_group_title}>"><{$form.title}></a>
+                <a href="<{$xoops_url}>/modules/tad_form/index.php?op=tad_form_fill_create&ofsn=<{$ofsn}>" data-toggle="tooltip" data-bs-toggle="tooltip" title="<{$smarty.const._MD_TAD_FORM_SIGN_GROUP}>: <{if $form.sign_group_title}><{"、"|implode:$form.sign_group_title}><{/if}>"><{$form.title}></a>
             </td>
             <td>
                 <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_index&ofsn=<{$ofsn}>" class="btn btn-sm btn-info"><{$form.fill_count|intval}></a>
                 <a href="<{$xoops_url}>/modules/tad_form/excel.php?ofsn=<{$ofsn}>" class="btn btn-sm btn-info">Excel</a>
                 <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_mail&ofsn=<{$ofsn}>" class="btn btn-sm btn-info">mail</a>
                 <{if $form.show_result}>
-                    <img src="<{$xoops_url}>/modules/tad_form/images/show_result.png" hspace=2 alt="<{$smarty.const._MD_TAD_FORM_SHOW_RESULT}>" data-toggle="tooltip" data-bs-toggle="tooltip" title="<{$smarty.const._MD_TAD_FORM_VIEW_RESULT_GROUP}>: <{"、"|implode:$form.view_result_group_title}>">
+                    <img src="<{$xoops_url}>/modules/tad_form/images/show_result.png" hspace=2 alt="<{$smarty.const._MD_TAD_FORM_SHOW_RESULT}>" data-toggle="tooltip" data-bs-toggle="tooltip" title="<{$smarty.const._MD_TAD_FORM_VIEW_RESULT_GROUP}>: <{if $form.view_result_group_title}><{"、"|implode:$form.view_result_group_title}><{/if}>">
                 <{/if}>
 
                 <{if $form.multi_sign}>
