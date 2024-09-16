@@ -108,6 +108,7 @@ class Tad_form_main
 
             $data['sign_group'] = $data['sign_group'] ? explode(',', $data['sign_group']) : [1, 2];
             $data['view_result_group'] = $data['view_result_group'] ? explode(',', $data['view_result_group']) : [1];
+            $data['ofsn'] = isset($data['ofsn']) ? $data['ofsn'] : 0;
 
             foreach (self::$filter_arr['explode'] as $item) {
                 if (strpos($data[$item], '=') !== false) {
@@ -137,7 +138,7 @@ class Tad_form_main
             }
 
             if (in_array('fill_count', $other_arr) || in_array('all', $other_arr)) {
-                $data['fill_count'] = $fill_count[$data['ofsn']];
+                $data['fill_count'] = isset($fill_count[$data['ofsn']]) ? $fill_count[$data['ofsn']] : 0;
             }
 
             if (in_array('can_fill', $other_arr) || in_array('all', $other_arr)) {
@@ -318,6 +319,7 @@ class Tad_form_main
             $tad_form_main = $def;
         }
 
+        $content = '';
         foreach ($tad_form_main as $key => $value) {
             $value = Tools::filter($key, $value, 'edit', self::$filter_arr);
             $$key = isset($tad_form_main[$key]) ? $tad_form_main[$key] : $def[$key];

@@ -83,8 +83,10 @@ class Tad_form_col
     {
         global $xoopsDB;
         if (empty($ofsn)) {
-            $ofsn = $where_arr['ofsn'];
+            $ofsn = isset($where_arr['ofsn']) ? $where_arr['ofsn'] : 0;
         }
+
+        $other_arr['ssn'] = isset($other_arr['ssn']) ? $other_arr['ssn'] : 0;
 
         $and_sql = Tools::get_and_where($where_arr);
         $view_col = Tools::get_view_col($view_cols);
@@ -103,9 +105,8 @@ class Tad_form_col
         $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
         $data_arr = [];
         $i = 0;
-        if (isset($other_arr['ssn']) && !empty($other_arr['ssn'])) {
-            $db_ans = Tad_form_value::get_all($ofsn, ['ssn' => $other_arr['ssn']], [], [], [], 'csn', 'val');
-        }
+
+        $db_ans = !empty($other_arr['ssn']) ? Tad_form_value::get_all($ofsn, ['ssn' => $other_arr['ssn']], [], [], [], 'csn', 'val') : [];
 
         while ($data = $xoopsDB->fetchArray($result)) {
 
@@ -128,8 +129,9 @@ class Tad_form_col
                     continue;
                 }
             }
-
-            $data['col_form'] = Tad_form_value::create($data, $other_arr['ssn'], $db_ans[$data['csn']]);
+            $csn = isset($data['csn']) ? $data['csn'] : 0;
+            $ans = isset($db_ans[$csn]) ? $db_ans[$csn] : [];
+            $data['col_form'] = Tad_form_value::create($data, $other_arr['ssn'], $ans);
 
             $new_key = $key_name ? $data[$key_name] : $i;
             $data_arr[$new_key] = $get_value ? $data[$get_value] : $data;

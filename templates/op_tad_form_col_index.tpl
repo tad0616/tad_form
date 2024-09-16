@@ -1,4 +1,4 @@
-<{$jquery}>
+<{$jquery|default:''}>
 <script>
     $().ready(function(){
         $("#sort").sortable({ opacity: 0.6, cursor: "move", update: function() {
@@ -14,12 +14,12 @@
 
 <h2><{$form.title}></h2>
 
-<div><{$smarty.const._MD_TAD_FORM_SIGN_GROUP}>: <{if $form.sign_group_title}><{"、"|implode:$form.sign_group_title}><{/if}></div>
-<div><{$smarty.const._MD_TAD_FORM_VIEW_RESULT_GROUP}>: <{if $form.view_result_group_title}><{"、"|implode:$form.view_result_group_title}><{/if}></div>
+<div><{$smarty.const._MD_TAD_FORM_SIGN_GROUP}>: <{if $form.sign_group_title|default:false}><{"、"|implode:$form.sign_group_title}><{/if}></div>
+<div><{$smarty.const._MD_TAD_FORM_VIEW_RESULT_GROUP}>: <{if $form.view_result_group_title|default:false}><{"、"|implode:$form.view_result_group_title}><{/if}></div>
 <div class="my-3">
-    <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-warning"><{$smarty.const._MD_TAD_FORM_EDIT}></a>
-    <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_index&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-primary"><{$smarty.const._MD_TAD_FORM_VIEW_RESULT}></a>
-    <a href="<{$xoops_url}>/modules/tad_form/index.php?op=tad_form_fill_create&ofsn=<{$smarty.get.ofsn}>&ssn=<{$smarty.get.ssn}>&code=<{$smarty.get.code}>" class="btn btn-sm btn-success"><{$smarty.const._MD_TAD_FORM_BACK_TO_FORM}></a>
+    <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$smarty.get.ofsn}>" class="btn btn-sm btn-warning"><{$smarty.const._MD_TAD_FORM_EDIT}></a>
+    <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_index&ofsn=<{$smarty.get.ofsn}>" class="btn btn-sm btn-primary"><{$smarty.const._MD_TAD_FORM_VIEW_RESULT}></a>
+    <a href="<{$xoops_url}>/modules/tad_form/index.php?op=tad_form_fill_create&ofsn=<{$smarty.get.ofsn}>&ssn=<{$smarty.get.ssn|default:0}>&code=<{$smarty.get.code|default:''}>" class="btn btn-sm btn-success"><{$smarty.const._MD_TAD_FORM_BACK_TO_FORM}></a>
 </div>
 
 <div id="save_msg"></div>
@@ -44,21 +44,21 @@
                 <td>
                     <span class="question"><b><{$col.title}></b></span>
                     <span class="badge badge-primary bg-primary text-white p-1"><{$col.kind}></span>
-                    <{if $col.func}><span class="badge badge-success bg-success text-white p-1"><{$col.func}></span><{/if}>
+                    <{if $col.func|default:false}><span class="badge badge-success bg-success text-white p-1"><{$col.func}></span><{/if}>
                     <br>
                     <span class="note"><{$col.descript}></span>
                 </td>
                 <td><{$col.size}></td>
                 <td><{$col.val}></td>
                 <td nowrap>
-                    <{if $col.chk}>
+                    <{if $col.chk|default:false}>
                         <a href='manager.php?op=change_chk&chk=0&csn=<{$col.csn}>&ofsn=<{$col.ofsn}>'><img src='<{$xoops_url}>/modules/tad_form/images/001_06.gif'></a>
                     <{else}>
                         <a href='manager.php?op=change_chk&chk=1&csn=<{$col.csn}>&ofsn=<{$col.ofsn}>'><img src='<{$xoops_url}>/modules/tad_form/images/001_05.gif'></a>
                     <{/if}>
                 </td>
                 <td nowrap>
-                    <{if $col.public}>
+                    <{if $col.public|default:false}>
                         <a href='manager.php?op=change_public&public=0&csn=<{$col.csn}>&ofsn=<{$col.ofsn}>'><img src='<{$xoops_url}>/modules/tad_form/images/001_06.gif'></a>
                     <{else}>
                         <a href='manager.php?op=change_public&public=1&csn=<{$col.csn}>&ofsn=<{$col.ofsn}>'><img src='<{$xoops_url}>/modules/tad_form/images/001_05.gif'></a>

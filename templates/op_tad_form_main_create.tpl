@@ -1,9 +1,9 @@
-<{if $smarty.get.ofsn}>
-    <h2><{$form.title}></h2>
+<{if $smarty.get.ofsn|default:false}>
+    <h2><{$form.title|default:''}></h2>
     <div class="my-3">
-        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_index&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-info"><{$smarty.const._MD_TAD_FORM_EDIT_ALL}></a>
-        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_index&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-primary"><{$smarty.const._MD_TAD_FORM_VIEW_RESULT}></a>
-        <a href="<{$xoops_url}>/modules/tad_form/index.php?op=tad_form_fill_create&ofsn=<{$smarty.get.ofsn}>&ssn=<{$smarty.get.ssn}>&code=<{$smarty.get.code}>" class="btn btn-sm btn-success"><{$smarty.const._MD_TAD_FORM_BACK_TO_FORM}></a>
+        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_index&ofsn=<{$smarty.get.ofsn}>" class="btn btn-sm btn-info"><{$smarty.const._MD_TAD_FORM_EDIT_ALL}></a>
+        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_index&ofsn=<{$smarty.get.ofsn}>" class="btn btn-sm btn-primary"><{$smarty.const._MD_TAD_FORM_VIEW_RESULT}></a>
+        <a href="<{$xoops_url}>/modules/tad_form/index.php?op=tad_form_fill_create&ofsn=<{$smarty.get.ofsn}>&ssn=<{$smarty.get.ssn|default:0}>&code=<{$smarty.get.code|default:''}>" class="btn btn-sm btn-success"><{$smarty.const._MD_TAD_FORM_BACK_TO_FORM}></a>
     </div>
 <{else}>
     <h2><{$smarty.const._MD_TAD_FORM_ADD}></h2>
@@ -20,7 +20,7 @@
                     <{$smarty.const._MD_TAD_FORM_TITLE}>
                 </label>
                 <div class="col-sm-8">
-                    <input type="text" name="title" id="title" value="<{$title}>" class="validate[required] form-control" >
+                    <input type="text" name="title" id="title" value="<{$title|default:''}>" class="validate[required] form-control" >
                 </div>
             </div>
 
@@ -62,11 +62,11 @@
                         <{$smarty.const._MD_TAD_FORM_USE_CAPTCHA}>
                     </label>
                     <div class="form-check form-check-inline radio-inline">
-                        <input class="form-check-input" type="radio" name="captcha" id="captcha_1" value="1" <{if $captcha == "1"}>checked<{/if}>>
+                        <input class="form-check-input" type="radio" name="captcha" id="captcha_1" value="1" <{if $captcha|default:'0' == "1"}>checked<{/if}>>
                         <label class="form-check-label" for="captcha_1"><{$smarty.const._YES}></label>
                     </div>
                     <div class="form-check form-check-inline radio-inline">
-                        <input class="form-check-input" type="radio" name="captcha" id="captcha_0" value="0" <{if $captcha != "1"}>checked<{/if}>>
+                        <input class="form-check-input" type="radio" name="captcha" id="captcha_0" value="0" <{if $captcha|default:'0' != "1"}>checked<{/if}>>
                         <label class="form-check-label" for="captcha_0"><{$smarty.const._NO}></label>
                     </div>
                 </div>
@@ -112,7 +112,7 @@
                     <label><{$smarty.const._MD_TAD_FORM_KIND}></label>
                     <select name="kind" class="form-control">
                         <option value=""><{$smarty.const._MD_TAD_FORM_KIND0}></option>
-                        <option value="application" <{if $kind=="application"}>selected<{/if}>><{$smarty.const._MD_TAD_FORM_KIND1}></option>
+                        <option value="application" <{if $kind|default:''=="application"}>selected<{/if}>><{$smarty.const._MD_TAD_FORM_KIND1}></option>
                     </select>
                 </div>
                 <div class="col-sm-4">

@@ -142,7 +142,7 @@ class Tools
     // 過濾所有資料
     public static function filter_all_data($filter, $data, $filter_arr)
     {
-        if ($filter) {
+        if ($filter && \is_array($data)) {
             foreach ($data as $key => $value) {
                 $data[$key] = Tools::filter($key, $value, $filter, $filter_arr);
             }

@@ -1,16 +1,16 @@
-<{$bootstrap_table}>
+<{$bootstrap_table|default:''}>
 
-<{if $form.title}>
+<{if $form.title|default:false}>
     <h2><{$form.title}></h2>
 <{else}>
     <h2 class="sr-only visually-hidden">report</h2>
 <{/if}>
 <div class="my-3">
-    <{if $smarty.session.tad_form_manager}>
-        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-warning"><{$smarty.const._MD_TAD_FORM_EDIT}></a>
-        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_index&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-info"><{$smarty.const._MD_TAD_FORM_EDIT_ALL}></a>
+    <{if $smarty.session.tad_form_manager|default:false}>
+        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$smarty.get.ofsn}>" class="btn btn-sm btn-warning"><{$smarty.const._MD_TAD_FORM_EDIT}></a>
+        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_index&ofsn=<{$smarty.get.ofsn}>" class="btn btn-sm btn-info"><{$smarty.const._MD_TAD_FORM_EDIT_ALL}></a>
     <{/if}>
-    <a href="<{$xoops_url}>/modules/tad_form/index.php?op=tad_form_fill_create&ofsn=<{$smarty.get.ofsn}>&ssn=<{$smarty.get.ssn}>&code=<{$smarty.get.code}>" class="btn btn-sm btn-success"><{$smarty.const._MD_TAD_FORM_BACK_TO_FORM}></a>
+    <a href="<{$xoops_url}>/modules/tad_form/index.php?op=tad_form_fill_create&ofsn=<{$smarty.get.ofsn}>&ssn=<{$smarty.get.ssn|default:0}>&code=<{$smarty.get.code|default:''}>" class="btn btn-sm btn-success"><{$smarty.const._MD_TAD_FORM_BACK_TO_FORM}></a>
 </div>
 
 
@@ -32,7 +32,7 @@
     <{foreach from=$all_tad_form_fill key=ssn item=fill}>
         <tr>
             <td style="text-align:center;">
-                <{if $smarty.session.tad_form_manager}>
+                <{if $smarty.session.tad_form_manager|default:false}>
                     <a href="index.php?op=tad_form_fill_show&ofsn=<{$fill.ofsn}>&code=<{$fill.code}>" target="_blank"><{$fill.man_name}></a>
                 <{else}>
                     <{$fill.man_name}>
@@ -62,7 +62,7 @@
 </table>
 
 
-<{if $analysis}>
+<{if $analysis|default:false}>
     <h2><{$smarty.const._MD_TAD_FORM_ANALYSIS}></h2>
     <table class="table table-striped">
         <tr>
@@ -71,7 +71,7 @@
             <th><{$smarty.const._MD_TAD_FORM_ANALYSIS_RESULT}></th>
         </tr>
         <{foreach from=$analysis item=data}>
-            <{if $data.func}>
+            <{if $data.func|default:false}>
                 <tr>
                     <td><{$data.title}></td>
                     <td><{$data.func}></td>

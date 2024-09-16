@@ -1,9 +1,9 @@
 <h2><{$form.title}></h2>
 <div class="my-3">
-    <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$form.ofsn}>" class="btn btn-warning"><{$smarty.const._MD_TAD_FORM_EDIT}></a>
-    <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_index&ofsn=<{$form.ofsn}>" class="btn btn-info"><{$smarty.const._MD_TAD_FORM_EDIT_ALL}></a>
-    <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_index&ofsn=<{$form.ofsn}>" class="btn btn-primary"><{$smarty.const._MD_TAD_FORM_VIEW_RESULT}></a>
-    <a href="<{$xoops_url}>/modules/tad_form/index.php?op=tad_form_fill_create&ofsn=<{$smarty.get.ofsn}>&ssn=<{$smarty.get.ssn}>&code=<{$smarty.get.code}>" class="btn btn-success"><{$smarty.const._MD_TAD_FORM_BACK_TO_FORM}></a>
+    <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$smarty.get.ofsn}>" class="btn btn-warning"><{$smarty.const._MD_TAD_FORM_EDIT}></a>
+    <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_index&ofsn=<{$smarty.get.ofsn}>" class="btn btn-info"><{$smarty.const._MD_TAD_FORM_EDIT_ALL}></a>
+    <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_index&ofsn=<{$smarty.get.ofsn}>" class="btn btn-primary"><{$smarty.const._MD_TAD_FORM_VIEW_RESULT}></a>
+    <a href="<{$xoops_url}>/modules/tad_form/index.php?op=tad_form_fill_create&ofsn=<{$smarty.get.ofsn}>&ssn=<{$smarty.get.ssn|default:0}>&code=<{$smarty.get.code|default:''}>" class="btn btn-success"><{$smarty.const._MD_TAD_FORM_BACK_TO_FORM}></a>
 </div>
 
 <form action="manager.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
@@ -49,7 +49,7 @@
             <{$smarty.const._MD_TAD_FORM_COL_OPTIONS}>
         </label>
         <div class="col-sm-7 options" <{if $kind != 'radio' && $kind != 'checkbox' && $kind != 'select' && $kind != 'upload'}>style="display: none;"<{/if}>>
-            <input type="text" name="size" value="<{if $size}><{$size}><{elseif $kind=="upload"}>.pdf,.jpg,.png,.gif,.docx,.pptx,.xlsx,.odt,.zip<{/if}>" class="form-control" placeholder="<{$smarty.const._MD_TAD_FORM_COL_NOTE}>" data-toggle="tooltip" data-html="true" data-bs-toggle="tooltip" data-bs-html="true" title="<{$smarty.const._MD_TAD_FORM_COL_NOTE}>">
+            <input type="text" name="size" value="<{if $size|default:false}><{$size}><{elseif $kind=="upload"}>.pdf,.jpg,.png,.gif,.docx,.pptx,.xlsx,.odt,.zip<{/if}>" class="form-control" placeholder="<{$smarty.const._MD_TAD_FORM_COL_NOTE}>" data-toggle="tooltip" data-html="true" data-bs-toggle="tooltip" data-bs-html="true" title="<{$smarty.const._MD_TAD_FORM_COL_NOTE}>">
         </div>
     </div>
 
@@ -97,7 +97,7 @@
 
     <div class="text-center">
         <{$token_form}>
-        <{if $smarty.get.mode}>
+        <{if $smarty.get.mode|default:false}>
             <input type="hidden" name="mode" value="<{$smarty.get.mode}>">
         <{else}>
             <label class="checkbox inline"><input type="checkbox" name="stop_tad_col_create" value="1"><{$smarty.const._MD_TAD_FORM_COL_END}></label>

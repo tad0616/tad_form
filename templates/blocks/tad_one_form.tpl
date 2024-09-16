@@ -1,10 +1,10 @@
 
-<{if $block.fill}>
+<{if $block.fill|default:false}>
     <{foreach from=$block.sign_form key=k item=v}>
         <{assign var=$k value=$v}>
     <{/foreach}>
 
-    <{if $error}>
+    <{if $error|default:false}>
         <h3><{$title}></h3>
         <div class="alert alert-danger">
             <p><{$error}></p>
