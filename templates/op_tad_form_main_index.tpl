@@ -12,10 +12,10 @@
         <{$form.content}>
         <div class="row">
             <div class="col-lg-6 d-grid gap-2">
-                <a href="index.php?op=tad_form_fill_create&ofsn=<{$ofsn}>" class="btn btn-lg btn-block btn-primary <{if !$form.can_fill}>disabled<{/if}>"><{if $form.can_fill|default:false}><{if $xoopsModuleConfig.show_amount && $form.fill_count}><{$smarty.const._MD_TAD_FORM_SIGN_NOW|sprintf:$form.title:$form.fill_count}><{else}><{$smarty.const._MD_TAD_FORM_SIGNNOW|sprintf:$form.title}><{/if}><{else}><{$smarty.const._MD_TAD_FORM_CANT_SIGN|sprintf:$form.title}><{/if}></a>
+                <a href="index.php?op=tad_form_fill_create&ofsn=<{$ofsn|default:''}>" class="btn btn-lg btn-block btn-primary <{if !$form.can_fill}>disabled<{/if}>"><{if $form.can_fill|default:false}><{if $xoopsModuleConfig.show_amount && $form.fill_count}><{$smarty.const._MD_TAD_FORM_SIGN_NOW|sprintf:$form.title:$form.fill_count}><{else}><{$smarty.const._MD_TAD_FORM_SIGNNOW|sprintf:$form.title}><{/if}><{else}><{$smarty.const._MD_TAD_FORM_CANT_SIGN|sprintf:$form.title}><{/if}></a>
             </div>
             <div class="col-lg-6 d-grid gap-2">
-                <a href="index.php?op=tad_form_fill_index&ofsn=<{$ofsn}>" class="btn btn-info btn-lg btn-block <{if !$form.can_view_result}>disabled<{/if}>"><{if $form.can_view_result|default:false}><{$smarty.const._MD_TAD_FORM_VIEW_RESULT}><{else}><{$smarty.const._MD_TAD_FORM_CANT_VIEW_RESULT}><{/if}></a>
+                <a href="index.php?op=tad_form_fill_index&ofsn=<{$ofsn|default:''}>" class="btn btn-info btn-lg btn-block <{if !$form.can_view_result}>disabled<{/if}>"><{if $form.can_view_result|default:false}><{$smarty.const._MD_TAD_FORM_VIEW_RESULT}><{else}><{$smarty.const._MD_TAD_FORM_CANT_VIEW_RESULT}><{/if}></a>
             </div>
         </div>
     </div>

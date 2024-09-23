@@ -31,7 +31,7 @@
     <{foreach from=$form.col key=csn item=col name=form_col}>
         <div class="p-2 q_col rounded">
             <{if $smarty.session.tad_form_manager|default:false}>
-                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_create&ofsn=<{$form.ofsn}>&csn=<{$csn}>&mode=update" class="btn btn-sm btn-warning pull-right float-right pull-end"><{$smarty.const._TAD_EDIT}></a>
+                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_create&ofsn=<{$form.ofsn}>&csn=<{$csn|default:''}>&mode=update" class="btn btn-sm btn-warning pull-right float-right pull-end"><{$smarty.const._TAD_EDIT}></a>
             <{/if}>
             <{if $col.kind=="show"}>
                 <div><b><{$col.title}></b></div>
@@ -54,7 +54,7 @@
         </div>
     <{/foreach}>
 
-    <{$token_form}>
+    <{$token_form|default:''}>
     <input type="hidden" name="ssn" value="<{$ssn|default:''}>">
     <input type="hidden" name="code" value="<{$code|default:''}>">
     <input type="hidden" name="ofsn" value="<{$form.ofsn}>">
@@ -80,14 +80,14 @@
         </label>
         <div class="col-sm-2">
             <label for="man_name" style="display:none;">man_name</label>
-                <input type="text" name="man_name" id="man_name" class="form-control validate[required]" value="<{if $man_name|default:false}><{$man_name}><{else}><{$smarty.session.now_user.name}><{/if}>">
+                <input type="text" name="man_name" id="man_name" class="form-control validate[required]" value="<{if $man_name|default:false}><{$man_name|default:''}><{else}><{$smarty.session.now_user.name}><{/if}>">
         </div>
         <label class="col-sm-2 col-form-label text-sm-right text-sm-end control-label">
             <{$smarty.const._MD_TAD_FORM_EMAIL}>
         </label>
         <div class="col-sm-4">
             <label for="tfemail" style="display:none;">tfemail</label>
-            <input type="text" name="email" id="tfemail"  class="form-control validate[required]" value="<{if $email|default:false}><{$email}><{else}><{$smarty.session.now_user.email}><{/if}>">
+            <input type="text" name="email" id="tfemail"  class="form-control validate[required]" value="<{if $email|default:false}><{$email|default:''}><{else}><{$smarty.session.now_user.email}><{/if}>">
             <div class="text-danger"><{$smarty.const._MD_TAD_FORM_EMAIL_TIP}></div>
         </div>
         <div class="col-sm-2">

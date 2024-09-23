@@ -5,9 +5,9 @@
     <{/foreach}>
 
     <{if $error|default:false}>
-        <h3><{$title}></h3>
+        <h3><{$title|default:''}></h3>
         <div class="alert alert-danger">
-            <p><{$error}></p>
+            <p><{$error|default:''}></p>
         </div>
     <{else}>
         <{include file="$xoops_rootpath/modules/tad_form/templates/op_tad_form_fill_create.tpl"}>

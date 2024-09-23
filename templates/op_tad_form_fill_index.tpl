@@ -41,7 +41,7 @@
             </td>
             <{if $form.kind == "application"}>
                 <td class="text-center">
-                    <input type="checkbox" name="result_col[<{$ssn}>]" data-ssn="<{$ssn}>" value='1' <{if $fill.result_col == 1}>checked<{/if}>>
+                    <input type="checkbox" name="result_col[<{$ssn|default:''}>]" data-ssn="<{$ssn|default:''}>" value='1' <{if $fill.result_col == 1}>checked<{/if}>>
                 </td>
             <{/if}>
             <{foreach from=$fill.form.col key=csn item=col}>
@@ -78,7 +78,7 @@
                     <td>
                     <{if $data.func=="count"}>
                         <{foreach from=$data.val key=option item=val}>
-                            <li><{$option}> = <{$val}></li>
+                            <li><{$option|default:''}> = <{$val|default:''}></li>
                         <{/foreach}>
                     <{else}>
                         <{$data.val}>

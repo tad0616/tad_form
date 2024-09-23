@@ -66,7 +66,7 @@
                 </td>
                 <td nowrap>
                     <img src="<{$xoops_url}>/modules/tadtools/treeTable/images/updown_s.png" style="cursor: s-resize;" alt="<{$smarty.const._MD_TREETABLE_SORT_PIC}>" title="<{$smarty.const._MD_TREETABLE_SORT_PIC}>">
-                    <a href="manager.php?op=tad_form_col_create&ofsn=<{$ofsn}>&csn=<{$col.csn}>&mode=modify" class="btn btn-sm btn-warning"><{$smarty.const._TAD_EDIT}></a>
+                    <a href="manager.php?op=tad_form_col_create&ofsn=<{$ofsn|default:''}>&csn=<{$col.csn}>&mode=modify" class="btn btn-sm btn-warning"><{$smarty.const._TAD_EDIT}></a>
                 </td>
             </tr>
         <{/foreach}>
@@ -74,7 +74,7 @@
 </table>
 
 <div class="text-right text-end">
-    <a href="manager.php?op=tad_form_col_create&ofsn=<{$ofsn}>" class="btn btn-info"><{$smarty.const._MD_TAD_FORM_ADD_COL}></a>
+    <a href="manager.php?op=tad_form_col_create&ofsn=<{$ofsn|default:''}>" class="btn btn-info"><{$smarty.const._MD_TAD_FORM_ADD_COL}></a>
 </div>
 
 <br style="clear:both">

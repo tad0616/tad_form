@@ -30,7 +30,7 @@
                     <{$smarty.const._MD_TAD_FORM_ADM_EMAIL}>
                 </label>
                 <div class="col-sm-8">
-                    <input type="text" name="adm_email" id="adm_email" value="<{$adm_email}>" class="validate[required] form-control" >
+                    <input type="text" name="adm_email" id="adm_email" value="<{$adm_email|default:''}>" class="validate[required] form-control" >
                 </div>
             </div>
 
@@ -40,7 +40,7 @@
                     <{$smarty.const._MD_TAD_FORM_START_DATE}>
                 </label>
                 <div class="col-sm-8">
-                    <input type="text" name="start_date" id="start_date" class="form-control" value="<{$start_date}>" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})">
+                    <input type="text" name="start_date" id="start_date" class="form-control" value="<{$start_date|default:''}>" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})">
                 </div>
             </div>
 
@@ -49,7 +49,7 @@
                     <{$smarty.const._MD_TAD_FORM_END_DATE}>
                 </label>
                 <div class="col-sm-8">
-                    <input type="text" name="end_date" id="end_date" class="form-control" value="<{$end_date}>" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})">
+                    <input type="text" name="end_date" id="end_date" class="form-control" value="<{$end_date|default:''}>" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})">
                 </div>
             </div>
 
@@ -117,25 +117,25 @@
                 </div>
                 <div class="col-sm-4">
                     <label><{$smarty.const._MD_TAD_FORM_SIGN_GROUP}></label>
-                    <{$sign_group_form}>
+                    <{$sign_group_form|default:''}>
                 </div>
                 <div class="col-sm-4">
                     <label><{$smarty.const._MD_TAD_FORM_VIEW_RESULT_GROUP}></label>
-                    <{$view_result_group_form}>
+                    <{$view_result_group_form|default:''}>
                 </div>
             </div>
         </div>
     </div>
 
 
-    <{$content_editor}>
+    <{$content_editor|default:''}>
 
 
     <div class="bar">
-        <{$token_form}>
-        <input type="hidden" name="enable" value="<{$enable}>">
-        <input type="hidden" name="ofsn" value="<{$ofsn}>">
-        <input type="hidden" name="op" value="<{$next_op}>">
+        <{$token_form|default:''}>
+        <input type="hidden" name="enable" value="<{$enable|default:''}>">
+        <input type="hidden" name="ofsn" value="<{$ofsn|default:''}>">
+        <input type="hidden" name="op" value="<{$next_op|default:''}>">
 
         <{if !$ofsn}>
             <div class="text-center mb-2">

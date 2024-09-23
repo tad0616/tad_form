@@ -12,18 +12,18 @@
     <{foreach from=$all_tad_form_main key=ofsn item=form}>
         <tr>
             <td>
-                <{$ofsn}>
+                <{$ofsn|default:''}>
                 <{if $form.enable|default:false}>
-                    <a href="manager.php?op=tad_form_main_update_enable&ofsn=<{$ofsn}>&enable=0"><img src="<{$xoops_url}>/modules/tad_form/images/001_06.gif" hspace=2 alt="<{$smarty.const._MD_TAD_FORM_COL_ENABLE}>" title="<{$smarty.const._MD_TAD_FORM_COL_ENABLE}>"></a>
+                    <a href="manager.php?op=tad_form_main_update_enable&ofsn=<{$ofsn|default:''}>&enable=0"><img src="<{$xoops_url}>/modules/tad_form/images/001_06.gif" hspace=2 alt="<{$smarty.const._MD_TAD_FORM_COL_ENABLE}>" title="<{$smarty.const._MD_TAD_FORM_COL_ENABLE}>"></a>
                 <{else}>
-                    <a href="manager.php?op=tad_form_main_update_enable&ofsn=<{$ofsn}>&enable=1"><img src="<{$xoops_url}>/modules/tad_form/images/001_05.gif" hspace=2 alt="<{$smarty.const._MD_TAD_FORM_COL_ACTIVE}>" title="<{$smarty.const._MD_TAD_FORM_COL_ACTIVE}>"></a>
+                    <a href="manager.php?op=tad_form_main_update_enable&ofsn=<{$ofsn|default:''}>&enable=1"><img src="<{$xoops_url}>/modules/tad_form/images/001_05.gif" hspace=2 alt="<{$smarty.const._MD_TAD_FORM_COL_ACTIVE}>" title="<{$smarty.const._MD_TAD_FORM_COL_ACTIVE}>"></a>
                 <{/if}>
-                <a href="<{$xoops_url}>/modules/tad_form/index.php?op=tad_form_fill_create&ofsn=<{$ofsn}>" data-toggle="tooltip" data-bs-toggle="tooltip" title="<{$smarty.const._MD_TAD_FORM_SIGN_GROUP}>: <{if $form.sign_group_title|default:false}><{"、"|implode:$form.sign_group_title}><{/if}>"><{$form.title}></a>
+                <a href="<{$xoops_url}>/modules/tad_form/index.php?op=tad_form_fill_create&ofsn=<{$ofsn|default:''}>" data-toggle="tooltip" data-bs-toggle="tooltip" title="<{$smarty.const._MD_TAD_FORM_SIGN_GROUP}>: <{if $form.sign_group_title|default:false}><{"、"|implode:$form.sign_group_title}><{/if}>"><{$form.title}></a>
             </td>
             <td>
-                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_index&ofsn=<{$ofsn}>" class="btn btn-sm btn-info"><{$form.fill_count|intval}></a>
-                <a href="<{$xoops_url}>/modules/tad_form/excel.php?ofsn=<{$ofsn}>" class="btn btn-sm btn-info">Excel</a>
-                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_mail&ofsn=<{$ofsn}>" class="btn btn-sm btn-info">mail</a>
+                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_index&ofsn=<{$ofsn|default:''}>" class="btn btn-sm btn-info"><{$form.fill_count|intval}></a>
+                <a href="<{$xoops_url}>/modules/tad_form/excel.php?ofsn=<{$ofsn|default:''}>" class="btn btn-sm btn-info">Excel</a>
+                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_mail&ofsn=<{$ofsn|default:''}>" class="btn btn-sm btn-info">mail</a>
                 <{if $form.show_result|default:false}>
                     <img src="<{$xoops_url}>/modules/tad_form/images/show_result.png" hspace=2 alt="<{$smarty.const._MD_TAD_FORM_SHOW_RESULT}>" data-toggle="tooltip" data-bs-toggle="tooltip" title="<{$smarty.const._MD_TAD_FORM_VIEW_RESULT_GROUP}>: <{if $form.view_result_group_title|default:false}><{"、"|implode:$form.view_result_group_title}><{/if}>">
                 <{/if}>
@@ -39,20 +39,20 @@
             </td>
             <td nowrap><{$form.start_date|substr:0:16}><br><{$form.end_date|substr:0:16}></td>
             <td>
-                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$ofsn}>" class="btn btn-sm btn-warning"><{$smarty.const._MD_TAD_FORM_EDIT}></a>
-                <a href="manager.php?op=copy&ofsn=<{$ofsn}>" class="btn btn-sm btn-success"><{$smarty.const._MD_TAD_FORM_COPY_FORM}></a>
+                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$ofsn|default:''}>" class="btn btn-sm btn-warning"><{$smarty.const._MD_TAD_FORM_EDIT}></a>
+                <a href="manager.php?op=copy&ofsn=<{$ofsn|default:''}>" class="btn btn-sm btn-success"><{$smarty.const._MD_TAD_FORM_COPY_FORM}></a>
                 <{if !$form.enable}>
-                    <a href="javascript:tad_form_main_destroy_func(<{$ofsn}>);" class="btn btn-sm btn-danger"><{$smarty.const._TAD_DEL}></a>
+                    <a href="javascript:tad_form_main_destroy_func(<{$ofsn|default:''}>);" class="btn btn-sm btn-danger"><{$smarty.const._TAD_DEL}></a>
                 <{/if}>
             </td>
             <td class="text-center"><{$form.col_count}></td>
             <td>
-                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_index&ofsn=<{$ofsn}>" class="btn btn-sm btn-warning"><{$smarty.const._MD_TAD_FORM_EDIT_ALL}></a>
-                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_create&ofsn=<{$ofsn}>" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-toggle="tooltip" title="<{$smarty.const._MD_TAD_FORM_ADD_COL}>"><i class="fa fa-plus" aria-hidden="true"></i>
+                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_index&ofsn=<{$ofsn|default:''}>" class="btn btn-sm btn-warning"><{$smarty.const._MD_TAD_FORM_EDIT_ALL}></a>
+                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_create&ofsn=<{$ofsn|default:''}>" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-toggle="tooltip" title="<{$smarty.const._MD_TAD_FORM_ADD_COL}>"><i class="fa fa-plus" aria-hidden="true"></i>
                 </a>
             </td>
         </tr>
     <{/foreach}>
     </tbody>
 </table>
-<{$bar}>
+<{$bar|default:''}>

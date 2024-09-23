@@ -10,10 +10,10 @@
     <div class="alert alert-info">
         <div class="form-group row mb-3">
             <label class="col-sm-2 control-label col-form-label text-sm-right text-sm-end">
-                <{$smarty.const._MD_TAD_FORM_COL_TITLE}><{$sort}>
+                <{$smarty.const._MD_TAD_FORM_COL_TITLE}><{$sort|default:''}>
             </label>
             <div class="col-sm-10">
-                <input type="text" name="title" id="title" value="<{$title}>" class="form-control">
+                <input type="text" name="title" id="title" value="<{$title|default:''}>" class="form-control">
             </div>
         </div>
 
@@ -22,7 +22,7 @@
                 <{$smarty.const._MD_TAD_FORM_COL_DESCRIPT}>
             </label>
             <div class="col-sm-10">
-                <textarea name="descript" id="descript" class="form-control" rows=4><{$descript}></textarea>
+                <textarea name="descript" id="descript" class="form-control" rows=4><{$descript|default:''}></textarea>
             </div>
         </div>
     </div>
@@ -49,7 +49,7 @@
             <{$smarty.const._MD_TAD_FORM_COL_OPTIONS}>
         </label>
         <div class="col-sm-7 options" <{if $kind != 'radio' && $kind != 'checkbox' && $kind != 'select' && $kind != 'upload'}>style="display: none;"<{/if}>>
-            <input type="text" name="size" value="<{if $size|default:false}><{$size}><{elseif $kind=="upload"}>.pdf,.jpg,.png,.gif,.docx,.pptx,.xlsx,.odt,.zip<{/if}>" class="form-control" placeholder="<{$smarty.const._MD_TAD_FORM_COL_NOTE}>" data-toggle="tooltip" data-html="true" data-bs-toggle="tooltip" data-bs-html="true" title="<{$smarty.const._MD_TAD_FORM_COL_NOTE}>">
+            <input type="text" name="size" value="<{if $size|default:false}><{$size|default:''}><{elseif $kind=="upload"}>.pdf,.jpg,.png,.gif,.docx,.pptx,.xlsx,.odt,.zip<{/if}>" class="form-control" placeholder="<{$smarty.const._MD_TAD_FORM_COL_NOTE}>" data-toggle="tooltip" data-html="true" data-bs-toggle="tooltip" data-bs-html="true" title="<{$smarty.const._MD_TAD_FORM_COL_NOTE}>">
         </div>
     </div>
 
@@ -62,7 +62,7 @@
                 <option value="1"" <{if $public=="1"}>selected<{/if}>><{$smarty.const._MD_TAD_FORM_COL_PUBLIC1}></option>
                 <option value="0" <{if $public!="1"}>selected<{/if}>><{$smarty.const._MD_TAD_FORM_COL_PUBLIC0}></option>
             </select>
-            <input type="hidden" name="sort" value="<{$sort}>">
+            <input type="hidden" name="sort" value="<{$sort|default:''}>">
         </div>
 
         <label class="col-sm-1 control-label col-form-label text-sm-right text-sm-end">
@@ -91,20 +91,20 @@
             <{$smarty.const._MD_TAD_FORM_COL_VAL}>
         </label>
         <div class="col-sm-2">
-            <input type="text" name="val" id="val" value="<{$val}>" class="form-control">
+            <input type="text" name="val" id="val" value="<{$val|default:''}>" class="form-control">
         </div>
     </div>
 
     <div class="text-center">
-        <{$token_form}>
+        <{$token_form|default:''}>
         <{if $smarty.get.mode|default:false}>
             <input type="hidden" name="mode" value="<{$smarty.get.mode}>">
         <{else}>
             <label class="checkbox inline"><input type="checkbox" name="stop_tad_col_create" value="1"><{$smarty.const._MD_TAD_FORM_COL_END}></label>
         <{/if}>
-        <input type="hidden" name="op" value="<{$next_op}>">
-        <input type="hidden" name="csn" value="<{$csn}>">
-        <input type="hidden" name="ofsn" value="<{$ofsn}>">
+        <input type="hidden" name="op" value="<{$next_op|default:''}>">
+        <input type="hidden" name="csn" value="<{$csn|default:''}>">
+        <input type="hidden" name="ofsn" value="<{$ofsn|default:''}>">
 
         <button type="submit" class="btn btn-primary"><{$smarty.const._TAD_SAVE}></button>
     </div>

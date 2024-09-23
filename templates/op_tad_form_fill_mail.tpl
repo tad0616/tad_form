@@ -7,7 +7,7 @@
 
     <div class="form-group row mb-3">
         <div class="col-sm-10">
-            <{$editor}>
+            <{$editor|default:''}>
         </div>
         <div class="col-sm-2">
             <span class="badge badge-danger bg-danger"><{$smarty.const._MD_TAD_FORM_SEND_TAG}></span>
@@ -30,7 +30,7 @@
         </div>
         <{foreach from=$form.all_apply key=ssn item=fill}>
             <div class="form-check form-check-inline">
-            <input class="form-check-input email" type="checkbox" name="email_ssn[<{$ssn}>]" id="email-<{$ssn}>" value="<{$fill.email}>" checked>
+            <input class="form-check-input email" type="checkbox" name="email_ssn[<{$ssn|default:''}>]" id="email-<{$ssn|default:''}>" value="<{$fill.email}>" checked>
             <label class="form-check-label" for="email-<{$fill.man_name}>"><{$fill.man_name}></label>
             </div>
         <{/foreach}>

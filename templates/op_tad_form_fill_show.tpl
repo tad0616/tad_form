@@ -5,7 +5,7 @@
 <{foreach from=$form.col key=csn item=col name=form_col}>
     <div class="p-2 q_col rounded">
         <{if $smarty.session.tad_form_manager|default:false}>
-            <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_create&ofsn=<{$form.ofsn}>&csn=<{$csn}>&mode=update" class="btn btn-sm btn-warning pull-right float-right pull-end"><{$smarty.const._TAD_EDIT}></a>
+            <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_create&ofsn=<{$form.ofsn}>&csn=<{$csn|default:''}>&mode=update" class="btn btn-sm btn-warning pull-right float-right pull-end"><{$smarty.const._TAD_EDIT}></a>
         <{/if}>
         <{if $col.kind=="show"}>
             <div><b><{$col.title}></b></div>
