@@ -148,3 +148,4 @@ define('_MD_TAD_FORM_CAPTCHA', '請輸入圖片中的數字');
 
 define('_MD_TAD_FORM_VISITORS_FILL', '訪客可填寫');
 define('_MD_TAD_FORM_CANT_UPLOAD', '填報訪客可填寫，資安因素，不開放上傳功能');
+define('_MD_TAD_FORM_LIST', '表單一覽');

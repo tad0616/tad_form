@@ -39,7 +39,7 @@
             </td>
             <td nowrap><{$form.start_date|substr:0:16}><br><{$form.end_date|substr:0:16}></td>
             <td>
-                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$ofsn|default:''}>" class="btn btn-sm btn-warning"><{$smarty.const._MD_TAD_FORM_EDIT}></a>
+                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$ofsn|default:''}>" class="btn btn-sm btn-warning"><i class="fa fa-pencil-square" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_EDIT}></a>
                 <a href="manager.php?op=copy&ofsn=<{$ofsn|default:''}>" class="btn btn-sm btn-success"><{$smarty.const._MD_TAD_FORM_COPY_FORM}></a>
                 <{if !$form.enable}>
                     <a href="javascript:tad_form_main_destroy_func(<{$ofsn|default:''}>);" class="btn btn-sm btn-danger"><{$smarty.const._TAD_DEL}></a>
@@ -47,7 +47,7 @@
             </td>
             <td class="text-center"><{$form.col_count}></td>
             <td>
-                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_index&ofsn=<{$ofsn|default:''}>" class="btn btn-sm btn-warning"><{$smarty.const._MD_TAD_FORM_EDIT_ALL}></a>
+                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_index&ofsn=<{$ofsn|default:''}>" class="btn btn-sm btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_EDIT_ALL}></a>
                 <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_create&ofsn=<{$ofsn|default:''}>" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-toggle="tooltip" title="<{$smarty.const._MD_TAD_FORM_ADD_COL}>"><i class="fa fa-plus" aria-hidden="true"></i>
                 </a>
             </td>

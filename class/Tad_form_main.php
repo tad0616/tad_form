@@ -397,12 +397,12 @@ class Tad_form_main
             $view_result_group = implode(',', $view_result_group);
         }
 
-        $sql = "INSERT INTO `" . $xoopsDB->prefix("tad_form_main") . "` (
+        $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_form_main') . '` (
             `title`, `start_date`, `end_date`, `content`, `uid`, `post_date`, `enable`, `sign_group`, `kind`, `adm_email`, `captcha`, `show_result`, `view_result_group`, `multi_sign`
-        ) VALUES(
-            '{$title}','{$start_date}','{$end_date}','{$content}','{$uid}', now() , '{$enable}','{$sign_group}','{$kind}','{$adm_email}','{$captcha}','{$show_result}','{$view_result_group}','{$multi_sign}'
-        )";
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
+        ) VALUES (
+            ?, ?, ?, ?, ?, now(), ?, ?, ?, ?, ?, ?, ?, ?
+        )';
+        Utility::query($sql, 'ssssissssssss', [$title, $start_date, $end_date, $content, $uid, $enable, $sign_group, $kind, $adm_email, $captcha, $show_result, $view_result_group, $multi_sign]) or Utility::web_error($sql, __FILE__, __LINE__, true);
 
         //取得最後新增資料的流水編號
         $ofsn = $xoopsDB->getInsertId();
@@ -486,9 +486,8 @@ class Tad_form_main
 
         foreach ($destroy_item_arr as $destroy_item) {
             if (Tools::chk_is_adm('my_form', $ofsn, __FILE__, __LINE__, 'return')) {
-                $sql = "DELETE FROM `" . $xoopsDB->prefix("tad_form_main") . "`
-                WHERE ofsn='{$destroy_item['ofsn']}'";
-                $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
+                $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_form_main') . '` WHERE `ofsn`=?';
+                Utility::query($sql, 'i', [$destroy_item['ofsn']]) or Utility::web_error($sql, __FILE__, __LINE__, true);
 
                 Tad_form_fill::destroy($destroy_item['ofsn'], ['ofsn' => $destroy_item['ofsn']]);
                 Tad_form_col::destroy($destroy_item['ofsn'], ['ofsn' => $destroy_item['ofsn']]);

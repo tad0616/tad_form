@@ -3,6 +3,7 @@
 global $xoopsConfig;
 
 $modversion = [];
+global $xoopsConfig;
 
 //---模組基本資訊---//
 $modversion['name'] = _MI_TAD_FORM_NAME;
@@ -29,20 +30,23 @@ $modversion['min_php'] = 5.4;
 $modversion['min_xoops'] = '2.5';
 
 //---paypal資訊---//
-$modversion['paypal'] = [];
-$modversion['paypal']['business'] = 'tad0616@gmail.com';
-$modversion['paypal']['item_name'] = 'Donation : ' . _MI_TAD_WEB;
-$modversion['paypal']['amount'] = 0;
-$modversion['paypal']['currency_code'] = 'USD';
+$modversion['paypal'] = [
+    'business' => 'tad0616@gmail.com',
+    'item_name' => 'Donation : ' . _MI_TAD_WEB,
+    'amount' => 0,
+    'currency_code' => 'USD',
+];
 
 //---啟動後台管理界面選單---//
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
-$modversion['tables'][] = 'tad_form_col';
-$modversion['tables'][] = 'tad_form_fill';
-$modversion['tables'][] = 'tad_form_main';
-$modversion['tables'][] = 'tad_form_value';
-$modversion['tables'][] = 'tad_form_data_center';
-$modversion['tables'][] = 'tad_form_files_center';
+$modversion['tables'] = [
+    'tad_form_col',
+    'tad_form_fill',
+    'tad_form_main',
+    'tad_form_value',
+    'tad_form_data_center',
+    'tad_form_files_center',
+];
 
 //---資料表架構---//
 $modversion['system_menu'] = 1;
@@ -61,42 +65,47 @@ $modversion['onUpdate'] = 'include/onUpdate.php';
 $modversion['onUninstall'] = 'include/onUninstall.php';
 
 //---樣板設定---//
-$modversion['templates'] = [];
-$i = 1;
-$modversion['templates'][$i]['file'] = 'tad_form_index.tpl';
-$modversion['templates'][$i]['description'] = 'tad_form_index.tpl';
-
-$i++;
-$modversion['templates'][$i]['file'] = 'tad_form_admin.tpl';
-$modversion['templates'][$i]['description'] = 'tad_form_admin.tpl';
+$modversion['templates'] = [
+    ['file' => 'tad_form_index.tpl', 'description' => 'tad_form_index.tpl'],
+    ['file' => 'tad_form_admin.tpl', 'description' => 'tad_form_admin.tpl'],
+];
 
 //---區塊設定---//
-$modversion['blocks'] = [];
-$modversion['blocks'][1]['file'] = 'tad_form.php';
-$modversion['blocks'][1]['name'] = _MI_TAD_FORM_BNAME1;
-$modversion['blocks'][1]['description'] = _MI_TAD_FORM_BDESC1;
-$modversion['blocks'][1]['show_func'] = 'tad_form';
-$modversion['blocks'][1]['template'] = 'tad_form.tpl';
-
-$modversion['blocks'][2]['file'] = 'tad_one_form.php';
-$modversion['blocks'][2]['name'] = _MI_TAD_FORM_BNAME2;
-$modversion['blocks'][2]['description'] = _MI_TAD_FORM_BDESC2;
-$modversion['blocks'][2]['show_func'] = 'tad_one_form';
-$modversion['blocks'][2]['template'] = 'tad_one_form.tpl';
-$modversion['blocks'][2]['edit_func'] = 'tad_one_form_edit';
-$modversion['blocks'][2]['options'] = '|1';
+$modversion['blocks'] = [
+    [
+        'file' => 'tad_form.php',
+        'name' => _MI_TAD_FORM_BNAME1,
+        'description' => _MI_TAD_FORM_BDESC1,
+        'show_func' => 'tad_form',
+        'template' => 'tad_form.tpl',
+    ],
+    [
+        'file' => 'tad_one_form.php',
+        'name' => _MI_TAD_FORM_BNAME2,
+        'description' => _MI_TAD_FORM_BDESC2,
+        'show_func' => 'tad_one_form',
+        'template' => 'tad_one_form.tpl',
+        'edit_func' => 'tad_one_form_edit',
+        'options' => '|1',
+    ],
+];
 
 //---偏好設定---//
-$modversion['config'][0]['name'] = 'show_amount';
-$modversion['config'][0]['title'] = '_MI_TAD_FORM_SHOW_AMOUNT';
-$modversion['config'][0]['description'] = '_MI_TAD_FORM_SHOW_AMOUNT_DESC';
-$modversion['config'][0]['formtype'] = 'yesno';
-$modversion['config'][0]['valuetype'] = 'int';
-$modversion['config'][0]['default'] = 1;
-
-$modversion['config'][1]['name'] = 'can_send_mail';
-$modversion['config'][1]['title'] = '_MI_TAD_FORM_CAN_SEND_MAIL';
-$modversion['config'][1]['description'] = '_MI_TAD_FORM_CAN_SEND_MAIL_DESC';
-$modversion['config'][1]['formtype'] = 'yesno';
-$modversion['config'][1]['valuetype'] = 'int';
-$modversion['config'][1]['default'] = 1;
+$modversion['config'] = [
+    [
+        'name' => 'show_amount',
+        'title' => '_MI_TAD_FORM_SHOW_AMOUNT',
+        'description' => '_MI_TAD_FORM_SHOW_AMOUNT_DESC',
+        'formtype' => 'yesno',
+        'valuetype' => 'int',
+        'default' => 1,
+    ],
+    [
+        'name' => 'can_send_mail',
+        'title' => '_MI_TAD_FORM_CAN_SEND_MAIL',
+        'description' => '_MI_TAD_FORM_CAN_SEND_MAIL_DESC',
+        'formtype' => 'yesno',
+        'valuetype' => 'int',
+        'default' => 1,
+    ],
+];

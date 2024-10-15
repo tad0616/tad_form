@@ -11,6 +11,7 @@ use XoopsModules\Tad_form\Tad_form_main;
  */
 class Tools
 {
+    public static $int_col = ['csn', 'ofsn', 'sort', 'ssn', 'uid'];
 
     // 變數過濾
     public static function filter($key, $value, $mode = "read", $filter_arr = [])
@@ -192,6 +193,7 @@ class Tools
     {
         $id = (int) $id;
         $file = str_replace('\\', '/', $file);
+
         if ($_SESSION['tad_form_adm']) {
             return true;
         } elseif (($other != '' && $_SESSION[$other]) || strpos($_SERVER['PHP_SELF'], '/admin/') !== false) {
@@ -225,8 +227,9 @@ class Tools
     public static function get_group()
     {
         global $xoopsDB;
-        $sql = "select `groupid`,`name` from " . $xoopsDB->prefix("groups") . "";
-        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
+        $sql = 'SELECT `groupid`,`name` FROM `' . $xoopsDB->prefix('groups') . '`';
+        $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
+
         $groups = [];
         while (list($group_id, $name) = $xoopsDB->fetchRow($result)) {
             $groups[$group_id] = $name;
@@ -238,14 +241,14 @@ class Tools
     public static function mk_group($name = "")
     {
         global $xoopsDB;
-        $sql = "select groupid from " . $xoopsDB->prefix("groups") . " where `name`='$name'";
-        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
+        $sql = 'SELECT `groupid` FROM `' . $xoopsDB->prefix('groups') . '` WHERE `name`=?';
+        $result = Utility::query($sql, 's', [$name]) or Utility::web_error($sql, __FILE__, __LINE__, true);
 
         list($group_id) = $xoopsDB->fetchRow($result);
 
         if (empty($group_id)) {
-            $sql = "insert into " . $xoopsDB->prefix("groups") . " (`name`) values('{$name}')";
-            $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
+            $sql = 'INSERT INTO `' . $xoopsDB->prefix('groups') . '` (`name`) VALUES(?)';
+            Utility::query($sql, 's', [$name]) or Utility::web_error($sql, __FILE__, __LINE__, true);
 
             //取得最後新增資料的流水編號
             $group_id = $xoopsDB->getInsertId();
@@ -257,16 +260,18 @@ class Tools
     public static function add_user_to_group($uid, $group_id)
     {
         global $xoopsDB;
-        $sql = "replace into " . $xoopsDB->prefix("groups_users_link") . " (`groupid`, `uid`) values('$group_id','$uid')";
-        $xoopsDB->queryF($sql) or die($sql);
+        $sql = 'REPLACE INTO `' . $xoopsDB->prefix('groups_users_link') . '` (`groupid`, `uid`) VALUES (?, ?)';
+        Utility::query($sql, 'ii', [$group_id, $uid]) or die($sql);
+
     }
 
     // 將某人移出群組
     public static function del_user_from_group($uid, $group_id)
     {
         global $xoopsDB;
-        $sql = "delete from " . $xoopsDB->prefix("groups_users_link") . " where `groupid`='$group_id' and `uid`='$uid'";
-        $xoopsDB->queryF($sql) or die($sql);
+        $sql = 'DELETE FROM `' . $xoopsDB->prefix('groups_users_link') . '` WHERE `groupid`=? AND `uid`=?';
+        Utility::query($sql, 'ii', [$group_id, $uid]) or die($sql);
+
     }
 
     // uid 轉姓名
@@ -287,8 +292,9 @@ class Tools
         $sort = 1;
         foreach ($item_arr as $primary_keys) {
             list($ofsn) = explode('-', $primary_keys);
-            $sql = "update `" . $xoopsDB->prefix($table) . "` set `{$sort_col}`='{$sort}' where `{$primary}`='{$ofsn}'";
-            $xoopsDB->queryF($sql) or die('排序失敗！ (' . date("Y-m-d H:i:s") . ')');
+            $sql = 'UPDATE `' . $xoopsDB->prefix($table) . '` SET `' . $sort_col . '`=? WHERE `' . $primary . '`=?';
+            Utility::query($sql, 'ii', [$sort, $ofsn]) or die('排序失敗！ (' . date("Y-m-d H:i:s") . ')');
+
             $sort++;
         }
         echo "排序完成！ (" . date("Y-m-d H:i:s") . ")";

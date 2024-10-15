@@ -33,6 +33,7 @@ CREATE TABLE `tad_form_col` (
   KEY `ofsn` (`ofsn`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+
 CREATE TABLE `tad_form_fill` (
   `ssn` int(10) unsigned NOT NULL auto_increment,
   `ofsn` smallint(5) unsigned NOT NULL default '0',

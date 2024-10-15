@@ -191,8 +191,9 @@ class Tad_form_col
 
         $and_sql = Tools::get_and_where($where_arr);
 
-        $sql = "SELECT * FROM `" . $xoopsDB->prefix("tad_form_col") . "` WHERE 1 $and_sql";
-        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
+        $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_form_col') . '` WHERE 1 ' . $and_sql;
+        $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
+
         $data = $xoopsDB->fetchArray($result);
         $data = Tools::filter_all_data($filter, $data, self::$filter_arr);
 
@@ -284,12 +285,12 @@ class Tad_form_col
             redirect_header($_SERVER['HTTP_REFERER'], 3, _MD_TAD_FORM_CANT_UPLOAD);
         }
 
-        $sql = "INSERT INTO `" . $xoopsDB->prefix("tad_form_col") . "` (
+        $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_form_col') . '` (
             `ofsn`, `title`, `descript`, `kind`, `size`, `val`, `chk`, `func`, `sort`, `public`
         ) VALUES(
-            '{$ofsn}','{$title}','{$descript}','{$kind}','{$size}', '{$val}' , '{$chk}','{$func}','{$sort}','{$public}'
-        )";
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+        )';
+        Utility::query($sql, 'isssssssis', [$ofsn, $title, $descript, $kind, $size, $val, $chk, $func, $sort, $public]) or Utility::web_error($sql, __FILE__, __LINE__, true);
 
         //取得最後新增資料的流水編號
         $csn = $xoopsDB->getInsertId();
@@ -302,8 +303,9 @@ class Tad_form_col
     public static function max_sort($ofsn = '')
     {
         global $xoopsDB;
-        $sql = 'select max(sort) from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn={$ofsn}";
-        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
+        $sql = 'SELECT MAX(`sort`) FROM `' . $xoopsDB->prefix('tad_form_col') . '` WHERE `ofsn`=?';
+        $result = Utility::query($sql, 'i', [$ofsn]) or Utility::web_error($sql, __FILE__, __LINE__, true);
+
         list($sort) = $xoopsDB->fetchRow($result);
 
         return ++$sort;
@@ -313,7 +315,6 @@ class Tad_form_col
     public static function update($ofsn, $where_arr = [], $data_arr = [])
     {
         global $xoopsDB;
-
         $and = Tools::get_and_where($where_arr);
 
         if (!empty($data_arr)) {
@@ -322,7 +323,6 @@ class Tad_form_col
             } else {
                 Tools::chk_is_adm('tad_form_manager', '', __FILE__, __LINE__);
             }
-
             $col_arr = [];
 
             foreach ($data_arr as $key => $value) {

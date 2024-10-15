@@ -1,8 +1,12 @@
 <?php
 use XoopsModules\Tad_form\Tad_form_col;
-require_once "../../mainfile.php";
-$updateRecordsArray = $_POST['tr'];
 
+require __DIR__ . '/header.php';
+error_reporting(0);
+$xoopsLogger->activated = false;
+
+$updateRecordsArray = $_POST['tr'];
+$ofsn = (int) $_GET['ofsn'];
 $sort = 1;
 foreach ($updateRecordsArray as $recordIDValue) {
     Tad_form_col::update($ofsn, ['csn' => $recordIDValue], ['sort' => $sort]);

@@ -1,7 +1,6 @@
 <?php
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
-require_once "../../mainfile.php";
 require __DIR__ . '/header.php';
 xoops_loadLanguage('admin', 'tad_form');
 
@@ -14,8 +13,9 @@ require_once XOOPS_ROOT_PATH . '/modules/tadtools/vendor/phpoffice/phpexcel/Clas
 $objPHPExcel = new PHPExcel(); //實體化Excel
 
 $ofsn = isset($_REQUEST['ofsn']) ? (int) $_REQUEST['ofsn'] : 0;
-$sql = 'select * from ' . $xoopsDB->prefix('tad_form_main') . " where ofsn='$ofsn'";
-$result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
+$sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_form_main') . '` WHERE `ofsn`=?';
+$result = Utility::query($sql, 'i', [$ofsn]) or Utility::web_error($sql, __FILE__, __LINE__, true);
+
 $form_main = $xoopsDB->fetchArray($result);
 $form_title = str_replace(['[', ']', ' '], '', $form_main['title']);
 $ff = sprintf(_MD_TAD_FORM_EXCEL_TITLE, $form_title) . '.xlsx';
@@ -30,8 +30,9 @@ $objPHPExcel->createSheet(); //建立新的工作表，上面那三行再來一�
 $objActSheet->setCellValue("A1", _MD_TAD_FORM_COL_WHO);
 $objActSheet->setCellValue("B1", strip_tags(sprintf(_MD_TAD_FORM_FORMAT_SIGN_DATE, $form_main['start_date'], $form_main['end_date'])));
 
-$sql = 'select csn,title,kind,func from ' . $xoopsDB->prefix('tad_form_col') . " where ofsn='{$ofsn}' order by sort";
-$result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
+$sql = 'SELECT `csn`, `title`, `kind`, `func` FROM `' . $xoopsDB->prefix('tad_form_col') . '` WHERE `ofsn`=? ORDER BY `sort`';
+$result = Utility::query($sql, 'i', [$ofsn]) or Utility::web_error($sql, __FILE__, __LINE__, true);
+
 $n = 2;
 while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
     if ('show' === $kind) {
@@ -44,15 +45,16 @@ while (list($csn, $title, $kind, $func) = $xoopsDB->fetchRow($result)) {
 }
 
 $n = 2;
-$sql = 'select ssn,uid,man_name,email,fill_time from ' . $xoopsDB->prefix('tad_form_fill') . " where ofsn='{$ofsn}' order by fill_time desc";
-$result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
+$sql = 'SELECT `ssn`, `uid`, `man_name`, `email`, `fill_time` FROM `' . $xoopsDB->prefix('tad_form_fill') . '` WHERE `ofsn` =? ORDER BY `fill_time` DESC';
+$result = Utility::query($sql, 'i', [$ofsn]) or Utility::web_error($sql, __FILE__, __LINE__, true);
+
 while (list($ssn, $uid, $man_name, $email, $fill_time) = $xoopsDB->fetchRow($result)) {
     $fill_time = date('Y-m-d H:i:s', xoops_getUserTimestamp(strtotime($fill_time)));
     $objActSheet->setCellValueByColumnAndRow(0, $n, $man_name);
     $objActSheet->setCellValueByColumnAndRow(1, $n, $fill_time);
 
-    $sql2 = 'select a.csn,a.val from ' . $xoopsDB->prefix('tad_form_value') . ' as a,' . $xoopsDB->prefix('tad_form_col') . " as b where a.csn=b.csn and a.ssn='{$ssn}'  order by b.sort";
-    $result2 = $xoopsDB->query($sql2) or Utility::web_error($sql2);
+    $sql2 = 'SELECT a.`csn`, a.`val` FROM `' . $xoopsDB->prefix('tad_form_value') . '` AS a, `' . $xoopsDB->prefix('tad_form_col') . '` AS b WHERE a.`csn` = b.`csn` AND a.`ssn` =? ORDER BY b.`sort`';
+    $result2 = Utility::query($sql2, 'i', [$ssn]) or Utility::web_error($sql2);
 
     $m = 2;
     while (list($csn, $val) = $xoopsDB->fetchRow($result2)) {

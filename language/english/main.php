@@ -147,3 +147,4 @@ define('_MD_TAD_FORM_CAPTCHA', 'Please enter the number in the picture');
 
 define('_MD_TAD_FORM_VISITORS_FILL', 'Visitors can fill in');
 define('_MD_TAD_FORM_CANT_UPLOAD', 'Visitors can fill in the form, information security factors, do not open the upload function');
+define('_MD_TAD_FORM_LIST', 'List of Forms');

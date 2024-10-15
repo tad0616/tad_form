@@ -3,11 +3,11 @@
 
 <div class="my-2">
     <{if $smarty.session.tad_form_manager|default:false}>
-        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-warning"><{$smarty.const._MD_TAD_FORM_EDIT}></a>
-        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_index&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-info"><{$smarty.const._MD_TAD_FORM_EDIT_ALL}></a>
-        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_index&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-primary"><{$smarty.const._MD_TAD_FORM_VIEW_RESULT}></a>
+        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-warning"><i class="fa fa-pencil-square" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_EDIT}></a>
+        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_index&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-info"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_EDIT_ALL}></a>
+        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_index&ofsn=<{$form.ofsn}>" class="btn btn-sm btn-primary"><i class="fa fa-list-alt" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_VIEW_RESULT}></a>
     <{elseif $form.can_view_result && $code}>
-        <a href="index.php?op=tad_form_fill_show&ofsn=<{$form.ofsn}>&code=<{$code|default:''}>" class="btn btn-sm btn-info"><{$smarty.const._MD_TAD_FORM_VIEW_RESULT}></a>
+        <a href="index.php?op=tad_form_fill_show&ofsn=<{$form.ofsn}>&code=<{$code|default:''}>" class="btn btn-sm btn-info"><i class="fa fa-list-alt" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_VIEW_RESULT}></a>
     <{/if}>
 </div>
 
@@ -31,7 +31,7 @@
     <{foreach from=$form.col key=csn item=col name=form_col}>
         <div class="p-2 q_col rounded">
             <{if $smarty.session.tad_form_manager|default:false}>
-                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_create&ofsn=<{$form.ofsn}>&csn=<{$csn|default:''}>&mode=update" class="btn btn-sm btn-warning pull-right float-right pull-end"><{$smarty.const._TAD_EDIT}></a>
+                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_create&ofsn=<{$form.ofsn}>&csn=<{$csn|default:''}>&mode=update" class="btn btn-sm btn-warning pull-right float-right pull-end"><i class="fa fa-pencil" aria-hidden="true"></i> <{$smarty.const._TAD_EDIT}></a>
             <{/if}>
             <{if $col.kind=="show"}>
                 <div><b><{$col.title}></b></div>
@@ -91,7 +91,7 @@
             <div class="text-danger"><{$smarty.const._MD_TAD_FORM_EMAIL_TIP}></div>
         </div>
         <div class="col-sm-2">
-            <button type="submit" name="submit" class="btn btn-primary"><{$smarty.const._MD_TAD_FORM_SUBMIT_FORM}></button>
+            <button type="submit" name="submit" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_SUBMIT_FORM}></button>
         </div>
     </div>
 </form>

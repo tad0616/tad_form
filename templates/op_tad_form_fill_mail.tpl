@@ -40,7 +40,7 @@
     <div class="text-center">
         <input type="hidden" name="op" value="tad_form_fill_send">
         <input type="hidden" name="ofsn" value="<{$form.ofsn}>">
-        <button type="submit" class="btn btn-primary"><{$smarty.const._MD_TAD_FORM_SEND}></button>
+        <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_SEND}></button>
     </div>
 </form>
 

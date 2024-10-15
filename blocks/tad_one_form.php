@@ -40,11 +40,11 @@ function tad_one_form_edit($options)
 {
     global $xoopsDB;
     $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_form_main') . " where enable='1' and start_date < '{$today}' and end_date > '{$today}'";
-    $result = $xoopsDB->query($sql);
+    $sql = 'SELECT `ofsn`, `title` FROM `' . $xoopsDB->prefix('tad_form_main') . '` WHERE `enable`=1 AND `start_date` < ? AND `end_date` > ?';
+    $result = Utility::query($sql, 'ss', [$today, $today]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $opt = '';
-    while (list($ofsn, $title, $start_date, $end_date, $content, $uid, $post_date, $enable) = $xoopsDB->fetchRow($result)) {
+    while (list($ofsn, $title) = $xoopsDB->fetchRow($result)) {
         $selected = ($ofsn == $options[0]) ? 'selected' : '';
         $opt .= "<option value='{$ofsn}' $selected>$title</option>\n";
     }

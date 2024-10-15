@@ -454,12 +454,12 @@ class Tad_form_fill
 
         $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
-        $sql = "{$insert} INTO `" . $xoopsDB->prefix("tad_form_fill") . "` (
+        $sql = $insert . ' INTO `' . $xoopsDB->prefix('tad_form_fill') . '` (
             `ofsn`, `uid`, `man_name`, `email`, `fill_time`, `result_col`, `code`
         ) VALUES(
-            '{$ofsn}','{$_SESSION['now_user']['uid']}', '{$man_name}' , '{$email}','{$now}','{$result_col}','{$code}'
-        )";
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
+            ?, ?, ?, ?, ?, ?, ?
+        )';
+        Utility::query($sql, 'iisssss', [$ofsn, $_SESSION['now_user']['uid'], $man_name, $email, $now, $result_col, $code]) or Utility::web_error($sql, __FILE__, __LINE__, true);
 
         //取得最後新增資料的流水編號
         $ssn = $xoopsDB->getInsertId();

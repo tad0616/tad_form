@@ -15,10 +15,15 @@
                 <a href="index.php?op=tad_form_fill_create&ofsn=<{$ofsn|default:''}>" class="btn btn-lg btn-block btn-primary <{if !$form.can_fill}>disabled<{/if}>"><{if $form.can_fill|default:false}><{if $xoopsModuleConfig.show_amount && $form.fill_count}><{$smarty.const._MD_TAD_FORM_SIGN_NOW|sprintf:$form.title:$form.fill_count}><{else}><{$smarty.const._MD_TAD_FORM_SIGNNOW|sprintf:$form.title}><{/if}><{else}><{$smarty.const._MD_TAD_FORM_CANT_SIGN|sprintf:$form.title}><{/if}></a>
             </div>
             <div class="col-lg-6 d-grid gap-2">
-                <a href="index.php?op=tad_form_fill_index&ofsn=<{$ofsn|default:''}>" class="btn btn-info btn-lg btn-block <{if !$form.can_view_result}>disabled<{/if}>"><{if $form.can_view_result|default:false}><{$smarty.const._MD_TAD_FORM_VIEW_RESULT}><{else}><{$smarty.const._MD_TAD_FORM_CANT_VIEW_RESULT}><{/if}></a>
+                <a href="index.php?op=tad_form_fill_index&ofsn=<{$ofsn|default:''}>" class="btn btn-info btn-lg btn-block <{if !$form.can_view_result}>disabled<{/if}>"><{if $form.can_view_result|default:false}><i class="fa fa-list-alt" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_VIEW_RESULT}><{else}><{$smarty.const._MD_TAD_FORM_CANT_VIEW_RESULT}><{/if}></a>
             </div>
         </div>
     </div>
 <{foreachelse}>
-    <h3><{$smarty.const._MD_TAD_FORM_EMPTY}></h3>
+    <h3 class="text-center"><{$smarty.const._MD_TAD_FORM_EMPTY}></h3>
+    <{if $smarty.session.tad_form_adm|default:false || $smarty.session.tad_form_col_manager|default:false}>
+    <div class="bar">
+        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create" class="btn btn-lg btn-info"><i class="fa fa-plus-square" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_ADD}></a>
+    </div>
+    <{/if}>
 <{/foreach}>

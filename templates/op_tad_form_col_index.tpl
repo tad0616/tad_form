@@ -3,7 +3,7 @@
     $().ready(function(){
         $("#sort").sortable({ opacity: 0.6, cursor: "move", update: function() {
             var order = $(this).sortable("serialize");
-            $.post("<{$xoops_url}>/modules/tad_form/save_sort.php", order, function(theResponse){
+            $.post("<{$xoops_url}>/modules/tad_form/save_sort.php?ofsn=<{$smarty.get.ofsn|intval}>", order, function(theResponse){
                 $("#save_msg").html(theResponse);
             });
         }
@@ -17,9 +17,9 @@
 <div><{$smarty.const._MD_TAD_FORM_SIGN_GROUP}>: <{if $form.sign_group_title|default:false}><{"、"|implode:$form.sign_group_title}><{/if}></div>
 <div><{$smarty.const._MD_TAD_FORM_VIEW_RESULT_GROUP}>: <{if $form.view_result_group_title|default:false}><{"、"|implode:$form.view_result_group_title}><{/if}></div>
 <div class="my-3">
-    <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$smarty.get.ofsn}>" class="btn btn-sm btn-warning"><{$smarty.const._MD_TAD_FORM_EDIT}></a>
-    <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_index&ofsn=<{$smarty.get.ofsn}>" class="btn btn-sm btn-primary"><{$smarty.const._MD_TAD_FORM_VIEW_RESULT}></a>
-    <a href="<{$xoops_url}>/modules/tad_form/index.php?op=tad_form_fill_create&ofsn=<{$smarty.get.ofsn}>&ssn=<{$smarty.get.ssn|default:0}>&code=<{$smarty.get.code|default:''}>" class="btn btn-sm btn-success"><{$smarty.const._MD_TAD_FORM_BACK_TO_FORM}></a>
+    <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$smarty.get.ofsn|intval}>" class="btn btn-sm btn-warning"><i class="fa fa-pencil-square" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_EDIT}></a>
+    <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_index&ofsn=<{$smarty.get.ofsn|intval}>" class="btn btn-sm btn-primary"><i class="fa fa-list-alt" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_VIEW_RESULT}></a>
+    <a href="<{$xoops_url}>/modules/tad_form/index.php?op=tad_form_fill_create&ofsn=<{$smarty.get.ofsn|intval}>&ssn=<{$smarty.get.ssn|default:0}>&code=<{$smarty.get.code|intval}>" class="btn btn-sm btn-success"><i class="fa fa-undo" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_BACK_TO_FORM}></a>
 </div>
 
 <div id="save_msg"></div>
@@ -66,7 +66,7 @@
                 </td>
                 <td nowrap>
                     <img src="<{$xoops_url}>/modules/tadtools/treeTable/images/updown_s.png" style="cursor: s-resize;" alt="<{$smarty.const._MD_TREETABLE_SORT_PIC}>" title="<{$smarty.const._MD_TREETABLE_SORT_PIC}>">
-                    <a href="manager.php?op=tad_form_col_create&ofsn=<{$ofsn|default:''}>&csn=<{$col.csn}>&mode=modify" class="btn btn-sm btn-warning"><{$smarty.const._TAD_EDIT}></a>
+                    <a href="manager.php?op=tad_form_col_create&ofsn=<{$ofsn|default:''}>&csn=<{$col.csn}>&mode=modify" class="btn btn-sm btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> <{$smarty.const._TAD_EDIT}></a>
                 </td>
             </tr>
         <{/foreach}>
@@ -74,7 +74,7 @@
 </table>
 
 <div class="text-right text-end">
-    <a href="manager.php?op=tad_form_col_create&ofsn=<{$ofsn|default:''}>" class="btn btn-info"><{$smarty.const._MD_TAD_FORM_ADD_COL}></a>
+    <a href="manager.php?op=tad_form_col_create&ofsn=<{$ofsn|default:''}>" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_ADD_COL}></a>
 </div>
 
 <br style="clear:both">
