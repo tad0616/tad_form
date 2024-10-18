@@ -201,9 +201,8 @@ class Tad_form_value
             case 'text':
                 $default_val = (empty($db_ans)) ? $default_val : $db_ans;
                 $chktxt = ($chk) ? ' validate[required]' : '';
-                $span = empty($size) ? 12 : round($size / 10, 0);
                 $main = "
-                <div class='col-sm-{$span}'>
+                <div class='col-sm-auto'>
                     <label for='tf{$csn}' style='display:none;'>{$csn}</label>
                     <input type='text' name='ans[$csn]' id='tf{$csn}' class='form-control {$chktxt}' value='{$default_val}'>
                     <input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>
@@ -277,8 +276,6 @@ class Tad_form_value
                 break;
 
             case 'upload':
-                // $default_val = (empty($db_ans)) ? $default_val : $db_ans;
-                $span = empty($size) ? 6 : round($size / 10, 0);
                 $TadUpFiles = new TadUpFiles("tad_form", "/{$ofsn}/{$csn}");
                 if ($chk and empty($db_ans)) {
                     $TadUpFiles->set_var('require', true);
@@ -294,16 +291,14 @@ class Tad_form_value
 
             case 'date':
                 $default_val = (empty($db_ans)) ? $default_val : $db_ans;
-                $span = empty($size) ? 6 : round($size / 10, 0);
                 $chktxt = ($chk) ? 'validate[required]' : '';
-                $main = "<div class='col-sm-{$span}'><label for='tf{$csn}' style='display:none;'>{$csn}</label><input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}' class='form-control {$chktxt}' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd' , startDate:'%y-%M-%d}'})\"></div>
+                $main = "<div class='col-sm-auto'><label for='tf{$csn}' style='display:none;'>{$csn}</label><input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}' class='form-control {$chktxt}' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd' , startDate:'%y-%M-%d}'})\"></div>
                 <input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
                 break;
             case 'datetime':
                 $default_val = (empty($db_ans)) ? $default_val : $db_ans;
-                $span = empty($size) ? 6 : round($size / 10, 0);
                 $chktxt = ($chk) ? 'validate[required]' : '';
-                $main = "<div class='col-sm-{$span}'><label for='tf{$csn}' style='display:none;'>{$csn}</label><input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}'  class='form-control {$chktxt}' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm' , startDate:'%y-%M-%d %H:%m}'})\"></div>
+                $main = "<div class='col-sm-auto'><label for='tf{$csn}' style='display:none;'>{$csn}</label><input type='text' name='ans[$csn]' id='tf{$csn}' value='{$default_val}'  class='form-control {$chktxt}' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm' , startDate:'%y-%M-%d %H:%m}'})\"></div>
                 <input type='hidden' name='need_csn[{$csn}]' value='{$csn}'>";
                 break;
             case 'show':

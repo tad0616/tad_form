@@ -266,9 +266,14 @@ class Tad_form_fill
     public static function create($ofsn = '', $ssn = '', $code = '', $mode = '')
     {
         global $xoopsTpl;
+
+        $tad_form_fill = self::get($ofsn, ['ofsn' => $ofsn, 'uid' => $_SESSION['now_user']['uid']]);
+
         $form_other = ['can_fill', 'col'];
         if ($ssn) {
             $form_other['ssn'] = $ssn;
+        } elseif ($tad_form_fill['ssn']) {
+            $form_other['ssn'] = $tad_form_fill['ssn'];
         }
 
         $where_arr['ofsn'] = $ofsn;
@@ -276,6 +281,7 @@ class Tad_form_fill
             $where_arr['enable'] = 1;
         }
         $form = Tad_form_main::get($where_arr, $form_other);
+        Utility::test($form, 'form', 'dd');
 
         $xoopsTpl->assign('form', $form);
 
@@ -292,10 +298,10 @@ class Tad_form_fill
             }
         }
 
-        $tad_form_fill = self::get($ofsn, ['ssn' => $ssn]);
+        // $tad_form_fill = self::get($ofsn, ['ssn' => $ssn]);
 
         //抓取預設值
-        // if (!empty($ssn) && $uid) {
+        // if (!empty($ssn) && $_SESSION['now_user']['uid']) {
         //     $tad_form_fill = self::get($ofsn, ['ssn' => $ssn]);
         // } elseif (!empty($code)) {
         //     $tad_form_fill = self::get($ofsn, ['code' => $code]);
@@ -320,7 +326,7 @@ class Tad_form_fill
         if (empty($tad_form_fill)) {
             $tad_form_fill = $def;
         }
-
+        Utility::test($tad_form_fill, 'tad_form_fill', 'dd');
         foreach ($tad_form_fill as $key => $value) {
             $value = Tools::filter($key, $value, 'edit', self::$filter_arr);
             $$key = isset($tad_form_fill[$key]) ? $tad_form_fill[$key] : $def[$key];
@@ -343,9 +349,12 @@ class Tad_form_fill
         $history_fill = [];
         if ($_SESSION['now_user'] && $form['multi_sign']) {
             $history_fill = self::get_all(['ofsn' => $ofsn, 'uid' => $_SESSION['now_user']['uid']], [], [], ['fill_time' => 'desc']);
+            Utility::test($history_fill, 'history_fill', 'dd');
             //刪除確認的JS
             $SweetAlert = new SweetAlert();
             $SweetAlert->render('tad_form_fill_destroy_func', "{$_SERVER['PHP_SELF']}?op=tad_form_fill_destroy&ofsn={$ofsn}&ssn=", 'ssn');
+        } else {
+
         }
         $xoopsTpl->assign('history_fill', $history_fill);
         $xoopsTpl->assign('man_name', $_SESSION['now_user']['name']);
@@ -455,11 +464,9 @@ class Tad_form_fill
         $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
         $sql = $insert . ' INTO `' . $xoopsDB->prefix('tad_form_fill') . '` (
-            `ofsn`, `uid`, `man_name`, `email`, `fill_time`, `result_col`, `code`
-        ) VALUES(
-            ?, ?, ?, ?, ?, ?, ?
-        )';
-        Utility::query($sql, 'iisssss', [$ofsn, $_SESSION['now_user']['uid'], $man_name, $email, $now, $result_col, $code]) or Utility::web_error($sql, __FILE__, __LINE__, true);
+            `ofsn`, `uid`, `man_name`, `email`, `fill_time`,  `code`
+        ) VALUES(?, ?, ?, ?, ?, ?)';
+        Utility::query($sql, 'iissss', [$ofsn, $_SESSION['now_user']['uid'], $man_name, $email, $now, $code]) or Utility::web_error($sql, __FILE__, __LINE__, true);
 
         //取得最後新增資料的流水編號
         $ssn = $xoopsDB->getInsertId();

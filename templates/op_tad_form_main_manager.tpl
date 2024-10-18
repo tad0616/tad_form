@@ -47,8 +47,8 @@
             </td>
             <td class="text-center"><{$form.col_count}></td>
             <td>
-                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_index&ofsn=<{$ofsn|default:''}>" class="btn btn-sm btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_EDIT_ALL}></a>
-                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_create&ofsn=<{$ofsn|default:''}>" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-toggle="tooltip" title="<{$smarty.const._MD_TAD_FORM_ADD_COL}>"><i class="fa fa-plus" aria-hidden="true"></i>
+                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_index&ofsn=<{$ofsn|default:''}>" class="btn btn-sm btn-info"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_EDIT_ALL}></a>
+                <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_create&ofsn=<{$ofsn|default:''}>" class="btn btn-sm btn-primary" data-bs-toggle="tooltip" data-toggle="tooltip" title="<{$smarty.const._MD_TAD_FORM_ADD_COL}>"><i class="fa fa-plus" aria-hidden="true"></i>
                 </a>
             </td>
         </tr>
