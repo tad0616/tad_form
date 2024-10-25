@@ -42,7 +42,7 @@
                 <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$ofsn|default:''}>" class="btn btn-sm btn-warning"><i class="fa fa-pencil-square" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_EDIT}></a>
                 <a href="manager.php?op=copy&ofsn=<{$ofsn|default:''}>" class="btn btn-sm btn-success"><{$smarty.const._MD_TAD_FORM_COPY_FORM}></a>
                 <{if !$form.enable}>
-                    <a href="javascript:tad_form_main_destroy_func(<{$ofsn|default:''}>);" class="btn btn-sm btn-danger"><{$smarty.const._TAD_DEL}></a>
+                    <a href="javascript:tad_form_main_destroy_func(<{$ofsn|default:''}>);" class="btn btn-sm btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
                 <{/if}>
             </td>
             <td class="text-center"><{$form.col_count}></td>

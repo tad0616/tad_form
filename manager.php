@@ -10,7 +10,6 @@ use XoopsModules\Tad_form\Tad_form_main;
 use XoopsModules\Tad_form\Tools;
 
 /*-----------引入檔案區--------------*/
-
 require __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'tad_form_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';

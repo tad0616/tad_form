@@ -6,7 +6,7 @@ $num1 = rand(0, 9);
 $num2 = rand(0, 9);
 $num3 = rand(0, 9);
 $num = $num1 . $num2 . $num3;
-error_reporting(0);
+// 關閉除錯訊息
 $xoopsLogger->activated = false;
 $_SESSION['security_code_' . $sn] = $num;
 
