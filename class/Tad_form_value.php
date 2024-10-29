@@ -257,7 +257,7 @@ class Tad_form_value
                 $default_val = (empty($db_ans)) ? $default_val : $db_ans;
                 $chktxt = ($chk) ? 'validate[required]' : '';
                 $opt = explode(';', $size);
-                $main = "<label for='tf{$csn}' style='display:none;'>{$csn}</label><select name='ans[$csn]' id='tf{$csn}' class='form-control {$chktxt}'>";
+                $main = "<label for='tf{$csn}' style='display:none;'>{$csn}</label><select name='ans[$csn]' id='tf{$csn}' class='form-select {$chktxt}'>";
                 foreach ($opt as $val) {
                     $selected = ($default_val == $val) ? 'selected' : '';
                     $main .= "<option value='{$val}' $selected>{$val}</option>";

@@ -109,7 +109,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <label><{$smarty.const._MD_TAD_FORM_KIND}></label>
-                    <select name="kind" class="form-control">
+                    <select name="kind" class="form-select">
                         <option value=""><{$smarty.const._MD_TAD_FORM_KIND0}></option>
                         <option value="application" <{if $kind|default:''=="application"}>selected<{/if}>><{$smarty.const._MD_TAD_FORM_KIND1}></option>
                     </select>

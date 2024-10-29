@@ -33,7 +33,7 @@
             <{$smarty.const._MD_TAD_FORM_COL_KIND}>
         </label>
         <div class="col-sm-2">
-            <select name="kind" id="kind" size=1 class="form-control" onchange="toggleInput()">
+            <select name="kind" id="kind" size=1 class="form-select" onchange="toggleInput()">
                 <option value="text" <{if $kind=="text"}>selected<{/if}>><{$smarty.const._MD_TAD_FORM_COL_TEXT}></option>
                 <option value="radio" <{if $kind=="radio"}>selected<{/if}>><{$smarty.const._MD_TAD_FORM_COL_RADIO}></option>
                 <option value="checkbox" <{if $kind=="checkbox"}>selected<{/if}>><{$smarty.const._MD_TAD_FORM_COL_CHECKBOX}></option>
@@ -58,7 +58,7 @@
             <{$smarty.const._MD_TAD_FORM_COL_PUBLIC}>
         </label>
         <div class="col-sm-2">
-            <select name="public" size=1 class="form-control">
+            <select name="public" size=1 class="form-select">
                 <option value="1"" <{if $public=="1"}>selected<{/if}>><{$smarty.const._MD_TAD_FORM_COL_PUBLIC1}></option>
                 <option value="0" <{if $public!="1"}>selected<{/if}>><{$smarty.const._MD_TAD_FORM_COL_PUBLIC0}></option>
             </select>
@@ -69,7 +69,7 @@
             <{$smarty.const._MD_TAD_FORM_COL_CHK}>
         </label>
         <div class="col-sm-2">
-            <select name="chk" size=1 class="form-control">
+            <select name="chk" size=1 class="form-select">
                 <option value="1"" <{if $chk=="1"}>selected<{/if}>><{$smarty.const._YES}></option>
                 <option value="0" <{if $chk!="1"}>selected<{/if}>><{$smarty.const._NO}></option>
             </select>
@@ -79,7 +79,7 @@
             <{$smarty.const._MD_TAD_FORM_COL_FUNC}>
         </label>
         <div class="col-sm-2">
-            <select name="func" id="func" size=1 class="form-control">
+            <select name="func" id="func" size=1 class="form-select">
                 <option value="" <{if $func==""}>selected<{/if}>><{$smarty.const._MD_TAD_FORM_COL_NO_FUN}></option>
                 <option value="sum" <{if $func=="sum"}>selected<{/if}>><{$smarty.const._MD_TAD_FORM_COL_SUM}></option>
                 <option value="avg" <{if $func=="avg"}>selected<{/if}>><{$smarty.const._MD_TAD_FORM_COL_AVG}></option>

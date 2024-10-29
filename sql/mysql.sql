@@ -23,7 +23,7 @@ CREATE TABLE `tad_form_col` (
   `title` varchar(255) NOT NULL default '',
   `descript` text,
   `kind` varchar(20) NOT NULL default '',
-  `size` varchar(255) NOT NULL default '',
+  `size` varchar(1000) default NULL,
   `val` varchar(255) default NULL,
   `chk` enum('1','0') default '1',
   `func` set('sum','avg','count') default NULL,

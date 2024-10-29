@@ -120,6 +120,35 @@ class Update
         }
     }
 
+    public static function go_update_size()
+    {
+        global $xoopsDB;
+
+        // 檢查欄位類型
+        $sql = "SELECT COLUMN_TYPE
+        FROM INFORMATION_SCHEMA.COLUMNS
+        WHERE  TABLE_NAME = '" . $xoopsDB->prefix('tad_form_col') . "'
+        AND COLUMN_NAME = 'size'";
+
+        $result = $xoopsDB->query($sql);
+
+        if ($xoopsDB->getRowsNum($result) == 0) {
+            throw new Exception("欄位 size 不存在於資料表 " . $xoopsDB->prefix('tad_form_col') . "");
+        }
+
+        $row = $xoopsDB->fetchArray($result);
+
+        // 檢查是否需要修改欄位類型
+        if (strtolower($row['COLUMN_TYPE']) !== 'varchar(1000)') {
+            // 修改欄位類型
+            $sql = "ALTER TABLE " . $xoopsDB->prefix('tad_form_col') . " MODIFY COLUMN size VARCHAR(1000)";
+
+            if (!$xoopsDB->queryF($sql)) {
+                throw new Exception("修改欄位類型失敗：" . $mysqli->error);
+            }
+        }
+    }
+
     public static function chk_chk1()
     {
         global $xoopsDB;
