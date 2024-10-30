@@ -2,6 +2,8 @@
 use Xmf\Request;
 /*-----------執行動作判斷區----------*/
 require __DIR__ . '/header.php';
+$xoopsLogger->activated = false;
+
 $ofsn = Request::getInt('ofsn');
 $csn = Request::getInt('csn');
 $mode = Request::getString('mode');

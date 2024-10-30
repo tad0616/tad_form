@@ -164,7 +164,7 @@ class Tools
             }
 
             if (!isset($_SESSION['tad_form_manager']) or $force) {
-                $_SESSION['tad_form_manager'] = Utility::power_chk('tad_form_post', 1);
+                $_SESSION['tad_form_manager'] = Utility::power_chk('tad_form_post', 1, 0, true, 'tad_form');
             }
 
             //目前登入者

@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . '/header.php';
+$xoopsLogger->activated = false;
 session_start();
 $sn = (int) $_GET['ofsn'];
 $num1 = rand(0, 9);

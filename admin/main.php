@@ -2,7 +2,6 @@
 /*-----------引入檔案區--------------*/
 $GLOBALS['xoopsOption']['template_main'] = 'tad_form_admin.tpl';
 require_once __DIR__ . '/header.php';
-require_once dirname(__DIR__) . '/function.php';
 
 require_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.php';
 require_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.admin.php';
