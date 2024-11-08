@@ -42,8 +42,6 @@ define('_MD_TAD_FORM_MANAGER', 'Form Manager');
 define('_MD_TAD_FORM_RESULT', 'Analysis');
 define('_MD_TAD_FORM_MY_ANS', 'Watch my answer');
 
-define('_MD_INPUT_FORM', 'Form Designer');
-
 define('_MD_TAD_FORM_CONTENT', 'Description');
 define('_MD_TAD_FORM_POST_DATE', 'Post Date');
 define('_MD_TAD_FORM_ENABLE', 'Activate');

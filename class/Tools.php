@@ -160,7 +160,7 @@ class Tools
 
             //判斷是否對該模組有管理權限
             if (!isset($_SESSION['tad_form_adm']) or $force) {
-                $_SESSION['tad_form_adm'] = ($xoopsUser) ? $xoopsUser->isAdmin() : false;
+                $_SESSION['tad_form_adm'] = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
             }
 
             if (!isset($_SESSION['tad_form_manager']) or $force) {

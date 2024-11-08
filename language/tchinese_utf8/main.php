@@ -39,7 +39,6 @@ define('_MD_TAD_FORM_MANAGER', '表單管理');
 
 define('_MD_TAD_FORM_RESULT', '觀看結果');
 define('_MD_TAD_FORM_MY_ANS', '觀看我的填報內容');
-define('_MD_INPUT_FORM', '設計表單表單');
 
 define('_MD_TAD_FORM_CONTENT', '表單說明');
 define('_MD_TAD_FORM_POST_DATE', '發佈日期');

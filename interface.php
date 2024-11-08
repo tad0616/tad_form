@@ -1,5 +1,8 @@
 <?php
 use XoopsModules\Tad_form\Tools;
+if (!class_exists('XoopsModules\Tad_form\Tools')) {
+    require XOOPS_ROOT_PATH . '/modules/tad_form/preloads/autoloader.php';
+}
 
 Tools::get_session();
 

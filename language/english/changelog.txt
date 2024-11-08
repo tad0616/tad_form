@@ -1,3 +1,16 @@
+Tad Form 4.0 (released on 2024-11-11)
+====================================
+1. Support XOOPS 2.5.11
+2. Support PHP8.1.x
+3. Use $xoopsDB->escape() instead of $myts->addSlashes()
+4. Use BootstrapTable to display results instead, which can be adjusted adaptively.
+5. Fixed the issue of duplicate content when sending notification letters
+6. Optimize layout and button text
+7. Corrected the problem that "Whether to show the form directly" in the "Online Form" block has no effect?
+8. Corrected the problem that the registration form could not be admitted
+9. Database syntax parameterization
+10. Modify the size field to 1000 characters
+
 Tad Form 3.7 (released 2024-02-05)
 ====================================
 1. rewrite the whole module
