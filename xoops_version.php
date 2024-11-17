@@ -1,7 +1,4 @@
 <?php
-
-global $xoopsConfig;
-
 $modversion = [];
 global $xoopsConfig;
 
@@ -69,16 +66,16 @@ $modversion['templates'] = [
     ['file' => 'tad_form_admin.tpl', 'description' => 'tad_form_admin.tpl'],
 ];
 
-//---區塊設定---//
+//---區塊設定 (索引為固定值，若欲刪除區塊記得補上索引，避免區塊重複)---//
 $modversion['blocks'] = [
-    [
+    1 => [
         'file' => 'tad_form.php',
         'name' => _MI_TAD_FORM_BNAME1,
         'description' => _MI_TAD_FORM_BDESC1,
         'show_func' => 'tad_form',
         'template' => 'tad_form.tpl',
     ],
-    [
+    2 => [
         'file' => 'tad_one_form.php',
         'name' => _MI_TAD_FORM_BNAME2,
         'description' => _MI_TAD_FORM_BDESC2,
