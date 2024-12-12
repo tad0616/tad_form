@@ -73,20 +73,6 @@ class Tools
         return $value;
     }
 
-    // 產生 token
-    public static function token_form($mode = 'assign')
-    {
-        global $xoopsTpl;
-        include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-        $token = new \XoopsFormHiddenToken();
-        $token_form = $token->render();
-        if ($mode == 'assign') {
-            $xoopsTpl->assign("token_form", $token_form);
-        } else {
-            return $token_form;
-        }
-    }
-
     // 取得資料庫條件
     public static function get_and_where($where_arr = '', $prefix = '')
     {
@@ -221,83 +207,6 @@ class Tools
                 redirect_header('index.php', 3, "無操作權限 {$file} ($line)");
             }
         }
-    }
-
-    // 取得所有群組
-    public static function get_group()
-    {
-        global $xoopsDB;
-        $sql = 'SELECT `groupid`,`name` FROM `' . $xoopsDB->prefix('groups') . '`';
-        $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
-
-        $groups = [];
-        while (list($group_id, $name) = $xoopsDB->fetchRow($result)) {
-            $groups[$group_id] = $name;
-        }
-        return $groups;
-    }
-
-    // 建立群組
-    public static function mk_group($name = "")
-    {
-        global $xoopsDB;
-        $sql = 'SELECT `groupid` FROM `' . $xoopsDB->prefix('groups') . '` WHERE `name`=?';
-        $result = Utility::query($sql, 's', [$name]) or Utility::web_error($sql, __FILE__, __LINE__, true);
-
-        list($group_id) = $xoopsDB->fetchRow($result);
-
-        if (empty($group_id)) {
-            $sql = 'INSERT INTO `' . $xoopsDB->prefix('groups') . '` (`name`) VALUES(?)';
-            Utility::query($sql, 's', [$name]) or Utility::web_error($sql, __FILE__, __LINE__, true);
-
-            //取得最後新增資料的流水編號
-            $group_id = $xoopsDB->getInsertId();
-        }
-        return $group_id;
-    }
-
-    // 將某人加入群組
-    public static function add_user_to_group($uid, $group_id)
-    {
-        global $xoopsDB;
-        $sql = 'REPLACE INTO `' . $xoopsDB->prefix('groups_users_link') . '` (`groupid`, `uid`) VALUES (?, ?)';
-        Utility::query($sql, 'ii', [$group_id, $uid]) or die($sql);
-
-    }
-
-    // 將某人移出群組
-    public static function del_user_from_group($uid, $group_id)
-    {
-        global $xoopsDB;
-        $sql = 'DELETE FROM `' . $xoopsDB->prefix('groups_users_link') . '` WHERE `groupid`=? AND `uid`=?';
-        Utility::query($sql, 'ii', [$group_id, $uid]) or die($sql);
-
-    }
-
-    // uid 轉姓名
-    public static function get_name_by_uid($uid)
-    {
-        $uid_name = \XoopsUser::getUnameFromId($uid, 1);
-        if (empty($uid_name)) {
-            $uid_name = \XoopsUser::getUnameFromId($uid, 0);
-        }
-
-        return $uid_name;
-    }
-
-    // 儲存排序
-    public static function sort_store($item_arr, $table, $sort_col = 'sort', $primary = 'ofsn')
-    {
-        global $xoopsDB;
-        $sort = 1;
-        foreach ($item_arr as $primary_keys) {
-            list($ofsn) = explode('-', $primary_keys);
-            $sql = 'UPDATE `' . $xoopsDB->prefix($table) . '` SET `' . $sort_col . '`=? WHERE `' . $primary . '`=?';
-            Utility::query($sql, 'ii', [$sort, $ofsn]) or die('排序失敗！ (' . date("Y-m-d H:i:s") . ')');
-
-            $sort++;
-        }
-        echo "排序完成！ (" . date("Y-m-d H:i:s") . ")";
     }
 
     //轉換日期為民國年

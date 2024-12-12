@@ -23,7 +23,7 @@
     <h3 class="text-center"><{$smarty.const._MD_TAD_FORM_EMPTY}></h3>
     <{if $smarty.session.tad_form_adm|default:false || $smarty.session.tad_form_col_manager|default:false}>
     <div class="bar">
-        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create" class="btn btn-lg btn-info"><i class="fa fa-plus-square" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_ADD}></a>
+        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create" class="btn btn-lg btn-info"><i class="fa fa-square-plus" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_ADD}></a>
     </div>
     <{/if}>
 <{/foreach}>

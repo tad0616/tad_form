@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . '/header.php';
+header('HTTP/1.1 200 OK');
 $xoopsLogger->activated = false;
 session_start();
 $sn = (int) $_GET['ofsn'];
@@ -8,6 +9,7 @@ $num2 = rand(0, 9);
 $num3 = rand(0, 9);
 $num = $num1 . $num2 . $num3;
 // 關閉除錯訊息
+header('HTTP/1.1 200 OK');
 $xoopsLogger->activated = false;
 $_SESSION['security_code_' . $sn] = $num;
 

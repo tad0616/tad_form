@@ -2,6 +2,7 @@
 use Xmf\Request;
 /*-----------執行動作判斷區----------*/
 require __DIR__ . '/header.php';
+header('HTTP/1.1 200 OK');
 $xoopsLogger->activated = false;
 
 $ofsn = Request::getInt('ofsn');

@@ -267,7 +267,15 @@ class Tad_form_fill
     {
         global $xoopsTpl;
 
-        $tad_form_fill = self::get($ofsn, ['ofsn' => $ofsn, 'uid' => $_SESSION['now_user']['uid']]);
+        $uid = $_SESSION['now_user']['uid'] ? $_SESSION['now_user']['uid'] : 0;
+        $where_arr['ofsn'] = $ofsn;
+        if (isset($_SESSION['now_user']['uid']) && !empty($_SESSION['now_user']['uid'])) {
+            $where_arr['uid'] = $_SESSION['now_user']['uid'];
+        } else {
+            $where_arr['code'] = $code;
+        }
+
+        $tad_form_fill = self::get($ofsn, $where_arr);
 
         $form_other = ['can_fill', 'col'];
         if ($ssn) {
@@ -276,11 +284,11 @@ class Tad_form_fill
             $form_other['ssn'] = $tad_form_fill['ssn'];
         }
 
-        $where_arr['ofsn'] = $ofsn;
+        $where_arr_main['ofsn'] = $ofsn;
         if (!$_SESSION['tad_form_adm'] && !$_SESSION['tad_form_manager']) {
-            $where_arr['enable'] = 1;
+            $where_arr_main['enable'] = 1;
         }
-        $form = Tad_form_main::get($where_arr, $form_other);
+        $form = Tad_form_main::get($where_arr_main, $form_other);
         Utility::test($form, 'form', 'dd');
 
         $xoopsTpl->assign('form', $form);
@@ -344,7 +352,7 @@ class Tad_form_fill
         My97DatePicker::render();
 
         //加入Token安全機制
-        Tools::token_form();
+        Utility::token_form();
 
         $history_fill = [];
         if ($_SESSION['now_user'] && $form['multi_sign']) {
@@ -466,7 +474,7 @@ class Tad_form_fill
         $sql = $insert . ' INTO `' . $xoopsDB->prefix('tad_form_fill') . '` (
             `ofsn`, `uid`, `man_name`, `email`, `fill_time`,  `code`
         ) VALUES(?, ?, ?, ?, ?, ?)';
-        Utility::query($sql, 'iissss', [$ofsn, $_SESSION['now_user']['uid'], $man_name, $email, $now, $code]) or Utility::web_error($sql, __FILE__, __LINE__, true);
+        Utility::query($sql, 'iissss', [(int) $ofsn, (int) $_SESSION['now_user']['uid'], (string) $man_name, (string) $email, (string) $now, (string) $code]);
 
         //取得最後新增資料的流水編號
         $ssn = $xoopsDB->getInsertId();

@@ -81,7 +81,7 @@ class Tad_form_main
             $user_groups = $xoopsUser ? $xoopsUser->getGroups() : [3];
         }
         if (in_array('sign_group_title', $other_arr) || in_array('view_result_group_title', $other_arr) || in_array('all', $other_arr)) {
-            $group_title = Tools::get_group();
+            $group_title = Utility::get_all_groups();
         }
 
         $and_sql = Tools::get_and_where($where_arr);
@@ -220,7 +220,7 @@ class Tad_form_main
         $data = Tools::filter_all_data($filter, $data, self::$filter_arr);
 
         if (in_array('sign_group_title', $other_arr) || in_array('view_result_group_title', $other_arr) || in_array('all', $other_arr)) {
-            $group_title = Tools::get_group();
+            $group_title = Utility::get_all_groups();
         }
 
         $data['sign_group'] = $data['sign_group'] ? explode(',', $data['sign_group']) : [1, 2];
@@ -354,7 +354,7 @@ class Tad_form_main
         $xoopsTpl->assign('view_result_group_form', $view_result_group_form);
 
         //加入Token安全機制
-        Tools::token_form();
+        Utility::token_form();
 
         //上傳表單
         $TadUpFiles = new TadUpFiles("tad_form");

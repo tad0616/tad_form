@@ -1,7 +1,7 @@
 
 <{if $block.fill|default:false}>
     <{foreach from=$block.sign_form key=k item=v}>
-        <{assign var=$k value=$v}>
+        <{assign var="$k" value=$v}>
     <{/foreach}>
 
     <{if $error|default:false}>

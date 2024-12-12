@@ -40,13 +40,13 @@
     <div class="text-center">
         <input type="hidden" name="op" value="tad_form_fill_send">
         <input type="hidden" name="ofsn" value="<{$form.ofsn}>">
-        <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_SEND}></button>
+        <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_SEND}></button>
     </div>
 </form>
 
 <script type='text/javascript'>
     $(document).ready(function(){
-        $("#checkAll").change(function() {
+        $("#checkAll").on('change', function() {
             console.log($("#checkAll").prop('checked'));
             $(".email").each(function() {
                 $(this).prop("checked", $("#checkAll").prop('checked'));

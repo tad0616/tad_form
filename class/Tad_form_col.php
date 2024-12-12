@@ -253,7 +253,7 @@ class Tad_form_col
         $xoopsTpl->assign('form', $form);
 
         //加入Token安全機制
-        Tools::token_form();
+        Utility::token_form();
     }
 
     //新增資料到 tad_form_col 中

@@ -141,7 +141,7 @@ switch ($op) {
 
     //觀看所有結果
     case 'tad_form_fill_index':
-        Tad_form_fill::index($ofsn, ['ofsn' => $ofsn], ['ans', 'analysis', 'form'], [], ['ssn' => 'asc'], 'ssn');
+        Tad_form_fill::index($ofsn, ['ofsn' => $ofsn], ['ans', 'analysis', 'form'], [], ['fill_time' => 'desc'], 'ssn');
         $BootstrapTable = BootstrapTable::render();
         break;
 

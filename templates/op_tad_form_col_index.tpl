@@ -17,7 +17,7 @@
 <div><{$smarty.const._MD_TAD_FORM_SIGN_GROUP}>: <{if $form.sign_group_title|default:false}><{"、"|implode:$form.sign_group_title}><{/if}></div>
 <div><{$smarty.const._MD_TAD_FORM_VIEW_RESULT_GROUP}>: <{if $form.view_result_group_title|default:false}><{"、"|implode:$form.view_result_group_title}><{/if}></div>
 <div class="my-3">
-    <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$smarty.get.ofsn|intval}>" class="btn btn-sm btn-warning"><i class="fa fa-pencil-square" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_EDIT}></a>
+    <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_main_create&ofsn=<{$smarty.get.ofsn|intval}>" class="btn btn-sm btn-warning"><i class="fa fa-pen-to-square" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_EDIT}></a>
     <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_index&ofsn=<{$smarty.get.ofsn|intval}>" class="btn btn-sm btn-primary"><i class="fa fa-list-alt" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_VIEW_RESULT}></a>
     <a href="<{$xoops_url}>/modules/tad_form/index.php?op=tad_form_fill_create&ofsn=<{$smarty.get.ofsn|intval}>&ssn=<{$smarty.get.ssn|default:0}>&code=<{$smarty.get.code|intval}>" class="btn btn-sm btn-success"><i class="fa fa-undo" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_BACK_TO_FORM}></a>
 </div>

@@ -1,7 +1,7 @@
 <{if $smarty.get.ofsn|default:false}>
     <h2><{$form.title|default:''}></h2>
     <div class="my-3">
-        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_index&ofsn=<{$smarty.get.ofsn|intval}>" class="btn btn-sm btn-info"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_EDIT_ALL}></a>
+        <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_col_index&ofsn=<{$smarty.get.ofsn|intval}>" class="btn btn-sm btn-info"><i class="fa fa-pencil" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_EDIT_ALL}></a>
         <a href="<{$xoops_url}>/modules/tad_form/manager.php?op=tad_form_fill_index&ofsn=<{$smarty.get.ofsn|intval}>" class="btn btn-sm btn-primary"><i class="fa fa-list-alt" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_VIEW_RESULT}></a>
         <a href="<{$xoops_url}>/modules/tad_form/index.php?op=tad_form_fill_create&ofsn=<{$smarty.get.ofsn|intval}>&ssn=<{$smarty.get.ssn|intval}>&code=<{$smarty.get.code|default:''}>" class="btn btn-sm btn-success"><i class="fa fa-undo" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_BACK_TO_FORM}></a>
     </div>
@@ -109,7 +109,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <label><{$smarty.const._MD_TAD_FORM_KIND}></label>
-                    <select name="kind" class="form-select">
+                    <select name="kind" class="form-control form-select">
                         <option value=""><{$smarty.const._MD_TAD_FORM_KIND0}></option>
                         <option value="application" <{if $kind|default:''=="application"}>selected<{/if}>><{$smarty.const._MD_TAD_FORM_KIND1}></option>
                     </select>
@@ -141,6 +141,6 @@
             <label class="checkbox inline"><input type="checkbox" name="edit_option" value="1" checked><{$smarty.const._MD_TAD_FORM_EDIT_OPTION}></label>
             </div>
         <{/if}>
-        <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> <{$smarty.const._TAD_SAVE}></button>
+        <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-disk" aria-hidden="true"></i> <{$smarty.const._TAD_SAVE}></button>
     </div>
 </form>
