@@ -79,24 +79,24 @@ class Tad_form_fill
     {
         global $xoopsDB;
 
-        $and_sql = Tools::get_and_where($where_arr);
-        $view_col = Tools::get_view_col($view_cols);
+        $and_sql   = Tools::get_and_where($where_arr);
+        $view_col  = Tools::get_view_col($view_cols);
         $order_sql = Tools::get_order($order_arr);
-        $order = $amount ? '' : $order_sql;
+        $order     = $amount ? '' : $order_sql;
 
         $sql = "SELECT {$view_col} FROM `" . $xoopsDB->prefix("tad_form_fill") . "` WHERE 1 {$and_sql} {$order}";
 
         // Utility::getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
         if ($amount) {
             $PageBar = Utility::getPageBar($sql, $amount, 10, '', '', $_SESSION['bootstrap'], 'none', $order_sql);
-            $bar = $PageBar['bar'];
-            $sql = $PageBar['sql'];
-            $total = $PageBar['total'];
+            $bar     = $PageBar['bar'];
+            $sql     = $PageBar['sql'];
+            $total   = $PageBar['total'];
         }
 
-        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
+        $result   = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
         $data_arr = $analysis = $col_arr = [];
-        $i = 0;
+        $i        = 0;
         if (in_array('analysis', $other_arr) || in_array('all', $other_arr)) {
             $col_arr = Tad_form_col::get_all($where_arr['ofsn'], ['ofsn' => $where_arr['ofsn']], [], [], [], 'csn');
         }
@@ -107,7 +107,7 @@ class Tad_form_fill
             foreach (self::$filter_arr['explode'] as $item) {
                 if (strpos($data[$item], '=') !== false) {
                     foreach (explode(';', $data[$item]) as $key => $value) {
-                        list($k, $v) = explode('=', $value);
+                        list($k, $v)              = explode('=', $value);
                         $data[$item . '_arr'][$k] = $v;
                     }
                 } else {
@@ -142,7 +142,7 @@ class Tad_form_fill
                 list($data['email'], $mail) = explode('@', $data['email']);
             }
 
-            $new_key = $key_name ? $data[$key_name] : $i;
+            $new_key            = $key_name ? $data[$key_name] : $i;
             $data_arr[$new_key] = $get_value ? $data[$get_value] : $data;
             $i++;
         }
@@ -150,7 +150,7 @@ class Tad_form_fill
         if (in_array('analysis', $other_arr) || in_array('all', $other_arr)) {
             foreach ($col_arr as $csn => $col) {
                 $analysis[$csn]['title'] = $col['title'];
-                $analysis[$csn]['func'] = $col['func'];
+                $analysis[$csn]['func']  = $col['func'];
                 if ($col['func'] == "avg") {
                     $analysis[$csn]['val'] = $analysis[$csn]['sum'] / $analysis[$csn]['count'];
                 } elseif ($col['func'] == "sum") {
@@ -192,9 +192,9 @@ class Tad_form_fill
         }
 
         foreach ($all as $key => $value) {
-            $value = Tools::filter($key, $value, 'read', self::$filter_arr);
+            $value     = Tools::filter($key, $value, 'read', self::$filter_arr);
             $all[$key] = $value;
-            $$key = $value;
+            $$key      = $value;
         }
 
         $SweetAlert = new SweetAlert();
@@ -231,10 +231,10 @@ class Tad_form_fill
 
         $and_sql = Tools::get_and_where($where_arr);
 
-        $sql = "SELECT * FROM `" . $xoopsDB->prefix("tad_form_fill") . "` WHERE 1 $and_sql";
+        $sql    = "SELECT * FROM `" . $xoopsDB->prefix("tad_form_fill") . "` WHERE 1 $and_sql";
         $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__, true);
-        $data = $xoopsDB->fetchArray($result);
-        $data = Tools::filter_all_data($filter, $data, self::$filter_arr);
+        $data   = $xoopsDB->fetchArray($result);
+        $data   = Tools::filter_all_data($filter, $data, self::$filter_arr);
 
         if (in_array('form', $other_arr) || in_array('all', $other_arr)) {
             $data['form'] = Tad_form_main::get(['ofsn' => $ofsn], ['can_view_result', 'can_fill', 'col', 'ssn' => $data['ssn']]);
@@ -247,7 +247,7 @@ class Tad_form_fill
         foreach (self::$filter_arr['explode'] as $item) {
             if (strpos($data[$item], '=') !== false) {
                 foreach (explode(';', $data[$item]) as $key => $value) {
-                    list($k, $v) = explode('=', $value);
+                    list($k, $v)              = explode('=', $value);
                     $data[$item . '_arr'][$k] = $v;
                 }
             } else {
@@ -267,7 +267,7 @@ class Tad_form_fill
     {
         global $xoopsTpl;
 
-        $uid = $_SESSION['now_user']['uid'] ? $_SESSION['now_user']['uid'] : 0;
+        $uid               = $_SESSION['now_user']['uid'] ? $_SESSION['now_user']['uid'] : 0;
         $where_arr['ofsn'] = $ofsn;
         if (isset($_SESSION['now_user']['uid']) && !empty($_SESSION['now_user']['uid'])) {
             $where_arr['uid'] = $_SESSION['now_user']['uid'];
@@ -275,13 +275,12 @@ class Tad_form_fill
             $where_arr['code'] = $code;
         }
 
-        $tad_form_fill = self::get($ofsn, $where_arr);
-
         $form_other = ['can_fill', 'col'];
         if ($ssn) {
             $form_other['ssn'] = $ssn;
-        } elseif ($tad_form_fill['ssn']) {
-            $form_other['ssn'] = $tad_form_fill['ssn'];
+            // } elseif ($tad_form_fill['ssn']) {
+            //     $form_other['ssn'] = $tad_form_fill['ssn'];
+            // }
         }
 
         $where_arr_main['ofsn'] = $ofsn;
@@ -290,6 +289,17 @@ class Tad_form_fill
         }
         $form = Tad_form_main::get($where_arr_main, $form_other);
         Utility::test($form, 'form', 'dd');
+
+        // $tad_form_fill = self::get($ofsn, $where_arr);        //抓取預設值
+        if (!empty($ssn) && $_SESSION['now_user']['uid']) {
+            $tad_form_fill = self::get($ofsn, ['ssn' => $ssn]);
+        } elseif (!empty($code)) {
+            $tad_form_fill = self::get($ofsn, ['code' => $code]);
+        } elseif (!empty($ofsn) and !$form['multi_sign']) {
+            $tad_form_fill = self::get($ofsn, ['ofsn' => $ofsn, 'uid' => $_SESSION['now_user']['uid']]);
+        } else {
+            $tad_form_fill = [];
+        }
 
         $xoopsTpl->assign('form', $form);
 
@@ -307,17 +317,6 @@ class Tad_form_fill
         }
 
         // $tad_form_fill = self::get($ofsn, ['ssn' => $ssn]);
-
-        //抓取預設值
-        // if (!empty($ssn) && $_SESSION['now_user']['uid']) {
-        //     $tad_form_fill = self::get($ofsn, ['ssn' => $ssn]);
-        // } elseif (!empty($code)) {
-        //     $tad_form_fill = self::get($ofsn, ['code' => $code]);
-        // } elseif (!empty($ofsn) and !$form['multi_sign']) {
-        //     $tad_form_fill = self::get($ofsn, ['ofsn' => $ofsn, 'uid' => $_SESSION['now_user']['uid']]);
-        // } else {
-        //     $tad_form_fill = [];
-        // }
 
         if (!$form['can_fill']) {
             if ($mode == 'return') {
@@ -337,7 +336,7 @@ class Tad_form_fill
         Utility::test($tad_form_fill, 'tad_form_fill', 'dd');
         foreach ($tad_form_fill as $key => $value) {
             $value = Tools::filter($key, $value, 'edit', self::$filter_arr);
-            $$key = isset($tad_form_fill[$key]) ? $tad_form_fill[$key] : $def[$key];
+            $$key  = isset($tad_form_fill[$key]) ? $tad_form_fill[$key] : $def[$key];
             $xoopsTpl->assign($key, $value);
         }
 
@@ -407,14 +406,14 @@ class Tad_form_fill
                 self::update(['ssn' => $ssn], ['uid' => $_SESSION['now_user']['uid'], 'man_name' => $man_name, 'email' => $email, 'fill_time' => $now]);
             } else {
                 $code = md5("{$ofsn}{$_SESSION['now_user']['uid']}{$man_name}{$email}{$now}");
-                $ssn = self::store(['ofsn' => $ofsn, 'uid' => $_SESSION['now_user']['uid'], 'man_name' => $man_name, 'email' => $email, 'fill_time' => $now, 'code' => $code]);
+                $ssn  = self::store(['ofsn' => $ofsn, 'uid' => $_SESSION['now_user']['uid'], 'man_name' => $man_name, 'email' => $email, 'fill_time' => $now, 'code' => $code]);
             }
         } else {
             if ($ssn) {
                 self::update(['ssn' => $ssn], ['uid' => $_SESSION['now_user']['uid'], 'man_name' => $man_name, 'email' => $email, 'fill_time' => $now]);
             } else {
                 $code = md5("{$ofsn}{$_SESSION['now_user']['uid']}{$man_name}{$email}{$now}");
-                $ssn = self::store(['ssn' => $ssn, 'ofsn' => $ofsn, 'uid' => $_SESSION['now_user']['uid'], 'man_name' => $man_name, 'email' => $email, 'fill_time' => $now, 'code' => $code], 'REPLACE');
+                $ssn  = self::store(['ssn' => $ssn, 'ofsn' => $ofsn, 'uid' => $_SESSION['now_user']['uid'], 'man_name' => $man_name, 'email' => $email, 'fill_time' => $now, 'code' => $code], 'REPLACE');
             }
 
         }
@@ -493,11 +492,11 @@ class Tad_form_fill
             $col_arr = [];
 
             foreach ($data_arr as $key => $value) {
-                $value = Tools::filter($key, $value, 'write', self::$filter_arr);
+                $value     = Tools::filter($key, $value, 'write', self::$filter_arr);
                 $col_arr[] = "`$key` = '{$value}'";
             }
             $update_cols = implode(', ', $col_arr);
-            $sql = "UPDATE `" . $xoopsDB->prefix("tad_form_fill") . "` SET
+            $sql         = "UPDATE `" . $xoopsDB->prefix("tad_form_fill") . "` SET
             $update_cols WHERE 1 $and";
         } else {
             //XOOPS表單安全檢查
@@ -560,7 +559,7 @@ class Tad_form_fill
     {
 
         global $xoopsTpl;
-        $xoopsMailer = getMailer();
+        $xoopsMailer                           = getMailer();
         $xoopsMailer->multimailer->ContentType = 'text/html';
         $xoopsMailer->addHeaders('MIME-Version: 1.0');
 
@@ -575,8 +574,8 @@ class Tad_form_fill
         $email_arr = explode(';', $form['adm_email']);
         $xoopsMailer->setFromEmail($email_arr[0]);
 
-        $i = 0;
-        $mail_test = [];
+        $i            = 0;
+        $mail_test    = [];
         $mail_rersult = '';
         // Utility::dd($form);
         foreach ($email_ssn as $ssn => $mail) {
@@ -586,8 +585,8 @@ class Tad_form_fill
             }
 
             if ($send_test) {
-                $mail_test[$i]['mail'] = $mail;
-                $mail_test[$i]['title'] = $title;
+                $mail_test[$i]['mail']    = $mail;
+                $mail_test[$i]['title']   = $title;
                 $mail_test[$i]['content'] = $new_content;
                 $i++;
             } else {

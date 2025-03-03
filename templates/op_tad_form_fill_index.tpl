@@ -13,81 +13,85 @@
     <a href="<{$xoops_url}>/modules/tad_form/index.php?op=tad_form_fill_create&ofsn=<{$smarty.get.ofsn|intval}>&ssn=<{$smarty.get.ssn|intval}>&code=<{$smarty.get.code|default:''}>" class="btn btn-sm btn-success"><i class="fa fa-undo" aria-hidden="true"></i> <{$smarty.const._MD_TAD_FORM_BACK_TO_FORM}></a>
 </div>
 
-
-
-<table id="result-table" class="table" data-toggle="table" data-pagination="true" data-search="true" data-mobile-responsive="true" data-fixed-columns="true" data-fixed-number="<{if $form.kind == "application"}>2<{else}>1<{/if}>">
-    <thead>
-        <tr>
-            <th><{$smarty.const._MD_TAD_FORM_COL_WHO}></th>
-            <{if $form.kind == "application"}>
-                <th><{$smarty.const._MD_TAD_FORM_KIND1_OK}></th>
-            <{/if}>
-            <{foreach from=$form.col key=csn item=col}>
-                <{if $col.public || $smarty.session.tad_form_manager}>
-                    <th style="max-width:20rem; overflow: hidden;"><{$col.title}></th>
+<{if $form.can_view_result|default:false}>
+    <table id="result-table" class="table" data-toggle="table" data-pagination="true" data-search="true" data-mobile-responsive="true" data-fixed-columns="true" data-fixed-number="<{if $form.kind == "application"}>2<{else}>1<{/if}>">
+        <thead>
+            <tr>
+                <th><{$smarty.const._MD_TAD_FORM_COL_WHO}></th>
+                <{if $form.kind == "application"}>
+                    <th><{$smarty.const._MD_TAD_FORM_KIND1_OK}></th>
                 <{/if}>
-            <{/foreach}>
-        </tr>
-    </thead>
-    <{foreach from=$all_tad_form_fill key=ssn item=fill}>
-        <tr>
-            <td style="text-align:center;">
-                <{if $smarty.session.tad_form_manager|default:false}>
-                    <a href="index.php?op=tad_form_fill_show&ofsn=<{$fill.ofsn}>&code=<{$fill.code}>" target="_blank"><{$fill.man_name}></a>
-                <{else}>
-                    <{$fill.man_name}>
-                <{/if}>
-                <div style='font-size: 0.8rem'><{$fill.fill_time}></div>
-            </td>
-            <{if $form.kind == "application"}>
-                <td class="text-center">
-                    <input type="checkbox" name="result_col[<{$ssn|default:''}>]" data-ssn="<{$ssn|default:''}>" value='1' <{if $fill.result_col == 1}>checked<{/if}>>
+                <{foreach from=$form.col key=csn item=col}>
+                    <{if $col.public || $smarty.session.tad_form_manager}>
+                        <th style="max-width:20rem; overflow: hidden;"><{$col.title}></th>
+                    <{/if}>
+                <{/foreach}>
+            </tr>
+        </thead>
+        <{foreach from=$all_tad_form_fill key=ssn item=fill}>
+            <tr>
+                <td style="text-align:center;">
+                    <{if $smarty.session.tad_form_manager|default:false}>
+                        <a href="index.php?op=tad_form_fill_show&ofsn=<{$fill.ofsn}>&code=<{$fill.code}>" target="_blank"><{$fill.man_name}></a>
+                    <{else}>
+                        <{$fill.man_name}>
+                    <{/if}>
+                    <div style='font-size: 0.8rem'><{$fill.fill_time}></div>
                 </td>
-            <{/if}>
-            <{foreach from=$fill.form.col key=csn item=col}>
-                <{if $col.kind!="" && ($col.public || $smarty.session.tad_form_manager)}>
-                    <td style="max-width:20rem; white-space: unset;">
-                    <{if $col.kind=="checkbox"}>
-                        <{$fill.ans.$csn|replace:';':'<br>'}>
-                    <{elseif $col.kind=="textarea"}>
-                        <{$fill.ans.$csn|nl2br}>
-                    <{else}>
-                        <{$fill.ans.$csn}>
-                    <{/if}>
+                <{if $form.kind == "application"}>
+                    <td class="text-center">
+                        <input type="checkbox" name="result_col[<{$ssn|default:''}>]" data-ssn="<{$ssn|default:''}>" value='1' <{if $fill.result_col == 1}>checked<{/if}>>
                     </td>
                 <{/if}>
-            <{/foreach}>
-        </tr>
-    <{/foreach}>
-</table>
-
-
-<{if $analysis|default:false}>
-    <h2><{$smarty.const._MD_TAD_FORM_ANALYSIS}></h2>
-    <table class="table table-striped">
-        <tr>
-            <th><{$smarty.const._MD_TAD_FORM_COL_TITLE}></th>
-            <th><{$smarty.const._MD_TAD_FORM_COL_FUNC}></th>
-            <th><{$smarty.const._MD_TAD_FORM_ANALYSIS_RESULT}></th>
-        </tr>
-        <{foreach from=$analysis item=data}>
-            <{if $data.func|default:false}>
-                <tr>
-                    <td><{$data.title}></td>
-                    <td><{$data.func}></td>
-                    <td>
-                    <{if $data.func=="count"}>
-                        <{foreach from=$data.val key=option item=val}>
-                            <li><{$option|default:''}> = <{$val|default:''}></li>
-                        <{/foreach}>
-                    <{else}>
-                        <{$data.val}>
+                <{foreach from=$fill.form.col key=csn item=col}>
+                    <{if $col.kind!="" && ($col.public || $smarty.session.tad_form_manager)}>
+                        <td style="max-width:20rem; white-space: unset;">
+                        <{if $col.kind=="checkbox"}>
+                            <{$fill.ans.$csn|replace:';':'<br>'}>
+                        <{elseif $col.kind=="textarea"}>
+                            <{$fill.ans.$csn|nl2br}>
+                        <{else}>
+                            <{$fill.ans.$csn}>
+                        <{/if}>
+                        </td>
                     <{/if}>
-                    </td>
-                </tr>
-            <{/if}>
+                <{/foreach}>
+            </tr>
         <{/foreach}>
     </table>
+
+
+    <{if $analysis|default:false}>
+        <h2><{$smarty.const._MD_TAD_FORM_ANALYSIS}></h2>
+        <table class="table table-striped">
+            <tr>
+                <th><{$smarty.const._MD_TAD_FORM_COL_TITLE}></th>
+                <th><{$smarty.const._MD_TAD_FORM_COL_FUNC}></th>
+                <th><{$smarty.const._MD_TAD_FORM_ANALYSIS_RESULT}></th>
+            </tr>
+            <{foreach from=$analysis item=data}>
+                <{if $data.func|default:false}>
+                    <tr>
+                        <td><{$data.title}></td>
+                        <td><{$data.func}></td>
+                        <td>
+                        <{if $data.func=="count"}>
+                            <{foreach from=$data.val key=option item=val}>
+                                <li><{$option|default:''}> = <{$val|default:''}></li>
+                            <{/foreach}>
+                        <{else}>
+                            <{$data.val}>
+                        <{/if}>
+                        </td>
+                    </tr>
+                <{/if}>
+            <{/foreach}>
+        </table>
+    <{/if}>
+<{else}>
+    <div class="alert alert-danger text-center">
+        <h3><{$smarty.const._MD_TAD_FORM_CANT_VIEW_RESULT}></h3>
+    </div>
 <{/if}>
 
 <{if $form.kind == "application" && $smarty.session.tad_form_manager}>
